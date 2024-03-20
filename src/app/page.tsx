@@ -1,3 +1,4 @@
+
 import React from 'react';
 // import { BrowserRouter as Router } from 'react-router-dom';
 import NavBar from './components/NavigationBar.tsx';
@@ -6,3 +7,4 @@ import NavBar from './components/NavigationBar.tsx';
 export default function Home() {
   return <NavBar />;
 }
+
