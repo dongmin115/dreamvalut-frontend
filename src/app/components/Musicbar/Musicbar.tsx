@@ -1,7 +1,16 @@
+// 'use client';
+
+// import { useEffect, useState } from 'react';
+
 /* eslint-disable @next/next/no-img-element */
 export default function MusicBar() {
+  // const [albumColor, setAlbumColor] = useState<string>('#000000');
+  // useEffect(() => {
+  //   setAlbumColor('#FE4500');
+  // }, []);
+
   return (
-    <div className="fixed bottom-[2%] left-[15%] w-[80%] h-[7%] bg-gray-600 rounded-md px-[2%] py-[0.5%] flex justify-between">
+    <div className="fixed bottom-[2%] left-[15%] w-[80%] h-[7%] rounded-md px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg">
       {/* 재생 컨트롤 버튼 */}
       <div className="flex flex-row">
         <img
