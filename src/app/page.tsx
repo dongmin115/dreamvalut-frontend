@@ -1,12 +1,10 @@
-import AlbumCoverUser from './components/AlbumCover/AlbumCoverUser.tsx';
-import AlbumCoverSystem from './components/AlbumCover/AlbumCoverSystem.tsx';
 
-function page() {
-  return (
-    <div className="">
-      <AlbumCoverSystem />
-    </div>
-  );
+import React from 'react';
+// import { BrowserRouter as Router } from 'react-router-dom';
+import NavBar from './components/NavigationBar.tsx';
+
+// App 컴포넌트
+export default function Home() {
+  return <NavBar />;
 }
 
-export default page;

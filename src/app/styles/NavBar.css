@@ -1,0 +1,3 @@
+.hover-bg-gradient:hover {
+    background-image: linear-gradient(to right, black, rgb(71, 9, 71));
+}
