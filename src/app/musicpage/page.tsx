@@ -5,7 +5,7 @@
 
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
-import { IconButton, Slider } from '@mui/material';
+import { Divider, IconButton, Slider } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
@@ -28,7 +28,7 @@ const theme = createTheme({
 
 export default function MusicPage() {
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen flex flex-row justify-around">
       <NavBar />
       {/* 블러배경 */}
       <img
@@ -79,6 +79,83 @@ export default function MusicPage() {
         </div>
       </div>
       {/* 재생목록 */}
+      <div className="flex flex-col items-center justify-center h-full w-[30%] space-y-4">
+        <h1 className="text-4xl text-white drop-shadow-lg self-start">
+          Playlist
+        </h1>
+        <Divider
+          variant="fullWidth"
+          orientation="horizontal"
+          flexItem
+          className="w-full bg-white drop-shadow-xl"
+        />
+        <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
+          <img
+            src="https://i.ibb.co/hLxvjJG/1.jpg"
+            alt="음악 커버이미지"
+            className="w-16 h-16 rounded-md drop-shadow-lg"
+          />
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-white text-lg">music title</p>
+            <p className="text-[#777777]">artist name</p>
+          </div>
+        </li>
+        <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
+          <img
+            src="https://i.ibb.co/hLxvjJG/1.jpg"
+            alt="음악 커버이미지"
+            className="w-16 h-16 rounded-md drop-shadow-lg"
+          />
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-white text-lg">music title</p>
+            <p className="text-[#777777]">artist name</p>
+          </div>
+        </li>
+        <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
+          <img
+            src="https://i.ibb.co/hLxvjJG/1.jpg"
+            alt="음악 커버이미지"
+            className="w-16 h-16 rounded-md drop-shadow-lg"
+          />
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-white text-lg">music title</p>
+            <p className="text-[#777777]">artist name</p>
+          </div>
+        </li>
+        <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
+          <img
+            src="https://i.ibb.co/hLxvjJG/1.jpg"
+            alt="음악 커버이미지"
+            className="w-16 h-16 rounded-md drop-shadow-lg"
+          />
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-white text-lg">music title</p>
+            <p className="text-[#777777]">artist name</p>
+          </div>
+        </li>
+        <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
+          <img
+            src="https://i.ibb.co/hLxvjJG/1.jpg"
+            alt="음악 커버이미지"
+            className="w-16 h-16 rounded-md drop-shadow-lg"
+          />
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-white text-lg">music title</p>
+            <p className="text-[#777777]">artist name</p>
+          </div>
+        </li>
+        <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
+          <img
+            src="https://i.ibb.co/hLxvjJG/1.jpg"
+            alt="음악 커버이미지"
+            className="w-16 h-16 rounded-md drop-shadow-lg"
+          />
+          <div className="flex flex-col justify-center items-center">
+            <p className="text-white text-lg">music title</p>
+            <p className="text-[#777777]">artist name</p>
+          </div>
+        </li>
+      </div>
     </div>
   );
 }
