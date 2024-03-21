@@ -1,3 +1,7 @@
 .hover-bg-gradient:hover {
-    background-image: linear-gradient(to right, black, rgb(71, 9, 71));
+  background-image: linear-gradient(to right, black, rgb(71, 9, 71));
+}
+
+.bg-gray-1000 {
+  background-color: #111111;
 }

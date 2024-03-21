@@ -40,7 +40,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ children }) => (
 const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 const NavBar: React.FC = () => (
-  <div className="fixed left-0 top-0 h-full bg-black opacity-90 text-white p-4">
+  <div className="fixed left-0 top-0 h-full bg-gray-1000 text-white p-4">
     <div className="flex items-center mt-5">
       <div className="bg-purple-500 w-10 h-10 rounded-full"></div>
       <h2 className="p-3">DreamVault</h2>
