@@ -2,13 +2,16 @@
 
 'use client';
 
-// import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import ReplayIcon from '@mui/icons-material/Replay';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import VolumeDown from '@mui/icons-material/VolumeDown';
+import VolumeUp from '@mui/icons-material/VolumeUp';
 
 const theme = createTheme({
   palette: {
@@ -25,6 +28,11 @@ export default function MusicBar() {
   // useEffect(() => {
   //   setAlbumColor('#FE4500');
   // }, []);
+  const [value, setValue] = useState<number>(30);
+
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number);
+  };
 
   return (
     <div className="fixed bottom-[2%] left-[15%] w-[80%] h-[7%] rounded-md px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg">
@@ -59,25 +67,17 @@ export default function MusicBar() {
         </div>
       </div>
       {/* 볼륨 조절 */}
-      <div className="flex flex-row">
-        <img
-          src="https://via.placeholder.com/50"
-          alt="volume down btn"
-          width={50}
-          height={50}
-        />
-        <img
-          src="https://via.placeholder.com/50"
-          alt="volume bar"
-          width={50}
-          height={50}
-        />
-        <img
-          src="https://via.placeholder.com/50"
-          alt="volume up btn"
-          width={50}
-          height={50}
-        />
+      <div className="w-[12%] flex items-center space-x-2">
+        <ThemeProvider theme={theme}>
+          <VolumeDown color="primary" fontSize="medium" />
+          <Slider
+            aria-label="Volume"
+            value={value}
+            onChange={handleChange}
+            size="small"
+          />
+          <VolumeUp color="primary" fontSize="medium" />
+        </ThemeProvider>
       </div>
     </div>
   );
