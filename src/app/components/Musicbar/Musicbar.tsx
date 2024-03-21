@@ -19,6 +19,10 @@ const theme = createTheme({
       // 메인 컬러 보라색
       main: '#6C26FF',
     },
+    secondary: {
+      // 흰색
+      main: '#ffffff',
+    },
   },
 });
 
