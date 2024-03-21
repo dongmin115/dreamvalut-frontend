@@ -1,22 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import '/Users/bowgi/dreamvalut-frontend/src/app/styles/NavBar.css';
+// import { BrowserRouter as Router } from 'react-router-dom';
+import './index.css';
 
 // 각각의 컴포넌트에 대한 타입 선언
 type HomeProps = {
     children: React.ReactNode;
   };
-  
+
 type PlaylistProps = {
     title: string;
   songs: string[];
   children?: React.ReactNode;
   };
-  
+
 type MymusicProps = {
     children: React.ReactNode;
   };
-  
+
 type UserProfileProps = {
     children: React.ReactNode;
   };
@@ -36,8 +36,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ children }) => <div>{children
 
 const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
-const NavBar: React.FC = () => {
-    return (
+const NavBar: React.FC = () => (
       <div className="fixed left-0 top-0 h-full bg-black opacity-90 text-white p-4">
         <div className='flex items-center mt-5'>
             <div className='bg-purple-500 w-10 h-10 rounded-full'></div>
@@ -76,7 +75,6 @@ const NavBar: React.FC = () => {
         </LogOut>
         </div>
       </div>
-    );
-  };
-  
-  export default NavBar;
+);
+
+export default NavBar;
