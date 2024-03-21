@@ -1,6 +1,23 @@
-// 'use client';
+/* eslint-disable import/no-extraneous-dependencies */
+
+'use client';
 
 // import { useEffect, useState } from 'react';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import ReplayIcon from '@mui/icons-material/Replay';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      // 메인 컬러 보라색
+      main: '#6C26FF',
+    },
+  },
+});
 
 /* eslint-disable @next/next/no-img-element */
 export default function MusicBar() {
@@ -12,11 +29,21 @@ export default function MusicBar() {
   return (
     <div className="fixed bottom-[2%] left-[15%] w-[80%] h-[7%] rounded-md px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg">
       {/* 재생 컨트롤 버튼 */}
-      <div className="flex flex-row py-[0.5%] space-x-3">
-        <img src="./pre-skip-btn/pre-skip-btn90.png" alt="previous music btn" />
-        <img src="./play-btn/play90.png" alt="play or stop btn" />
-        <img src="./skip-btn/skip-btn90.png" alt="next music btn" />
-        <img src="./replay-btn/replay-btn90.png" alt="replay btn" />
+      <div className="flex flex-row py-[0.5%] items-center">
+        <ThemeProvider theme={theme}>
+          <IconButton>
+            <SkipPreviousIcon color="primary" fontSize="large" />
+          </IconButton>
+          <IconButton>
+            <PlayArrowIcon color="primary" fontSize="large" />
+          </IconButton>
+          <IconButton>
+            <SkipNextIcon color="primary" fontSize="large" />
+          </IconButton>
+          <IconButton>
+            <ReplayIcon color="primary" fontSize="medium" />
+          </IconButton>
+        </ThemeProvider>
       </div>
       {/* 음악 정보 */}
       <div className="flex flex-row space-x-4">
