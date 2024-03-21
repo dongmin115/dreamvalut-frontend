@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/NavBar.css';
+import Link from 'next/link';
 
 // 각각의 컴포넌트에 대한 타입 선언
 type HomeProps = {
@@ -71,6 +72,14 @@ const NavBar: React.FC = () => (
         <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
         <UserProfile>
           <button className="p-5">프로필</button>
+        </UserProfile>
+      </div>
+      <div className="flex items-center rounded-lg hover:bg-gray-900 cursor-pointer">
+        <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
+        <UserProfile>
+          <button className="p-5">
+            <Link href={'/musicpage'}>음악 상세페이지 (임시)</Link>
+          </button>
         </UserProfile>
       </div>
     </div>
