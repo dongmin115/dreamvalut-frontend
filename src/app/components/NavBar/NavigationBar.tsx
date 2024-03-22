@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/no-children-prop */
+/* eslint-disable import/no-duplicates */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 
 'use client';
 
@@ -14,6 +16,7 @@ import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay'; // 플리 아�
 import EditNoteIcon from '@mui/icons-material/EditNote'; // 나만의 음악 등록 아이콘
 import PersonIcon from '@mui/icons-material/Person'; // 프로필 아이콘
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom'; // 로그아웃 아이콘
+import { createTheme } from '@mui/material/styles';
 
 // 각각의 컴포넌트에 대한 타입 선언
 type HomeProps = {
@@ -37,6 +40,19 @@ type UserProfileProps = {
 type LogOutProps = {
   children: React.ReactNode;
 };
+
+// MUI 색상 커스텀
+const theme = createTheme({
+  palette: {
+    primary: {
+      // style={{ color: theme.palette.primary.main }} 식으로 작성했음
+      main: '#6C26FF',
+    },
+    secondary: {
+      main: '#ffffff',
+    },
+  },
+});
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -120,7 +136,7 @@ const NavBar: React.FC = () => (
       <SearchAppBar />
       <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
         <Home>
-          <HomeIcon />
+          <HomeIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">홈</button>
         </Home>
       </div>
@@ -130,20 +146,20 @@ const NavBar: React.FC = () => (
           title="내 플레이리스트"
           songs={['노래 1', '노래 2', '노래 3']}
         >
-          <PlaylistPlayIcon />
+          <PlaylistPlayIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">플레이리스트</button>
         </Playlist>
       </div>
 
       <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
         <Mymusic>
-          <EditNoteIcon />
+          <EditNoteIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">나만의 음악</button>
         </Mymusic>
       </div>
 
       <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
-        <PersonIcon />
+        <PersonIcon style={{ color: theme.palette.primary.main }} />
         <UserProfile>
           <button className="p-2 text-sm">프로필</button>
         </UserProfile>
@@ -162,7 +178,7 @@ const NavBar: React.FC = () => (
     <div className="flexbox pt-72">
       <div className="flex items-center text-sm rounded-lg hover:bg-zinc-700">
         <LogOut>
-          <MeetingRoomIcon />
+          <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sx">로그아웃</button>
         </LogOut>
       </div>
