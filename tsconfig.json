@@ -12,8 +12,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "allowImportingTsExtensions": true,
-    "allowUmdGlobalAccess": true,
     "plugins": [
       {
         "name": "next"
