@@ -6,3 +6,8 @@ body {
   background-color: black;
   color: white;
 }
+
+/* background color #111111 커스텀 지정 */
+.bg-gray-1000 {
+  background-color: #111111;
+}
