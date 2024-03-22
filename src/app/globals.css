@@ -6,15 +6,6 @@ body {
   background-color: black;
 }
 
-/* 내비게이션바-로그아웃 버튼 배경 효과 */
-.hover-bg-gradient:hover {
-  background-image: linear-gradient(to right, black, rgb(71, 9, 71));
-}
-
-.hover-bg-gradient-LoginBtn:hover {
-  background-color: rgb(112, 65, 156);
-}
-
 /* 로그인페이지- 로그인 버튼들 효과 */
 .fade-in-box {
   animation: fadein 3s;
