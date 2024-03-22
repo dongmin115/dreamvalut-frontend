@@ -17,7 +17,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 
-import NavBar from '../components/NavigationBar';
+import NavBar from '../components/NavBar/NavigationBar';
 
 const theme = createTheme({
   palette: {
