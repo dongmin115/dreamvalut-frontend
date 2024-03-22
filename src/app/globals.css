@@ -67,16 +67,16 @@ body {
   margin-top: -20%;
   transform-origin: 50% 48%;
   border-radius: 100%;
-  animation: drift 3000ms infinite linear;
+  animation: drift 16000ms infinite linear;
   z-index: 1;
 }
 
 .wave.-three {
-  animation: drift 5000ms infinite linear;
+  animation: drift 17000ms infinite linear;
 }
 
 .wave.-two {
-  animation: drift 7000ms infinite linear;
+  animation: drift 21000ms infinite linear;
   opacity: 0.1;
   background: rgba(187, 255, 0, 0.603);
 }
