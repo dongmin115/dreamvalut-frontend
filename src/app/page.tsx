@@ -7,8 +7,8 @@ import GenrePage from './GenrePage/page';
 export default function Home() {
   return (
     <>
-      {/* <NavBar /> */}
-      {/* <MusicBar /> */}
+      {/* <NavBar />
+      <MusicBar /> */}
       {/* <LogIn /> */}
       <GenrePage />
     </>

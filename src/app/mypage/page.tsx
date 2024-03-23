@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable import/extensions */
 
