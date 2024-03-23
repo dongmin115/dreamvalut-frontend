@@ -27,31 +27,153 @@ export default function Mypage() {
     <ThemeProvider theme={theme}>
       <NavBar />
       <MusicBar />
-      <div className="w-screen h-screen pl-[15%] bg-[#1a1a1a]">
-        <div className="flex flex-col p-[2%] w-full h-full space-y-4">
-          <h1 className="text-[#D4D4D4] text-3xl">내 계정</h1>
-          <div className="flex flex-row items-center space-x-2 bg-[#353535] w-[45%] h-fit rounded-xl p-[2%] justify-between shadow-md">
-            <div className="flex flex-row space-x-8">
-              <img
-                src="https://i.ibb.co/hLxvjJG/1.jpg"
-                alt="프로필 이미지"
-                className="size-28 rounded-full"
-              />
-              <div className="flex flex-col justify-center">
-                <p className="text-white text-xl">User name</p>
-                <p className="text-[#777777] text-lg">User email</p>
+      <div className="w-screen h-screen pl-[15%] bg-[#1a1a1a] flex flex-col">
+        <div className="flex flex-row w-full h-[30%] space-x-6 p-[2%]">
+          {/* 내 계정 */}
+          <div className="flex flex-col w-[40%] h-full space-y-4">
+            <h1 className="text-[#D4D4D4] text-3xl">내 계정</h1>
+            <div className="flex flex-row items-center space-x-4 bg-[#353535] w-full h-full rounded-xl p-[4%] justify-between shadow-md">
+              <div className="flex flex-row space-x-8">
+                <img
+                  src="https://i.ibb.co/hLxvjJG/1.jpg"
+                  alt="프로필 이미지"
+                  className="size-28 rounded-full drop-shadow-sm"
+                />
+                <div className="flex flex-col justify-center">
+                  <p className="text-white text-xl">User name</p>
+                  <p className="text-[#777777] text-lg">User email</p>
+                </div>
               </div>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                <EditIcon color="secondary" fontSize="small" className="mr-2" />
+                프로필 수정
+              </Button>
             </div>
-            <Button
-              variant="contained"
-              color="primary"
-              className="rounded-full bg-[#6C26FF] text-white"
-            >
-              <EditIcon color="secondary" fontSize="small" className="mr-2" />
-              프로필 수정
-            </Button>
+          </div>
+          {/* 음악취향 */}
+          <div className="flex flex-col w-[60%] h-full space-y-4">
+            <h1 className="text-[#D4D4D4] text-3xl">나의 음악취향</h1>
+            <div className="flex flex-wrap items-center bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md justify-center space-x-2 space-y-2 text-center object-center">
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Jazz
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Rock
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                EDM
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                R&B
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Pop
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Lofi
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Blues
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Latin
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Metal
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Raggae
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Ambient
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Classical
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Funk/Soul
+              </Button>
+              {/* <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Rap/Hip-Hop
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Folk/Country
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Electronic Dance
+              </Button> */}
+            </div>
           </div>
         </div>
+        <div></div>
       </div>
     </ThemeProvider>
   );
