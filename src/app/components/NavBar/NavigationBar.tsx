@@ -120,7 +120,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ children }) => (
 const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 const NavBar: React.FC = () => (
-  <div className="fixed space-y-16 left-0 top-0 h-full w-[10%] bg-zinc-900 text-white p-4">
+  <div className="fixed space-y-16 left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
     <div className="flexbox">
       <div className="flex items-center mt-5">
         <img

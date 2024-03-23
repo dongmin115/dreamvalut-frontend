@@ -1,7 +1,10 @@
+/* eslint-disable import/extensions */
+import NavBar from '../components/NavBar/NavigationBar';
+
 export default function Mypage() {
   return (
     <div>
-      <p className="text-white">Mypage</p>
+      <NavBar />
     </div>
   );
 }
