@@ -10,6 +10,15 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const GenrePage: React.FC = () => {
+  const [formats, setFormats] = React.useState(() => ['bold', 'italic']);
+
+  const handleFormat = (
+    event: React.MouseEvent<HTMLElement>,
+    newFormats: string[],
+  ) => {
+    setFormats(newFormats);
+  };
+
   const NextPageBtn: React.FC = () => (
     <Link href={'/musicpage'}>
       <button className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]">
@@ -182,10 +191,10 @@ const GenrePage: React.FC = () => {
         </div>
       </div>
       <div className=""></div>
-      <div className="absolute fade-in-box2 left-0 top-[45%] text-violet-900 opacity-[70%] text-8xl">
+      <p className="absolute fade-in-box2 left-0 top-[45%] text-violet-900 opacity-[100%] text-8xl">
         Genre.
-      </div>
-      <div className="absolute fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-900 opacity-[40%]"></div>
+      </p>
+      <div className="absolute fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-950 opacity-[100%]"></div>
       <ThemeProvider theme={theme}>
         <NextPageBtn />
       </ThemeProvider>
