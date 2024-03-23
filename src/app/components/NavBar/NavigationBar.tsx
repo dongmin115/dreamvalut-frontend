@@ -120,8 +120,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ children }) => (
 const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 const NavBar: React.FC = () => (
-  <div className="fixed space-y-16 left-0 top-0 h-full w-[10%] bg-zinc-900 text-white p-4">
-    <div className="flexbox">
+  <div className="fixed flex flex-col justify-between left-0 top-0 h-full w-[10%] bg-zinc-900 text-white p-4">
+    <div className="flex flex-col">
       <div className="flex items-center mt-5">
         <img
           src="https://i.ibb.co/Jkwmvbq/image.png"
@@ -132,7 +132,7 @@ const NavBar: React.FC = () => (
       </div>
     </div>
 
-    <div className="flexbox">
+    <div className="flex flex-col">
       <SearchAppBar />
       <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
         <Home>
@@ -175,7 +175,7 @@ const NavBar: React.FC = () => (
       </div>
     </div>
 
-    <div className="flexbox pt-72">
+    <div className="flex flex-col pt-72">
       <div className="flex items-center text-sm rounded-lg hover:bg-zinc-700">
         <LogOut>
           <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
