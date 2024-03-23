@@ -6,7 +6,6 @@
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
-import MusicBar from '../components/Musicbar/Musicbar';
 import NavBar from '../components/NavBar/NavigationBar';
 
 const theme = createTheme({
@@ -23,10 +22,91 @@ const theme = createTheme({
 });
 
 export default function Mypage() {
+  const recentSongs = [
+    {
+      title: 'title1',
+      artist: 'artist1',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title2',
+      artist: 'artist2',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title3',
+      artist: 'artist3',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title4',
+      artist: 'artist4',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title5',
+      artist: 'artist5',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title6',
+      artist: 'artist6',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title7',
+      artist: 'artist7',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title8',
+      artist: 'artist8',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title9',
+      artist: 'artist9',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title10',
+      artist: 'artist10',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title11',
+      artist: 'artist11',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title12',
+      artist: 'artist12',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title13',
+      artist: 'artist13',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title13',
+      artist: 'artist13',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title13',
+      artist: 'artist13',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+    {
+      title: 'title13',
+      artist: 'artist13',
+      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
+    },
+  ];
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <MusicBar />
       <div className="w-screen h-screen pl-[15%] bg-[#1a1a1a] flex flex-col">
         <div className="flex flex-row w-full h-[30%] space-x-6 p-[2%]">
           {/* 내 계정 */}
@@ -57,7 +137,7 @@ export default function Mypage() {
           {/* 음악취향 */}
           <div className="flex flex-col w-[60%] h-full space-y-4">
             <h1 className="text-[#D4D4D4] text-3xl">나의 음악취향</h1>
-            <div className="flex flex-wrap items-center bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md justify-center space-x-2 space-y-2 text-center object-center">
+            <div className="flex flex-wrap items-center bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md justify-center gap-2 text-center object-center">
               <Button
                 variant="contained"
                 color="primary"
@@ -173,7 +253,28 @@ export default function Mypage() {
             </div>
           </div>
         </div>
-        <div></div>
+        {/* 최근 감상한 곡 */}
+        <div className="flex flex-col w-full h-full p-[2%] space-y-4">
+          <h1 className="text-[#D4D4D4] text-3xl">최근 감상한 곡</h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md">
+            {recentSongs.map((e, i) => (
+              <div
+                key={i}
+                className="flex flex-row space-x-4 w-full h-fit hover:bg-[#040404] hover:bg-opacity-30 rounded-lg p-4"
+              >
+                <img
+                  src={e.cover}
+                  alt="음악 커버이미지"
+                  className="w-16 h-16 rounded-md drop-shadow-lg items-center"
+                />
+                <div className="flex flex-col justify-center">
+                  <p className="text-white text-lg">{e.title}</p>
+                  <p className="text-[#777777]">{e.artist}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </ThemeProvider>
   );
