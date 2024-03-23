@@ -47,7 +47,7 @@ const GenrePage: React.FC = () => {
   return (
     <>
       <div className="flex justify-center">
-        <div className="z-10 grid grid-cols-3 grid-rows-4 w-[30%] h-screen gap-[3%] p-[2%]">
+        <div className="z-10 fade-in-box grid grid-cols-3 grid-rows-4 w-[30%] h-screen gap-[3%] p-[2%]">
           <button
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
@@ -206,10 +206,11 @@ const GenrePage: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="absolute left-0 top-[45%] text-violet-900 opacity-[70%] text-8xl">
+      <div className=""></div>
+      <div className="absolute fade-in-box2 left-0 top-[45%] text-violet-900 opacity-[70%] text-8xl">
         Genre.
       </div>
-      <div className="absolute left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-900 opacity-[40%]"></div>
+      <div className="absolute fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-900 opacity-[40%]"></div>
     </>
   );
 };
