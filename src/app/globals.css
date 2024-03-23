@@ -17,7 +17,8 @@ body {
   background-color: #333333;
 }
 
-.drop-shadow-2xl {
+/* text-shadow 커스텀 지정 */
+.drop-shadow-text {
   text-shadow: 2px 2px 1px #777;
 }
 
