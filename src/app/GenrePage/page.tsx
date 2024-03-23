@@ -22,7 +22,7 @@ const GridComponent: React.FC = () => (
       </button>
       <button className="flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl">
         <img
-          src="https://i.ibb.co/QYvMHz3/image.png"
+          src="https://i.ibb.co/yyFmN1f/image.png"
           alt="image"
           className="w-[90%] h-[70%] rounded-full"
         />
