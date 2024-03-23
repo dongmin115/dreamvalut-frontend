@@ -95,3 +95,27 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* 장르페이지 다음 버튼 효과 */
+.genreBtns {
+  background: transparent;
+  color: rgba(207, 124, 255, 0.7);
+  transition: all 0.7s ease-out;
+  background: linear-gradient(
+    270deg,
+    rgba(167, 106, 223, 0.8),
+    rgba(93, 52, 146, 0.8),
+    rgba(34, 34, 34, 0),
+    rgba(34, 34, 34, 0)
+  );
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+}
+
+.genreBtns:hover {
+  color: #fff;
+  color: white;
+  background-position: 99% 50%;
+  cursor: pointer;
+}
