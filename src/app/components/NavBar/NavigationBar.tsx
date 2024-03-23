@@ -161,7 +161,9 @@ const NavBar: React.FC = () => (
       <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
         <PersonIcon style={{ color: theme.palette.primary.main }} />
         <UserProfile>
-          <button className="p-2 text-sm">프로필</button>
+          <button className="p-2 text-sm">
+            <Link href={'/mypage'}>프로필</Link>
+          </button>
         </UserProfile>
       </div>
 

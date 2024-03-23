@@ -39,7 +39,7 @@ export default function MusicBar() {
   };
 
   return (
-    <div className="fixed bottom-[2%] left-[15%] w-[80%] h-[7%] rounded-md px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg">
+    <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg">
       {/* 재생 컨트롤 버튼 */}
       <div className="flex flex-row py-[0.5%] items-center">
         <ThemeProvider theme={theme}>
@@ -71,7 +71,7 @@ export default function MusicBar() {
         </div>
       </div>
       {/* 볼륨 조절 */}
-      <div className="w-[12%] flex items-center space-x-2">
+      <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
         <ThemeProvider theme={theme}>
           <VolumeDown color="primary" fontSize="medium" />
           <Slider
