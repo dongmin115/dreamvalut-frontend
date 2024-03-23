@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import '../styles/NavBar.css';
 import Link from 'next/link';
