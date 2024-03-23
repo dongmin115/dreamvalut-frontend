@@ -5,44 +5,31 @@
 'use client';
 
 import React, { useState } from 'react';
-
-interface ClickedState {
-  POP: boolean;
-  RnB: boolean;
-  Jazz: boolean;
-  Ballade: boolean;
-  Classical: boolean;
-  Rock: boolean;
-  HipHap: boolean;
-  Folk: boolean;
-  OST: boolean;
-  JPOP: boolean;
-  Musical: boolean;
-  EDM: boolean;
-}
+import Link from 'next/link';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const GenrePage: React.FC = () => {
-  const [clicked, setClicked] = useState<ClickedState>({
-    POP: false,
-    RnB: false,
-    Jazz: false,
-    Ballade: false,
-    Classical: false,
-    Rock: false,
-    HipHap: false,
-    Folk: false,
-    OST: false,
-    JPOP: false,
-    Musical: false,
-    EDM: false,
-  });
+  const NextPageBtn: React.FC = () => (
+    <Link href={'/musicpage'}>
+      <button className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]">
+        <ArrowForwardIosIcon color="primary" fontSize="large" />
+      </button>
+    </Link>
+  );
 
-  const handleButtonClick = (buttonName: keyof ClickedState) => {
-    setClicked((prevState) => ({
-      ...prevState,
-      [buttonName]: !prevState[buttonName],
-    }));
-  };
+  const theme = createTheme({
+    palette: {
+      primary: {
+        // 메인 컬러 보라색
+        main: '#6a1b9a',
+      },
+      secondary: {
+        // 흰색
+        main: '#ffffff',
+      },
+    },
+  });
 
   return (
     <>
@@ -52,7 +39,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/QYvMHz3/image.png"
@@ -65,7 +51,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/pKWSB7k/RNB.png"
@@ -78,7 +63,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/yyFmN1f/image.png"
@@ -91,7 +75,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/Fwj5D5s/image.png"
@@ -104,7 +87,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/nwnkLDJ/image.png"
@@ -117,7 +99,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/3cjmtvN/image.png"
@@ -130,7 +111,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/ZHJLj11/image.png"
@@ -143,7 +123,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/Bq4w6f9/Folk.png"
@@ -156,7 +135,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/HYCZ8KS/OST.png"
@@ -169,7 +147,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/cgVFWw1/JPOP.png"
@@ -182,7 +159,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/cgP2r1p/image.png"
@@ -195,7 +171,6 @@ const GenrePage: React.FC = () => {
             className={
               'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
             }
-            onClick={() => handleButtonClick('POP')}
           >
             <img
               src="https://i.ibb.co/CvC2VdF/EDM.png"
@@ -211,13 +186,11 @@ const GenrePage: React.FC = () => {
         Genre.
       </div>
       <div className="absolute fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-900 opacity-[40%]"></div>
+      <ThemeProvider theme={theme}>
+        <NextPageBtn />
+      </ThemeProvider>
     </>
   );
 };
 
 export default GenrePage;
-function setClicked(
-  arg0: (prevState: { [x: string]: any }) => { [x: string]: any },
-) {
-  throw new Error('Function not implemented.');
-}
