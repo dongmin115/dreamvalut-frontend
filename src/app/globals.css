@@ -11,3 +11,18 @@ body {
 .bg-gray-1000 {
   background-color: #111111;
 }
+
+/* background color #333333 커스텀 지정 */
+.bg-gray-650 {
+  background-color: #333333;
+}
+
+.drop-shadow-2xl {
+  text-shadow: 2px 2px 1px #777;
+}
+
+h1 {
+  font-size: 2.25rem;
+  margin-block: 2.25rem;
+  font-weight: 700;
+}
