@@ -71,7 +71,7 @@ export default function MusicBar() {
         </div>
       </div>
       {/* 볼륨 조절 */}
-      <div className="w-[12%] flex items-center space-x-2">
+      <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
         <ThemeProvider theme={theme}>
           <VolumeDown color="primary" fontSize="medium" />
           <Slider
