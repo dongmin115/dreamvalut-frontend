@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
