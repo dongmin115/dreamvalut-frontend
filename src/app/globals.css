@@ -19,7 +19,12 @@ body {
 
 /* text-shadow 커스텀 지정 */
 .drop-shadow-text {
-  text-shadow: 2px 2px 1px #777;
+  text-shadow: 4px 2px 0.1px #777;
+}
+
+.hover-bg-gray:hover {
+  transition: background-color 0.5s ease;
+  background-color: #444444; /* 마우스를 올렸을 때 배경색이 #333333으로 변하도록 설정 */
 }
 
 h1 {
