@@ -9,7 +9,8 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import './GenreColorList.css';
 import MusicBar from '../components/Musicbar/Musicbar';
 import NavigationBar from '../components/NavigationBar';
 import { Button, Divider, IconButton, Slider } from '@mui/material';
@@ -19,6 +20,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
 const theme = createTheme({
   palette: {
@@ -33,50 +35,98 @@ const theme = createTheme({
   },
 });
 
-function page() {
-  const [startIndex, setStartIndex] = useState(0); // 시작 인덱스
-  const maxIndex = 30; // 최대 인덱스
+// 인기 음악 컴포넌트의 props
+type PopularMusicProps = {
+  ranking: number;
+};
+// 인기 음악 컴포넌트
+function PopularMusic({ ranking }: PopularMusicProps) {
+  return (
+    <div className="w-1/5 h-1/4 flex flex-row justify-start items-center m-2 ml-8 rounded-lg cursor-pointer hover-bg-gray">
+      {/* 순위 */}
+      <p className="w-16 text-right text-4xl mt-6 drop-shadow-text z-10 -mr-4">
+        {ranking}
+      </p>
+      {/* 앨범 커버 */}
+      <img
+        className="w-16 h-16"
+        src="https://i.ibb.co/L0GHzbR/202402211005009.jpg"
+      />
 
-  const handleForwardClick = () => {
-    setStartIndex(startIndex + 1); // 시작 인덱스를 1 증가
+      {/* 음악 정보 */}
+      <div className="flex flex-col justify-center ml-4">
+        <p className="text-2xl z-10">Shopper</p>
+      </div>
+    </div>
+  );
+}
+
+// 장르별 음악 컴포넌트의 props
+type GenreMusicProps = {
+  genre: string;
+  bgColor: number;
+};
+// 장르별 음악 컴포넌트
+function GenreMusic({ genre, bgColor }: GenreMusicProps) {
+  return (
+    <div
+      className={`flex flex-col items-center w-72 h-96 rounded-2xl bg-genre-${bgColor} my-12 m-4`}
+    >
+      <div
+        className={`flex flex-row items-center w-full h-20 p-8 rounded-t-2xl bg-nv-${bgColor}`}
+      >
+        <p className="w-11/12 text-2xl text-black font-bold">{genre}</p>
+        <IconButton>
+          <PlayCircleIcon style={{ fontSize: 50, opacity: 0.7 }} />
+        </IconButton>
+      </div>
+    </div>
+  );
+}
+
+// 메인 페이지 컴포넌트
+function page() {
+  const [popularPageIndex, setpopularPageIndex] = useState(0); // 인기 음악 페이지 인덱스
+  const [tagPageIndex, settagPageIndex] = useState(0); // 인기 태그 페이지 인덱스
+  const [genrePageIndex, setgenrePageIndex] = useState(0); // 장르별 음악 페이지 인덱스
+
+  const handlePopularPageForwardClick = () => {
+    setpopularPageIndex(popularPageIndex + 1);
   };
 
-  const handleBackwardClick = () => {
-    if (startIndex > 0) {
-      setStartIndex(startIndex - 1); // 시작 인덱스를 1 감소
+  const handlePopularPageBackwardClick = () => {
+    if (popularPageIndex > 0) {
+      setpopularPageIndex(popularPageIndex - 1);
     }
   };
 
-  // 인기 음악 컴포넌트의 props
-  type PopularMusicProps = {
-    ranking: number;
+  const handleTagPageForwardClick = () => {
+    settagPageIndex(tagPageIndex + 1);
   };
-  // 인기 음악 컴포넌트
-  function PopularMusic({ ranking }: PopularMusicProps) {
-    return (
-      <div className="w-1/5 h-1/4 flex flex-row justify-start items-center m-2 ml-8 rounded-lg cursor-pointer hover-bg-gray">
-        {/* 순위 */}
-        <p className="w-16 text-right text-4xl mt-6 drop-shadow-text z-10 -mr-4">
-          {ranking}
-        </p>
-        {/* 앨범 커버 */}
-        <img
-          className="w-16 h-16"
-          src="https://i.ibb.co/k55YHSL/Perfect-Night.jpg"
-        />
 
-        {/* 음악 정보 */}
-        <div className="flex flex-col justify-center ml-4">
-          <p className="text-2xl z-10">Perfect Night</p>
-          <p className="text-lg-text z-10 text-gray-500">LE SSERAFIM</p>
-        </div>
-      </div>
-    );
-  }
+  const handleTagPageBackwardClick = () => {
+    if (tagPageIndex > 0) {
+      settagPageIndex(tagPageIndex - 1);
+    }
+  };
+
+  const handleGenrePageForwardClick = () => {
+    setgenrePageIndex(genrePageIndex + 1);
+  };
+
+  const handleGenrePageBackwardClick = () => {
+    if (genrePageIndex > 0) {
+      setgenrePageIndex(genrePageIndex - 1);
+    }
+  };
 
   const popularMusicList = [];
   // 1부터 12까지의 PopularMusic 컴포넌트를 생성하여 배열에 추가
-  for (let i = startIndex * 3 + 1; i <= startIndex * 3 + 12; i += 1) {
+  for (
+    let i = popularPageIndex * 3 + 1;
+    i <= popularPageIndex * 3 + 12;
+    i += 1
+  ) {
     popularMusicList.push(<PopularMusic key={i} ranking={i} />);
   }
 
@@ -90,13 +140,13 @@ function page() {
           {/* 인기 차트 */}
           <h1 className="">인기 차트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton onClick={handleBackwardClick}>
+            <IconButton onClick={handlePopularPageBackwardClick}>
               <BackIcon color="primary" fontSize="large" />
             </IconButton>
             <div className="w-11/12 h-full flex flex-col flex-wrap justify-center items-start">
               {popularMusicList}
             </div>
-            <IconButton onClick={handleForwardClick}>
+            <IconButton onClick={handlePopularPageForwardClick}>
               <ForwardIcon color="primary" fontSize="large" />
             </IconButton>
           </div>
@@ -104,20 +154,38 @@ function page() {
           {/* 인기 태그 */}
           <h1 className="">인기 태그</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton onClick={handleBackwardClick}>
+            <IconButton onClick={handleTagPageBackwardClick}>
               <BackIcon color="primary" fontSize="large" />
             </IconButton>
             <div className="w-11/12 h-full flex flex-row items-center justify-start">
               <AlbumCoverSystem
                 image="https://i.ibb.co/k55YHSL/Perfect-Night.jpg"
-                title="top 100"
+                title="신나는"
               />
             </div>
-            <IconButton onClick={handleForwardClick}>
+            <IconButton onClick={handleTagPageForwardClick}>
+              <ForwardIcon color="primary" fontSize="large" />
+            </IconButton>
+          </div>
+
+          {/* 장르별 음악 */}
+          <h1 className="">장르별 음악</h1>
+          <div className="flex flex-row items-center w-full h-auto bg-gray-650 rounded-2xl">
+            <IconButton onClick={handleGenrePageBackwardClick}>
+              <BackIcon color="primary" fontSize="large" />
+            </IconButton>
+            <div className="w-11/12 h-full flex flex-row items-center justify-start">
+              <GenreMusic genre="아이돌" bgColor={100} />
+              <GenreMusic genre="인디" bgColor={200} />
+              <GenreMusic genre="발라드" bgColor={300} />
+              <GenreMusic genre="힙합" bgColor={400} />
+            </div>
+            <IconButton onClick={handleGenrePageForwardClick}>
               <ForwardIcon color="primary" fontSize="large" />
             </IconButton>
           </div>
         </div>
+        <div className="w-full h-40" />
       </div>
     </ThemeProvider>
   );
