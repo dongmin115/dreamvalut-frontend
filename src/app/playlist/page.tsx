@@ -156,7 +156,7 @@ function page() {
           </div>
 
           {/* 시스템 플레이리스트 */}
-          <h1 className="">시스템 플레이리스트</h1>
+          <h1 className="">구독한 플레이리스트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
             <IconButton
               className="w-4"
@@ -166,7 +166,17 @@ function page() {
                 <BackIcon color="primary" fontSize="large" />
               )}
             </IconButton>
-            <div className="w-11/12 h-full flex flex-row items-center justify-start"></div>
+            <div className="w-11/12 h-full flex flex-row items-center justify-start">
+              <AlbumCoverSystem
+                image="https://i.ibb.co/ZVGLMxS/wecan-tbefriends.jpg"
+                title="Billboard Hot 100"
+              />
+
+              <AlbumCoverSystem
+                image="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
+                title="가사 AI 노래 Top 100"
+              />
+            </div>
             <IconButton onClick={handleSystemPlaylistPageForwardClick}>
               <ForwardIcon color="primary" fontSize="large" />
             </IconButton>
