@@ -13,7 +13,7 @@
 import React, { useEffect, useState } from 'react';
 import './GenreColorList.css';
 import MusicBar from '../components/Musicbar/Musicbar';
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavBar/NavigationBar';
 import { Button, Divider, IconButton, Slider } from '@mui/material';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
@@ -189,11 +189,11 @@ function page() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-full h-full flex flex-col justify-center items-center overflow-hidden">
+      <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
         <NavigationBar />
         <MusicBar />
         {/* NavigationBar 제외 영역 */}
-        <div className="w-10/12 h-full ml-64">
+        <div className="w-10/12 h-full pr-8">
           {/* 인기 차트 */}
           <h1 className="">인기 차트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
