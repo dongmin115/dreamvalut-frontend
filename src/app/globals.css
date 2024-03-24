@@ -22,9 +22,15 @@ body {
   text-shadow: 4px 2px 0.1px #777;
 }
 
-.hover-bg-gray:hover {
+.hover-bg-opacity:hover {
   transition: background-color 0.5s ease;
-  background-color: #444444; /* 마우스를 올렸을 때 배경색이 #333333으로 변하도록 설정 */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ); /* 마우스를 올렸을 때 배경색이 #333333으로 변하도록 설정 */
+  border-radius: 10px;
 }
 
 h1 {

@@ -42,7 +42,7 @@ type PopularMusicProps = {
 // 인기 음악 컴포넌트
 function PopularMusic({ ranking }: PopularMusicProps) {
   return (
-    <div className="w-1/5 h-1/4 flex flex-row justify-start items-center m-2 ml-8 rounded-lg cursor-pointer hover-bg-gray">
+    <div className="w-1/5 h-1/4 flex flex-row justify-start items-center m-2 ml-8 cursor-pointer hover-bg-opacity">
       {/* 순위 */}
       <p className="w-16 text-right text-4xl mt-6 drop-shadow-text z-10 -mr-4">
         {ranking}
@@ -65,13 +65,29 @@ function PopularMusic({ ranking }: PopularMusicProps) {
 type GenreMusicProps = {
   genre: string;
   bgColor: number;
+  musicImage1: string;
+  musicImage2: string;
+  musicImage3: string;
+  musicTitle1: string;
+  musicTitle2: string;
+  musicTitle3: string;
 };
 // 장르별 음악 컴포넌트
-function GenreMusic({ genre, bgColor }: GenreMusicProps) {
+function GenreMusic({
+  genre,
+  bgColor,
+  musicImage1,
+  musicImage2,
+  musicImage3,
+  musicTitle1,
+  musicTitle2,
+  musicTitle3,
+}: GenreMusicProps) {
   return (
     <div
-      className={`flex flex-col items-center w-72 h-96 rounded-2xl bg-genre-${bgColor} my-12 m-4`}
+      className={`flex flex-col items-center w-72 h-96 rounded-2xl bg-genre-${bgColor} my-12 m-4 mx-8`}
     >
+      {/* 위에 단색 배경바 */}
       <div
         className={`flex flex-row items-center w-full h-20 p-8 rounded-t-2xl bg-nv-${bgColor}`}
       >
@@ -79,6 +95,25 @@ function GenreMusic({ genre, bgColor }: GenreMusicProps) {
         <IconButton>
           <PlayCircleIcon style={{ fontSize: 50, opacity: 0.7 }} />
         </IconButton>
+      </div>
+
+      {/* 음악 정보 */}
+      {/* 1번째 음악 */}
+      <div className="flex flex-row items-center justify-start m-2 cursor-pointer hover-bg-opacity">
+        <img className="w-1/4 m-2" src={musicImage1} />
+        <p className="text-lg text-black">{musicTitle1}</p>
+      </div>
+
+      {/* 2번째 음악 */}
+      <div className="flex flex-row items-center justify-start m-2 cursor-pointer hover-bg-opacity">
+        <img className="w-1/4 m-2" src={musicImage2} />
+        <p className="text-lg text-black">{musicTitle2}</p>
+      </div>
+
+      {/* 3번째 음악 */}
+      <div className="flex flex-row items-center justify-start m-2 cursor-pointer hover-bg-opacity">
+        <img className="w-1/4 m-2" src={musicImage3} />
+        <p className="text-lg text-black">{musicTitle3}</p>
       </div>
     </div>
   );
@@ -175,10 +210,46 @@ function page() {
               <BackIcon color="primary" fontSize="large" />
             </IconButton>
             <div className="w-11/12 h-full flex flex-row items-center justify-start">
-              <GenreMusic genre="아이돌" bgColor={100} />
-              <GenreMusic genre="인디" bgColor={200} />
-              <GenreMusic genre="발라드" bgColor={300} />
-              <GenreMusic genre="힙합" bgColor={400} />
+              <GenreMusic
+                genre="아이돌"
+                bgColor={100}
+                musicImage1="https://i.ibb.co/4d0pj5j/dynamite.webp"
+                musicImage2="https://i.ibb.co/ZcJxmcZ/supershy.webp"
+                musicImage3="https://i.ibb.co/DGWrD6M/image.jpg"
+                musicTitle1="Dynamite"
+                musicTitle2="Super Shy"
+                musicTitle3="불꽃놀이"
+              />
+              <GenreMusic
+                genre="인디"
+                bgColor={200}
+                musicImage1="https://i.ibb.co/4d0pj5j/dynamite.webp"
+                musicImage2="https://i.ibb.co/ZcJxmcZ/supershy.webp"
+                musicImage3="https://i.ibb.co/DGWrD6M/image.jpg"
+                musicTitle1="Dynamite"
+                musicTitle2="Super Shy"
+                musicTitle3="불꽃놀이"
+              />
+              <GenreMusic
+                genre="발라드"
+                bgColor={300}
+                musicImage1="https://i.ibb.co/4d0pj5j/dynamite.webp"
+                musicImage2="https://i.ibb.co/ZcJxmcZ/supershy.webp"
+                musicImage3="https://i.ibb.co/DGWrD6M/image.jpg"
+                musicTitle1="Dynamite"
+                musicTitle2="Super Shy"
+                musicTitle3="불꽃놀이"
+              />
+              <GenreMusic
+                genre="힙합"
+                bgColor={400}
+                musicImage1="https://i.ibb.co/4d0pj5j/dynamite.webp"
+                musicImage2="https://i.ibb.co/ZcJxmcZ/supershy.webp"
+                musicImage3="https://i.ibb.co/DGWrD6M/image.jpg"
+                musicTitle1="Dynamite"
+                musicTitle2="Super Shy"
+                musicTitle3="불꽃놀이"
+              />
             </div>
             <IconButton onClick={handleGenrePageForwardClick}>
               <ForwardIcon color="primary" fontSize="large" />
