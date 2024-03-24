@@ -124,7 +124,7 @@ const NavBar: React.FC = () => (
     <div className="flex flex-col">
       <div className="flex items-center mt-5">
         <img
-          src="https://i.ibb.co/Kmmr0T2/image-91-removebg.png"
+          src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           alt="DreamVault-logo-img"
           className="w-12"
         />

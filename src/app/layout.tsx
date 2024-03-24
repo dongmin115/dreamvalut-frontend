@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <link
           rel="icon"
-          href="https://i.ibb.co/Kmmr0T2/image-91-removebg.png"
+          href="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           sizes="any"
         />
         {children}
