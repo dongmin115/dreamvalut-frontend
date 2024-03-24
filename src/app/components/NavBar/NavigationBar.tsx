@@ -134,14 +134,14 @@ const NavBar: React.FC = () => (
 
     <div className="flex flex-col">
       <SearchAppBar />
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <Home>
           <HomeIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">홈</button>
         </Home>
       </div>
 
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <Playlist
           title="내 플레이리스트"
           songs={['노래 1', '노래 2', '노래 3']}
@@ -151,14 +151,14 @@ const NavBar: React.FC = () => (
         </Playlist>
       </div>
 
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <Mymusic>
           <EditNoteIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">나만의 음악</button>
         </Mymusic>
       </div>
 
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <PersonIcon style={{ color: theme.palette.primary.main }} />
         <UserProfile>
           <button className="p-2 text-sm">
@@ -167,7 +167,7 @@ const NavBar: React.FC = () => (
         </UserProfile>
       </div>
 
-      <div className="flex items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
         <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
         <UserProfile>
           <button className="p-2 text-sm">
@@ -178,7 +178,7 @@ const NavBar: React.FC = () => (
     </div>
 
     <div className="flex flex-col pt-72">
-      <div className="flex items-center text-sm rounded-lg hover:bg-zinc-700">
+      <div className="flex items-center text-sm rounded-lg hover-bg-opacity">
         <LogOut>
           <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sx">로그아웃</button>
