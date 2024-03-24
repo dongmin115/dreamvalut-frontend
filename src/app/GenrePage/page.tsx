@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const GenrePage: React.FC = () => {
   const NextPageBtn: React.FC = () => (
-    <Link href={'/musicpage'}>
+    <Link href={'/main'}>
       <button className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]">
         <ArrowForwardIosIcon color="primary" fontSize="large" />
       </button>
