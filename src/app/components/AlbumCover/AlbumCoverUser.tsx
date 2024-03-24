@@ -1,11 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 // eslint-disable-next-line @next/next/no-img-element
-function AlbumCoverUser() {
-  const image1 = 'https://i.ibb.co/k55YHSL/Perfect-Night.jpg';
-  const image2 = 'https://i.ibb.co/k55YHSL/Perfect-Night.jpg';
-  const image3 = 'https://i.ibb.co/k55YHSL/Perfect-Night.jpg';
+
+type AlbumCoverUserProps = {
+  image1: string;
+  image2: string;
+  image3: string;
+  title: string;
+};
+function AlbumCoverUser({
+  image1,
+  image2,
+  image3,
+  title,
+}: AlbumCoverUserProps) {
   return (
-    <div className="flex flex-col w-48 items-center justify-center mt-8">
+    <div className="flex flex-col w-56 h-72 items-center justify-center my-4 cursor-pointer hover-bg-opacity pt-8">
       <img
         src={image1}
         alt="Album cover"
@@ -21,9 +30,7 @@ function AlbumCoverUser() {
         alt="Album cover"
         className="h-40 w-40 rounded-lg -mt-48 z-10"
       />
-      <p className="text-lg text-white text-center mt-20">
-        텐션 쫙 올리는 플리 ㅋㅋ
-      </p>
+      <p className="text-lg text-white text-center mt-20">{title}</p>
     </div>
   );
 }

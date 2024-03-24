@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
@@ -124,6 +125,8 @@ function page() {
   const [popularPageIndex, setpopularPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const [tagPageIndex, settagPageIndex] = useState(0); // 인기 태그 페이지 인덱스
   const [genrePageIndex, setgenrePageIndex] = useState(0); // 장르별 음악 페이지 인덱스
+  const [otherPlaylistPageIndex, setOtherPlaylistPageIndex] = useState(0); // 다른 유저가 선택한 플레이리스트 페이지 인덱스
+  const [systemPlaylistPageIndex, setSystemPlaylistPageIndex] = useState(0); // 시스템 플레이리스트 페이지 인덱스
 
   const handlePopularPageForwardClick = () => {
     setpopularPageIndex(popularPageIndex + 1);
@@ -155,6 +158,25 @@ function page() {
     }
   };
 
+  const handleOtherPlaylistPageForwardClick = () => {
+    setOtherPlaylistPageIndex(otherPlaylistPageIndex + 1);
+  };
+
+  const handleOtherPlaylistPageBackwardClick = () => {
+    if (otherPlaylistPageIndex > 0) {
+      setOtherPlaylistPageIndex(otherPlaylistPageIndex - 1);
+    }
+  };
+
+  const handleSystemPlaylistPageForwardClick = () => {
+    setSystemPlaylistPageIndex(systemPlaylistPageIndex + 1);
+  };
+
+  const handleSystemPlaylistPageBackwardClick = () => {
+    if (systemPlaylistPageIndex > 0) {
+      setSystemPlaylistPageIndex(systemPlaylistPageIndex - 1);
+    }
+  };
   const popularMusicList = [];
   // 1부터 12까지의 PopularMusic 컴포넌트를 생성하여 배열에 추가
   for (
@@ -252,6 +274,25 @@ function page() {
               />
             </div>
             <IconButton onClick={handleGenrePageForwardClick}>
+              <ForwardIcon color="primary" fontSize="large" />
+            </IconButton>
+          </div>
+
+          {/* 다른 유저가 선택한 플레이리스트 */}
+          <h1 className="">다른 유저가 선택한 플레이리스트</h1>
+          <div className="flex flex-row items-center w-full h-80 bg-gray-650 rounded-2xl">
+            <IconButton onClick={handleOtherPlaylistPageBackwardClick}>
+              <BackIcon color="primary" fontSize="large" />
+            </IconButton>
+            <div className="w-11/12 h-full flex flex-col flex-wrap justify-center items-start">
+              <AlbumCoverUser
+                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
+                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
+                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
+                title="텐션 업!"
+              />
+            </div>
+            <IconButton onClick={handleOtherPlaylistPageForwardClick}>
               <ForwardIcon color="primary" fontSize="large" />
             </IconButton>
           </div>
