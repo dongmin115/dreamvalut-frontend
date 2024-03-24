@@ -65,6 +65,7 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: 0,
   marginBottom: theme.spacing(5),
   width: '100%',
+  height: '40px',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(0),
     width: 'auto',
@@ -97,7 +98,7 @@ export function SearchAppBar() {
         <InputBase
           placeholder="검색"
           inputProps={{ 'aria-label': 'search' }}
-          className="ml-10 text-sm text-white"
+          className="ml-10 h-full text-sm text-white"
         />
       </Search>
     </>
@@ -121,16 +122,16 @@ const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 const NavBar: React.FC = () => (
   <div className="fixed flex flex-col justify-start left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
-    <div className="flex flex-col">
+    <Link className="flex flex-col cursor-pointer" href={'/main'}>
       <div className="flex items-center mt-5">
         <img
           src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           alt="DreamVault-logo-img"
           className="w-12"
         />
-        <h2 className="p-3">DreamVault</h2>
+        <h2 className="p-3 text-2xl font-bold">DreamVault</h2>
       </div>
-    </div>
+    </Link>
 
     <div className="flex flex-col mt-12 h-full">
       <SearchAppBar />
