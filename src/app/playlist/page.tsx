@@ -93,6 +93,12 @@ function page() {
                 </p>
               </div>
               <AlbumCoverUser
+                image1="https://i.ibb.co/VQycV7k/like.png"
+                image2="https://i.ibb.co/HgFcPLj/getaguitar.webp"
+                image3="https://i.ibb.co/TbQL5kz/thatthat.jpg"
+                title="좋아요 누른 곡"
+              />
+              <AlbumCoverUser
                 image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
                 image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
                 image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
