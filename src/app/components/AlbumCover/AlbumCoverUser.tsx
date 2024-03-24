@@ -14,7 +14,7 @@ function AlbumCoverUser({
   title,
 }: AlbumCoverUserProps) {
   return (
-    <div className="flex flex-col w-56 h-72 items-center justify-center my-4 cursor-pointer hover-bg-opacity pt-8">
+    <div className="flex flex-col w-56 h-72 items-center justify-center m-4 cursor-pointer hover-bg-opacity pt-8">
       <img
         src={image1}
         alt="Album cover"

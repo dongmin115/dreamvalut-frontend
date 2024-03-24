@@ -227,7 +227,7 @@ function page() {
 
           {/* 장르별 음악 */}
           <h1 className="">장르별 음악</h1>
-          <div className="flex flex-row items-center w-full h-auto bg-gray-650 rounded-2xl">
+          <div className="flex flex-row justify-center items-center w-full h-auto bg-gray-650 rounded-2xl">
             <IconButton onClick={handleGenrePageBackwardClick}>
               <BackIcon color="primary" fontSize="large" />
             </IconButton>
@@ -280,23 +280,62 @@ function page() {
 
           {/* 다른 유저가 선택한 플레이리스트 */}
           <h1 className="">다른 유저가 선택한 플레이리스트</h1>
-          <div className="flex flex-row items-center w-full h-80 bg-gray-650 rounded-2xl">
+          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
             <IconButton onClick={handleOtherPlaylistPageBackwardClick}>
               <BackIcon color="primary" fontSize="large" />
             </IconButton>
-            <div className="w-11/12 h-full flex flex-col flex-wrap justify-center items-start">
+            <div className="w-11/12 h-full flex flex-row justify-start items-start">
               <AlbumCoverUser
                 image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
                 image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
                 image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
                 title="텐션 업!"
               />
+
+              <AlbumCoverUser
+                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
+                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
+                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
+                title="낭만 있는 플리"
+              />
+
+              <AlbumCoverUser
+                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
+                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
+                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
+                title="올드 팝송"
+              />
+
+              <AlbumCoverUser
+                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
+                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
+                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
+                title="나만 들으려고 저장한 노래"
+              />
             </div>
             <IconButton onClick={handleOtherPlaylistPageForwardClick}>
               <ForwardIcon color="primary" fontSize="large" />
             </IconButton>
           </div>
+
+          {/* 구독한 플레이리스트 */}
+          <h1 className="">DreamVault가 제공하는 플레이리스트</h1>
+          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
+            <IconButton onClick={handleSystemPlaylistPageBackwardClick}>
+              <BackIcon color="primary" fontSize="large" />
+            </IconButton>
+            <div className="w-11/12 h-full flex flex-row justify-start items-start">
+              <AlbumCoverSystem
+                image="https://i.ibb.co/ZVGLMxS/wecan-tbefriends.jpg"
+                title="Billboard Hot 100"
+              />
+            </div>
+            <IconButton onClick={handleSystemPlaylistPageForwardClick}>
+              <ForwardIcon color="primary" fontSize="large" />
+            </IconButton>
+          </div>
         </div>
+        {/* 아래 여백 */}
         <div className="w-full h-40" />
       </div>
     </ThemeProvider>
