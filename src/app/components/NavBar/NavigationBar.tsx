@@ -84,12 +84,12 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 export function SearchAppBar() {
   return (
     <>
-      <Typography
+      {/* <Typography
         variant="h6"
         noWrap
         component="div"
         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-      />
+      /> */}
       <Search>
         <SearchIconWrapper>
           <SearchIcon />
@@ -120,7 +120,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ children }) => (
 const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 const NavBar: React.FC = () => (
-  <div className="fixed flex flex-col justify-between left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
+  <div className="fixed flex flex-col justify-start left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
     <div className="flex flex-col">
       <div className="flex items-center mt-5">
         <img
@@ -132,7 +132,7 @@ const NavBar: React.FC = () => (
       </div>
     </div>
 
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-12 h-full">
       <SearchAppBar />
       <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <Home>
@@ -177,7 +177,7 @@ const NavBar: React.FC = () => (
       </div>
     </div>
 
-    <div className="flex flex-col pt-72">
+    <div className="flex flex-col my-4">
       <div className="flex items-center text-sm rounded-lg hover-bg-opacity">
         <LogOut>
           <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
