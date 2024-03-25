@@ -8,15 +8,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
@@ -73,18 +70,21 @@ const UploadMyMusic = () => {
             </p>
             {/* 선 */}
             <div className="flex flex-col bg-white w-[100%] h-[0.3%] rounded-md"></div>
-            <div className="flex flex-row space-x-8">
+            {/* 등록할 곡 사진, 제목, 가수명, 용량 */}
+            <div className="flex flex-row space-x-8 p-[3%]">
               <img
                 src="https://i.ibb.co/8MTGSjd/image.png"
                 alt="프로필 이미지"
-                className="size-28 rounded-xl drop-shadow-sm"
+                className="size-36 rounded-xl drop-shadow-sm"
               />
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col text-center justify-center">
                 <p className="text-white text-xl">Dangerously</p>
                 <p className="text-[#777777] text-lg">Charlie Puth</p>
+                <p className="text-[#777777] text-base">8.02 MB</p>
               </div>
             </div>
             <form
+              id="test"
               className="flex flex-col h-[77%] w-full ml-0"
               onSubmit={handleSubmit}
             >
@@ -276,7 +276,11 @@ const UploadMyMusic = () => {
                 </List>
               </div>
             </form>
-            <button className="flex flex-col items-end p-[2%]" type="submit">
+            <button
+              className="fixed bottom-[5%] items-end p-[2%]"
+              type="submit"
+              form="test"
+            >
               <FileUploadRoundedIcon sx={{ fontSize: 60 }} color="secondary" />
             </button>
           </div>
