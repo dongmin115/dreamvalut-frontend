@@ -1,0 +1,11 @@
+/* 장르 드롭다운 리스트 padding 없애기 */
+.css-x3cy1w-MuiList-root {
+  padding: 0;
+}
+
+/* 가운데 맞추기 위해  */
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1; /* 0 -> 1 */
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}

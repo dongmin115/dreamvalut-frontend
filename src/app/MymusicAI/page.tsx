@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
@@ -18,10 +20,10 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import FileUploadTwoToneIcon from '@mui/icons-material/FileUploadTwoTone';
-import FileUploadSharpIcon from '@mui/icons-material/FileUploadSharp';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from '../components/NavBar/NavigationBar';
+import './MymusicAICSS.css';
 
 const theme = createTheme({
   palette: {
@@ -63,18 +65,30 @@ const UploadMyMusic = () => {
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <div className="flex flex-col w-screen h-screen bg-emerald-600">
-        <div className="flex flex-col ml-[22%] rounded-xl bg-slate-400 justify-start mt-[3%] items-center w-[70%] h-[80%]">
-          <p className="text-3xl mb-[2%] mt-[2%]">나만의 음악 업로드</p>
-          {/* 선 */}
-          <div className="flex flex-col bg-white w-[90%] h-[0.3%] rounded-md"></div>
-          {/* 제목, 프롬프트, 태그, 장르 */}
-          <form
-            className="flex flex-col justify-between bg-gray-600 h-full w-full"
-            onSubmit={handleSubmit}
-          >
-            <div className="flex flex-col mr-[8%]">
-              <div className="flex justify-end mt-[4%]">
+      <div className="pl-[15%] w-screen h-screen bg-amber-900">
+        <div className="flex w-[70%] h-[100%] pt-[2%] pb-[2%] ml-[15%] ">
+          <div className="flex flex-col items-center space-x-4 bg-[#353535] w-full h-full rounded-xl p-[4%] justify-between shadow-md">
+            <p className="flex text-3xl items-center mb-[2%]">
+              나만의 음악 업로드
+            </p>
+            {/* 선 */}
+            <div className="flex flex-col bg-white w-[100%] h-[0.3%] rounded-md"></div>
+            <div className="flex flex-row space-x-8">
+              <img
+                src="https://i.ibb.co/8MTGSjd/image.png"
+                alt="프로필 이미지"
+                className="size-28 rounded-xl drop-shadow-sm"
+              />
+              <div className="flex flex-col justify-center">
+                <p className="text-white text-xl">Dangerously</p>
+                <p className="text-[#777777] text-lg">Charlie Puth</p>
+              </div>
+            </div>
+            <form
+              className="flex flex-col h-[77%] w-full ml-0"
+              onSubmit={handleSubmit}
+            >
+              <div className="flex justify-center mt-[4%]">
                 <label className="p-[1%]">제목:</label>
                 <input
                   className="w-[50%] h-[100%] text-black"
@@ -84,8 +98,8 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
-              <div className="flex justify-end mt-[3%]">
-                <label className="p-[1%]">프롬프트:</label>
+              <div className="flex justify-center mt-[3%]">
+                <label className="p-[1%]">설명:</label>
                 <input
                   className="w-[50%] h-[300%] text-black"
                   type="text"
@@ -94,7 +108,7 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
-              <div className="flex justify-end mt-[12%]">
+              <div className="flex justify-center mt-[12%]">
                 <label className="p-[1%]">태그:</label>
                 <input
                   className="w-[50%] h-[200%] text-black"
@@ -104,7 +118,7 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
-              <div className="flex justify-end mt-[8%]">
+              <div className="flex justify-center mt-[8%]">
                 <label className="p-[1%]">장르:</label>
                 <List
                   sx={{
@@ -115,6 +129,7 @@ const UploadMyMusic = () => {
                     position: 'relative',
                     height: '100%',
                     maxHeight: 200,
+                    zIndex: 20,
                   }}
                   component="nav"
                   aria-labelledby="nested-list-subheader"
@@ -260,13 +275,11 @@ const UploadMyMusic = () => {
                   </Collapse>
                 </List>
               </div>
-            </div>
-            <div className="flex flex-col items-end">
-              <button className="text-xl" type="submit">
-                업로드
-              </button>
-            </div>
-          </form>
+            </form>
+            <button className="flex flex-col items-end p-[2%]" type="submit">
+              <FileUploadRoundedIcon sx={{ fontSize: 60 }} color="secondary" />
+            </button>
+          </div>
         </div>
       </div>
     </ThemeProvider>
