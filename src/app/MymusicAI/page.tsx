@@ -27,48 +27,56 @@ const UploadMyMusic = () => {
 
   return (
     <>
-      {/* <NavBar /> */}
-      <div>
-        <h2>나만의 음악 업로드</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>제목:</label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>프롬프트:</label>
-            <input
-              type="text"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>태그:</label>
-            <input
-              type="text"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label>장르:</label>
-            <input
-              type="text"
-              value={genre}
-              onChange={(e) => setGenre(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit">업로드</button>
-        </form>
+      <NavBar />
+      <div className="flex flex-col w-screen h-screen bg-emerald-600">
+        <div className="flex flex-col ml-[22%] rounded-xl bg-slate-400 justify-start mt-[3%] items-center w-[70%] h-[80%]">
+          <p className="text-3xl mb-[3%] mt-[3%]">나만의 음악 업로드</p>
+          {/* 선 */}
+          <div className="flex flex-col bg-white w-[90%] h-[0.3%] rounded-md"></div>
+          {/* 제목, 프롬프트, 태그, 장르 */}
+          <form
+            className="flex flex-col mt-[3%] bg-gray-600 w-f h-scree"
+            onSubmit={handleSubmit}
+          >
+            <div>
+              <label>제목:</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>프롬프트:</label>
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>태그:</label>
+              <input
+                type="text"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>장르:</label>
+              <input
+                type="text"
+                value={genre}
+                onChange={(e) => setGenre(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">업로드</button>
+          </form>
+        </div>
       </div>
     </>
   );
