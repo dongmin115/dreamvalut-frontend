@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable import/order */
 /* eslint-disable no-console */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-restricted-globals */
@@ -7,20 +9,24 @@
 
 'use client';
 
-import React, { useState } from 'react';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
+import React, { ReactNode, useState } from 'react';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {
+  createTheme,
+  ThemeProvider,
+  Theme,
+  useTheme,
+} from '@mui/material/styles';
 import NavBar from '../components/NavBar/NavigationBar';
 import './MymusicAICSS.css';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const theme = createTheme({
   palette: {
@@ -35,16 +41,53 @@ const theme = createTheme({
   },
 });
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'POP',
+  'RnB',
+  'Jazz',
+  'Ballade',
+  'classical',
+  'Rock',
+  'Hip-Hap',
+  'Folk',
+  'OST',
+  'JPOP',
+  'Musical',
+  'EDM',
+];
+
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
   const [tags, setTags] = useState('');
   const [genre, setGenre] = useState(true);
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState<string[]>([]);
+
+  function getStyles(name: string, personName: string[], theme: Theme) {
+    return {
+      fontWeight:
+        personName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
 
   // 장르 드롭다운 박스
-  const handleClick = () => {
-    setGenre(!genre);
-  };
+  //   const handleClick = () => {
+  //     setGenre(!genre);
+  //   };
 
   // Form의 onSubmit 이벤트 핸들러 - 음악 정보 업로드
   const handleSubmit = (event: React.FormEvent) => {
@@ -59,17 +102,33 @@ const UploadMyMusic = () => {
     // 이후에 서버로 데이터를 전송하는 등의 로직을 추가하는 곳
   };
 
+  // 가사 보유 여부 버튼
+  const [alignment, setAlignment] = React.useState<string | null>('left');
+
+  const handleAlignment = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string | null,
+  ) => {
+    setAlignment(newAlignment);
+  };
+
+  function handleChange(
+    event: SelectChangeEvent<string[]>,
+    child: ReactNode,
+  ): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
       <div className="pl-[15%] w-screen h-screen bg-amber-900">
-        <div className="flex w-[70%] h-[100%] pt-[2%] pb-[2%] ml-[15%] ">
-          <div className="flex flex-col items-center space-x-4 bg-[#353535] w-full h-full rounded-xl p-[4%] justify-between shadow-md">
-            <p className="flex text-3xl items-center mb-[2%]">
-              나만의 음악 업로드
-            </p>
-            {/* 선 */}
-            <div className="flex flex-col bg-white w-[100%] h-[0.3%] rounded-md"></div>
+        <div className="flex w-[70%] h-full pt-[2%] pb-[2%] ml-[15%] ">
+          <div className="flex flex-col items-center space-x-4 bg-[#1e1e1e] w-full h-full rounded-xl  justify-between shadow-md">
+            <div className="flex flex-col p-[3%] w-[90%] text-[#A97DFF] border-b border-[#727272] text-3xl text-center items-center mb-[1%]">
+              나만의 음악 등록
+            </div>
+
             {/* 등록할 곡 사진, 제목, 가수명, 용량 */}
             <div className="flex flex-row space-x-8 p-[3%]">
               <img
@@ -89,195 +148,79 @@ const UploadMyMusic = () => {
               onSubmit={handleSubmit}
             >
               <div className="flex justify-center mt-[4%]">
-                <label className="p-[1%]">제목:</label>
+                <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
                 <input
-                  className="w-[50%] h-[100%] text-black"
+                  className="w-[50%] text-black rounded-xl outline-none"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex justify-center mt-[3%]">
-                <label className="p-[1%]">설명:</label>
+              <div className="flex mh-[200%] justify-center mt-[5%]">
+                <label className="p-[1%] text-lg text-[#A97DFF]">설명</label>
                 <input
-                  className="w-[50%] h-[300%] text-black"
+                  className="w-[50%] text-black rounded-xl outline-none"
                   type="text"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex justify-center mt-[12%]">
-                <label className="p-[1%]">태그:</label>
+              <div className="flex justify-center mt-[5%]">
+                <label className="p-[1%] text-lg text-[#A97DFF]">태그</label>
                 <input
-                  className="w-[50%] h-[200%] text-black"
+                  className="w-[50%] text-black rounded-xl outline-none"
                   type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex justify-center mt-[8%]">
-                <label className="p-[1%]">장르:</label>
-                <List
-                  sx={{
-                    width: '100%',
-                    maxWidth: '50%',
-                    bgcolor: 'background.paper',
-                    overflow: 'auto',
-                    position: 'relative',
-                    height: '100%',
-                    maxHeight: 200,
-                    zIndex: 20,
-                  }}
-                  component="nav"
-                  aria-labelledby="nested-list-subheader"
+              <div className="flex justify-center mt-[5%]">
+                <ToggleButtonGroup
+                  value={alignment}
+                  exclusive
+                  onChange={handleAlignment}
+                  aria-label="text alignment"
                 >
-                  <ListItemButton onClick={handleClick}>
-                    <ListItemIcon>
-                      <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText className="text-black" primary="장르 선택" />
-                    {genre ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="POP" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="RnB" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="Jazz" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText
-                          className="text-black"
-                          primary="Ballade"
-                        />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText
-                          className="text-black"
-                          primary="Classical"
-                        />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="Rock" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText
-                          className="text-black"
-                          primary="Hip-Hap"
-                        />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="Folk" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="OST" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="J-POP" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText
-                          className="text-black"
-                          primary="Musical"
-                        />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                  <Collapse in={genre} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText className="text-black" primary="EDM" />
-                      </ListItemButton>
-                    </List>
-                  </Collapse>
-                </List>
+                  <ToggleButton className="bg-[#44334e]" value="left">
+                    <p className="text-white">가사 보유 O</p>
+                  </ToggleButton>
+                  <ToggleButton className="bg-[#44334e]" value="center">
+                    <p className="text-white">가사 보유 X</p>
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </div>
+              <div className="flex justify-center mt-[5%]">
+                <div>
+                  <FormControl sx={{ m: 1, width: 300 }}>
+                    <InputLabel id="demo-multiple-name-label">Genre</InputLabel>
+                    <Select
+                      labelId="demo-multiple-name-label"
+                      id="demo-multiple-name"
+                      multiple
+                      value={personName}
+                      onChange={handleChange}
+                      input={<OutlinedInput label="Name" />}
+                      MenuProps={MenuProps}
+                    >
+                      {names.map((name) => (
+                        <MenuItem
+                          key={name}
+                          value={name}
+                          style={getStyles(name, personName, theme)}
+                        >
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
             </form>
             <button
-              className="fixed bottom-[5%] items-end p-[2%]"
+              className="flex flex-col bottom-[5%] items-end p-[2%]"
               type="submit"
               form="test"
             >

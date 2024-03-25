@@ -1,24 +1,23 @@
-/* 장르 드롭다운 리스트 padding 없애기 */
-.css-1m2x6n7-MuiList-root {
+.css-usbumk-MuiList-root {
   list-style: none;
   margin: 0;
   padding: 0;
   position: relative;
-  /* padding-top: 8px; */
-  /* padding-bottom: 8px; */
+  /* padding-top: 8px;
+    padding-bottom: 8px; */
   width: 100%;
   max-width: 50%;
   background-color: #fff;
   overflow: auto;
   position: relative;
   height: 100%;
-  max-height: 200px;
+  max-height: 150px;
   z-index: 20;
 }
 
 /* 가운데 맞추기 위해  */
 .space-x-4 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 1; /* 0 -> 1 */
+  --tw-space-x-reverse: 0.5; /* 0 -> 1 */
   margin-right: calc(1rem * var(--tw-space-x-reverse));
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
