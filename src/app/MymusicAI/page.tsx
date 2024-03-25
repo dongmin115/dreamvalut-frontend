@@ -18,7 +18,23 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
+import FileUploadTwoToneIcon from '@mui/icons-material/FileUploadTwoTone';
+import FileUploadSharpIcon from '@mui/icons-material/FileUploadSharp';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import NavBar from '../components/NavBar/NavigationBar';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      // 검은색
+      main: '#000000',
+    },
+    secondary: {
+      // 보라색
+      main: '#6C26FF',
+    },
+  },
+});
 
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
@@ -45,7 +61,7 @@ const UploadMyMusic = () => {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <NavBar />
       <div className="flex flex-col w-screen h-screen bg-emerald-600">
         <div className="flex flex-col ml-[22%] rounded-xl bg-slate-400 justify-start mt-[3%] items-center w-[70%] h-[80%]">
@@ -57,29 +73,29 @@ const UploadMyMusic = () => {
             className="flex flex-col justify-between bg-gray-600 h-full w-full"
             onSubmit={handleSubmit}
           >
-            <div className="flex flex-col justify-between">
-              <div className="flex justify-end mr-[10%] mt-[3%]">
-                <label>제목:</label>
+            <div className="flex flex-col mr-[8%]">
+              <div className="flex justify-end mt-[4%]">
+                <label className="p-[1%]">제목:</label>
                 <input
-                  className="w-[50%] h-[200%]"
+                  className="w-[50%] h-[100%] text-black"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex justify-end mr-[10%] mt-[5%]">
-                <label>프롬프트:</label>
+              <div className="flex justify-end mt-[3%]">
+                <label className="p-[1%]">프롬프트:</label>
                 <input
-                  className="w-[50%] h-[400%]"
+                  className="w-[50%] h-[300%] text-black"
                   type="text"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex justify-end mr-[10%] mt-[10%]">
-                <label>태그:</label>
+              <div className="flex justify-end mt-[12%]">
+                <label className="p-[1%]">태그:</label>
                 <input
                   className="w-[50%] h-[200%] text-black"
                   type="text"
@@ -88,12 +104,17 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
-              <div className="flex justify-end mr-[10%] mt-[5%]">
-                <label>장르:</label>
+              <div className="flex justify-end mt-[8%]">
+                <label className="p-[1%]">장르:</label>
                 <List
                   sx={{
-                    width: '50%',
+                    width: '100%',
+                    maxWidth: '50%',
                     bgcolor: 'background.paper',
+                    overflow: 'auto',
+                    position: 'relative',
+                    height: '100%',
+                    maxHeight: 200,
                   }}
                   component="nav"
                   aria-labelledby="nested-list-subheader"
@@ -107,11 +128,133 @@ const UploadMyMusic = () => {
                   </ListItemButton>
                   <Collapse in={genre} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                      <ListItemButton sx={{ pl: 4 }}>
+                      <ListItemButton>
                         <ListItemIcon>
                           <StarBorder />
                         </ListItemIcon>
-                        <ListItemText primary="Starred" />
+                        <ListItemText className="text-black" primary="POP" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText className="text-black" primary="RnB" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText className="text-black" primary="Jazz" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText
+                          className="text-black"
+                          primary="Ballade"
+                        />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText
+                          className="text-black"
+                          primary="Classical"
+                        />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText className="text-black" primary="Rock" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText
+                          className="text-black"
+                          primary="Hip-Hap"
+                        />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText className="text-black" primary="Folk" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText className="text-black" primary="OST" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText className="text-black" primary="J-POP" />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText
+                          className="text-black"
+                          primary="Musical"
+                        />
+                      </ListItemButton>
+                    </List>
+                  </Collapse>
+                  <Collapse in={genre} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText className="text-black" primary="EDM" />
                       </ListItemButton>
                     </List>
                   </Collapse>
@@ -119,12 +262,14 @@ const UploadMyMusic = () => {
               </div>
             </div>
             <div className="flex flex-col items-end">
-              <button type="submit">업로드</button>
+              <button className="text-xl" type="submit">
+                업로드
+              </button>
             </div>
           </form>
         </div>
       </div>
-    </>
+    </ThemeProvider>
   );
 };
 
