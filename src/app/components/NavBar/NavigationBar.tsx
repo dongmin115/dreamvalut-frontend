@@ -154,7 +154,9 @@ const NavBar: React.FC = () => (
       <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
         <Mymusic>
           <EditNoteIcon style={{ color: theme.palette.primary.main }} />
-          <button className="p-2 text-sm">나만의 음악</button>
+          <button className="p-2 text-sm">
+            <Link href={'/MymusicAI'}>나만의 음악</Link>
+          </button>
         </Mymusic>
       </div>
 
