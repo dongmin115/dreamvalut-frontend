@@ -27,6 +27,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import { ListItemText } from '@mui/material';
+import Button from '@mui/material/Button';
 
 const theme = createTheme({
   palette: {
@@ -41,6 +44,7 @@ const theme = createTheme({
   },
 });
 
+// 장르 선택
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -52,6 +56,19 @@ const MenuProps = {
   },
 };
 
+// 해시태그
+const ITEM_HEIGHT2 = 48;
+const ITEM_PADDING_TOP2 = 8;
+const MenuProps2 = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT2 * 4.5 + ITEM_PADDING_TOP2,
+      width: 250,
+    },
+  },
+};
+
+// 장르 데이터
 const names = [
   'POP',
   'RnB',
@@ -67,27 +84,46 @@ const names = [
   'EDM',
 ];
 
+// 해시태그 데이터
+const names2 = [
+  'Love',
+  'Happy',
+  'Energy',
+  'Sad',
+  'Chill',
+  'Empty',
+  'Power',
+  'Relax',
+];
+
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
-  const [tags, setTags] = useState('');
+  //   const [tags, setTags] = useState('');
   const [genre, setGenre] = useState(true);
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
+  const [genreName, setgenreName] = React.useState<string[]>([]);
+  const [tagName, settagName] = React.useState<string[]>([]);
 
-  function getStyles(name: string, personName: string[], theme: Theme) {
+  // 장르
+  function getStyles(name: string, genreName: string[], theme: Theme) {
     return {
       fontWeight:
-        personName.indexOf(name) === -1
+        genreName.indexOf(name) === -1
           ? theme.typography.fontWeightRegular
           : theme.typography.fontWeightMedium,
     };
   }
 
-  // 장르 드롭다운 박스
-  //   const handleClick = () => {
-  //     setGenre(!genre);
-  //   };
+  const handleChange = (event: SelectChangeEvent<typeof tagName>) => {
+    const {
+      target: { value },
+    } = event;
+    settagName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
 
   // Form의 onSubmit 이벤트 핸들러 - 음악 정보 업로드
   const handleSubmit = (event: React.FormEvent) => {
@@ -96,7 +132,7 @@ const UploadMyMusic = () => {
     console.log('음악 업로드:', {
       title,
       prompt,
-      tags,
+      //   tags,
       genre,
     });
     // 이후에 서버로 데이터를 전송하는 등의 로직을 추가하는 곳
@@ -111,13 +147,6 @@ const UploadMyMusic = () => {
   ) => {
     setAlignment(newAlignment);
   };
-
-  function handleChange(
-    event: SelectChangeEvent<string[]>,
-    child: ReactNode,
-  ): void {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -167,7 +196,30 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
-              <div className="flex justify-center mt-[5%]">
+              {/* 해시태그 선택 */}
+              <div className="flex mh-[200%] justify-center mt-[2%]">
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+                  <Select
+                    labelId="demo-multiple-checkbox-label"
+                    id="demo-multiple-checkbox"
+                    multiple
+                    value={tagName}
+                    onChange={handleChange}
+                    input={<OutlinedInput label="Tag" />}
+                    renderValue={(selected) => selected.join(', ')}
+                    MenuProps={MenuProps}
+                  >
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name}>
+                        <Checkbox checked={tagName.indexOf(name) > -1} />
+                        <ListItemText primary={name} />
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+              {/* <div className="flex justify-center mt-[5%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">태그</label>
                 <input
                   className="w-[50%] text-black rounded-xl outline-none"
@@ -176,8 +228,9 @@ const UploadMyMusic = () => {
                   onChange={(e) => setTags(e.target.value)}
                   required
                 />
-              </div>
-              <div className="flex justify-center mt-[5%]">
+              </div> */}
+              {/* 가사 보유여부 */}
+              <div className="flex justify-center mt-[2%]">
                 <ToggleButtonGroup
                   value={alignment}
                   exclusive
@@ -192,7 +245,8 @@ const UploadMyMusic = () => {
                   </ToggleButton>
                 </ToggleButtonGroup>
               </div>
-              <div className="flex justify-center mt-[5%]">
+              {/* 장르 선택 */}
+              <div className="flex justify-center mt-[2%]">
                 <div>
                   <FormControl sx={{ m: 1, width: 300 }}>
                     <InputLabel id="demo-multiple-name-label">Genre</InputLabel>
@@ -200,16 +254,16 @@ const UploadMyMusic = () => {
                       labelId="demo-multiple-name-label"
                       id="demo-multiple-name"
                       multiple
-                      value={personName}
+                      value={genreName}
                       onChange={handleChange}
-                      input={<OutlinedInput label="Name" />}
+                      input={<OutlinedInput label="genre" />}
                       MenuProps={MenuProps}
                     >
                       {names.map((name) => (
                         <MenuItem
                           key={name}
                           value={name}
-                          style={getStyles(name, personName, theme)}
+                          style={getStyles(name, genreName, theme)}
                         >
                           {name}
                         </MenuItem>
