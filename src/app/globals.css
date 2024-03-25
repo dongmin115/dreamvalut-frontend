@@ -153,3 +153,8 @@ h1 {
   background-position: 99% 50%;
   cursor: pointer;
 }
+
+/* 장르 드롭다운 리스트 padding 없애기 */
+.css-x3cy1w-MuiList-root {
+  padding: 0;
+}

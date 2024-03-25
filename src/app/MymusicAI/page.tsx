@@ -24,7 +24,7 @@ const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
   const [tags, setTags] = useState('');
-  const [genre, setGenre] = React.useState(true);
+  const [genre, setGenre] = useState(true);
 
   // 장르 드롭다운 박스
   const handleClick = () => {
@@ -39,6 +39,7 @@ const UploadMyMusic = () => {
       title,
       prompt,
       tags,
+      genre,
     });
     // 이후에 서버로 데이터를 전송하는 등의 로직을 추가하는 곳
   };
@@ -56,7 +57,7 @@ const UploadMyMusic = () => {
             className="flex flex-col justify-between bg-gray-600 h-full w-full"
             onSubmit={handleSubmit}
           >
-            <div>
+            <div className="flex flex-col justify-between">
               <div className="flex justify-end mr-[10%] mt-[3%]">
                 <label>제목:</label>
                 <input
@@ -67,32 +68,31 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
-              <div className="flex justify-end mr-[10%] mt-[3%]">
+              <div className="flex justify-end mr-[10%] mt-[5%]">
                 <label>프롬프트:</label>
                 <input
-                  className="w-[50%] h-[200%]"
+                  className="w-[50%] h-[400%]"
                   type="text"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex justify-end mr-[10%] mt-[3%]">
+              <div className="flex justify-end mr-[10%] mt-[10%]">
                 <label>태그:</label>
                 <input
-                  className="w-[50%] h-[200%]"
+                  className="w-[50%] h-[200%] text-black"
                   type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex justify-end mr-[10%] mt-[3%]">
+              <div className="flex justify-end mr-[10%] mt-[5%]">
                 <label>장르:</label>
                 <List
                   sx={{
-                    width: '100%',
-                    maxWidth: 360,
+                    width: '50%',
                     bgcolor: 'background.paper',
                   }}
                   component="nav"
@@ -102,7 +102,7 @@ const UploadMyMusic = () => {
                     <ListItemIcon>
                       <InboxIcon />
                     </ListItemIcon>
-                    <ListItemText className="text-black" primary="Inbox" />
+                    <ListItemText className="text-black" primary="장르 선택" />
                     {genre ? <ExpandLess /> : <ExpandMore />}
                   </ListItemButton>
                   <Collapse in={genre} timeout="auto" unmountOnExit>
