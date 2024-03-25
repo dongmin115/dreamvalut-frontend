@@ -1,27 +1,24 @@
-/* eslint-disable max-len */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable object-curly-newline */
-/* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable import/order */
-/* eslint-disable import/no-unresolved */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable max-len */
 /* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './GenreColorList.css';
-import MusicBar from '../components/Musicbar/Musicbar';
-import NavigationBar from '../components/NavBar/NavigationBar';
-import { Button, Divider, IconButton, Slider } from '@mui/material';
-import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
-import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
+import { IconButton } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
+import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
+import NavigationBar from '../components/NavBar/NavigationBar';
+import MusicBar from '../components/Musicbar/Musicbar';
 
 const theme = createTheme({
   palette: {
@@ -197,8 +194,13 @@ function page() {
           {/* 인기 차트 */}
           <h1 className="">인기 차트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton onClick={handlePopularPageBackwardClick}>
-              <BackIcon color="primary" fontSize="large" />
+            <IconButton
+              className="w-4"
+              onClick={handlePopularPageBackwardClick}
+            >
+              {popularPageIndex !== 0 && (
+                <BackIcon color="primary" fontSize="large" />
+              )}
             </IconButton>
             <div className="w-11/12 h-full flex flex-col flex-wrap justify-center items-start">
               {popularMusicList}
@@ -211,8 +213,10 @@ function page() {
           {/* 인기 태그 */}
           <h1 className="">인기 태그</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton onClick={handleTagPageBackwardClick}>
-              <BackIcon color="primary" fontSize="large" />
+            <IconButton className="w-4" onClick={handleTagPageBackwardClick}>
+              {tagPageIndex !== 0 && (
+                <BackIcon color="primary" fontSize="large" />
+              )}
             </IconButton>
             <div className="w-11/12 h-full flex flex-row items-center justify-start">
               <AlbumCoverSystem
@@ -228,8 +232,10 @@ function page() {
           {/* 장르별 음악 */}
           <h1 className="">장르별 음악</h1>
           <div className="flex flex-row justify-center items-center w-full h-auto bg-gray-650 rounded-2xl">
-            <IconButton onClick={handleGenrePageBackwardClick}>
-              <BackIcon color="primary" fontSize="large" />
+            <IconButton className="w-4" onClick={handleGenrePageBackwardClick}>
+              {genrePageIndex !== 0 && (
+                <BackIcon color="primary" fontSize="large" />
+              )}
             </IconButton>
             <div className="w-11/12 h-full flex flex-row items-center justify-start">
               <GenreMusic
@@ -281,8 +287,13 @@ function page() {
           {/* 다른 유저가 선택한 플레이리스트 */}
           <h1 className="">다른 유저가 선택한 플레이리스트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton onClick={handleOtherPlaylistPageBackwardClick}>
-              <BackIcon color="primary" fontSize="large" />
+            <IconButton
+              className="w-4"
+              onClick={handleOtherPlaylistPageBackwardClick}
+            >
+              {otherPlaylistPageIndex !== 0 && (
+                <BackIcon color="primary" fontSize="large" />
+              )}
             </IconButton>
             <div className="w-11/12 h-full flex flex-row justify-start items-start">
               <AlbumCoverUser
@@ -321,8 +332,13 @@ function page() {
           {/* 구독한 플레이리스트 */}
           <h1 className="">DreamVault가 제공하는 플레이리스트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton onClick={handleSystemPlaylistPageBackwardClick}>
-              <BackIcon color="primary" fontSize="large" />
+            <IconButton
+              className="w-4"
+              onClick={handleSystemPlaylistPageBackwardClick}
+            >
+              {systemPlaylistPageIndex !== 0 && (
+                <BackIcon color="primary" fontSize="large" />
+              )}
             </IconButton>
             <div className="w-11/12 h-full flex flex-row justify-start items-start">
               <AlbumCoverSystem
