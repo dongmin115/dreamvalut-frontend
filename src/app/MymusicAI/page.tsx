@@ -32,7 +32,10 @@ const theme = createTheme({
   palette: {
     primary: {
       // 검은색
-      main: '#000000',
+      main: '#a97dff',
+      light: '#42a5f5',
+      dark: '#1565c0',
+      contrastText: '#fff',
     },
     secondary: {
       // 보라색
@@ -76,6 +79,8 @@ const UploadMyMusic = () => {
   const [genre, setGenre] = useState(true);
   const theme = useTheme();
   const [genreName, setgenreName] = React.useState<string[]>([]);
+  // 가사 보유 여부 버튼
+  const [lyrics, setLyrics] = React.useState<string | null>('left');
 
   // 장르
   function getStyles(name: string, genreName: string[], theme: Theme) {
@@ -87,7 +92,7 @@ const UploadMyMusic = () => {
     };
   }
 
-  const handleChange = (event: SelectChangeEvent<typeof genreName>) => {
+  const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {
     const {
       target: { value },
     } = event;
@@ -106,27 +111,25 @@ const UploadMyMusic = () => {
       prompt,
       tags,
       genre,
+      lyrics,
     });
     // 이후에 서버로 데이터를 전송하는 등의 로직을 추가하는 곳
   };
 
-  // 가사 보유 여부 버튼
-  const [alignment, setAlignment] = React.useState<string | null>('left');
-
-  const handleAlignment = (
+  const handleLyrics = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string | null,
+    newLyrics: string | null,
   ) => {
-    setAlignment(newAlignment);
+    setLyrics(newLyrics);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <div className="pl-[15%] w-screen h-screen bg-amber-900">
-        <div className="flex w-[70%] h-full pt-[2%] pb-[2%] ml-[15%] ">
-          <div className="flex flex-col items-center space-x-4 bg-[#1e1e1e] w-full h-full rounded-xl  justify-between shadow-md">
-            <div className="flex flex-col p-[3%] w-[90%] text-[#A97DFF] border-b border-[#727272] text-3xl text-center items-center mb-[1%]">
+      <div className="pl-[15%] w-screen h-screen">
+        <div className="flex w-[70%] h-screen ml-[15%] ">
+          <div className="flex flex-col shadow-indigo-500/100 shadow-lg items-center space-x-4 bg-[#1e1e1e] w-full h-full rounded-xl">
+            <div className="flex flex-col p-[3%] w-[90%] text-[#A97DFF] border-b border-[#727272] text-3xl text-center items-center">
               나만의 음악 등록
             </div>
 
@@ -145,13 +148,13 @@ const UploadMyMusic = () => {
             </div>
             <form
               id="test"
-              className="flex flex-col h-[77%] w-full ml-0"
+              className="flex flex-col h-[77%] w-full"
               onSubmit={handleSubmit}
             >
-              <div className="flex justify-center mt-[4%]">
+              <div className="flex justify-center mt-[3%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
                 <input
-                  className="w-[50%] p-[1%] text-black rounded-xl outline-none"
+                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -161,7 +164,7 @@ const UploadMyMusic = () => {
               <div className="flex justify-center mt-[5%]">
                 <label className="p-[1%] text-lg text-[#A97DFF] ">설명</label>
                 <textarea
-                  className="w-[50%] p-[1%] text-black rounded-xl outline-none"
+                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
@@ -171,7 +174,7 @@ const UploadMyMusic = () => {
               <div className="flex justify-center mt-[5%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">태그</label>
                 <input
-                  className="w-[50%] p-[1%] text-black rounded-xl outline-none"
+                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
                   type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
@@ -179,12 +182,13 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 가사 보유여부 */}
-              <div className="flex justify-center mt-[2%]">
+              <div className="flex justify-center mt-[4%]">
                 <ToggleButtonGroup
-                  value={alignment}
+                  value={lyrics}
                   exclusive
-                  onChange={handleAlignment}
+                  onChange={handleLyrics}
                   aria-label="text alignment"
+                  color="secondary"
                 >
                   <ToggleButton className="bg-[#44334e]" value="left">
                     <p className="text-white">가사 보유 O</p>
@@ -195,19 +199,26 @@ const UploadMyMusic = () => {
                 </ToggleButtonGroup>
               </div>
               {/* 장르 선택 */}
-              <div className="flex justify-center mt-[2%]">
+              <div className="flex justify-center mt-[4%]">
                 <div>
                   <FormControl sx={{ m: 1, width: 300 }}>
-                    <InputLabel id="demo-multiple-name-label">Genre</InputLabel>
+                    <InputLabel
+                      id="demo-multiple-name-label"
+                      color="secondary"
+                      className="text-[#a97dff]"
+                    >
+                      Genre
+                    </InputLabel>
                     <Select
                       labelId="demo-multiple-name-label"
                       id="demo-multiple-name"
                       multiple
                       value={genreName}
-                      onChange={handleChange}
+                      onChange={handleGenre}
                       input={<OutlinedInput label="genre" />}
                       MenuProps={MenuProps}
-                      color="primary"
+                      color="secondary"
+                      className="text-[#a0a0a0]"
                     >
                       {names.map((name) => (
                         <MenuItem
@@ -222,14 +233,19 @@ const UploadMyMusic = () => {
                   </FormControl>
                 </div>
               </div>
+              <div className="flex h-full items-center justify-center">
+                <button
+                  className="bottom-[5%] p-[2%]"
+                  type="submit"
+                  form="test"
+                >
+                  <FileUploadRoundedIcon
+                    sx={{ fontSize: 60 }}
+                    color="secondary"
+                  />
+                </button>
+              </div>
             </form>
-            <button
-              className="flex flex-col bottom-[5%] items-end p-[2%]"
-              type="submit"
-              form="test"
-            >
-              <FileUploadRoundedIcon sx={{ fontSize: 60 }} color="secondary" />
-            </button>
           </div>
         </div>
       </div>
