@@ -42,8 +42,8 @@ export default function SearchPage() {
               </div>
               <Divider />
               {/* 검색 결과 리스트 */}
-              <ul className="flex flex-col gap-4 h-fit">
-                <li className="flex flex-row justify-around items-center h-fit p-[1%]">
+              <ul className="flex flex-col gap-8 h-fit">
+                <li className="flex flex-row justify-around items-center h-fit">
                   {/* 앨범 커버, 곡 이름 + 태그, 프롬프트 내용 flexbox */}
                   <div className="flex flex-row justify-between items-center w-[60%] gap-8">
                     {/* 앨범 커버, 곡 이름 flexbox */}
@@ -51,7 +51,7 @@ export default function SearchPage() {
                       <img
                         src="https://i.ibb.co/hLxvjJG/1.jpg"
                         alt="cover"
-                        className="size-24 rounded-sm"
+                        className="size-28 rounded-sm"
                       />
                       <p className="text-lg">title</p>
                     </div>
