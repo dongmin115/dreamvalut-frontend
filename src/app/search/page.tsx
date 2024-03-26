@@ -1,8 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable import/extensions */
+
+'use client';
+
 import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
 import NavBar from '../components/NavBar/NavigationBar';
 
@@ -57,8 +61,14 @@ export default function SearchPage() {
                       soundscapes
                     </p>
                   </div>
+                  {/* 제작자 */}
                   <p className="text-lg w-[10%] text-center">aespa</p>
-                  <p className="text-lg w-[10%] text-center">1</p>
+                  {/* 좋아요 */}
+                  <div className="flex flex-row justify-center gap-2 items-center w-[10%]">
+                    <FavoriteIcon color="primary" />
+                    <p className="text-lg w-fit text-center">1</p>
+                  </div>
+                  {/* 재생 */}
                   <p className="text-lg w-[10%] text-center">1</p>
                 </li>
               </ul>
