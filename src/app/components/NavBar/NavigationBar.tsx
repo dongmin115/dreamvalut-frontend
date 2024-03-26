@@ -155,14 +155,14 @@ const NavBar: React.FC = () => (
         </Playlist>
       </Link>
 
-      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
-        <Mymusic>
-          <EditNoteIcon style={{ color: theme.palette.primary.main }} />
-          <button className="p-2 text-sm">
-            <Link href={'/MymusicAI'}>나만의 음악</Link>
-          </button>
-        </Mymusic>
-      </div>
+      <Link href={'/MymusicAI'}>
+        <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
+          <Mymusic>
+            <EditNoteIcon style={{ color: theme.palette.primary.main }} />
+            <button className="p-2 text-sm">나만의 음악</button>
+          </Mymusic>
+        </div>
+      </Link>
 
       <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <PersonIcon style={{ color: theme.palette.primary.main }} />
