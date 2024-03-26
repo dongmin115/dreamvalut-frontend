@@ -65,6 +65,7 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: 0,
   marginBottom: theme.spacing(5),
   width: '100%',
+  height: '40px',
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(0),
     width: 'auto',
@@ -84,12 +85,12 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 export function SearchAppBar() {
   return (
     <>
-      <Typography
+      {/* <Typography
         variant="h6"
         noWrap
         component="div"
         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-      />
+      /> */}
       <Search>
         <SearchIconWrapper>
           <SearchIcon />
@@ -97,7 +98,7 @@ export function SearchAppBar() {
         <InputBase
           placeholder="검색"
           inputProps={{ 'aria-label': 'search' }}
-          className="ml-10 text-sm text-white"
+          className="ml-10 h-full text-sm text-white"
         />
       </Search>
     </>
@@ -120,28 +121,31 @@ const UserProfile: React.FC<UserProfileProps> = ({ children }) => (
 const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 const NavBar: React.FC = () => (
-  <div className="fixed flex flex-col justify-between left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
-    <div className="flex flex-col">
+  <div className="fixed flex flex-col justify-start left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
+    <Link className="flex flex-col cursor-pointer" href={'/main'}>
       <div className="flex items-center mt-5">
         <img
-          src="https://i.ibb.co/Jkwmvbq/image.png"
+          src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           alt="DreamVault-logo-img"
-          className="w-10 h-10"
+          className="w-12"
         />
-        <h2 className="p-3">DreamVault</h2>
+        <h2 className="p-3 text-2xl font-bold">DreamVault</h2>
       </div>
-    </div>
+    </Link>
 
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-12 h-full">
       <SearchAppBar />
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <Home>
           <HomeIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">홈</button>
         </Home>
       </div>
 
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <Link
+        className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer"
+        href={'/playlist'}
+      >
         <Playlist
           title="내 플레이리스트"
           songs={['노래 1', '노래 2', '노래 3']}
@@ -149,9 +153,9 @@ const NavBar: React.FC = () => (
           <PlaylistPlayIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">플레이리스트</button>
         </Playlist>
-      </div>
+      </Link>
 
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <Mymusic>
           <EditNoteIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sm">
@@ -160,7 +164,7 @@ const NavBar: React.FC = () => (
         </Mymusic>
       </div>
 
-      <div className="flex mb-5 items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <PersonIcon style={{ color: theme.palette.primary.main }} />
         <UserProfile>
           <button className="p-2 text-sm">
@@ -169,7 +173,7 @@ const NavBar: React.FC = () => (
         </UserProfile>
       </div>
 
-      <div className="flex items-center rounded-lg hover:bg-zinc-700 cursor-pointer">
+      <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
         <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
         <UserProfile>
           <button className="p-2 text-sm">
@@ -179,8 +183,8 @@ const NavBar: React.FC = () => (
       </div>
     </div>
 
-    <div className="flex flex-col pt-72">
-      <div className="flex items-center text-sm rounded-lg hover:bg-zinc-700">
+    <div className="flex flex-col my-4">
+      <div className="flex items-center text-sm rounded-lg hover-bg-opacity">
         <LogOut>
           <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
           <button className="p-2 text-sx">로그아웃</button>
