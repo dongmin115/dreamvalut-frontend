@@ -5,7 +5,8 @@
 'use client';
 
 import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material';
+import { IconButton, createTheme } from '@mui/material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
 import NavBar from '../components/NavBar/NavigationBar';
@@ -65,11 +66,17 @@ export default function SearchPage() {
                   <p className="text-lg w-[10%] text-center">aespa</p>
                   {/* 좋아요 */}
                   <div className="flex flex-row justify-center gap-2 items-center w-[10%]">
-                    <FavoriteIcon color="primary" />
+                    <IconButton>
+                      <FavoriteIcon color="primary" fontSize="medium" />
+                    </IconButton>
                     <p className="text-lg w-fit text-center">1</p>
                   </div>
                   {/* 재생 */}
-                  <p className="text-lg w-[10%] text-center">1</p>
+                  <div className="w-[10%] text-center">
+                    <IconButton>
+                      <PlayArrowIcon color="primary" fontSize="large" />
+                    </IconButton>
+                  </div>
                 </li>
               </ul>
             </div>
