@@ -95,8 +95,8 @@ export default function MusicPage() {
         </div>
         {/* 재생목록 */}
         <div className="flex flex-col items-center justify-center h-full w-[30%] space-y-4">
-          <div className="flex flex-row justify-between w-full">
-            <h1 className="text-4xl text-white drop-shadow-lg self-start">
+          <div className="flex flex-row justify-between w-full h-fit items-center">
+            <h1 className="text-4xl text-white drop-shadow-lg h-fit m-0">
               Playlist
             </h1>
             <Button
