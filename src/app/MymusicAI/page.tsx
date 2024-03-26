@@ -127,14 +127,14 @@ const UploadMyMusic = () => {
     <ThemeProvider theme={theme}>
       <NavBar />
       <div className="pl-[15%] w-screen h-screen">
-        <div className="flex w-[70%] h-screen ml-[15%] ">
-          <div className="flex flex-col shadow-indigo-500/100 shadow-lg items-center space-x-4 bg-[#1e1e1e] w-full h-full rounded-xl">
+        <div className="flex w-[70%] ml-[15%] mt-[2%]">
+          <div className="flex flex-col shadow-indigo-500/100 shadow-lg items-center space-x-4 bg-[#1e1e1e] w-full rounded-xl mb-[4%]">
             <div className="flex flex-col p-[3%] w-[90%] text-[#A97DFF] border-b border-[#727272] text-3xl text-center items-center">
               나만의 음악 등록
             </div>
 
             {/* 등록할 곡 사진, 제목, 가수명, 용량 */}
-            <div className="flex flex-row space-x-8 p-[3%]">
+            <div className="flex mt-[4%] shadow-lg rounded-xl shadow-neutral-400 space-x-8 p-[3%]">
               <img
                 src="https://i.ibb.co/8MTGSjd/image.png"
                 alt="프로필 이미지"
@@ -148,10 +148,10 @@ const UploadMyMusic = () => {
             </div>
             <form
               id="test"
-              className="flex flex-col h-[77%] w-full"
+              className="flex flex-col w-full h-auto"
               onSubmit={handleSubmit}
             >
-              <div className="flex justify-center mt-[3%]">
+              <div className="flex justify-center mt-[5%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
                 <input
                   className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
@@ -161,7 +161,7 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
-              <div className="flex justify-center mt-[5%]">
+              <div className="flex justify-center mt-[3%]">
                 <label className="p-[1%] text-lg text-[#A97DFF] ">설명</label>
                 <textarea
                   className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
@@ -171,7 +171,7 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 해시태그 선택 */}
-              <div className="flex justify-center mt-[5%]">
+              <div className="flex justify-center mt-[3%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">태그</label>
                 <input
                   className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
@@ -182,7 +182,7 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 가사 보유여부 */}
-              <div className="flex justify-center mt-[4%]">
+              <div className="flex justify-center mt-[3%]">
                 <ToggleButtonGroup
                   value={lyrics}
                   exclusive
@@ -199,7 +199,7 @@ const UploadMyMusic = () => {
                 </ToggleButtonGroup>
               </div>
               {/* 장르 선택 */}
-              <div className="flex justify-center mt-[4%]">
+              <div className="flex justify-center mt-[3%]">
                 <div>
                   <FormControl sx={{ m: 1, width: 300 }}>
                     <InputLabel
