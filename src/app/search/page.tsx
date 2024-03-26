@@ -41,9 +41,12 @@ export default function SearchPage() {
                 <p className="text-lg w-[10%] text-center">재생</p>
               </div>
               <Divider />
+              {/* 검색 결과 리스트 */}
               <ul className="flex flex-col gap-4 h-fit">
-                <li className="flex flex-row justify-around items-center h-fit">
+                <li className="flex flex-row justify-around items-center h-fit p-[1%]">
+                  {/* 앨범 커버, 곡 이름 + 태그, 프롬프트 내용 flexbox */}
                   <div className="flex flex-row justify-between items-center w-[60%] gap-8">
+                    {/* 앨범 커버, 곡 이름 flexbox */}
                     <div className="flex flex-col justify-center items-center w-fit gap-4">
                       <img
                         src="https://i.ibb.co/hLxvjJG/1.jpg"
@@ -52,18 +55,34 @@ export default function SearchPage() {
                       />
                       <p className="text-lg">title</p>
                     </div>
-                    <p className="text-md items-center w-[80%]">
-                      "Cyclone Silence" merges the ethereal qualities of Ambient
-                      music with a more intense and forceful atmosphere. This
-                      track weaves together swirling synths and deep, pulsating
-                      beats, creating a soundscape that's both aggressive and
-                      enveloping. It's a journey through a storm of emotions,
-                      where the power of nature meets the tranquility of ambient
-                      soundscapes
-                    </p>
+                    {/* 태그, 프롬프트 내용 flexbox */}
+                    <div className="flex flex-col justify-center items-center w-[80%] gap-2">
+                      {/* 태그 flexbox */}
+                      <div className="flex flex-row gap-2 self-start">
+                        {/* 태그 */}
+                        <div className="rounded-full bg-[#5419d4] p-2 text-xs w-fit">
+                          #Jazz
+                        </div>
+                        <div className="rounded-full bg-[#5419d4] p-2 text-xs w-fit">
+                          #Rock
+                        </div>
+                      </div>
+                      {/* 프롬프트 내용 */}
+                      <p className="text-md items-center w-full">
+                        "Cyclone Silence" merges the ethereal qualities of
+                        Ambient music with a more intense and forceful
+                        atmosphere. This track weaves together swirling synths
+                        and deep, pulsating beats, creating a soundscape that's
+                        both aggressive and enveloping. It's a journey through a
+                        storm of emotions, where the power of nature meets the
+                        tranquility of ambient soundscapes
+                      </p>
+                    </div>
                   </div>
                   {/* 제작자 */}
-                  <p className="text-lg w-[10%] text-center">aespa</p>
+                  <p className="text-lg w-[10%] text-center text-[#777777]">
+                    aespa
+                  </p>
                   {/* 좋아요 */}
                   <div className="flex flex-row justify-center gap-2 items-center w-[10%]">
                     <IconButton>
