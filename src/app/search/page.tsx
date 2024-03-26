@@ -15,13 +15,13 @@ export default function SearchPage() {
           <div className="flex flex-col bg-[#353535] h-fit rounded-xl w-full p-[2%] gap-4">
             <div className="flex flex-row justify-around items-center h-fit">
               <p className="text-xl w-[60%] text-center">곡정보</p>
-              <p className="text-lg">제작자</p>
-              <p className="text-lg">좋아요</p>
-              <p className="text-lg">재생</p>
+              <p className="text-lg w-[10%] text-center">제작자</p>
+              <p className="text-lg w-[10%] text-center">좋아요</p>
+              <p className="text-lg w-[10%] text-center">재생</p>
             </div>
             <Divider />
             <ul className="flex flex-col gap-4 h-fit">
-              <li className="flex flex-row justify-around items-center h-fit p-[1%]">
+              <li className="flex flex-row justify-around items-center h-fit">
                 <div className="flex flex-row justify-between items-center w-[60%] gap-8">
                   <div className="flex flex-col justify-center items-center w-fit gap-4">
                     <img
@@ -41,9 +41,9 @@ export default function SearchPage() {
                     soundscapes
                   </p>
                 </div>
-                <p className="text-lg">aespa</p>
-                <p className="text-lg">1</p>
-                <p className="text-lg">1</p>
+                <p className="text-lg w-[10%] text-center">aespa</p>
+                <p className="text-lg w-[10%] text-center">1</p>
+                <p className="text-lg w-[10%] text-center">1</p>
               </li>
             </ul>
           </div>
