@@ -27,9 +27,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import { ListItemText } from '@mui/material';
-import Button from '@mui/material/Button';
 
 const theme = createTheme({
   palette: {
@@ -44,22 +41,10 @@ const theme = createTheme({
   },
 });
 
-// 장르 선택
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 // 해시태그
 const ITEM_HEIGHT2 = 48;
 const ITEM_PADDING_TOP2 = 8;
-const MenuProps2 = {
+const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT2 * 4.5 + ITEM_PADDING_TOP2,
@@ -74,7 +59,7 @@ const names = [
   'RnB',
   'Jazz',
   'Ballade',
-  'classical',
+  'Classical',
   'Rock',
   'Hip-Hap',
   'Folk',
@@ -84,26 +69,13 @@ const names = [
   'EDM',
 ];
 
-// 해시태그 데이터
-const names2 = [
-  'Love',
-  'Happy',
-  'Energy',
-  'Sad',
-  'Chill',
-  'Empty',
-  'Power',
-  'Relax',
-];
-
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
-  //   const [tags, setTags] = useState('');
+  const [tags, setTags] = useState('');
   const [genre, setGenre] = useState(true);
   const theme = useTheme();
   const [genreName, setgenreName] = React.useState<string[]>([]);
-  const [tagName, settagName] = React.useState<string[]>([]);
 
   // 장르
   function getStyles(name: string, genreName: string[], theme: Theme) {
@@ -115,11 +87,11 @@ const UploadMyMusic = () => {
     };
   }
 
-  const handleChange = (event: SelectChangeEvent<typeof tagName>) => {
+  const handleChange = (event: SelectChangeEvent<typeof genreName>) => {
     const {
       target: { value },
     } = event;
-    settagName(
+    setgenreName(
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
@@ -132,7 +104,7 @@ const UploadMyMusic = () => {
     console.log('음악 업로드:', {
       title,
       prompt,
-      //   tags,
+      tags,
       genre,
     });
     // 이후에 서버로 데이터를 전송하는 등의 로직을 추가하는 곳
@@ -179,56 +151,33 @@ const UploadMyMusic = () => {
               <div className="flex justify-center mt-[4%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
                 <input
-                  className="w-[50%] text-black rounded-xl outline-none"
+                  className="w-[50%] p-[1%] text-black rounded-xl outline-none"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
                 />
               </div>
-              <div className="flex mh-[200%] justify-center mt-[5%]">
-                <label className="p-[1%] text-lg text-[#A97DFF]">설명</label>
-                <input
-                  className="w-[50%] text-black rounded-xl outline-none"
-                  type="text"
+              <div className="flex justify-center mt-[5%]">
+                <label className="p-[1%] text-lg text-[#A97DFF] ">설명</label>
+                <textarea
+                  className="w-[50%] p-[1%] text-black rounded-xl outline-none"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
                 />
               </div>
               {/* 해시태그 선택 */}
-              <div className="flex mh-[200%] justify-center mt-[2%]">
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
-                  <Select
-                    labelId="demo-multiple-checkbox-label"
-                    id="demo-multiple-checkbox"
-                    multiple
-                    value={tagName}
-                    onChange={handleChange}
-                    input={<OutlinedInput label="Tag" />}
-                    renderValue={(selected) => selected.join(', ')}
-                    MenuProps={MenuProps}
-                  >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        <Checkbox checked={tagName.indexOf(name) > -1} />
-                        <ListItemText primary={name} />
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </div>
-              {/* <div className="flex justify-center mt-[5%]">
+              <div className="flex justify-center mt-[5%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">태그</label>
                 <input
-                  className="w-[50%] text-black rounded-xl outline-none"
+                  className="w-[50%] p-[1%] text-black rounded-xl outline-none"
                   type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
                   required
                 />
-              </div> */}
+              </div>
               {/* 가사 보유여부 */}
               <div className="flex justify-center mt-[2%]">
                 <ToggleButtonGroup
@@ -258,6 +207,7 @@ const UploadMyMusic = () => {
                       onChange={handleChange}
                       input={<OutlinedInput label="genre" />}
                       MenuProps={MenuProps}
+                      color="primary"
                     >
                       {names.map((name) => (
                         <MenuItem
