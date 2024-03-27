@@ -4,8 +4,12 @@
 
 'use client';
 
+import React from 'react';
+import numeral from 'numeral';
 import { IconButton, ThemeProvider } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { createTheme } from '@mui/material/styles';
 import NavigationBar from '../../components/NavBar/NavigationBar';
 import MusicBar from '../../components/Musicbar/Musicbar';
@@ -22,6 +26,28 @@ const theme = createTheme({
     },
   },
 });
+type MusicElementProps = {
+  image: string;
+  title: string;
+  like: number;
+  isLiked: boolean;
+};
+
+function MusicElement({ image, title, like, isLiked }: MusicElementProps) {
+  return (
+    <div className="flex flex-row w-full items-center">
+      <div className="flex flex-row w-full items-center px-12">
+        <img src={image} alt="Album cover" className="h-24 w-24 rounded-lg" />
+        <p className="flex mx-6 w-96 text-2xl">{title}</p>
+      </div>
+      <p className="flex mx-6 w-24 text-2xl">{like}</p>
+      <IconButton className="mx-6">
+        <PlayCircleIcon color="primary" style={{ fontSize: 50, opacity: 1 }} />
+      </IconButton>
+    </div>
+  );
+}
+
 function page(props: any) {
   const playlistTitle = decodeURIComponent(props.params.playlistTitle);
   return (
@@ -49,6 +75,13 @@ function page(props: any) {
               <p className="flex mx-6 w-24 text-2xl">재생</p>
             </div>
             <hr className="w-full my-6 border-zinc-600" />
+            {/* 음악 요소들 */}
+            <MusicElement
+              image="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+              title="곡 제목"
+              like={100}
+              isLiked={false}
+            />
           </div>
         </div>
       </div>
