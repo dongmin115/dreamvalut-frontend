@@ -126,7 +126,7 @@ const UploadMyMusic = () => {
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <div className="pl-[15%] w-screen h-screen">
+      <div className="pl-[15%] w-full h-screen">
         <div className="flex w-[70%] ml-[15%] mt-[2%]">
           <div className="flex flex-col shadow-indigo-500/100 shadow-lg items-center space-x-4 bg-[#1e1e1e] w-full rounded-xl mb-[4%]">
             <div className="flex flex-col p-[3%] w-[90%] text-[#A97DFF] border-b border-[#727272] text-3xl text-center items-center">
@@ -212,7 +212,7 @@ const UploadMyMusic = () => {
                     <Select
                       labelId="demo-multiple-name-label"
                       id="demo-multiple-name"
-                      multiple
+                      multiple // 다수 선택 가능
                       value={genreName}
                       onChange={handleGenre}
                       input={<OutlinedInput label="genre" />}
