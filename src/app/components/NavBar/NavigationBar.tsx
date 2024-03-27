@@ -155,12 +155,14 @@ const NavBar: React.FC = () => (
         </Playlist>
       </Link>
 
-      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
-        <Mymusic>
-          <EditNoteIcon style={{ color: theme.palette.primary.main }} />
-          <button className="p-2 text-sm">나만의 음악</button>
-        </Mymusic>
-      </div>
+      <Link href={'/MymusicAI'}>
+        <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
+          <Mymusic>
+            <EditNoteIcon style={{ color: theme.palette.primary.main }} />
+            <button className="p-2 text-sm">나만의 음악</button>
+          </Mymusic>
+        </div>
+      </Link>
 
       <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <PersonIcon style={{ color: theme.palette.primary.main }} />
@@ -176,6 +178,15 @@ const NavBar: React.FC = () => (
         <UserProfile>
           <button className="p-2 text-sm">
             <Link href={'/musicpage'}>음악 상세페이지 (임시)</Link>
+          </button>
+        </UserProfile>
+      </div>
+
+      <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
+        <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
+        <UserProfile>
+          <button className="p-2 text-sm">
+            <Link href={'/search'}>검색 결과페이지 (임시)</Link>
           </button>
         </UserProfile>
       </div>

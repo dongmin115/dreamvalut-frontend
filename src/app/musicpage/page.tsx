@@ -43,16 +43,18 @@ export default function MusicPage() {
   };
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-screen h-screen flex flex-row justify-around">
+      <div className="w-screen h-screen flex flex-row justify-around pl-[15%]">
         <NavBar />
         {/* 블러배경 */}
         <img
           src="https://i.ibb.co/hLxvjJG/1.jpg"
           alt="1"
-          className="w-full h-full blur -z-10 fixed"
+          className="w-full h-full blur -z-20 fixed"
         />
+        {/* 검은색 레이어 */}
+        <div className="w-full h-full bg-black bg-opacity-30 fixed -z-10" />
         {/* 음악정보 */}
-        <div className="flex flex-col items-center justify-center h-full w-[30%] ml-[20%] space-y-4">
+        <div className="flex flex-col items-center justify-center h-full w-[40%] space-y-4">
           <h1 className="text-4xl text-white drop-shadow-lg">Lovin On Me</h1>
           <p className="text-[#777777] drop-shadow-md">Jack Harlow</p>
           <img
@@ -93,8 +95,8 @@ export default function MusicPage() {
         </div>
         {/* 재생목록 */}
         <div className="flex flex-col items-center justify-center h-full w-[30%] space-y-4">
-          <div className="flex flex-row justify-between w-full">
-            <h1 className="text-4xl text-white drop-shadow-lg self-start">
+          <div className="flex flex-row justify-between w-full h-fit items-center">
+            <h1 className="text-4xl text-white drop-shadow-lg h-fit m-0">
               Playlist
             </h1>
             <Button
