@@ -5,7 +5,7 @@
 
 'use client';
 
-import { Icon, IconButton, ThemeProvider } from '@mui/material';
+import { IconButton, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
