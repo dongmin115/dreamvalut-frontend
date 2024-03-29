@@ -5,8 +5,8 @@
 import LogIn from './LogInPage/page';
 // import GenrePage from './GenrePage/page';
 
-import React from 'react';
-import UploadMyMusic from './MymusicAI/page';
+// import React from 'react';
+// import UploadMyMusic from './MymusicAI/page';
 // App 컴포넌트
 export default function Home() {
   return (
