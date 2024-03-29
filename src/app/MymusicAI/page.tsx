@@ -141,8 +141,7 @@ const UploadMyMusic = () => {
                 className="size-36 rounded-xl drop-shadow-sm"
               />
               <div className="flex flex-col text-center justify-center">
-                <p className="text-white text-xl">Dangerously</p>
-                <p className="text-[#777777] text-lg">Charlie Puth</p>
+                <p className="text-white text-xl mb-[20%]">Dangerously</p>
                 <p className="text-[#777777] text-base">8.02 MB</p>
               </div>
             </div>
