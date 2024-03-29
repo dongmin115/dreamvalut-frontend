@@ -1,28 +1,37 @@
+/* eslint-disable no-console */
 /* eslint-disable @next/next/no-img-element */
 
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 const LogIn = () => {
   const router = useRouter();
 
+  useEffect(() => {
+    console.log('마운트될 때만 실행된다.');
+  }, []);
+
   const handleLogin = () => {
     // 로그인 처리를 한 뒤 다른 페이지로 이동하도록 설정
-    router.push('/another-page');
+    router.push('/GenrePage');
   };
-
   return (
     <>
       <div className="flex justify-center items-center flex-col h-screen fade-in-box">
+        <img
+          src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
+          alt="DreamVault-logo-img"
+          className="w-[5%] mb-[1%]"
+        />
         <p className="text-4xl text-white mb-10 z-10">
           Welcome To <span className="text-violet-600 z-10">DreamVault.</span>
         </p>
         <p className="text-6xl text-white mb-16 z-10">
           당신의 꿈을 열어보세요.
         </p>
-        <div className="flex LogInBtns justify-center items-center mb-4 p-1 w-1/5 rounded-xl z-10">
+        <div className="flex h-[5%] LogInBtns justify-center items-center mb-4 p-1 w-1/5 rounded-xl z-10">
           <img
             src="https://i.ibb.co/fQ4ZGZ8/image.png"
             alt="googleimage"
@@ -32,7 +41,7 @@ const LogIn = () => {
             구글로 로그인
           </button>
         </div>
-        <div className="flex LogInBtns justify-center items-center mb-4 p-1 w-1/5 rounded-xl z-10">
+        <div className="flex h-[5%] LogInBtns justify-center items-center mb-4 p-1 w-1/5 rounded-xl z-10">
           <img
             src="https://i.ibb.co/9Y7CRMr/image.png"
             alt="kakaoimage"
@@ -42,7 +51,7 @@ const LogIn = () => {
             카카오톡으로 로그인
           </button>
         </div>
-        <div className="flex LogInBtns justify-center items-center mb-4 p-1 w-1/5 rounded-xl z-10">
+        <div className="flex h-[5%] LogInBtns justify-center items-center mb-4 p-1 w-1/5 rounded-xl z-10">
           <img
             src="https://i.ibb.co/Y8Q9dVv/image.png"
             alt="naverimage"
