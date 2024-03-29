@@ -1,8 +1,11 @@
+/* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import React from 'react';
+import { MSWComponent } from './mocks/MSWComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +30,7 @@ export default function RootLayout({
           href="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           sizes="any"
         />
-        {children}
+        <MSWComponent>{children}</MSWComponent>
       </body>
     </html>
   );
