@@ -1,12 +1,8 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import MSWComponent from '../mocks/MSWcomponent.tsx';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,6 +28,7 @@ export default function RootLayout({
           href="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           sizes="any"
         />
+        {children}
       </body>
     </html>
   );
