@@ -37,7 +37,15 @@ const LogIn = () => {
             alt="googleimage"
             className="w-10 h-10 rounded-full"
           />
-          <button onClick={handleLogin} className="text-xl ml-10">
+          <button
+            onClick={() => {
+              window
+                .fetch('https://api.example.com/api/user')
+                .then((res) => res.json())
+                .then((data) => console.log(data));
+            }}
+            className="text-xl ml-10"
+          >
             구글로 로그인
           </button>
         </div>
