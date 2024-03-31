@@ -3,4 +3,5 @@
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers';
 
+// 개발 환경에서만 MSW를 활성화합니다.
 export const server = setupServer(...handlers);
