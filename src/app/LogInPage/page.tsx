@@ -3,20 +3,36 @@
 
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 
+// 클라이언트 코드에서 실제 서버로 POST 요청을 보내는 방식
 const LogIn = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    console.log('마운트될 때만 실행된다.');
-  }, []);
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ provider: 'kakao' }), // 카카오 로그인을 가정
+      });
 
-  const handleLogin = () => {
-    // 로그인 처리를 한 뒤 다른 페이지로 이동하도록 설정
-    router.push('/GenrePage');
+      // 응답 확인
+      if (!response.ok) {
+        throw new Error('로그인에 실패했습니다.');
+      }
+
+      const data = await response.json();
+      console.log(data); // 로그인 성공 시 응답 데이터를 콘솔에 출력
+      router.push('/GenrePage'); // 로그인 성공 시 다음 페이지로 이동
+    } catch (error: any) {
+      console.error(error.message); // 오류 메시지 출력
+    }
   };
+
   return (
     <>
       <div className="flex justify-center items-center flex-col h-screen fade-in-box">

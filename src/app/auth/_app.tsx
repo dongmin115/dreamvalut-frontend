@@ -1,12 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import React from 'react';
 import { SessionProvider } from 'next-auth/react';
+import { AppProps } from 'next/app';
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={pageProps.session}>
       <Component {...pageProps} />
     </SessionProvider>
   );
