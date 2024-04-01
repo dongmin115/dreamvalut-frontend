@@ -11,7 +11,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import './GenrePageCSS.css';
 
 const GenrePage: React.FC = () => {
   const NextPageBtn: React.FC = () => (
@@ -21,6 +20,7 @@ const GenrePage: React.FC = () => {
       </button>
     </Link>
   );
+  const [alignment, setAlignment] = React.useState('web');
   const [formats, setFormats] = React.useState(() => [
     'POP',
     'RnB',
@@ -36,18 +36,11 @@ const GenrePage: React.FC = () => {
     'EDM',
   ]);
 
-  // 버튼 선택시 배경색 변경
-  const [isActive, setIsActive] = useState(false);
-
-  const toggleActive = () => {
-    setIsActive(!isActive);
-  };
-
-  const handleFormat = (
+  const handleChange = (
     event: React.MouseEvent<HTMLElement>,
-    newFormats: string[],
+    newAlignment: string,
   ) => {
-    setFormats(newFormats);
+    setAlignment(newAlignment);
   };
 
   const theme = createTheme({
@@ -64,11 +57,13 @@ const GenrePage: React.FC = () => {
   });
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <ToggleButtonGroup
-        value={formats}
-        onChange={handleFormat}
-        aria-label="text formatting"
+        color="primary"
+        value={alignment}
+        exclusive
+        onChange={handleChange}
+        aria-label="Platform"
       >
         <div className="flex  w-screen h-screen justify-center">
           <div className="z-10 fade-in-box grid grid-cols-3 grid-rows-4 w-[30%] h-screen gap-[3%] p-[2%]">
@@ -236,10 +231,9 @@ const GenrePage: React.FC = () => {
         Genre.
       </p>
       <div className="absolute fade-in-box2 left-[1%] bottom-[44%] w-[98%] h-[1%] rounded-md bg-violet-950 opacity-[100%]"></div>
-      <ThemeProvider theme={theme}>
-        <NextPageBtn />
-      </ThemeProvider>
-    </>
+
+      <NextPageBtn />
+    </ThemeProvider>
   );
 };
 
