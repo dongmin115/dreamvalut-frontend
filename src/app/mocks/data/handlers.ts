@@ -21,11 +21,6 @@ export const handlers = [
         pwd: '12211433ㅇㄹ',
         email: 'examplㅁㅁㅁe@example.com',
       },
-      data4: {
-        id: 'handongryong',
-        pwd: 'ㄴㄻㄴㄹㅇㄴ23312',
-        email: 'exampl2222e@example.com',
-      },
     });
   }),
 ];

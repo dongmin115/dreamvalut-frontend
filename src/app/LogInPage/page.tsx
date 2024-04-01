@@ -1,38 +1,21 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable @next/next/no-img-element */
 
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 // 클라이언트 코드에서 실제 서버로 POST 요청을 보내는 방식
 const LogIn = () => {
   const router = useRouter();
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ provider: 'kakao' }), // 카카오 로그인을 가정
-      });
-
-      // 응답 확인
-      if (!response.ok) {
-        throw new Error('로그인에 실패했습니다.');
-      }
-
-      const data = await response.json();
-      console.log(data); // 로그인 성공 시 응답 데이터를 콘솔에 출력
-      router.push('/GenrePage'); // 로그인 성공 시 다음 페이지로 이동
-    } catch (error: any) {
-      console.error(error.message); // 오류 메시지 출력
-    }
+  const handleLogin = () => {
+    // 로그인 처리를 한 뒤 다른 페이지로 이동하도록 설정
+    router.push('/GenrePage');
   };
-
   return (
     <>
       <div className="flex justify-center items-center flex-col h-screen fade-in-box">
@@ -58,7 +41,7 @@ const LogIn = () => {
               window
                 .fetch('https://api.example.com/api/user')
                 .then((res) => res.json())
-                .then((data) => console.log(data));
+                .then((data1) => console.log(data1));
             }}
             className="text-xl ml-10"
           >
@@ -71,7 +54,15 @@ const LogIn = () => {
             alt="kakaoimage"
             className="w-10 h-10 rounded-full"
           />
-          <button onClick={handleLogin} className="text-xl ml-10">
+          <button
+            onClick={() => {
+              window
+                .fetch('https://api.example.com/api/user')
+                .then((res) => res.json())
+                .then((data1) => console.log(data1));
+            }}
+            className="text-xl ml-10"
+          >
             카카오톡으로 로그인
           </button>
         </div>
@@ -81,7 +72,15 @@ const LogIn = () => {
             alt="naverimage"
             className="w-10 h-10 rounded-full"
           />
-          <button onClick={handleLogin} className="text-xl ml-10">
+          <button
+            onClick={() => {
+              window
+                .fetch('https://api.example.com/api/user')
+                .then((res) => res.json())
+                .then((data1) => console.log(data1));
+            }}
+            className="text-xl ml-10"
+          >
             네이버로 로그인
           </button>
         </div>
@@ -94,5 +93,4 @@ const LogIn = () => {
     </>
   );
 };
-
 export default LogIn;
