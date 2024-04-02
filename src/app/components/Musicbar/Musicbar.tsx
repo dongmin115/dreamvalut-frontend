@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
@@ -33,30 +33,37 @@ export default function MusicBar() {
   // useEffect(() => {
   //   setAlbumColor('#FE4500');
   // }, []);
-  const [value, setValue] = useState<number>(30);
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number);
-  };
-
-  const audio = document.getElementById('audio') as HTMLAudioElement;
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [isPaused, setIsPaused] = useState<boolean>(true);
   // 재생함수
   const playAudio = () => {
-    audio.play();
-    setIsPaused(false);
+    if (audioRef.current) {
+      audioRef.current.play();
+      setIsPaused(false);
+    }
   };
 
   // 일시정지함수
   const pauseAudio = () => {
-    audio.pause();
-    setIsPaused(true);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPaused(true);
+    }
+  };
+  // 볼륨조절
+  const [volume, setVolume] = useState<number>(30);
+
+  const handleChange = (event: Event, newVolume: number | number[]) => {
+    if (audioRef.current) {
+      setVolume(newVolume as number);
+      audioRef.current.volume = volume / 100;
+    }
   };
 
   return (
     <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg z-40">
       {/* 음악소스 */}
-      <audio id="audio" controls preload="auto" className="hidden">
+      <audio ref={audioRef} controls preload="auto" className="hidden">
         <source
           src="https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/Melancholy+Motif.wav"
           id="audio_player"
@@ -105,7 +112,7 @@ export default function MusicBar() {
           <VolumeDown color="primary" fontSize="medium" />
           <Slider
             aria-label="Volume"
-            value={value}
+            value={volume}
             onChange={handleChange}
             size="small"
           />
