@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/rules-of-hooks */
@@ -7,7 +9,8 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import './GenreColorList.css';
 import { IconButton } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -125,6 +128,8 @@ function page() {
   const [otherPlaylistPageIndex, setOtherPlaylistPageIndex] = useState(0); // 다른 유저가 선택한 플레이리스트 페이지 인덱스
   const [systemPlaylistPageIndex, setSystemPlaylistPageIndex] = useState(0); // 시스템 플레이리스트 페이지 인덱스
 
+  const [data, setData] = useState<any>({});
+
   const handlePopularPageForwardClick = () => {
     setpopularPageIndex(popularPageIndex + 1);
   };
@@ -183,7 +188,23 @@ function page() {
   ) {
     popularMusicList.push(<PopularMusic key={i} ranking={i} />);
   }
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('/api/users');
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [
+    popularPageIndex,
+    tagPageIndex,
+    genrePageIndex,
+    otherPlaylistPageIndex,
+    systemPlaylistPageIndex,
+  ]);
   return (
     <ThemeProvider theme={theme}>
       <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">

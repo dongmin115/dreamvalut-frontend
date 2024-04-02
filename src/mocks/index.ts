@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
+/* eslint-disable import/extensions */
+/* eslint-disable import/order */
 export async function initMsw() {
   if (typeof window === 'undefined') {
     const { server } = await import('./server');

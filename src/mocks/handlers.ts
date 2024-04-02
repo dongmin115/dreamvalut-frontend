@@ -1,17 +1,14 @@
 /* eslint-disable import/no-unresolved */
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable import/prefer-default-export */
 /* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable arrow-body-style */
 import { HttpResponse, http } from 'msw';
 
 export const handlers = [
-  http.get('https://api.example.com/api/user', () =>
-    HttpResponse.json({
-      data: {
-        name: 'handongryong',
-        age: 25,
-      },
-    }),
-  ),
+  http.get('/api/users', () => {
+    return HttpResponse.json({
+      success: true,
+      message: '성공입니다~',
+    });
+  }),
 ];
