@@ -7,6 +7,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import ReplayIcon from '@mui/icons-material/Replay';
+import PauseIcon from '@mui/icons-material/Pause';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
@@ -38,10 +39,24 @@ export default function MusicBar() {
     setValue(newValue as number);
   };
 
+  const audio = document.getElementById('audio') as HTMLAudioElement;
+  const [isPaused, setIsPaused] = useState<boolean>(true);
+  // 재생함수
+  const playAudio = () => {
+    audio.play();
+    setIsPaused(false);
+  };
+
+  // 일시정지함수
+  const pauseAudio = () => {
+    audio.pause();
+    setIsPaused(true);
+  };
+
   return (
     <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg z-40">
       {/* 음악소스 */}
-      <audio controls preload="auto" className="hidden">
+      <audio id="audio" controls preload="auto" className="hidden">
         <source
           src="https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/Melancholy+Motif.wav"
           id="audio_player"
@@ -54,9 +69,15 @@ export default function MusicBar() {
           <IconButton>
             <SkipPreviousIcon color="primary" fontSize="large" />
           </IconButton>
-          <IconButton>
-            <PlayArrowIcon color="primary" fontSize="large" />
-          </IconButton>
+          {isPaused ? (
+            <IconButton onClick={playAudio}>
+              <PlayArrowIcon color="primary" fontSize="large" />
+            </IconButton>
+          ) : (
+            <IconButton onClick={pauseAudio}>
+              <PauseIcon color="primary" fontSize="large" />
+            </IconButton>
+          )}
           <IconButton>
             <SkipNextIcon color="primary" fontSize="large" />
           </IconButton>
