@@ -18,7 +18,6 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
 import NavigationBar from '../components/NavBar/NavigationBar';
-import MusicBar from '../components/Musicbar/Musicbar';
 
 const theme = createTheme({
   palette: {
@@ -188,7 +187,7 @@ function page() {
     <ThemeProvider theme={theme}>
       <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
         <NavigationBar />
-        <MusicBar />
+        {/* <MusicBar /> */}
         {/* NavigationBar 제외 영역 */}
         <div className="w-10/12 h-full pr-8">
           {/* 인기 차트 */}
