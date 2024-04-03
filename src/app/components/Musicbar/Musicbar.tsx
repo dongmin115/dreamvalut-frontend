@@ -33,6 +33,7 @@ export default function MusicBar() {
   // useEffect(() => {
   //   setAlbumColor('#FE4500');
   // }, []);
+
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPaused, setIsPaused] = useState<boolean>(true);
   // 재생함수

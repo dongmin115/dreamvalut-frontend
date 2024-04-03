@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './GenreColorList.css';
 import { IconButton } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -17,6 +17,7 @@ import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
+import getMusic from '../api/music';
 
 const theme = createTheme({
   palette: {
@@ -181,6 +182,16 @@ function page() {
   ) {
     popularMusicList.push(<PopularMusic key={i} ranking={i} />);
   }
+
+  useEffect(() => {
+    getMusic()
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('오류 발생:', error);
+      });
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
