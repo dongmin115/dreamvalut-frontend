@@ -2,6 +2,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
 import { setupWorker } from 'msw/browser';
-import { handlers } from './handlers';
+import { handlers } from './handlers/handlers';
 
 export const worker = setupWorker(...handlers);

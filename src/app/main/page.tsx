@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @next/next/no-img-element */
@@ -188,14 +189,15 @@ function page() {
   ) {
     popularMusicList.push(<PopularMusic key={i} ranking={i} />);
   }
+
   const fetchData = async () => {
     try {
-      const response = await axios.get('/api/users');
-      setData(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+      const response = await axios.get('/api/v1/charts');
+      setData(response.data.data.tracks);
+      console.log(response.data);
+    } catch (error) {}
   };
+
   useEffect(() => {
     fetchData();
   }, [
