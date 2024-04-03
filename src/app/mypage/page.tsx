@@ -11,9 +11,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
-import axios, { AxiosResponse } from 'axios';
-import NavBar from '../components/NavBar/NavigationBar';
-import { takemygenrehandlers } from '../mocks/handlers'; // handlers.ts에서 목데이터 가져오기
 
 const theme = createTheme({
   palette: {
@@ -150,7 +147,6 @@ export default function Mypage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
       <div className="w-screen h-screen pl-[15%] bg-[#1a1a1a] flex flex-col">
         <div className="flex flex-row w-full h-[30%] space-x-6 p-[2%]">
           {/* 내 계정 */}

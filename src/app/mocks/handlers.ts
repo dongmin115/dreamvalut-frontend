@@ -4,6 +4,8 @@
 /* eslint-disable arrow-body-style */
 import { HttpResponse, http } from 'msw';
 
+export const handlers = [
+  http.get('/api/v1/tracks/track_id', () => {
 // 장르페이지-모든 장르 리스트 가져오기
 export const genrehandlers = [
   http.get('/api/v1/genres/list', () => {
@@ -97,7 +99,18 @@ export const takemygenrehandlers = [
   http.get('/api/v1/users/preference', () => {
     return HttpResponse.json({
       status: 'success',
+      status: 'success',
       data: {
+        track_id: 1,
+        title: 'Dreamscape',
+        uploader_name: 'Uploader 1',
+        has_lyrics: false,
+        track_url: 'url/to/track/audio.mp3',
+        track_image: 'url/to/image.png',
+        thumbnail_image: 'url/to/thumbnail.png',
+        prompt: 'This is the prompt how this track was made...',
+      },
+      message: 'Track information retrieved successfully.',
         genres: [
           {
             genre_id: 1,
