@@ -7,6 +7,7 @@ import './globals.css';
 import React from 'react';
 import { MSWComponent } from './mocks/MSWComponent';
 import MusicBar from './components/Musicbar/Musicbar';
+import NavBar from './components/NavBar/NavigationBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
         />
         <MSWComponent>{children}</MSWComponent>
         <MusicBar />
+        <NavBar />
       </body>
     </html>
   );
