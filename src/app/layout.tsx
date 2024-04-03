@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import React from 'react';
-import { MSWComponent } from './mocks/data/MSWComponent';
+import { MSWComponent } from './mocks/MSWComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 
