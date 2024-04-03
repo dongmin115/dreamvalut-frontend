@@ -143,21 +143,7 @@ export default function Mypage() {
                 color="primary"
                 className="rounded-full bg-[#6C26FF] text-white"
               >
-                Jazz
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Rock
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                EDM
+                POP
               </Button>
               <Button
                 variant="contained"
@@ -171,49 +157,14 @@ export default function Mypage() {
                 color="primary"
                 className="rounded-full bg-[#6C26FF] text-white"
               >
-                Pop
+                Jazz
               </Button>
               <Button
                 variant="contained"
                 color="primary"
                 className="rounded-full bg-[#6C26FF] text-white"
               >
-                Lofi
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Blues
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Latin
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Metal
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Raggae
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Ambient
+                Ballade
               </Button>
               <Button
                 variant="contained"
@@ -227,8 +178,51 @@ export default function Mypage() {
                 color="primary"
                 className="rounded-full bg-[#6C26FF] text-white"
               >
-                Funk/Soul
+                Rock
               </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Hip-Hap
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Folk
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                OST
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                J-POP
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                Musical
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                className="rounded-full bg-[#6C26FF] text-white"
+              >
+                EDM
+              </Button>
+
               {/* <Button
                 variant="contained"
                 color="primary"
