@@ -16,6 +16,7 @@ import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import getMusic from '@/app/api/music';
+import { Music } from '@/app/types/music';
 
 const theme = createTheme({
   palette: {
@@ -63,12 +64,13 @@ export default function MusicBar() {
       audioRef.current.volume = volume / 100;
     }
   };
-  const [currentMusic, setCurrentMusic] = useState<any>({
+  const [currentMusic, setCurrentMusic] = useState<Music>({
     track_id: 1,
     title: 'Dreamscape',
     uploader_name: 'Uploader 1',
     has_lyrics: false,
-    track_url: 'url/to/track/audio.mp3',
+    track_url:
+      'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/Melancholy+Motif.wav',
     track_image: 'url/to/image.png',
     thumbnail_image: 'url/to/thumbnail.png',
     prompt: 'This is the prompt how this track was made...',
@@ -90,7 +92,7 @@ export default function MusicBar() {
       {/* 음악소스 */}
       <audio ref={audioRef} controls preload="auto" className="hidden">
         <source
-          src="https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/Melancholy+Motif.wav"
+          src={currentMusic.track_url}
           id="audio_player"
           type="audio/wav"
         />
