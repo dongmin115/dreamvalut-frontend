@@ -74,8 +74,6 @@ function page() {
   return (
     <ThemeProvider theme={theme}>
       <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
-        <NavigationBar />
-        <MusicBar />
         {/* NavigationBar 제외 영역 */}
         <div className="w-10/12 h-full pr-8">
           {/* 내가 생성한 플레이리스트 */}
