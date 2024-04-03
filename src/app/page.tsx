@@ -5,16 +5,13 @@
 // import GenrePage from './GenrePage/page';
 
 import React from 'react';
-import UploadMyMusic from './MymusicAI/page';
+import LogIn from './LogInPage/page';
+
 // App 컴포넌트
 export default function Home() {
   return (
     <>
-      {/* <NavBar />
-      <MusicBar /> */}
-      {/* <LogIn /> */}
-      {/* <GenrePage /> */}
-      <UploadMyMusic />
+      <LogIn />
     </>
   );
 }
