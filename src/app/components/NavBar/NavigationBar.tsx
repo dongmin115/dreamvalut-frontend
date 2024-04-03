@@ -187,15 +187,7 @@ const NavBar: React.FC = () => (
       <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
         <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
         <UserProfile>
-          <button
-            className="p-2 text-sm"
-            onClick={() => {
-              window
-                .fetch('https://api.example.com/api/user')
-                .then((res) => res.json())
-                .then((data) => console.log(data));
-            }}
-          >
+          <button className="p-2 text-sm">
             <Link href={'/search'}>검색 결과페이지 (임시)</Link>
           </button>
         </UserProfile>
