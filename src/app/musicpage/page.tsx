@@ -17,8 +17,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 
-import NavBar from '../components/NavBar/NavigationBar';
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -44,7 +42,6 @@ export default function MusicPage() {
   return (
     <ThemeProvider theme={theme}>
       <div className="w-screen h-screen flex flex-row justify-around pl-[15%]">
-        <NavBar />
         {/* 블러배경 */}
         <img
           src="https://i.ibb.co/hLxvjJG/1.jpg"
