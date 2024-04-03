@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -190,23 +191,25 @@ function page() {
     popularMusicList.push(<PopularMusic key={i} ranking={i} />);
   }
 
-  const fetchData = async () => {
+  const chartsData = async () => {
     try {
       const response = await axios.get('/api/v1/charts');
       setData(response.data.data.tracks);
-      console.log(response.data);
+      console.log(response.data.data.charts[1], 'asdf');
     } catch (error) {}
+    console.log(data[1]);
   };
 
   useEffect(() => {
-    fetchData();
-  }, [
-    popularPageIndex,
-    tagPageIndex,
-    genrePageIndex,
-    otherPlaylistPageIndex,
-    systemPlaylistPageIndex,
-  ]);
+    setTimeout(() => {
+      try {
+        chartsData();
+      } catch (error) {
+        chartsData();
+      }
+    }, 500);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
