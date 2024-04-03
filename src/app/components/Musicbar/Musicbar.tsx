@@ -63,82 +63,87 @@ export default function MusicBar() {
       audioRef.current.volume = volume / 100;
     }
   };
-
-  // 음악데이터 가져오기
-  const [currentMusic, setCurrentMusic] = useState<any>({});
+  const [currentMusic, setCurrentMusic] = useState<any>({
+    track_id: 1,
+    title: 'Dreamscape',
+    uploader_name: 'Uploader 1',
+    has_lyrics: false,
+    track_url: 'url/to/track/audio.mp3',
+    track_image: 'url/to/image.png',
+    thumbnail_image: 'url/to/thumbnail.png',
+    prompt: 'This is the prompt how this track was made...',
+  });
   useEffect(() => {
     getMusic()
       .then((res) => {
         setCurrentMusic(res.data);
-        console.log(currentMusic);
       })
       .catch((error) => {
         console.error('오류 발생:', error);
       });
-  }, []);
+  }, [currentMusic]);
 
   return (
-    currentMusic &&
-    Object.keys(currentMusic).length > 0 && (
-      <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg z-40">
-        {/* 음악소스 */}
-        <audio ref={audioRef} controls preload="auto" className="hidden">
-          <source
-            src="https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/Melancholy+Motif.wav"
-            id="audio_player"
-            type="audio/wav"
-          />
-        </audio>
-        {/* 재생 컨트롤 버튼 */}
-        <div className="flex flex-row py-[0.5%] items-center">
-          <ThemeProvider theme={theme}>
-            <IconButton>
-              <SkipPreviousIcon color="primary" fontSize="large" />
+    // currentMusic &&
+    // Object.keys(currentMusic).length >= 0 && (
+    <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg z-40">
+      {/* 음악소스 */}
+      <audio ref={audioRef} controls preload="auto" className="hidden">
+        <source
+          src="https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/Melancholy+Motif.wav"
+          id="audio_player"
+          type="audio/wav"
+        />
+      </audio>
+      {/* 재생 컨트롤 버튼 */}
+      <div className="flex flex-row py-[0.5%] items-center">
+        <ThemeProvider theme={theme}>
+          <IconButton>
+            <SkipPreviousIcon color="primary" fontSize="large" />
+          </IconButton>
+          {isPaused ? (
+            <IconButton onClick={playAudio}>
+              <PlayArrowIcon color="primary" fontSize="large" />
             </IconButton>
-            {isPaused ? (
-              <IconButton onClick={playAudio}>
-                <PlayArrowIcon color="primary" fontSize="large" />
-              </IconButton>
-            ) : (
-              <IconButton onClick={pauseAudio}>
-                <PauseIcon color="primary" fontSize="large" />
-              </IconButton>
-            )}
-            <IconButton>
-              <SkipNextIcon color="primary" fontSize="large" />
+          ) : (
+            <IconButton onClick={pauseAudio}>
+              <PauseIcon color="primary" fontSize="large" />
             </IconButton>
-            <IconButton>
-              <ReplayIcon color="primary" fontSize="medium" />
-            </IconButton>
-          </ThemeProvider>
-        </div>
-        {/* 음악 정보 */}
-        <div className="flex flex-row space-x-4">
-          <img
-            src="https://via.placeholder.com/50"
-            alt="album cover"
-            width={50}
-            height={50}
-          />
-          <div className="flex flex-col justify-center items-center">
-            <p className="">{currentMusic.title}</p>
-            <p className="text-gray-400">{currentMusic.uploader_name}</p>
-          </div>
-        </div>
-        {/* 볼륨 조절 */}
-        <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
-          <ThemeProvider theme={theme}>
-            <VolumeDown color="primary" fontSize="medium" />
-            <Slider
-              aria-label="Volume"
-              value={volume}
-              onChange={handleChange}
-              size="small"
-            />
-            <VolumeUp color="primary" fontSize="medium" />
-          </ThemeProvider>
+          )}
+          <IconButton>
+            <SkipNextIcon color="primary" fontSize="large" />
+          </IconButton>
+          <IconButton>
+            <ReplayIcon color="primary" fontSize="medium" />
+          </IconButton>
+        </ThemeProvider>
+      </div>
+      {/* 음악 정보 */}
+      <div className="flex flex-row space-x-4">
+        <img
+          src={currentMusic.thumbnail_image}
+          alt="album"
+          width={50}
+          height={50}
+        />
+        <div className="flex flex-col justify-center items-center">
+          <p className="">{currentMusic.title}</p>
+          <p className="text-gray-400">{currentMusic.uploader_name}</p>
         </div>
       </div>
-    )
+      {/* 볼륨 조절 */}
+      <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
+        <ThemeProvider theme={theme}>
+          <VolumeDown color="primary" fontSize="medium" />
+          <Slider
+            aria-label="Volume"
+            value={volume}
+            onChange={handleChange}
+            size="small"
+          />
+          <VolumeUp color="primary" fontSize="medium" />
+        </ThemeProvider>
+      </div>
+    </div>
   );
 }

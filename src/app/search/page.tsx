@@ -71,6 +71,7 @@ export default function SearchPage() {
       likes: 1,
     },
   ];
+
   return (
     <ThemeProvider theme={theme}>
       <div className="h-fit min-h-screen bg-[#1a1a1a]">
