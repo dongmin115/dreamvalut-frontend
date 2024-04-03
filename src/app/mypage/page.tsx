@@ -1,12 +1,19 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable import/extensions */
 
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
+import axios, { AxiosResponse } from 'axios';
 import NavBar from '../components/NavBar/NavigationBar';
+import { takemygenrehandlers } from '../mocks/handlers'; // handlers.ts에서 목데이터 가져오기
 
 const theme = createTheme({
   palette: {
@@ -20,8 +27,33 @@ const theme = createTheme({
     },
   },
 });
+// 선택한 장르와 선택된 장르를 변경하는 함수
+interface Genre {
+  genre_id: number;
+  genre_name: string;
+  state: boolean;
+}
 
 export default function Mypage() {
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // 변경: loading 상태 타입 명시
+  const [error, setError] = useState<any>(null); // 변경: error 상태 타입 명시
+  const fetchGenres = async () => {
+    try {
+      // GET 요청을 보냅니다.
+      const response: AxiosResponse<any> = await axios.get(
+        '/api/v1/users/preference',
+      );
+      // 응답 데이터에서 장르 정보를 추출합니다.
+      const genresData: Genre[] = response.data.data.genres;
+      // 장르 정보를 설정합니다.
+      setGenres(genresData);
+      setLoading(false); // 변경: 데이터 로딩이 완료되면 loading 상태 변경
+    } catch (err) {
+      setError(err); // 변경: 에러 처리 수정
+      setLoading(false);
+    }
+  };
   const recentSongs = [
     {
       title: 'title1',
@@ -104,6 +136,18 @@ export default function Mypage() {
       cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
     },
   ];
+
+  const handleGenreToggle = (genreId: number) => {
+    // 장르를 토글하여 선택 상태를 변경
+    const updatedGenres = genres.map((genre) =>
+      genre.genre_id === genreId ? { ...genre, state: !genre.state } : genre,
+    );
+    setGenres(updatedGenres);
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
@@ -138,7 +182,21 @@ export default function Mypage() {
           <div className="flex flex-col w-[60%] h-full space-y-4">
             <h1 className="text-[#D4D4D4] text-3xl">나의 음악취향</h1>
             <div className="flex flex-wrap items-center bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md justify-center gap-2 text-center object-center">
-              <Button
+              {genres.map((genre) => (
+                <Button
+                  key={genre.genre_id}
+                  variant="contained"
+                  color={genre.state ? 'primary' : 'secondary'} // 선택된 장르는 primary 색상, 선택되지 않은 장르는 default 색상
+                  className="rounded-full bg-[#6C26FF] text-white"
+                  onClick={() => {
+                    handleGenreToggle(genre.genre_id);
+                    fetchGenres(); // 장르를 토글할 때마다 장르 정보를 다시 가져옵니다.
+                  }}
+                >
+                  {genre.genre_name}
+                </Button>
+              ))}
+              {/* <Button
                 variant="contained"
                 color="primary"
                 className="rounded-full bg-[#6C26FF] text-white"
@@ -147,7 +205,6 @@ export default function Mypage() {
               </Button>
               <Button
                 variant="contained"
-                color="primary"
                 className="rounded-full bg-[#6C26FF] text-white"
               >
                 R&B
@@ -221,7 +278,7 @@ export default function Mypage() {
                 className="rounded-full bg-[#6C26FF] text-white"
               >
                 EDM
-              </Button>
+              </Button> */}
 
               {/* <Button
                 variant="contained"
