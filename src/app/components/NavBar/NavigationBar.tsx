@@ -138,7 +138,9 @@ const NavBar: React.FC = () => (
       <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
         <Home>
           <HomeIcon style={{ color: theme.palette.primary.main }} />
-          <button className="p-2 text-sm">홈</button>
+          <button className="p-2 text-sm">
+            <Link href={'/main'}>홈</Link>
+          </button>
         </Home>
       </div>
 
