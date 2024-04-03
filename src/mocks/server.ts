@@ -3,5 +3,6 @@
 /* eslint-disable import/prefer-default-export */
 import { setupServer } from 'msw/node';
 import { handlers } from './handlers/handlers';
+import { chartHandlers } from './handlers/chartHandlers';
 
-export const server = setupServer(...handlers);
+export const server = setupServer(...handlers, ...chartHandlers);
