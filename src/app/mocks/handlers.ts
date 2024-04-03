@@ -94,7 +94,7 @@ export const genreBooleanhandlers = [
 
 // 마이페이지-내 장르 취향 가져오기
 export const takemygenrehandlers = [
-  http.post('/api/v1/users/preference', () => {
+  http.get('/api/v1/users/preference', () => {
     return HttpResponse.json({
       status: 'success',
       data: {
@@ -169,7 +169,7 @@ export const takemygenrehandlers = [
 
 // 마이페이지 - 내 장르취향 변경하기
 export const changegenrenhandlers = [
-  http.post('/api/v1/users/preference', () => {
+  http.put('/api/v1/users/preference', () => {
     return HttpResponse.json({
       status: 'success',
       data: [

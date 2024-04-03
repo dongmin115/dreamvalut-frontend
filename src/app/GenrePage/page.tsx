@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-use-before-define */
@@ -89,8 +90,9 @@ const GenrePage = () => {
       // 다음 페이지로 이동하면서 데이터 전송
       navigate('/main', { state: dataToSend });
 
+      // async 함수이므로 비동기 작업을 await으로 처리
       // 여기서 로그인한 사용자의 데이터에 취향 장르를 업데이트하는 API 호출을 추가할 수 있습니다.
-      axios.post('/api/v1/users/preference', { genres: selectedGenres });
+      await axios.post('/api/v1/users/preference', { genres: selectedGenres });
     } catch (error) {
       console.error('Error navigating to next page:', error);
     }

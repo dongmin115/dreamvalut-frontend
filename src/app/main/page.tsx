@@ -118,7 +118,7 @@ function GenreMusic({
 }
 
 // 메인 페이지 컴포넌트
-function page() {
+function Page() {
   const [popularPageIndex, setpopularPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const [tagPageIndex, settagPageIndex] = useState(0); // 인기 태그 페이지 인덱스
   const [genrePageIndex, setgenrePageIndex] = useState(0); // 장르별 음악 페이지 인덱스
@@ -358,4 +358,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

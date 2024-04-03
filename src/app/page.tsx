@@ -9,6 +9,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GenrePage from './GenrePage/page';
+import Page from './main/page';
 // import React from 'react';
 // import UploadMyMusic from './MymusicAI/page';
 // App 컴포넌트
@@ -21,6 +22,7 @@ export default function Home() {
       <Router>
         <Routes>
           <Route path="/" element={<GenrePage />} />
+          <Route path="/main" element={<Page />} />
         </Routes>
       </Router>
       {/* <UploadMyMusic /> */}
