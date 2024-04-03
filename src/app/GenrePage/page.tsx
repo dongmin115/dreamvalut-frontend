@@ -79,8 +79,21 @@ const GenrePage = () => {
   });
 
   // 다음페이지 버튼
-  const handleNextPage = () => {
-    navigate('/main', { state: { selectedGenres } }); // useNavigate를 통해 다음 페이지로 이동하면서 데이터 전달
+  const handleNextPage = async () => {
+    try {
+      // 전달할 데이터 객체
+      const dataToSend = {
+        selectedGenres,
+      };
+
+      // 다음 페이지로 이동하면서 데이터 전송
+      navigate('/main', { state: dataToSend });
+
+      // 여기서 로그인한 사용자의 데이터에 취향 장르를 업데이트하는 API 호출을 추가할 수 있습니다.
+      axios.post('/api/v1/users/preference', { genres: selectedGenres });
+    } catch (error) {
+      console.error('Error navigating to next page:', error);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
