@@ -4,8 +4,11 @@
 // import NavBar from './components/NavBar/NavigationBar';
 
 // import LogIn from './LogInPage/page';
-import GenrePage from './GenrePage/page';
 
+'use client';
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import GenrePage from './GenrePage/page';
 // import React from 'react';
 // import UploadMyMusic from './MymusicAI/page';
 // App 컴포넌트
@@ -15,7 +18,11 @@ export default function Home() {
       {/* <NavBar />
       <MusicBar /> */}
       {/* <LogIn /> */}
-      <GenrePage />
+      <Router>
+        <Routes>
+          <Route path="/" element={<GenrePage />} />
+        </Routes>
+      </Router>
       {/* <UploadMyMusic /> */}
     </>
   );
