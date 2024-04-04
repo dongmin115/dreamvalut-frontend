@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable @next/next/no-img-element */
@@ -7,55 +8,20 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import useQuery from 'react-query';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // React Router에서 임포트
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { fetchGenres, EditfetchGenres } from '../api/genre.ts';
+import { GenreData } from '../types/genre.ts';
+
 // import { fetchData } from 'next-auth/client/_utils';
 
-interface Response {
-  // API 응답을 정의하는 TypeScript 인터페이스입니다.
-  data: Data[];
-}
-
-export interface Data {
-  // 장르 데이터의 형식을 정의하는 TypeScript 인터페이스입니다.
-  genre_id: number;
-  genre_name: string;
-  genre_image: string;
-}
 const GenrePage = () => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
-  const [genres, setGenres] = useState<Data[]>([]); // 변경: genres 상태 타입 수정
-  const [loading, setLoading] = useState<boolean>(true); // 변경: loading 상태 타입 명시
-  const [error, setError] = useState<any>(null); // 변경: error 상태 타입 명시
-  const navigate = useNavigate(); // useNavigate 사용
-  const fetchGenres = async () => {
-    try {
-      const response = await axios.get<Response>('/api/v1/genres/list'); // 변경: Response 타입 지정
-      setGenres(response.data.data);
-      setLoading(false);
-    } catch (err) {
-      setError(err); // 변경: 에러 처리 수정
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 장르 목록을 가져오는 fetchGenres 함수를 실행합니다. 의존성 배열이 비어 있으므로 컴포넌트가 처음 렌더링될 때 한 번만 실행됩니다.
-    const fetchData = () => {
-      setTimeout(async () => {
-        try {
-          await fetchGenres(); // fetchGenres 함수가 완료될 때까지 대기합니다.
-        } catch (err) {
-          fetchData();
-        }
-      }, 100);
-    };
-    fetchData();
-  }, []); // 변경: 의존성 배열 수정
+  const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
 
   const handleGenreToggle = (genre_id: number) => {
     // 변경: genre_id 타입 명시
@@ -65,6 +31,17 @@ const GenrePage = () => {
       setSelectedGenres([...selectedGenres, genre_id]);
     }
   };
+
+  useEffect(() => {
+    // 장르 목록을 가져오는 함수
+    fetchGenres()
+      .then((res) => {
+        setGenres(res);
+      })
+      .catch((error) => {
+        console.error('오류', error);
+      }); // 장르 데이터 가져오기
+  }, [genres]); // 컴포넌트가 처음 렌더링될 때 한 번만 실행
 
   const theme = createTheme({
     palette: {
@@ -82,24 +59,21 @@ const GenrePage = () => {
   // 다음페이지 버튼
   const handleNextPage = async () => {
     try {
-      // 전달할 데이터 객체
-      const dataToSend = {
-        selectedGenres,
-      };
+      // // 전달할 데이터 객체
+      // const dataToSend = {
+      //   selectedGenres,
+      // };
 
-      // 다음 페이지로 이동하면서 데이터 전송
-      navigate('/main', { state: dataToSend });
+      // // 데이터를 JSON 문자열로 변환하여 URL 매개변수로 전달
+      // const dataString = encodeURIComponent(JSON.stringify(dataToSend));
+      // window.location.href = `/main?data=${dataString}`;
 
-      // async 함수이므로 비동기 작업을 await으로 처리
-      // 여기서 로그인한 사용자의 데이터에 취향 장르를 업데이트하는 API 호출을 추가할 수 있습니다.
+      // API 호출
       await axios.post('/api/v1/users/preference', { genres: selectedGenres });
     } catch (error) {
       console.error('Error navigating to next page:', error);
     }
   };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <ThemeProvider theme={theme}>
