@@ -7,7 +7,6 @@
 
 'use client';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GenrePage from './GenrePage/page';
 import Page from './main/page';
 // import React from 'react';
@@ -19,12 +18,8 @@ export default function Home() {
       {/* <NavBar />
       <MusicBar /> */}
       {/* <LogIn /> */}
-      <Router>
-        <Routes>
-          <Route path="/" element={<GenrePage />} />
-          <Route path="/main" element={<Page />} />
-        </Routes>
-      </Router>
+      <GenrePage />
+      <Page />
       {/* <UploadMyMusic /> */}
     </>
   );

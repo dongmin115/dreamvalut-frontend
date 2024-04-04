@@ -119,7 +119,7 @@ export const takemygenrehandlers = [
         {
           genre_id: 1,
           genre_name: 'Pop',
-          state: false,
+          state: true,
         },
         {
           genre_id: 2,
@@ -134,7 +134,7 @@ export const takemygenrehandlers = [
         {
           genre_id: 4,
           genre_name: 'Ballade',
-          state: false,
+          state: true,
         },
         {
           genre_id: 5,

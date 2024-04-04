@@ -6,8 +6,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import React from 'react';
 import { MSWComponent } from './mocks/MSWComponent';
-import MusicBar from './components/Musicbar/Musicbar';
-import NavBar from './components/NavBar/NavigationBar';
+// import MusicBar from './components/Musicbar/Musicbar';
+// import NavBar from './components/NavBar/NavigationBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,8 +33,8 @@ export default function RootLayout({
           sizes="any"
         />
         <MSWComponent>{children}</MSWComponent>
-        <MusicBar />
-        <NavBar />
+        {/* <MusicBar />
+        <NavBar /> */}
       </body>
     </html>
   );

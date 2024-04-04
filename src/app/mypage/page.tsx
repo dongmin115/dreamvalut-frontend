@@ -7,11 +7,12 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
-import fetchGenres from '../api/edit_genre';
+import { fetchGenres, EditfetchGenres } from '../api/genre.ts';
+import { Genre } from '../types/genre.ts';
 
 const theme = createTheme({
   palette: {
@@ -160,16 +161,17 @@ export default function Mypage() {
                 <Button
                   key={genre.genre_id}
                   variant="contained"
-                  color={genre.state ? 'primary' : 'secondary'} // 선택된 장르는 primary 색상, 선택되지 않은 장르는 default 색상
+                  color={genre.state ? 'primary' : 'secondary'}
                   className="rounded-full bg-[#6C26FF] text-white"
                   onClick={() => {
                     handleGenreToggle(genre.genre_id);
-                    fetchGenres(); // 장르를 토글할 때마다 장르 정보를 다시 가져옵니다.
+                    EditfetchGenres();
                   }}
                 >
                   {genre.genre_name}
                 </Button>
               ))}
+
               {/* <Button
                 variant="contained"
                 color="primary"
