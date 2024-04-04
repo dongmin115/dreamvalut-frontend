@@ -15,8 +15,8 @@ import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-import getMusic from '@/app/api/music';
-import { Music } from '@/app/types/music';
+import getMusic from '@/api/music';
+import { Music } from '@/types/music';
 
 const theme = createTheme({
   palette: {
