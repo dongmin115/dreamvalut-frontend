@@ -8,7 +8,7 @@
 'use client';
 
 import GenrePage from './GenrePage/page';
-import Page from './main/page';
+// import Page from './main/page';
 // import React from 'react';
 // import UploadMyMusic from './MymusicAI/page';
 // App 컴포넌트
@@ -19,7 +19,7 @@ export default function Home() {
       <MusicBar /> */}
       {/* <LogIn /> */}
       <GenrePage />
-      <Page />
+      {/* <Page /> */}
       {/* <UploadMyMusic /> */}
     </>
   );

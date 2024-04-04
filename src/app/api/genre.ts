@@ -9,16 +9,21 @@ import axios, { AxiosResponse } from 'axios';
 import { Genre, GenreData } from '../types/genre.ts';
 
 const fetchGenres = async () => {
-  interface Response {
-    // API 응답을 정의하는 TypeScript 인터페이스입니다.
-    data: GenreData[];
-  }
+  const [retryCount, setRetryCount] = useState(0);
+  const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
   try {
-    const response = await axios.get<Response>('/api/v1/genres/list'); // 변경: Response 타입 지정
-    return response.data.data;
+    const response = await axios.get('/api/v1/genres/list'); // 변경: Response 타입 지정
+    if (response.data) {
+      setGenres(response.data.data); // 장르 데이터 설정
+    }
   } catch (error) {
     console.error('오류 발생:', error);
-    throw error;
+    if (retryCount < 5) {
+      // 다섯 번 이하로 재시도
+      setRetryCount(retryCount + 1); // 재시도 횟수 증가
+    } else {
+      throw new Error('API 호출이 여러 번 실패했습니다.');
+    }
   }
 };
 

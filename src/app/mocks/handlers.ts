@@ -115,69 +115,72 @@ export const genreBooleanhandlers = [
 export const takemygenrehandlers = [
   http.get('/api/v1/genres/list', () => {
     return HttpResponse.json({
-      genres: [
-        {
-          genre_id: 1,
-          genre_name: 'Pop',
-          state: true,
-        },
-        {
-          genre_id: 2,
-          genre_name: 'R&B',
-          state: false,
-        },
-        {
-          genre_id: 3,
-          genre_name: 'Jazz',
-          state: false,
-        },
-        {
-          genre_id: 4,
-          genre_name: 'Ballade',
-          state: true,
-        },
-        {
-          genre_id: 5,
-          genre_name: 'Classical',
-          state: false,
-        },
-        {
-          genre_id: 6,
-          genre_name: 'Rock',
-          state: false,
-        },
-        {
-          genre_id: 7,
-          genre_name: 'Hip-Hap',
-          state: false,
-        },
-        {
-          genre_id: 8,
-          genre_name: 'Folk',
-          state: false,
-        },
-        {
-          genre_id: 9,
-          genre_name: 'OST',
-          state: false,
-        },
-        {
-          genre_id: 10,
-          genre_name: 'J-Pop',
-          state: false,
-        },
+      status: 'success',
+      data: {
+        genres: [
+          {
+            genre_id: 1,
+            genre_name: 'Pop',
+            state: true,
+          },
+          {
+            genre_id: 2,
+            genre_name: 'R&B',
+            state: false,
+          },
+          {
+            genre_id: 3,
+            genre_name: 'Jazz',
+            state: false,
+          },
+          {
+            genre_id: 4,
+            genre_name: 'Ballade',
+            state: true,
+          },
+          {
+            genre_id: 5,
+            genre_name: 'Classical',
+            state: false,
+          },
+          {
+            genre_id: 6,
+            genre_name: 'Rock',
+            state: false,
+          },
+          {
+            genre_id: 7,
+            genre_name: 'Hip-Hap',
+            state: false,
+          },
+          {
+            genre_id: 8,
+            genre_name: 'Folk',
+            state: false,
+          },
+          {
+            genre_id: 9,
+            genre_name: 'OST',
+            state: false,
+          },
+          {
+            genre_id: 10,
+            genre_name: 'J-Pop',
+            state: false,
+          },
 
-        {
-          genre_id: 11,
-          genre_name: 'Musical',
-          state: false,
-        },
-        {
-          genre_id: 12,
-          genre_name: 'EDM',
-          state: false,
-        },
-      ],
+          {
+            genre_id: 11,
+            genre_name: 'Musical',
+            state: false,
+          },
+          {
+            genre_id: 12,
+            genre_name: 'EDM',
+            state: false,
+          },
+        ],
+      },
     });
   }),
 ];
