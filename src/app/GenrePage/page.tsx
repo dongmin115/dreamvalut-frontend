@@ -17,7 +17,6 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
 // import { fetchData } from 'next-auth/client/_utils';
-import { fetchGenres, EditfetchGenres } from '../api/genre.ts';
 import { GenreData } from '../types/genre.ts';
 
 const GenrePage = () => {
