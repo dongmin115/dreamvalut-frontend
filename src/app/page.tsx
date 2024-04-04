@@ -7,10 +7,11 @@
 
 'use client';
 
-import GenrePage from './GenrePage/page';
+// import GenrePage from './GenrePage/page';
 // import Page from './main/page';
 // import React from 'react';
 // import UploadMyMusic from './MymusicAI/page';
+import Mypage from './mypage/page';
 // App 컴포넌트
 export default function Home() {
   return (
@@ -18,7 +19,8 @@ export default function Home() {
       {/* <NavBar />
       <MusicBar /> */}
       {/* <LogIn /> */}
-      <GenrePage />
+      {/* <GenrePage /> */}
+      <Mypage />
       {/* <Page /> */}
       {/* <UploadMyMusic /> */}
     </>
