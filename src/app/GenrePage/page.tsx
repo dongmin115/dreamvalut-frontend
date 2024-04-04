@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
@@ -9,19 +11,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import useQuery from 'react-query';
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Link from 'next/link';
+// import { fetchData } from 'next-auth/client/_utils';
 import { fetchGenres, EditfetchGenres } from '../api/genre.ts';
 import { GenreData } from '../types/genre.ts';
-
-// import { fetchData } from 'next-auth/client/_utils';
 
 const GenrePage = () => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
+  const [retryCount, setRetryCount] = useState(0);
 
   const handleGenreToggle = (genre_id: number) => {
     // 변경: genre_id 타입 명시
@@ -34,14 +36,35 @@ const GenrePage = () => {
 
   useEffect(() => {
     // 장르 목록을 가져오는 함수
-    fetchGenres()
-      .then((res) => {
-        setGenres(res);
-      })
-      .catch((error) => {
-        console.error('오류', error);
-      }); // 장르 데이터 가져오기
-  }, [genres]); // 컴포넌트가 처음 렌더링될 때 한 번만 실행
+    const fetchGenres = async () => {
+      try {
+        const response = await axios.get('/api/v1/genres/list'); // 변경: Response 타입 지정
+        if (response.data) {
+          setGenres(response.data.data); // 장르 데이터 설정
+        }
+      } catch (error) {
+        console.error('오류 발생:', error);
+        if (retryCount < 5) {
+          // 다섯 번 이하로 재시도
+          setRetryCount(retryCount + 1); // 재시도 횟수 증가
+        } else {
+          throw new Error('API 호출이 여러 번 실패했습니다.');
+        }
+      }
+    };
+    fetchGenres(); // 장르 데이터 가져오기
+  }, [retryCount]);
+
+  // useEffect(() => {
+  //   fetchGenres()
+  //     .then((res) => {
+  //       setGenres(res.data.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log('asdsa');
+  //       console.error('err', error);
+  //     });
+  // }, []);
 
   const theme = createTheme({
     palette: {
@@ -87,7 +110,7 @@ const GenrePage = () => {
                     value={genre.genre_id}
                     onClick={() => {
                       handleGenreToggle(genre.genre_id);
-                      fetchGenres(); // fetchGenres 호출
+                      // fetchGenres(); // fetchGenres 호출
                     }}
                     className={`flex fade-in-box flex-col w-full h-full text-center hover-bg-opacity ${selectedGenres.includes(genre.genre_id) ? '#341672' : ''}`}
                     style={{
@@ -119,12 +142,14 @@ const GenrePage = () => {
           <div className="absolute z-0 fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-950 opacity-[100%]"></div>
         </div>
       </ToggleButtonGroup>
-      <button
-        className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]"
-        onClick={handleNextPage}
-      >
-        <ArrowForwardIosIcon color="primary" fontSize="large" />
-      </button>{' '}
+      <Link href="/main">
+        <button
+          className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]"
+          onClick={handleNextPage}
+        >
+          <ArrowForwardIosIcon color="primary" fontSize="large" />
+        </button>{' '}
+      </Link>
       {/* 다음 페이지로 이동하는 버튼 */}
     </ThemeProvider>
   );
