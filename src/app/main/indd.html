@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>슬라이드 애니메이션</title>
+    <!-- Tailwind CSS 추가 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* 추가적인 사용자 정의 CSS */
+      .slide-container {
+        overflow-x: hidden;
+      }
+      .slide-content {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-500 p-4">
+    <div class="max-w-lg mx-auto bg-white">
+      <div class="slide-container bg-black">
+        <div class="slide-content">
+          <!-- 좌우로 슬라이드될 요소들 -->
+          <div class="w-40 h-40 bg-blue-500 flex-shrink-0 mr-4"></div>
+          <div class="w-40 h-40 bg-green-500 flex-shrink-0 mr-4"></div>
+          <div class="w-40 h-40 bg-red-500 flex-shrink-0 mr-4"></div>
+          <div class="w-40 h-40 bg-red-500 flex-shrink-0 mr-4"></div>
+          <div class="w-40 h-40 bg-red-500 flex-shrink-0 mr-4"></div>
+          <div class="w-40 h-40 bg-red-500 flex-shrink-0 mr-4"></div>
+          <div class="w-40 h-40 bg-red-500 flex-shrink-0 mr-4"></div>
+        </div>
+      </div>
+      <!-- 좌우 버튼 -->
+      <div class="flex justify-between mt-4">
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          onclick="slideLeft()"
+        >
+          &#8592; 이전
+        </button>
+        <button
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          onclick="slideRight()"
+        >
+          다음 &#8594;
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // 좌우로 슬라이드하는 함수들
+      let slideIndex = 0;
+      const slideContent = document.querySelector('.slide-content');
+      const slides = document.querySelectorAll('.slide-content > div');
+
+      function slideLeft() {
+        if (slideIndex > 0) {
+          slideIndex--;
+          slideContent.style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+      }
+
+      function slideRight() {
+        if (slideIndex < slides.length - 1) {
+          slideIndex++;
+          slideContent.style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+      }
+    </script>
+  </body>
+</html>

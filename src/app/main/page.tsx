@@ -1,3 +1,5 @@
+/* eslint-disable import/order */
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable no-console */
 /* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
@@ -14,6 +16,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './GenreColorList.css';
+import { getSlideContentStyle } from '../styles/SlideStyles';
 import { IconButton } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
@@ -41,24 +44,23 @@ const theme = createTheme({
 // 인기 음악 컴포넌트의 props
 type PopularMusicProps = {
   ranking: number;
+  title: string;
+  thumnailImage: string;
 };
 // 인기 음악 컴포넌트
-function PopularMusic({ ranking }: PopularMusicProps) {
+function PopularMusic({ ranking, title, thumnailImage }: PopularMusicProps) {
   return (
-    <div className="w-1/5 h-1/4 flex flex-row justify-start items-center m-2 ml-8 cursor-pointer hover-bg-opacity">
+    <div className="w-[24%] h-1/4 flex flex-row justify-start items-center m-2 cursor-pointer hover-bg-opacity">
       {/* 순위 */}
       <p className="w-16 text-right text-4xl mt-6 drop-shadow-text z-10 -mr-4">
         {ranking}
       </p>
       {/* 앨범 커버 */}
-      <img
-        className="w-16 h-16"
-        src="https://i.ibb.co/L0GHzbR/202402211005009.jpg"
-      />
+      <img className="w-16" src={thumnailImage} />
 
       {/* 음악 정보 */}
       <div className="flex flex-col justify-center ml-4">
-        <p className="text-2xl z-10">Shopper</p>
+        <p className="text-xl w-full z-10">{title}</p>
       </div>
     </div>
   );
@@ -130,8 +132,6 @@ function page() {
   const [otherPlaylistPageIndex, setOtherPlaylistPageIndex] = useState(0); // 다른 유저가 선택한 플레이리스트 페이지 인덱스
   const [systemPlaylistPageIndex, setSystemPlaylistPageIndex] = useState(0); // 시스템 플레이리스트 페이지 인덱스
 
-  const [data, setData] = useState<any>({});
-
   const handlePopularPageForwardClick = () => {
     setpopularPageIndex(popularPageIndex + 1);
   };
@@ -182,58 +182,80 @@ function page() {
     }
   };
   const popularMusicList = [];
-  // 1부터 12까지의 PopularMusic 컴포넌트를 생성하여 배열에 추가
-  for (
-    let i = popularPageIndex * 3 + 1;
-    i <= popularPageIndex * 3 + 12;
-    i += 1
-  ) {
-    popularMusicList.push(<PopularMusic key={i} ranking={i} />);
-  }
 
-  const chartsData = async () => {
+  const [data, setData] = useState<any>({});
+  const fetchChartData = async () => {
     try {
       const response = await axios.get('/api/v1/charts');
       setData(response.data.data.tracks);
-      console.log(response.data.data.charts[1], 'asdf');
+      console.log(data);
     } catch (error) {}
-    console.log(data[1]);
   };
 
   useEffect(() => {
     setTimeout(() => {
       try {
-        chartsData();
+        fetchChartData();
       } catch (error) {
-        chartsData();
+        fetchChartData();
       }
     }, 500);
   }, []);
 
+  // wldnjdiehla
+  useEffect(() => {
+    if (data.length > 0) {
+      console.log(data[0]); // 데이터가 로드된 후에만 track_id에 접근
+    }
+  }, [data, popularPageIndex]);
+
+  if (data.length > 0) {
+    // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
+    for (let i = 0; i < 30; i += 1) {
+      if (data[i]) {
+        // 데이터가 존재하는 경우에만 생성
+        popularMusicList.push(
+          <PopularMusic
+            key={i}
+            ranking={i + 1}
+            title={data[i].title}
+            thumnailImage={data[i].thumbnail_image}
+          />,
+        );
+      }
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
+      <div className="w-full h-full flex flex-col justify-end items-end">
         <NavigationBar />
         <MusicBar />
         {/* NavigationBar 제외 영역 */}
         <div className="w-10/12 h-full pr-8">
           {/* 인기 차트 */}
           <h1 className="">인기 차트</h1>
-          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton
-              className="w-4"
-              onClick={handlePopularPageBackwardClick}
+          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
+            <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+              <IconButton onClick={handlePopularPageBackwardClick}>
+                {popularPageIndex !== 0 && (
+                  <BackIcon color="primary" fontSize="large" />
+                )}
+              </IconButton>
+            </div>
+            <div
+              className={
+                'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
+              }
+              style={getSlideContentStyle(popularPageIndex)}
             >
-              {popularPageIndex !== 0 && (
-                <BackIcon color="primary" fontSize="large" />
-              )}
-            </IconButton>
-            <div className="w-11/12 h-full flex flex-col flex-wrap justify-center items-start">
               {popularMusicList}
             </div>
-            <IconButton onClick={handlePopularPageForwardClick}>
-              <ForwardIcon color="primary" fontSize="large" />
-            </IconButton>
+            <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+              <IconButton onClick={handlePopularPageForwardClick}>
+                <ForwardIcon color="primary" fontSize="large" />
+              </IconButton>
+            </div>
           </div>
 
           {/* 인기 태그 */}
