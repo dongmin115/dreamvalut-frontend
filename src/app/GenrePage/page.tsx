@@ -1,22 +1,42 @@
-/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable camelcase */
 
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import axios from 'axios';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Link from 'next/link';
+// import { fetchData } from 'next-auth/client/_utils';
+import { GenreData } from '../types/genre.ts';
+import { EditfetchGenres, fetchGenres } from '../api/genre.ts';
 
-const GenrePage: React.FC = () => {
-  const NextPageBtn: React.FC = () => (
-    <Link href={'/main'}>
-      <button className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]">
-        <ArrowForwardIosIcon color="primary" fontSize="large" />
-      </button>
-    </Link>
-  );
+const GenrePage = () => {
+  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
+  const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
+  const [retryCount, setRetryCount] = useState(0);
+
+  const handleGenreToggle = (genre_id: number) => {
+    // 변경: genre_id 타입 명시
+    if (selectedGenres.includes(genre_id)) {
+      setSelectedGenres(selectedGenres.filter((id) => id !== genre_id));
+    } else {
+      setSelectedGenres([...selectedGenres, genre_id]);
+    }
+  };
+
+  useEffect(() => {
+    fetchGenres()
+      .then((res) => {
+        setGenres(res); // 가져온 데이터를 상태에 설정
+      })
+      .catch((error) => {
+        console.error('오류 발생:', error);
+      });
+  }, []);
 
   const theme = createTheme({
     palette: {
@@ -31,165 +51,71 @@ const GenrePage: React.FC = () => {
     },
   });
 
+  // 다음페이지 버튼
+  // 내 장르 취향 설정하기
+  const handleNextPage = async () => {
+    try {
+      // API 호출
+      await axios.post('/api/v1/users/preference', { genres: selectedGenres });
+    } catch (error) {
+      console.error('Error navigating to next page:', error);
+    }
+  };
+
   return (
-    <>
-      <div className="flex justify-center">
-        <div className="z-10 fade-in-box grid grid-cols-3 grid-rows-4 w-[30%] h-screen gap-[3%] p-[2%]">
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/QYvMHz3/image.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">POP</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/pKWSB7k/RNB.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">RnB</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/yyFmN1f/image.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">Jazz</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/Fwj5D5s/image.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">Ballade</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/nwnkLDJ/image.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">Classical</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/3cjmtvN/image.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">Rock</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/ZHJLj11/image.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">Hip-Hap</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/Bq4w6f9/Folk.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">Folk</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/HYCZ8KS/OST.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">OST</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/cgVFWw1/JPOP.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">J-POP</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/cgP2r1p/image.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">Musical</p>
-          </button>
-          <button
-            className={
-              'genreBtns flex flex-col items-center text-center justify-center border-2 border-purple-950 bg-zinc-900 rounded-xl'
-            }
-          >
-            <img
-              src="https://i.ibb.co/CvC2VdF/EDM.png"
-              alt="image"
-              className="w-[90%] h-[70%] rounded-full"
-            />
-            <p className="text-zinc-50 mt-[8%] text-xl">EDM</p>
-          </button>
+    <ThemeProvider theme={theme}>
+      <ToggleButtonGroup orientation="vertical" value={selectedGenres}>
+        <div>
+          <div className="w-screen h-screen flex justify-center items-center">
+            <div className="w-[30%] h-screen grid z-10 grid-cols-3 grid-rows-4 gap-4 p-[1%]">
+              {genres.map((genre) => (
+                <div key={genre.genre_id} className="w-full">
+                  <ToggleButton
+                    value={genre.genre_id}
+                    onClick={() => {
+                      handleGenreToggle(genre.genre_id);
+                      // fetchGenres(); // fetchGenres 호출
+                    }}
+                    className={`flex fade-in-box flex-col w-full h-full text-center hover-bg-opacity ${selectedGenres.includes(genre.genre_id) ? '#341672' : ''}`}
+                    style={{
+                      border: selectedGenres.includes(genre.genre_id)
+                        ? '1px solid #8b5cf6'
+                        : '1px solid #8b5cf6',
+                      backgroundColor: selectedGenres.includes(genre.genre_id)
+                        ? '#4c1d95'
+                        : 'transparent',
+                      borderRadius: '15%',
+                    }}
+                  >
+                    <img
+                      src={genre.genre_image}
+                      alt="genre-thumbnail"
+                      className="w-4/5 h-4/5 rounded-full"
+                    />
+                    <p className="text-white mt-[15%] text-sm">
+                      {genre.genre_name}
+                    </p>
+                  </ToggleButton>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="absolute z-10 fade-in-box2 left-0 top-[45%] text-violet-900 opacity-[100%]">
+            <p className="text-8xl">Genre.</p>
+          </div>
+          <div className="absolute z-0 fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-950 opacity-[100%]"></div>
         </div>
-      </div>
-      <div className=""></div>
-      <p className="absolute fade-in-box2 left-0 top-[45%] text-violet-900 opacity-[100%] text-8xl">
-        Genre.
-      </p>
-      <div className="absolute fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-950 opacity-[100%]"></div>
-      <ThemeProvider theme={theme}>
-        <NextPageBtn />
-      </ThemeProvider>
-    </>
+      </ToggleButtonGroup>
+      {/* 다음 페이지로 이동하는 버튼 */}
+      <Link href="/main">
+        <button
+          className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]"
+          onClick={handleNextPage}
+        >
+          <ArrowForwardIosIcon color="primary" fontSize="large" />
+        </button>{' '}
+      </Link>
+    </ThemeProvider>
   );
 };
 
