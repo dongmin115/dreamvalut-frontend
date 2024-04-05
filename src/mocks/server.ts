@@ -3,17 +3,19 @@
 /* eslint-disable import/prefer-default-export */
 import { setupServer } from 'msw/node';
 import { chartHandlers } from './handlers/chartHandlers';
+import { handlers } from './handlers/musicbarHandlers';
+import { uploadmymusichandlers } from './handlers/uploadmymusicHandlers';
 import {
-  handlers,
   genrehandlers,
   genreBooleanhandlers,
   takemygenrehandlers,
-} from './handlers/handlers';
+} from './handlers/genreHandlers';
 
 export const server = setupServer(
-  ...handlers,
   ...chartHandlers,
   ...genrehandlers,
   ...genreBooleanhandlers,
   ...takemygenrehandlers,
+  ...uploadmymusichandlers,
+  ...handlers,
 );
