@@ -1,16 +1,20 @@
+/* eslint-disable import/named */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
 import { setupWorker } from 'msw/browser';
+
+import { chartHandlers } from './handlers/chartHandlers';
 import {
   handlers,
   genrehandlers,
   genreBooleanhandlers,
   takemygenrehandlers,
-} from './handlers';
+} from './handlers/handlers';
 
-// 브라우저에서 API mocking을 활성화할 수 있도록 클라이언트-작업자 간 통신을 준비한다.
 export const worker = setupWorker(
   ...handlers,
+  ...chartHandlers,
   ...genrehandlers,
   ...genreBooleanhandlers,
   ...takemygenrehandlers,
