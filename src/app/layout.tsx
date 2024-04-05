@@ -24,7 +24,6 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <MSWComponent>{children}</MSWComponent>
         <link
           rel="icon"
           href="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
