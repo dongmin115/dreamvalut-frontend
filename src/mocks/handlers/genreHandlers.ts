@@ -5,25 +5,6 @@
 /* eslint-disable arrow-body-style */
 import { HttpResponse, http } from 'msw';
 
-export const handlers = [
-  http.get('/api/v1/tracks/track_id', () => {
-    return HttpResponse.json({
-      status: 'success',
-      data: {
-        track_id: 1,
-        title: 'Dreamscape',
-        uploader_name: 'Uploader 1',
-        has_lyrics: false,
-        track_url: 'url/to/track/audio.mp3',
-        track_image: 'url/to/image.png',
-        thumbnail_image: 'url/to/thumbnail.png',
-        prompt: 'This is the prompt how this track was made...',
-      },
-      message: 'Track information retrieved successfully.',
-    });
-  }),
-];
-
 // 장르페이지-모든 장르 리스트 가져오기
 export const genrehandlers = [
   http.get('/api/v1/genres/list', () => {
@@ -183,25 +164,6 @@ export const takemygenrehandlers = [
           },
         ],
       },
-    });
-  }),
-];
-
-// 나만의 음악 등록 페이지 - 특정 곡 등록하기
-export const uploadmymusichandlers = [
-  http.post('/api/v1/tracks', () => {
-    return HttpResponse.json({
-      status: 'success',
-      data: {
-        track_id: 123,
-        title: 'Sunset Boulevard',
-        duration: 120,
-        has_lyrics: true,
-        track_url: 'url/to/track/audio.mp3',
-        track_image: 'url/to/track/image.png',
-        thumbnail_image: 'url/to/track/image.png',
-      },
-      message: 'Track uploaded successfully.',
     });
   }),
 ];
