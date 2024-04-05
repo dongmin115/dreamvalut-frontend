@@ -188,7 +188,6 @@ function Page() {
     try {
       const response = await axios.get('/api/v1/charts');
       setData(response.data.data.tracks);
-      console.log(data);
     } catch (error) {}
   };
 
@@ -201,13 +200,6 @@ function Page() {
       }
     }, 500);
   }, []);
-
-  // wldnjdiehla
-  useEffect(() => {
-    if (data.length > 0) {
-      console.log(data.length); // 데이터가 로드된 후에만 track_id에 접근
-    }
-  }, [data, popularPageIndex]);
 
   if (data.length > 0) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
