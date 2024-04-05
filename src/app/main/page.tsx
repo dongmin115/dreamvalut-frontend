@@ -25,8 +25,6 @@ import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
-import NavigationBar from '../components/NavBar/NavigationBar';
-import MusicBar from '../components/Musicbar/Musicbar';
 
 const theme = createTheme({
   palette: {
@@ -125,7 +123,7 @@ function GenreMusic({
 }
 
 // 메인 페이지 컴포넌트
-function page() {
+function Page() {
   const [popularPageIndex, setpopularPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const [tagPageIndex, settagPageIndex] = useState(0); // 인기 태그 페이지 인덱스
   const [genrePageIndex, setgenrePageIndex] = useState(0); // 장르별 음악 페이지 인덱스
@@ -230,9 +228,13 @@ function page() {
 
   return (
     <ThemeProvider theme={theme}>
+<<<<<<< HEAD
       <div className="w-full h-full flex flex-col justify-end items-end">
         <NavigationBar />
         <MusicBar />
+=======
+      <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
+>>>>>>> develop
         {/* NavigationBar 제외 영역 */}
         <div className="w-10/12 h-full pr-8">
           {/* 인기 차트 */}
@@ -408,4 +410,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
