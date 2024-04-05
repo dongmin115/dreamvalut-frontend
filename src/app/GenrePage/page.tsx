@@ -42,7 +42,7 @@ const GenrePage = () => {
     palette: {
       primary: {
         // 메인 컬러 보라색
-        main: '#7b4ba7',
+        main: '#6a1b9a',
       },
       secondary: {
         // 흰색
