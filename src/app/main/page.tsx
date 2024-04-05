@@ -131,9 +131,12 @@ function page() {
   const [genrePageIndex, setgenrePageIndex] = useState(0); // 장르별 음악 페이지 인덱스
   const [otherPlaylistPageIndex, setOtherPlaylistPageIndex] = useState(0); // 다른 유저가 선택한 플레이리스트 페이지 인덱스
   const [systemPlaylistPageIndex, setSystemPlaylistPageIndex] = useState(0); // 시스템 플레이리스트 페이지 인덱스
+  const [data, setData] = useState<any>({});
 
   const handlePopularPageForwardClick = () => {
-    setpopularPageIndex(popularPageIndex + 1);
+    if (Math.ceil(data.length / 3) - 4 > popularPageIndex) {
+      setpopularPageIndex(popularPageIndex + 1);
+    } // 이때 4는 한번에 보여지는 인기음악의 개수
   };
 
   const handlePopularPageBackwardClick = () => {
@@ -183,7 +186,6 @@ function page() {
   };
   const popularMusicList = [];
 
-  const [data, setData] = useState<any>({});
   const fetchChartData = async () => {
     try {
       const response = await axios.get('/api/v1/charts');
@@ -205,7 +207,7 @@ function page() {
   // wldnjdiehla
   useEffect(() => {
     if (data.length > 0) {
-      console.log(data[0]); // 데이터가 로드된 후에만 track_id에 접근
+      console.log(data.length); // 데이터가 로드된 후에만 track_id에 접근
     }
   }, [data, popularPageIndex]);
 

@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import './styles/globals.css';
 import React from 'react';
 import { MSWComponent } from '../mocks/MSWComponent';
 
