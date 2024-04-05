@@ -1,12 +1,19 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable import/extensions */
 
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
-import NavBar from '../components/NavBar/NavigationBar';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { EditfetchGenres, fetchGenres } from '../api/genre.ts';
+import { Genre } from '../types/genre.ts';
 
 const theme = createTheme({
   palette: {
@@ -104,9 +111,55 @@ export default function Mypage() {
       cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
     },
   ];
+
+  const [genres, setGenres] = useState<Genre[]>([]);
+
+  useEffect(() => {
+    EditfetchGenres()
+      .then((res) => {
+        setGenres(res); // 가져온 데이터를 상태에 설정
+      })
+      .catch((error) => {
+        console.error('오류 발생:', error);
+      });
+  }, []);
+
+  const handleGenreToggle = (genreId: number) => {
+    // 장르를 토글하여 선택 상태를 변경
+    const updatedGenres = genres.map((genre) =>
+      genre.genre_id === genreId ? { ...genre, state: !genre.state } : genre,
+    );
+    setGenres(updatedGenres);
+  };
+
+  const itemsPerPage = 7; // 페이지당 아이템 수
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+
+  // 전체 페이지 수 계산
+  const totalPages = Math.ceil(genres.length / itemsPerPage);
+
+  // 현재 페이지에 해당하는 장르만 선택하여 렌더링
+  const visibleGenres = genres.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
+  // // 페이지 변경 핸들러
+  // const handlePageChange = (page: React.SetStateAction<number>) => {
+  //   setCurrentPage(page);
+  // };
+
+  // 이전 페이지로 이동하는 핸들러
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  // 다음 페이지로 이동하는 핸들러
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
+  };
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
       <div className="w-screen h-screen pl-[15%] bg-[#1a1a1a] flex flex-col">
         <div className="flex flex-row w-full h-[30%] space-x-6 p-[2%]">
           {/* 내 계정 */}
@@ -138,118 +191,49 @@ export default function Mypage() {
           <div className="flex flex-col w-[60%] h-full space-y-4">
             <h1 className="text-[#D4D4D4] text-3xl">나의 음악취향</h1>
             <div className="flex flex-wrap items-center bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md justify-center gap-2 text-center object-center">
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Jazz
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Rock
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                EDM
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                R&B
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Pop
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Lofi
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Blues
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Latin
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Metal
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Raggae
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Ambient
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Classical
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Funk/Soul
-              </Button>
-              {/* <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Rap/Hip-Hop
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Folk/Country
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Electronic Dance
-              </Button> */}
+              <div>
+                {/* 장르 데이터를 Button 컴포넌트로 매핑하여 보여줍니다. */}
+                <div>
+                  {/* 장르 목록 */}
+                  <div className="flex">
+                    {visibleGenres.map((genre) => (
+                      <Button
+                        key={genre.genre_id}
+                        variant="contained"
+                        style={{
+                          backgroundImage: `linear-gradient(135deg, ${
+                            genre.state ? '#6c26ff' : '#606060'
+                          }, transparent)`,
+                          borderRadius: '45%', // 모서리를 둥글게 조절
+                          margin: '1%', // 버튼 간의 간격 조절
+                        }}
+                        color="primary"
+                        onClick={() => handleGenreToggle(genre.genre_id)}
+                      >
+                        {genre.genre_name}
+                      </Button>
+                    ))}
+                  </div>
+                  {/* 페이지네이션 */}
+                  <div className="flex justify-center mt-4">
+                    <Button
+                      disabled={currentPage === 1}
+                      onClick={handlePrevPage}
+                    >
+                      <ArrowBackIosIcon />
+                    </Button>
+                    {/* <div>
+                      {currentPage} / {totalPages}
+                    </div> */}
+                    <Button
+                      disabled={currentPage === totalPages}
+                      onClick={handleNextPage}
+                    >
+                      <ArrowForwardIosIcon />
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -17,7 +17,6 @@ import {
   Theme,
   useTheme,
 } from '@mui/material/styles';
-import NavBar from '../components/NavBar/NavigationBar';
 import './MymusicAICSS.css';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -125,7 +124,6 @@ const UploadMyMusic = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />
       <div className="pl-[15%] w-full h-screen">
         <div className="flex w-[70%] ml-[15%] mt-[2%]">
           <div className="flex flex-col shadow-indigo-500/100 shadow-lg items-center space-x-4 bg-[#1e1e1e] w-full rounded-xl mb-[4%]">
@@ -141,8 +139,7 @@ const UploadMyMusic = () => {
                 className="size-36 rounded-xl drop-shadow-sm"
               />
               <div className="flex flex-col text-center justify-center">
-                <p className="text-white text-xl">Dangerously</p>
-                <p className="text-[#777777] text-lg">Charlie Puth</p>
+                <p className="text-white text-xl mb-[20%]">Dangerously</p>
                 <p className="text-[#777777] text-base">8.02 MB</p>
               </div>
             </div>

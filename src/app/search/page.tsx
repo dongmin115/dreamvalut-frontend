@@ -9,7 +9,6 @@ import { IconButton, createTheme } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
-import NavBar from '../components/NavBar/NavigationBar';
 
 const theme = createTheme({
   palette: {
@@ -72,10 +71,10 @@ export default function SearchPage() {
       likes: 1,
     },
   ];
+
   return (
     <ThemeProvider theme={theme}>
       <div className="h-fit min-h-screen bg-[#1a1a1a]">
-        <NavBar />
         {/* NavBar 제외영역 */}
         <div className="pl-[15%] h-fit w-full">
           <div className="flex p-[3%] flex-col gap-8 w-full">
