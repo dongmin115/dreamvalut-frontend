@@ -3,8 +3,8 @@
 // import MusicBar from './components/Musicbar/Musicbar';
 // import NavBar from './components/NavBar/NavigationBar';
 
-// import LogIn from './LogInPage/page';
-import GenrePage from './GenrePage/page';
+import LogIn from './LogInPage/page';
+// import GenrePage from './GenrePage/page';
 // import Page from './main/page';
 // import React from 'react';
 // import UploadMyMusic from './MymusicAI/page';
@@ -15,8 +15,8 @@ export default function Home() {
     <>
       {/* <NavBar />
       <MusicBar /> */}
-      {/* <LogIn /> */}
-      <GenrePage />
+      <LogIn />
+      {/* <GenrePage /> */}
       {/* <Mypage /> */}
       {/* <Page /> */}
       {/* <UploadMyMusic /> */}
