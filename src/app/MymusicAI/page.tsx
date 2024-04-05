@@ -1,3 +1,7 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable operator-linebreak */
+/* eslint-disable max-len */
 /* eslint-disable no-shadow */
 /* eslint-disable import/order */
 /* eslint-disable no-console */
@@ -9,7 +13,7 @@
 
 'use client';
 
-import React, { ReactNode, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import {
   createTheme,
@@ -26,6 +30,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { fetchGenres } from '@/api/genre';
+import { GenreData } from '@/types/genre';
 
 const theme = createTheme({
   palette: {
@@ -55,31 +61,17 @@ const MenuProps = {
   },
 };
 
-// 장르 데이터
-const names = [
-  'POP',
-  'RnB',
-  'Jazz',
-  'Ballade',
-  'Classical',
-  'Rock',
-  'Hip-Hap',
-  'Folk',
-  'OST',
-  'JPOP',
-  'Musical',
-  'EDM',
-];
-
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
   const [tags, setTags] = useState('');
   const [genre, setGenre] = useState(true);
   const theme = useTheme();
-  const [genreName, setgenreName] = React.useState<string[]>([]);
   // 가사 보유 여부 버튼
   const [lyrics, setLyrics] = React.useState<string | null>('left');
+  const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
+  const [state, setState] = React.useState<boolean>(false);
+  const [selectedGenres, setSelectedGenres] = useState<GenreData[]>([]);
 
   // 장르
   function getStyles(name: string, genreName: string[], theme: Theme) {
@@ -90,16 +82,6 @@ const UploadMyMusic = () => {
           : theme.typography.fontWeightMedium,
     };
   }
-
-  const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {
-    const {
-      target: { value },
-    } = event;
-    setgenreName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
 
   // Form의 onSubmit 이벤트 핸들러 - 음악 정보 업로드
   const handleSubmit = (event: React.FormEvent) => {
@@ -120,6 +102,35 @@ const UploadMyMusic = () => {
     newLyrics: string | null,
   ) => {
     setLyrics(newLyrics);
+  };
+
+  useEffect(() => {
+    fetchGenres()
+      .then((res) => {
+        setGenres(res); // 가져온 데이터를 상태에 설정
+      })
+      .catch((error) => {
+        console.error('오류 발생:', error);
+      });
+  }, []);
+
+  const [genreName, setgenreName] = React.useState<string[]>([]);
+  const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {
+    const {
+      target: { value },
+    } = event;
+
+    // 선택된 장르가 있는지 여부를 판단하여 state를 설정합니다.
+    const newState =
+      typeof value === 'string'
+        ? value.split(',').length > 0
+        : value.length > 0;
+    setState(newState);
+
+    setgenreName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
   };
 
   return (
@@ -210,20 +221,20 @@ const UploadMyMusic = () => {
                       labelId="demo-multiple-name-label"
                       id="demo-multiple-name"
                       multiple // 다수 선택 가능
-                      value={genreName}
+                      value={genreName} // 변경된 부분
                       onChange={handleGenre}
                       input={<OutlinedInput label="genre" />}
                       MenuProps={MenuProps}
                       color="secondary"
                       className="text-[#a0a0a0]"
                     >
-                      {names.map((name) => (
+                      {genres.map((genre) => (
                         <MenuItem
-                          key={name}
-                          value={name}
-                          style={getStyles(name, genreName, theme)}
+                          key={genre.genre_id} // 장르의 고유 id를 key로 사용합니다.
+                          value={genre.genre_id} // 장르의 id를 value로 사용합니다.
+                          style={getStyles(genre.genre_name, genreName, theme)}
                         >
-                          {name}
+                          {genre.genre_name} {/* 장르의 이름을 표시합니다. */}
                         </MenuItem>
                       ))}
                     </Select>
