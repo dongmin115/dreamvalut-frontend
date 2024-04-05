@@ -1,11 +1,8 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable import/named */
 /* eslint-disable no-unused-vars */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable import/extensions */
 
 'use client';
 
@@ -15,7 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import EditfetchGenres from '../api/genre.ts';
+import { EditfetchGenres, fetchGenres } from '../api/genre.ts';
 import { Genre } from '../types/genre.ts';
 
 const theme = createTheme({
@@ -115,15 +112,11 @@ export default function Mypage() {
     },
   ];
 
-  // useEffect(() => {
-  //   fetchGenres();
-  // }, [loading]);
   const [genres, setGenres] = useState<Genre[]>([]);
 
   useEffect(() => {
     EditfetchGenres()
       .then((res) => {
-        console.log('데이터 반환:', res); // 반환된 데이터 콘솔에 출력
         setGenres(res); // 가져온 데이터를 상태에 설정
       })
       .catch((error) => {
@@ -137,7 +130,6 @@ export default function Mypage() {
       genre.genre_id === genreId ? { ...genre, state: !genre.state } : genre,
     );
     setGenres(updatedGenres);
-    console.log(updatedGenres);
   };
 
   const itemsPerPage = 7; // 페이지당 아이템 수
@@ -152,10 +144,10 @@ export default function Mypage() {
     currentPage * itemsPerPage,
   );
 
-  // 페이지 변경 핸들러
-  const handlePageChange = (page: React.SetStateAction<number>) => {
-    setCurrentPage(page);
-  };
+  // // 페이지 변경 핸들러
+  // const handlePageChange = (page: React.SetStateAction<number>) => {
+  //   setCurrentPage(page);
+  // };
 
   // 이전 페이지로 이동하는 핸들러
   const handlePrevPage = () => {
@@ -242,91 +234,6 @@ export default function Mypage() {
                   </div>
                 </div>
               </div>
-
-              {/* <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                POP
-              </Button>
-              <Button
-                variant="contained"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                R&B
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Jazz
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Ballade
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Classical
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Rock
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Hip-Hap
-              </Button>
-
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Folk
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                OST
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                J-POP
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                Musical
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
-              >
-                EDM
-              </Button> */}
             </div>
           </div>
         </div>

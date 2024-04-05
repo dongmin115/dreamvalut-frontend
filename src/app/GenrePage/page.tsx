@@ -1,11 +1,5 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-/* eslint-disable no-shadow */
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable no-use-before-define */
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable camelcase */
 
 'use client';
@@ -18,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
 // import { fetchData } from 'next-auth/client/_utils';
 import { GenreData } from '../types/genre.ts';
+import { EditfetchGenres, fetchGenres } from '../api/genre.ts';
 
 const GenrePage = () => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
@@ -34,36 +29,14 @@ const GenrePage = () => {
   };
 
   useEffect(() => {
-    // 장르 목록을 가져오는 함수
-    const fetchGenres = async () => {
-      try {
-        const response = await axios.get('/api/v1/genres/list'); // 변경: Response 타입 지정
-        if (response.data) {
-          setGenres(response.data.data); // 장르 데이터 설정
-        }
-      } catch (error) {
+    fetchGenres()
+      .then((res) => {
+        setGenres(res); // 가져온 데이터를 상태에 설정
+      })
+      .catch((error) => {
         console.error('오류 발생:', error);
-        if (retryCount < 5) {
-          // 다섯 번 이하로 재시도
-          setRetryCount(retryCount + 1); // 재시도 횟수 증가
-        } else {
-          throw new Error('API 호출이 여러 번 실패했습니다.');
-        }
-      }
-    };
-    fetchGenres(); // 장르 데이터 가져오기
-  }, [retryCount]);
-
-  // useEffect(() => {
-  //   fetchGenres()
-  //     .then((res) => {
-  //       setGenres(res.data.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log('asdsa');
-  //       console.error('err', error);
-  //     });
-  // }, []);
+      });
+  }, []);
 
   const theme = createTheme({
     palette: {
@@ -79,17 +52,9 @@ const GenrePage = () => {
   });
 
   // 다음페이지 버튼
+  // 내 장르 취향 설정하기
   const handleNextPage = async () => {
     try {
-      // // 전달할 데이터 객체
-      // const dataToSend = {
-      //   selectedGenres,
-      // };
-
-      // // 데이터를 JSON 문자열로 변환하여 URL 매개변수로 전달
-      // const dataString = encodeURIComponent(JSON.stringify(dataToSend));
-      // window.location.href = `/main?data=${dataString}`;
-
       // API 호출
       await axios.post('/api/v1/users/preference', { genres: selectedGenres });
     } catch (error) {
@@ -141,6 +106,7 @@ const GenrePage = () => {
           <div className="absolute z-0 fade-in-box2 left-[1%] bottom-[43%] w-[98%] h-[1%] rounded-md bg-violet-950 opacity-[100%]"></div>
         </div>
       </ToggleButtonGroup>
+      {/* 다음 페이지로 이동하는 버튼 */}
       <Link href="/main">
         <button
           className="fixed right-0 bottom-0 genreBtns w-[8%] h-[12%]"
@@ -149,7 +115,6 @@ const GenrePage = () => {
           <ArrowForwardIosIcon color="primary" fontSize="large" />
         </button>{' '}
       </Link>
-      {/* 다음 페이지로 이동하는 버튼 */}
     </ThemeProvider>
   );
 };
