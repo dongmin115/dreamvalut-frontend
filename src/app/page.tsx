@@ -4,11 +4,11 @@
 // import NavBar from './components/NavBar/NavigationBar';
 
 // import LogIn from './LogInPage/page';
-// import GenrePage from './GenrePage/page';
+import GenrePage from './GenrePage/page';
 // import Page from './main/page';
 // import React from 'react';
 // import UploadMyMusic from './MymusicAI/page';
-import Mypage from './mypage/page';
+// import Mypage from './mypage/page';
 // App 컴포넌트
 export default function Home() {
   return (
@@ -16,8 +16,8 @@ export default function Home() {
       {/* <NavBar />
       <MusicBar /> */}
       {/* <LogIn /> */}
-      {/* <GenrePage /> */}
-      <Mypage />
+      <GenrePage />
+      {/* <Mypage /> */}
       {/* <Page /> */}
       {/* <UploadMyMusic /> */}
     </>
