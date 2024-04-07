@@ -12,8 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { EditfetchGenres, fetchGenres } from '../api/genre.ts';
-import { Genre } from '../types/genre.ts';
+import { EditfetchGenres, fetchGenres } from '@/api/genre.ts';
+import { Genre } from '@/types/genre.ts';
 
 const theme = createTheme({
   palette: {

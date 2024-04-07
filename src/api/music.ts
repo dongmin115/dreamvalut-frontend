@@ -6,7 +6,7 @@ const getMusic = async () => {
     }
     const responseJson = await response.json();
 
-    return responseJson;
+    return responseJson.data;
   } catch (error) {
     console.error('오류 발생:', error);
     throw error;
