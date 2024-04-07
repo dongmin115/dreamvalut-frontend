@@ -24,7 +24,6 @@ import {
 import './MymusicAICSS.css';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,6 +31,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { fetchGenres } from '@/api/genre';
 import { GenreData } from '@/types/genre';
+import { useQuery } from '@tanstack/react-query';
 
 const theme = createTheme({
   palette: {
@@ -113,6 +113,18 @@ const UploadMyMusic = () => {
   //       console.error('오류 발생:', error);
   //     });
   // }, []);
+
+  const { data } = useQuery({
+    queryKey: ['genres'],
+    queryFn: fetchGenres,
+  });
+
+  // 받아온 데이터 세팅
+  React.useEffect(() => {
+    if (data) {
+      setGenres(data);
+    }
+  }, [data]);
 
   const [genreName, setgenreName] = React.useState<string[]>([]);
   const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {
