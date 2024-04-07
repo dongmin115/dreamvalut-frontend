@@ -104,15 +104,15 @@ const UploadMyMusic = () => {
     setLyrics(newLyrics);
   };
 
-  useEffect(() => {
-    fetchGenres()
-      .then((res) => {
-        setGenres(res); // 가져온 데이터를 상태에 설정
-      })
-      .catch((error) => {
-        console.error('오류 발생:', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetchGenres()
+  //     .then((res) => {
+  //       setGenres(res); // 가져온 데이터를 상태에 설정
+  //     })
+  //     .catch((error) => {
+  //       console.error('오류 발생:', error);
+  //     });
+  // }, []);
 
   const [genreName, setgenreName] = React.useState<string[]>([]);
   const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {

@@ -4,7 +4,7 @@
 
 import axios from 'axios';
 
-const MAX_RETRY_COUNT = 5; // 재시도 횟수 상수 설정
+const MAX_RETRY_COUNT = 3; // 재시도 횟수 상수 설정
 const RETRY_INTERVAL = 1000; // 재시도 간격(ms) 상수 설정
 let retryCount = 0; // 재시도 횟수 초기화
 
