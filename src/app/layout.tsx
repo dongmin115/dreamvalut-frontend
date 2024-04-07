@@ -5,9 +5,10 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './styles/globals.css';
 import React from 'react';
-import { MSWComponent } from '../mocks/MSWComponent';
+import { MSWComponent } from '@/mocks/MSWComponent';
 import MusicBar from './components/Musicbar/Musicbar';
 import NavBar from './components/NavBar/NavigationBar';
+import QueryProviders from './components/QueryProvider/QueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,9 +30,13 @@ export default function RootLayout({
           href="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           sizes="any"
         />
-        <MSWComponent>{children}</MSWComponent>
-        <MusicBar />
-        <NavBar />
+        <MSWComponent>
+          <QueryProviders>
+            {children}
+            <MusicBar />
+            <NavBar />
+          </QueryProviders>
+        </MSWComponent>
       </body>
     </html>
   );
