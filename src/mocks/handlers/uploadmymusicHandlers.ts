@@ -7,17 +7,16 @@ import { HttpResponse, http } from 'msw';
 export const uploadmymusichandlers = [
   http.post('/api/v1/tracks', () =>
     HttpResponse.json({
-      status: 'success',
-      data: {
-        track_id: 123,
+      track_info: {
         title: 'Sunset Boulevard',
-        duration: 120,
+        prompt:
+          'Inspired by a sunset along the coast, bringing a serene end to a bustling day.',
         has_lyrics: true,
-        track_url: 'url/to/track/audio.mp3',
-        track_image: 'url/to/track/image.png',
-        thumbnail_image: 'url/to/track/image.png',
+        tags: ['chill', 'sunset', 'electronic'],
+        genre_id: 1,
       },
-      message: 'Track uploaded successfully.',
+      track_image: 'image_file.jpg',
+      track_audio: 'track_file.jpg',
     }),
   ),
 ];

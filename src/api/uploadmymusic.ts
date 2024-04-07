@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import axios from 'axios';
 
+// 특정 곡 등록하기
 const uploadMymusic = async () => {
   try {
     const response = await axios.post('/api/v1/tracks');
