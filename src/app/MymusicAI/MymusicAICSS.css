@@ -26,3 +26,7 @@ textarea {
   /* border:none; */
   resize: none;
 }
+
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-selected {
+  background-color: rgba(111, 4, 182, 0.151);
+}

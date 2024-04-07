@@ -1,3 +1,6 @@
+/* eslint-disable no-shadow */
+/* eslint-disable operator-linebreak */
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-unused-vars */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
@@ -13,7 +16,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { EditfetchGenres, fetchGenres } from '@/api/genre.ts';
-import { Genre } from '@/types/genre.ts';
+import { Genre, GenreData } from '@/types/genre.ts';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 const theme = createTheme({
   palette: {
@@ -112,52 +116,45 @@ export default function Mypage() {
     },
   ];
 
+  const { data } = useQuery({
+    queryKey: ['genres'],
+    queryFn: EditfetchGenres,
+  });
+
   const [genres, setGenres] = useState<Genre[]>([]);
 
-  useEffect(() => {
-    EditfetchGenres()
-      .then((res) => {
-        setGenres(res); // 가져온 데이터를 상태에 설정
-      })
-      .catch((error) => {
-        console.error('오류 발생:', error);
-      });
-  }, []);
+  React.useEffect(() => {
+    if (data) {
+      setGenres(data);
+    }
+  }, [data]);
 
   const handleGenreToggle = (genreId: number) => {
-    // 장르를 토글하여 선택 상태를 변경
     const updatedGenres = genres.map((genre) =>
       genre.genre_id === genreId ? { ...genre, state: !genre.state } : genre,
     );
     setGenres(updatedGenres);
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const genresPerPage = 7;
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  // 페이지 이동 버튼 핸들러
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
-  const itemsPerPage = 7; // 페이지당 아이템 수
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
 
   // 전체 페이지 수 계산
-  const totalPages = Math.ceil(genres.length / itemsPerPage);
+  const totalPages = Math.ceil(genres.length / genresPerPage);
 
-  // 현재 페이지에 해당하는 장르만 선택하여 렌더링
-  const visibleGenres = genres.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  );
+  // 현재 페이지에 표시할 장르 가져오기
+  const indexOfLastGenre = currentPage * genresPerPage;
+  const indexOfFirstGenre = indexOfLastGenre - genresPerPage;
+  const currentGenres = genres.slice(indexOfFirstGenre, indexOfLastGenre);
 
-  // // 페이지 변경 핸들러
-  // const handlePageChange = (page: React.SetStateAction<number>) => {
-  //   setCurrentPage(page);
-  // };
-
-  // 이전 페이지로 이동하는 핸들러
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-  };
-
-  // 다음 페이지로 이동하는 핸들러
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-  };
   return (
     <ThemeProvider theme={theme}>
       <div className="w-screen h-screen pl-[15%] bg-[#1a1a1a] flex flex-col">
@@ -196,24 +193,22 @@ export default function Mypage() {
                 <div>
                   {/* 장르 목록 */}
                   <div className="flex">
-                    {visibleGenres.map((genre) => (
+                    {currentGenres.map((genre) => (
                       <Button
                         key={genre.genre_id}
                         variant="contained"
                         style={{
-                          backgroundImage: `linear-gradient(135deg, ${
-                            genre.state ? '#6c26ff' : '#606060'
-                          }, transparent)`,
-                          borderRadius: '45%', // 모서리를 둥글게 조절
-                          margin: '1%', // 버튼 간의 간격 조절
+                          backgroundColor: genre.state ? '#6c26ff' : '#606060',
+                          margin: '1%',
+                          borderRadius: '45%',
                         }}
-                        color="primary"
                         onClick={() => handleGenreToggle(genre.genre_id)}
                       >
                         {genre.genre_name}
                       </Button>
                     ))}
                   </div>
+
                   {/* 페이지네이션 */}
                   <div className="flex justify-center mt-4">
                     <Button
@@ -222,9 +217,9 @@ export default function Mypage() {
                     >
                       <ArrowBackIosIcon />
                     </Button>
-                    {/* <div>
+                    <div>
                       {currentPage} / {totalPages}
-                    </div> */}
+                    </div>
                     <Button
                       disabled={currentPage === totalPages}
                       onClick={handleNextPage}
