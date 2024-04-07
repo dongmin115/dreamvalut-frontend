@@ -137,7 +137,6 @@ export default function Mypage() {
   };
   const [currentPage, setCurrentPage] = useState(1);
   const genresPerPage = 7;
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   // 페이지 이동 버튼 핸들러
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
