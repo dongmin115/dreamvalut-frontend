@@ -26,7 +26,7 @@ const theme = createTheme({
   },
 });
 
-export default function SearchPage() {
+export default function SearchPage(props: any) {
   const { data, isLoading } = useQuery({
     queryKey: ['search'],
     queryFn: async () => {
@@ -41,7 +41,9 @@ export default function SearchPage() {
         {/* NavBar 제외영역 */}
         <div className="pl-[15%] h-fit w-full">
           <div className="flex p-[3%] flex-col gap-8 w-full">
-            <p className="text-xl w-fit">에스파에 대한 검색 결과입니다.</p>
+            <p className="text-xl w-fit">
+              <em>{props.params.keyward}</em>에 대한 검색 결과입니다.
+            </p>
             <div className="flex flex-col bg-[#353535] h-fit rounded-xl w-full p-[2%] gap-4">
               <div className="flex flex-row justify-around items-center h-fit">
                 <p className="text-xl w-[60%] text-center">곡정보</p>
@@ -54,7 +56,7 @@ export default function SearchPage() {
               <ul className="flex flex-col gap-8 min-h-[70vh] h-fit">
                 {isLoading ? (
                   <div className="h-full w-full text-center my-auto text-2xl">
-                    검색 결과 가져오는중...
+                    {props.params.keyward}에 대한 검색 결과 가져오는중...
                   </div>
                 ) : (
                   data.map((e: searchResult, i: number) => (
