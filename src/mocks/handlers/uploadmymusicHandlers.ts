@@ -1,22 +1,30 @@
+/* eslint-disable camelcase */
 /* eslint-disable function-paren-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable import/prefer-default-export */
 import { HttpResponse, http } from 'msw';
+
+const title: string = '';
+const prompt: string = '';
+const has_lyrics: boolean = false;
+const tags: string[] = [];
+const genre_id: number[] = [];
+const track_image: File | null = null;
+const track_audio: File | null = null;
 
 // 나만의 음악 등록 페이지 - 특정 곡 등록하기
 export const uploadmymusichandlers = [
   http.post('/api/v1/tracks', () =>
     HttpResponse.json({
       track_info: {
-        title: 'Sunset Boulevard',
-        prompt:
-          'Inspired by a sunset along the coast, bringing a serene end to a bustling day.',
-        has_lyrics: true,
-        tags: ['chill', 'sunset', 'electronic'],
-        genre_id: 1,
+        title,
+        prompt,
+        has_lyrics,
+        tags,
+        genre_id,
       },
-      track_image: 'image_file.jpg',
-      track_audio: 'track_file.jpg',
+      track_image,
+      track_audio,
     }),
   ),
 ];
