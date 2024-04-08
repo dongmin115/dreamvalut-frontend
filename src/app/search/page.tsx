@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { searchResult } from '@/types/search';
 
 const theme = createTheme({
   palette: {
@@ -54,7 +55,7 @@ export default function SearchPage() {
                 {isLoading ? (
                   <div>검색 결과 가져오는중...</div>
                 ) : (
-                  data.map((e, i) => (
+                  data.map((e: searchResult, i: number) => (
                     <li
                       key={i}
                       className="flex flex-row justify-around items-center h-fit"
