@@ -71,7 +71,10 @@ export default function SearchPage() {
                             alt="cover"
                             className="size-28 rounded-sm"
                           />
-                          <p className="text-lg">{e.title}</p>
+                          <p
+                            className="xs:text-xs md:text-xs lg:text-xs xl:text-lg xl:text-md w-fit"
+                            dangerouslySetInnerHTML={{ __html: e.title }}
+                          />
                         </div>
                         {/* 태그, 프롬프트 내용 flexbox */}
                         <div className="flex flex-col justify-center items-center w-[80%] gap-2">
@@ -88,15 +91,17 @@ export default function SearchPage() {
                             ))} */}
                           </div>
                           {/* 프롬프트 내용 */}
-                          <p className="text-md items-center w-full">
-                            {e.prompt}
-                          </p>
+                          <p
+                            className="text-md items-center w-full"
+                            dangerouslySetInnerHTML={{ __html: e.prompt }}
+                          />
                         </div>
                       </div>
                       {/* 제작자 */}
-                      <p className="text-lg w-[10%] text-center text-[#777777]">
-                        {e.uploader_name}
-                      </p>
+                      <p
+                        className="text-lg w-[10%] text-center text-[#777777]"
+                        dangerouslySetInnerHTML={{ __html: e.uploader_name }}
+                      />
                       {/* 좋아요 */}
                       <div className="flex flex-row justify-center gap-2 items-center w-[10%]">
                         <IconButton>
