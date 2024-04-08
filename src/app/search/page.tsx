@@ -51,9 +51,11 @@ export default function SearchPage() {
               </div>
               <Divider />
               {/* 검색 결과 리스트 */}
-              <ul className="flex flex-col gap-8 h-fit">
+              <ul className="flex flex-col gap-8 min-h-[70vh] h-fit">
                 {isLoading ? (
-                  <div>검색 결과 가져오는중...</div>
+                  <div className="h-full w-full text-center my-auto text-2xl">
+                    검색 결과 가져오는중...
+                  </div>
                 ) : (
                   data.map((e: searchResult, i: number) => (
                     <li
