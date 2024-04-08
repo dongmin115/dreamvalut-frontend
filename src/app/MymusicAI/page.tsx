@@ -275,12 +275,15 @@ const UploadMyMusic = () => {
       }
 
       // axios를 사용하여 FormData를 서버로 보냅니다.
-      const response = await axios.post('/api/v1/tracks', formData, {
+      axios({
+        method: 'post',
+        url: '/api/v1/tracks',
+        data: formData,
         headers: {
-          'Content-Type': 'multipart/form-data', // 파일을 업로드할 때는 이 헤더가 필요합니다.
+          'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Upload response:', response);
+      console.log('Upload response:', formData);
     } catch (error) {
       console.error('Error submitting:', error);
     }
