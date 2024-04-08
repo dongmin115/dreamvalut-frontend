@@ -21,9 +21,8 @@ import {
   Theme,
   useTheme,
 } from '@mui/material/styles';
-import './MymusicAICSS.css';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+// import ToggleButton from '@mui/material/ToggleButton';
+// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,7 +31,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { fetchGenres } from '@/api/genre';
 import { Genre, GenreData } from '@/types/genre';
 import { useQuery } from '@tanstack/react-query';
-import uploadMymusic from '@/api/uploadmymusic';
+// import uploadMymusic from '@/api/uploadmymusic';
 import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -53,17 +52,17 @@ const theme = createTheme({
   },
 });
 
-// 해시태그
-const ITEM_HEIGHT2 = 48;
-const ITEM_PADDING_TOP2 = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT2 * 4.5 + ITEM_PADDING_TOP2,
-      width: 250,
-    },
-  },
-};
+// // 해시태그;
+// const ITEM_HEIGHT2 = 48;
+// const ITEM_PADDING_TOP2 = 8;
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       maxHeight: ITEM_HEIGHT2 * 4.5 + ITEM_PADDING_TOP2,
+//       width: 250,
+//     },
+//   },
+// };
 
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
@@ -286,6 +285,7 @@ const UploadMyMusic = () => {
       console.error('Error submitting:', error);
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="pl-[15%] w-full h-screen">
@@ -327,6 +327,14 @@ const UploadMyMusic = () => {
                         }}
                         accept="image/*"
                         required
+                        style={{
+                          fontWeight: 'bold',
+                          opacity: 0,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          width: '100%',
+                          marginBottom: '10%',
+                        }}
                       />
                     </div>
                     <div className="flex justify-center">
@@ -346,6 +354,14 @@ const UploadMyMusic = () => {
                         }}
                         accept="audio/*"
                         required
+                        style={{
+                          fontWeight: 'bold',
+                          opacity: 0,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          width: '100%',
+                          marginBottom: '8%',
+                        }}
                       />
                     </div>
                   </div>
@@ -376,7 +392,7 @@ const UploadMyMusic = () => {
               <div className="flex justify-center mt-[3%]">
                 <label className="p-[1%] text-lg text-[#A97DFF] ">설명</label>
                 <textarea
-                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
+                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950 resize-none"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
@@ -420,15 +436,17 @@ const UploadMyMusic = () => {
                   </ToggleButton>
                 </ToggleButtonGroup>
               </div> */}
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={hasLyrics}
-                    onChange={handleCheckboxChange}
-                  />
-                }
-                label="가사 보유 여부"
-              />
+              <div className="flex justify-center mt-[3%]">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={hasLyrics}
+                      onChange={handleCheckboxChange}
+                    />
+                  }
+                  label="가사 보유 여부"
+                />
+              </div>
               {/* 장르 선택 */}
               <div className="flex justify-center mt-[3%]">
                 <FormControl sx={{ m: 1, width: 300 }}>
@@ -454,6 +472,7 @@ const UploadMyMusic = () => {
                         key={genre.genre_id}
                         value={genre.genre_id}
                         style={getStyles(genre.genre_name, genreName, theme)}
+                        className=""
                       >
                         {genre.genre_name}
                       </MenuItem>
