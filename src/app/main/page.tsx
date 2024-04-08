@@ -13,10 +13,8 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import './GenreColorList.css';
-import { getSlideContentStyle } from '../styles/SlideStyles';
 import { IconButton } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
