@@ -64,19 +64,9 @@ const MenuProps = {
 };
 
 const UploadMyMusic = () => {
-  // const [title, setTitle] = useState('');
-  // const [prompt, setPrompt] = useState('');
-  // const [tags, setTags] = useState('');
-  // const [genre, setGenre] = useState(true);
-  // const theme = useTheme();
-  // // 가사 보유 여부 버튼
-  // const [lyrics, setLyrics] = React.useState<string | null>('left');
-  // const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
-  // const [selectedGenres, setSelectedGenres] = useState<GenreData[]>([]);
-
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
-  const [hasLyrics, setHasLyrics] = useState(false);
+  const [hasLyrics, setHasLyrics] = useState(Boolean);
   const [tags, setTags] = useState<string[]>([]);
   const [genreId, setGenreId] = useState<Genre[]>([]);
   const [trackImage, setTrackImage] = useState<File | null>(null);
@@ -122,15 +112,15 @@ const UploadMyMusic = () => {
   //       console.error('오류 발생:', error);
   //     });
   // }, []);
-  const handleHasLyrics = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setHasLyrics(event.target.checked); // 이벤트 타겟의 타입을 명시적으로 지정합니다.
-  };
+  // const handleHasLyrics = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setHasLyrics(event.target.checked); // 이벤트 타겟의 타입을 명시적으로 지정합니다.
+  // };
 
   const handleToggleButtonClick = (
     event: React.MouseEvent<HTMLElement>,
-    value: string,
+    value: boolean,
   ) => {
-    setHasLyrics(value === 'checked');
+    setHasLyrics(value === true);
   };
 
   // React.useEffect(() => {
@@ -176,12 +166,12 @@ const UploadMyMusic = () => {
       return selectedGenre ? selectedGenre.genre_id : null;
     });
 
-    // genre_id가 유효한 경우에만 formData에 추가합니다.
-    selectedGenreIds.forEach((selectedGenreId) => {
-      if (selectedGenreId) {
-        formData.append('genre_id', selectedGenreId.toString());
-      }
-    });
+    // // genre_id가 유효한 경우에만 formData에 추가합니다.
+    // selectedGenreIds.forEach((selectedGenreId) => {
+    //   if (selectedGenreId) {
+    //     formData.append('genre_id', selectedGenreId.toString());
+    //   }
+    // });
   };
 
   const addTrackImageToFormData = (
@@ -217,19 +207,37 @@ const UploadMyMusic = () => {
       reader.readAsArrayBuffer(trackAudio);
     }
   };
-
+  // formData.append('title', title);
+  // formData.append('prompt', prompt);
+  // formData.append('has_lyrics', hasLyrics.toString());
+  // tags.forEach((tag) => formData.append('tags[]', tag));
+  // addGenreToFormData(formData, genreName, genreId);
+  // addTrackImageToFormData(formData, trackImage);
+  // addTrackAudioToFormData(formData, trackAudio);
+  // 폼 제출
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
     try {
       const formData = new FormData();
-      formData.append('title', title);
-      formData.append('prompt', prompt);
-      formData.append('has_lyrics', hasLyrics.toString());
-      tags.forEach((tag) => formData.append('tags[]', tag));
-      addGenreToFormData(formData, genreName, genreId);
-      addTrackImageToFormData(formData, trackImage);
-      addTrackAudioToFormData(formData, trackAudio);
+
+      const trackInfo = {
+        title,
+        prompt,
+        has_lyrics: setHasLyrics, // 가사 보유 여부를 Boolean으로 반환
+        tags: setTags, // tags를 JSON 문자열로 변환하여 추가
+        genre_id: addGenreToFormData, // genre_id를 JSON 문자열로 변환하여 추가
+      };
+      formData.append('track_info', JSON.stringify(trackInfo));
+      // 이미지 파일 추가
+      if (trackImage !== null) {
+        formData.append('track_image', trackImage);
+      }
+
+      // 오디오 파일 추가
+      if (trackAudio !== null) {
+        formData.append('track_audio', trackAudio);
+      }
 
       // axios를 사용하여 FormData를 서버로 보냅니다.
       const response = await axios.post('/api/v1/tracks', formData, {
@@ -258,18 +266,66 @@ const UploadMyMusic = () => {
               className="flex flex-col w-full h-auto"
               onSubmit={handleSubmit}
             >
-              <div className="flex mt-[4%] shadow-lg rounded-xl shadow-neutral-400 space-x-8 p-[3%]">
-                <img
-                  src="https://i.ibb.co/8MTGSjd/image.png"
-                  alt="프로필 이미지"
-                  className="size-36 rounded-xl drop-shadow-sm"
-                />
-                <div className="flex flex-col text-center justify-center">
-                  <p className="text-white text-xl mb-[20%]">Dangerously</p>
-                  <p className="text-[#777777] text-base">8.02 MB</p>
+              <div className="flex items-center justify-center ">
+                <div className="flex mt-[4%] shadow-lg w-[35%] justify-center rounded-xl shadow-neutral-400 space-x-8 p-[3%]">
+                  {/* <img
+                    src="https://i.ibb.co/8MTGSjd/image.png"
+                    alt="프로필 이미지"
+                    className="size-36 rounded-xl drop-shadow-sm"
+                  /> */}
+                  <div className="flex flex-col justify-center items-center">
+                    <div className="flex justify-center">
+                      <label
+                        htmlFor="file"
+                        className="absolute text-2xl p-[0.4%] text-center border-2 rounded-xl border-purple-900 bg-purple-800 w-[18%] hover:bg-violet-900"
+                      >
+                        Upload Image
+                      </label>
+                      <input
+                        type="file"
+                        className="flex justify-center"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]; // null 체크를 통해 오류 방지
+                          if (file) {
+                            setTrackImage(file);
+                          }
+                        }}
+                        accept="image/*"
+                        required
+                      />
+                    </div>
+                    <div className="flex justify-center">
+                      <label
+                        htmlFor="file"
+                        className="absolute text-2xl p-[0.4%] text-center border-2 rounded-xl border-purple-900 bg-purple-800 w-[18%] hover:bg-violet-900"
+                      >
+                        Upload Audio
+                      </label>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]; // null 체크를 통해 오류 방지
+                          if (file) {
+                            setTrackAudio(file);
+                          }
+                        }}
+                        accept="audio/*"
+                        required
+                      />
+                    </div>
+                  </div>
+                  {/* <div className="flex flex-col text-center justify-center">
+                    <input
+                      type="file"
+                      onChange={(e) => setTrackAudio(e.target.files[0])}
+                      accept="audio/*"
+                      required
+                    /> */}
+                  {/* <p className="text-white text-xl mb-[20%]">Dangerously</p>
+                    <p className="text-[#777777] text-base">8.02 MB</p> */}
+                  {/* </div> */}
                 </div>
               </div>
-
               {/* 제목 */}
               <div className="flex justify-center mt-[5%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
@@ -307,7 +363,7 @@ const UploadMyMusic = () => {
               {/* 가사 보유여부 */}
               <div className="flex justify-center mt-[3%]">
                 <ToggleButtonGroup
-                  value={hasLyrics ? 'checked' : 'Non-checked'} // boolean 값을 문자열로 변환하여 전달합니다.
+                  value={hasLyrics ? 'true' : 'false'} // boolean 값을 문자열로 변환하여 전달합니다.
                   exclusive
                   onChange={() => {}}
                   aria-label="text alignment"
@@ -315,15 +371,15 @@ const UploadMyMusic = () => {
                 >
                   <ToggleButton
                     className="bg-[#44334e]"
-                    value="checked"
-                    onClick={(e) => handleToggleButtonClick(e, 'checked')}
+                    value="true"
+                    onClick={(e) => handleToggleButtonClick(e, true)}
                   >
                     <p className="text-white">가사 보유 O</p>
                   </ToggleButton>
                   <ToggleButton
                     className="bg-[#44334e]"
-                    value=""
-                    onClick={(e) => handleToggleButtonClick(e, '')}
+                    value="false"
+                    onClick={(e) => handleToggleButtonClick(e, false)}
                   >
                     <p className="text-white">가사 보유 X</p>
                   </ToggleButton>
