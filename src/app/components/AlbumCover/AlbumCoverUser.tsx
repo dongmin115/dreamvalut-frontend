@@ -1,18 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-// eslint-disable-next-line @next/next/no-img-element
+/* eslint-disable import/extensions */
 
-type AlbumCoverUserProps = {
-  image1: string;
-  image2: string;
-  image3: string;
-  title: string;
-};
+import { albumCoverUserProps } from '@/types/albumCover';
+
 function AlbumCoverUser({
   image1,
   image2,
   image3,
   title,
-}: AlbumCoverUserProps) {
+}: albumCoverUserProps) {
   return (
     <div className="flex flex-col w-56 h-72 items-center justify-center m-4 cursor-pointer hover-bg-opacity pt-8">
       <img

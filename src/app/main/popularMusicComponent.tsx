@@ -12,11 +12,11 @@ import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { useEffect, useState } from 'react';
-import { chart } from '../../types/chart';
+import { chartProps } from '../../types/chart';
 import { fetchChartData } from '../../api/chart';
 import { getSlideContentStyle } from '../styles/SlideStyles';
 
-function MusicElement({ ranking, thumnailImage, title }: chart) {
+function MusicElement({ ranking, thumnailImage, title }: chartProps) {
   return (
     <div className="w-[24%] h-1/4 flex flex-row justify-start items-center m-2 cursor-pointer hover-bg-opacity">
       {/* 순위 */}
