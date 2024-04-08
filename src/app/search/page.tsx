@@ -9,6 +9,8 @@ import { IconButton, createTheme } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const theme = createTheme({
   palette: {
@@ -24,53 +26,13 @@ const theme = createTheme({
 });
 
 export default function SearchPage() {
-  const searchResult = [
-    {
-      albumCover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-      title: 'title',
-      tags: ['#Jazz', '#Rock'],
-      prompt:
-        '"Cyclone Silence" merges the ethereal qualities of Ambient music with a more intense and forceful atmosphere. This track weaves together swirling synths and deep, pulsating beats, creating a soundscape that\'s both aggressive and enveloping. It\'s a journey through a storm of emotions, where the power of nature meets the tranquility of ambient soundscapes',
-      artist: 'aespa',
-      likes: 1,
+  const { data, isLoading } = useQuery({
+    queryKey: ['search'],
+    queryFn: async () => {
+      const response = await axios.get('/api/v1/search');
+      return response.data.data.results;
     },
-    {
-      albumCover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-      title: 'title',
-      tags: ['#Jazz', '#Rock'],
-      prompt:
-        '"Cyclone Silence" merges the ethereal qualities of Ambient music with a more intense and forceful atmosphere. This track weaves together swirling synths and deep, pulsating beats, creating a soundscape that\'s both aggressive and enveloping. It\'s a journey through a storm of emotions, where the power of nature meets the tranquility of ambient soundscapes',
-      artist: 'aespa',
-      likes: 1,
-    },
-    {
-      albumCover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-      title: 'title',
-      tags: ['#Jazz', '#Rock'],
-      prompt:
-        '"Cyclone Silence" merges the ethereal qualities of Ambient music with a more intense and forceful atmosphere. This track weaves together swirling synths and deep, pulsating beats, creating a soundscape that\'s both aggressive and enveloping. It\'s a journey through a storm of emotions, where the power of nature meets the tranquility of ambient soundscapes',
-      artist: 'aespa',
-      likes: 1,
-    },
-    {
-      albumCover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-      title: 'title',
-      tags: ['#Jazz', '#Rock'],
-      prompt:
-        '"Cyclone Silence" merges the ethereal qualities of Ambient music with a more intense and forceful atmosphere. This track weaves together swirling synths and deep, pulsating beats, creating a soundscape that\'s both aggressive and enveloping. It\'s a journey through a storm of emotions, where the power of nature meets the tranquility of ambient soundscapes',
-      artist: 'aespa',
-      likes: 1,
-    },
-    {
-      albumCover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-      title: 'title',
-      tags: ['#Jazz', '#Rock'],
-      prompt:
-        '"Cyclone Silence" merges the ethereal qualities of Ambient music with a more intense and forceful atmosphere. This track weaves together swirling synths and deep, pulsating beats, creating a soundscape that\'s both aggressive and enveloping. It\'s a journey through a storm of emotions, where the power of nature meets the tranquility of ambient soundscapes',
-      artist: 'aespa',
-      likes: 1,
-    },
-  ];
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,61 +51,65 @@ export default function SearchPage() {
               <Divider />
               {/* 검색 결과 리스트 */}
               <ul className="flex flex-col gap-8 h-fit">
-                {searchResult.map((e, i) => (
-                  <li
-                    key={i}
-                    className="flex flex-row justify-around items-center h-fit"
-                  >
-                    {/* 앨범 커버, 곡 이름 + 태그, 프롬프트 내용 flexbox */}
-                    <div className="flex flex-row justify-between items-center w-[60%] gap-8">
-                      {/* 앨범 커버, 곡 이름 flexbox */}
-                      <div className="flex flex-col justify-center items-center w-fit gap-4">
-                        <img
-                          src="https://i.ibb.co/hLxvjJG/1.jpg"
-                          alt="cover"
-                          className="size-28 rounded-sm"
-                        />
-                        <p className="text-lg">{e.title}</p>
-                      </div>
-                      {/* 태그, 프롬프트 내용 flexbox */}
-                      <div className="flex flex-col justify-center items-center w-[80%] gap-2">
-                        {/* 태그 flexbox */}
-                        <div className="flex flex-row gap-2 self-start">
-                          {/* 태그 */}
-                          {e.tags.map((tags, idx) => (
-                            <div
-                              key={idx}
-                              className="rounded-full bg-[#5419d4] p-2 text-xs w-fit"
-                            >
-                              {tags}
-                            </div>
-                          ))}
+                {isLoading ? (
+                  <div>검색 결과 가져오는중...</div>
+                ) : (
+                  data.map((e, i) => (
+                    <li
+                      key={i}
+                      className="flex flex-row justify-around items-center h-fit"
+                    >
+                      {/* 앨범 커버, 곡 이름 + 태그, 프롬프트 내용 flexbox */}
+                      <div className="flex flex-row justify-between items-center w-[60%] gap-8">
+                        {/* 앨범 커버, 곡 이름 flexbox */}
+                        <div className="flex flex-col justify-center items-center w-fit gap-4">
+                          <img
+                            src={e.thumbnail_image}
+                            alt="cover"
+                            className="size-28 rounded-sm"
+                          />
+                          <p className="text-lg">{e.title}</p>
                         </div>
-                        {/* 프롬프트 내용 */}
-                        <p className="text-md items-center w-full">
-                          {e.prompt}
-                        </p>
+                        {/* 태그, 프롬프트 내용 flexbox */}
+                        <div className="flex flex-col justify-center items-center w-[80%] gap-2">
+                          {/* 태그 flexbox */}
+                          <div className="flex flex-row gap-2 self-start">
+                            {/* 태그 */}
+                            {/* {e.tags.map((tags, idx) => (
+                              <div
+                                key={idx}
+                                className="rounded-full bg-[#5419d4] p-2 text-xs w-fit"
+                              >
+                                {tags}
+                              </div>
+                            ))} */}
+                          </div>
+                          {/* 프롬프트 내용 */}
+                          <p className="text-md items-center w-full">
+                            {e.prompt}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    {/* 제작자 */}
-                    <p className="text-lg w-[10%] text-center text-[#777777]">
-                      {e.artist}
-                    </p>
-                    {/* 좋아요 */}
-                    <div className="flex flex-row justify-center gap-2 items-center w-[10%]">
-                      <IconButton>
-                        <FavoriteIcon color="primary" fontSize="medium" />
-                      </IconButton>
-                      <p className="text-lg w-fit text-center">{e.likes}</p>
-                    </div>
-                    {/* 재생 */}
-                    <div className="w-[10%] text-center">
-                      <IconButton>
-                        <PlayArrowIcon color="primary" fontSize="large" />
-                      </IconButton>
-                    </div>
-                  </li>
-                ))}
+                      {/* 제작자 */}
+                      <p className="text-lg w-[10%] text-center text-[#777777]">
+                        {e.uploader_name}
+                      </p>
+                      {/* 좋아요 */}
+                      <div className="flex flex-row justify-center gap-2 items-center w-[10%]">
+                        <IconButton>
+                          <FavoriteIcon color="primary" fontSize="medium" />
+                        </IconButton>
+                        <p className="text-lg w-fit text-center">{e.likes}</p>
+                      </div>
+                      {/* 재생 */}
+                      <div className="w-[10%] text-center">
+                        <IconButton>
+                          <PlayArrowIcon color="primary" fontSize="large" />
+                        </IconButton>
+                      </div>
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
           </div>
