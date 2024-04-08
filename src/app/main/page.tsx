@@ -25,6 +25,7 @@ import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
+import PopularMusicComponent from './popularMusicComponent';
 
 const theme = createTheme({
   palette: {
@@ -38,31 +39,6 @@ const theme = createTheme({
     },
   },
 });
-
-// 인기 음악 컴포넌트의 props
-type PopularMusicProps = {
-  ranking: number;
-  title: string;
-  thumnailImage: string;
-};
-// 인기 음악 컴포넌트
-function PopularMusic({ ranking, title, thumnailImage }: PopularMusicProps) {
-  return (
-    <div className="w-[24%] h-1/4 flex flex-row justify-start items-center m-2 cursor-pointer hover-bg-opacity">
-      {/* 순위 */}
-      <p className="w-16 text-right text-4xl mt-6 drop-shadow-text z-10 -mr-4">
-        {ranking}
-      </p>
-      {/* 앨범 커버 */}
-      <img className="w-16" src={thumnailImage} />
-
-      {/* 음악 정보 */}
-      <div className="flex flex-col justify-center ml-4">
-        <p className="text-xl w-full z-10">{title}</p>
-      </div>
-    </div>
-  );
-}
 
 // 장르별 음악 컴포넌트의 props
 type GenreMusicProps = {
@@ -124,24 +100,10 @@ function GenreMusic({
 
 // 메인 페이지 컴포넌트
 function Page() {
-  const [popularPageIndex, setpopularPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const [tagPageIndex, settagPageIndex] = useState(0); // 인기 태그 페이지 인덱스
   const [genrePageIndex, setgenrePageIndex] = useState(0); // 장르별 음악 페이지 인덱스
   const [otherPlaylistPageIndex, setOtherPlaylistPageIndex] = useState(0); // 다른 유저가 선택한 플레이리스트 페이지 인덱스
   const [systemPlaylistPageIndex, setSystemPlaylistPageIndex] = useState(0); // 시스템 플레이리스트 페이지 인덱스
-  const [data, setData] = useState<any>({});
-
-  const handlePopularPageForwardClick = () => {
-    if (Math.ceil(data.length / 3) - 4 > popularPageIndex) {
-      setpopularPageIndex(popularPageIndex + 1);
-    } // 이때 4는 한번에 보여지는 인기음악의 개수
-  };
-
-  const handlePopularPageBackwardClick = () => {
-    if (popularPageIndex > 0) {
-      setpopularPageIndex(popularPageIndex - 1);
-    }
-  };
 
   const handleTagPageForwardClick = () => {
     settagPageIndex(tagPageIndex + 1);
@@ -182,41 +144,6 @@ function Page() {
       setSystemPlaylistPageIndex(systemPlaylistPageIndex - 1);
     }
   };
-  const popularMusicList = [];
-
-  const fetchChartData = async () => {
-    try {
-      const response = await axios.get('/api/v1/charts');
-      setData(response.data.data.tracks);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      try {
-        fetchChartData();
-      } catch (error) {
-        fetchChartData();
-      }
-    }, 500);
-  }, []);
-
-  if (data.length > 0) {
-    // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
-    for (let i = 0; i < 30; i += 1) {
-      if (data[i]) {
-        // 데이터가 존재하는 경우에만 생성
-        popularMusicList.push(
-          <PopularMusic
-            key={i}
-            ranking={i + 1}
-            title={data[i].title}
-            thumnailImage={data[i].thumbnail_image}
-          />,
-        );
-      }
-    }
-  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -226,26 +153,7 @@ function Page() {
           {/* 인기 차트 */}
           <h1 className="">인기 차트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
-            <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
-              <IconButton onClick={handlePopularPageBackwardClick}>
-                {popularPageIndex !== 0 && (
-                  <BackIcon color="primary" fontSize="large" />
-                )}
-              </IconButton>
-            </div>
-            <div
-              className={
-                'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
-              }
-              style={getSlideContentStyle(popularPageIndex)}
-            >
-              {popularMusicList}
-            </div>
-            <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
-              <IconButton onClick={handlePopularPageForwardClick}>
-                <ForwardIcon color="primary" fontSize="large" />
-              </IconButton>
-            </div>
+            <PopularMusicComponent />
           </div>
 
           {/* 인기 태그 */}
