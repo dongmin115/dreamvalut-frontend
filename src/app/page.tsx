@@ -7,8 +7,6 @@
 // import GenrePage from './GenrePage/page';
 // import Page from './main/page';
 // import React from 'react';
-// import Register from './MymusicAI/practice';
-// import YourComponent from './MymusicAI/practice';
 import UploadMyMusic from './MymusicAI/page';
 // import Mypage from './mypage/page';
 // App 컴포넌트
@@ -20,7 +18,6 @@ export default function Home() {
       {/* <LogIn /> */}
       {/* <GenrePage /> */}
       {/* <Mypage /> */}
-      {/* <Register /> */}
       {/* <Page /> */}
       <UploadMyMusic />
     </>
