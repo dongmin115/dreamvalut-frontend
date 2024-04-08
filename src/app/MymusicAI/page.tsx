@@ -34,6 +34,8 @@ import { Genre, GenreData } from '@/types/genre';
 import { useQuery } from '@tanstack/react-query';
 import uploadMymusic from '@/api/uploadmymusic';
 import axios from 'axios';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const theme = createTheme({
   palette: {
@@ -116,12 +118,12 @@ const UploadMyMusic = () => {
   //   setHasLyrics(event.target.checked); // 이벤트 타겟의 타입을 명시적으로 지정합니다.
   // };
 
-  const handleToggleButtonClick = (
-    event: React.MouseEvent<HTMLElement>,
-    value: boolean,
-  ) => {
-    setHasLyrics(value === true);
-  };
+  //   const handleToggleButtonClick = (
+  //     event: React.MouseEvent<HTMLElement>,
+  //     value: boolean,
+  //   ) => {
+  //     setHasLyrics(value === true);
+  //   };
 
   // React.useEffect(() => {
   //   if (formData) {
@@ -129,17 +131,29 @@ const UploadMyMusic = () => {
   //   }
   // }, [formData]);
 
-  const { data: genresData } = useQuery({
+  //   const { data: genresData } = useQuery({
+  //     queryKey: ['genres'],
+  //     queryFn: fetchGenres,
+  //   });
+
+  //   // 받아온 데이터 세팅
+  //   React.useEffect(() => {
+  //     if (genresData) {
+  //       setGenreId(genresData);
+  //     }
+  //   }, [genresData]);
+
+  const { data } = useQuery({
     queryKey: ['genres'],
     queryFn: fetchGenres,
   });
 
   // 받아온 데이터 세팅
   React.useEffect(() => {
-    if (genresData) {
-      setGenreId(genresData);
+    if (data) {
+      setGenreId(data);
     }
-  }, [genresData]);
+  }, [data]);
 
   const [genreName, setgenreName] = React.useState<string[]>([]);
   const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {
@@ -153,59 +167,62 @@ const UploadMyMusic = () => {
     );
   };
 
-  const addGenreToFormData = (
-    formData: FormData,
-    genreNames: string[],
-    genresData: Genre[],
-  ) => {
-    // 선택된 genre_name들에 대응하는 genre_id를 찾습니다.
-    const selectedGenreIds = genreNames.map((selectedGenreName) => {
-      const selectedGenre = genresData.find(
-        (genre: Genre) => genre.genre_name === selectedGenreName,
-      );
-      return selectedGenre ? selectedGenre.genre_id : null;
-    });
+  //   const addGenreToFormData = (
+  //     formData: FormData,
+  //     genreNames: string[],
+  //     genresData: Genre[],
+  //   ) => {
+  //     // 선택된 genre_name들에 대응하는 genre_id를 찾습니다.
+  //     const selectedGenreIds = genreNames.map((selectedGenreName) => {
+  //       const selectedGenre = genresData.find(
+  //         (genre: Genre) => genre.genre_name === selectedGenreName,
+  //       );
+  //       return selectedGenre ? selectedGenre.genre_id : null;
+  //     });
 
-    // // genre_id가 유효한 경우에만 formData에 추가합니다.
-    // selectedGenreIds.forEach((selectedGenreId) => {
-    //   if (selectedGenreId) {
-    //     formData.append('genre_id', selectedGenreId.toString());
-    //   }
-    // });
-  };
+  //     // genre_id가 유효한 경우에만 formData에 추가합니다.
+  //     selectedGenreIds.forEach((selectedGenreId) => {
+  //       if (selectedGenreId) {
+  //         formData.append('genre_id', selectedGenreId.toString());
+  //       }
+  //     });
+  //   };
 
-  const addTrackImageToFormData = (
-    formData: FormData,
-    trackImage: File | null,
-  ) => {
-    if (trackImage) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          const fileData = event.target.result as ArrayBuffer;
-          const blob = new Blob([new Uint8Array(fileData)]);
-          formData.append('track_image', blob);
-        }
-      };
-      reader.readAsArrayBuffer(trackImage);
-    }
-  };
+  //   const addTrackImageToFormData = (
+  //     formData: FormData,
+  //     trackImage: File | null,
+  //   ) => {
+  //     if (trackImage) {
+  //       const reader = new FileReader();
+  //       reader.onload = (event) => {
+  //         if (event.target?.result) {
+  //           const fileData = event.target.result as ArrayBuffer;
+  //           const blob = new Blob([new Uint8Array(fileData)]);
+  //           formData.append('track_image', blob);
+  //         }
+  //       };
+  //       reader.readAsArrayBuffer(trackImage);
+  //     }
+  //   };
 
-  const addTrackAudioToFormData = (
-    formData: FormData,
-    trackAudio: File | null,
-  ) => {
-    if (trackAudio) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          const fileData = event.target.result as ArrayBuffer;
-          const blob = new Blob([new Uint8Array(fileData)]);
-          formData.append('track_audio', blob);
-        }
-      };
-      reader.readAsArrayBuffer(trackAudio);
-    }
+  //   const addTrackAudioToFormData = (
+  //     formData: FormData,
+  //     trackAudio: File | null,
+  //   ) => {
+  //     if (trackAudio) {
+  //       const reader = new FileReader();
+  //       reader.onload = (event) => {
+  //         if (event.target?.result) {
+  //           const fileData = event.target.result as ArrayBuffer;
+  //           const blob = new Blob([new Uint8Array(fileData)]);
+  //           formData.append('track_audio', blob);
+  //         }
+  //       };
+  //       reader.readAsArrayBuffer(trackAudio);
+  //     }
+  //   };
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setHasLyrics(event.target.checked);
   };
   // formData.append('title', title);
   // formData.append('prompt', prompt);
@@ -215,28 +232,47 @@ const UploadMyMusic = () => {
   // addTrackImageToFormData(formData, trackImage);
   // addTrackAudioToFormData(formData, trackAudio);
   // 폼 제출
+
+  // 장르 데이터를 trackInfo에 추가하는 함수
+  const addGenreToTrackInfo = (
+    formData: FormData,
+    genreNames: string[],
+    genresData: Genre[],
+  ) => {
+    genreNames.forEach((selectedGenreName) => {
+      const selectedGenre = genresData.find(
+        (genre: Genre) => genre.genre_name === selectedGenreName,
+      );
+
+      if (selectedGenre) {
+        formData.append('genre_id', selectedGenre.genre_id.toString());
+      }
+    });
+  };
+
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
     try {
       const formData = new FormData();
-
+      // 선택된 장르를 formData에 추가합니다.
       const trackInfo = {
         title,
         prompt,
-        has_lyrics: setHasLyrics, // 가사 보유 여부를 Boolean으로 반환
-        tags: setTags, // tags를 JSON 문자열로 변환하여 추가
-        genre_id: addGenreToFormData, // genre_id를 JSON 문자열로 변환하여 추가
+        has_lyrics: hasLyrics,
+        tags: tags.join(','),
+        genre: addGenreToTrackInfo(formData, genreName, genreId),
       };
+
       formData.append('track_info', JSON.stringify(trackInfo));
       // 이미지 파일 추가
       if (trackImage !== null) {
-        formData.append('track_image', trackImage);
+        formData.append('track_image', trackImage as Blob);
       }
 
       // 오디오 파일 추가
       if (trackAudio !== null) {
-        formData.append('track_audio', trackAudio);
+        formData.append('track_audio', trackAudio as Blob);
       }
 
       // axios를 사용하여 FormData를 서버로 보냅니다.
@@ -250,7 +286,6 @@ const UploadMyMusic = () => {
       console.error('Error submitting:', error);
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <div className="pl-[15%] w-full h-screen">
@@ -262,7 +297,7 @@ const UploadMyMusic = () => {
 
             {/* 등록할 곡 사진, 제목, 가수명, 용량 */}
             <form
-              id="test"
+              id="form-data"
               className="flex flex-col w-full h-auto"
               onSubmit={handleSubmit}
             >
@@ -361,9 +396,9 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 가사 보유여부 */}
-              <div className="flex justify-center mt-[3%]">
+              {/* <div className="flex justify-center mt-[3%]">
                 <ToggleButtonGroup
-                  value={hasLyrics ? 'true' : 'false'} // boolean 값을 문자열로 변환하여 전달합니다.
+                  value={!!hasLyrics} // boolean 값을 문자열로 변환하여 전달합니다.
                   exclusive
                   onChange={() => {}}
                   aria-label="text alignment"
@@ -384,7 +419,16 @@ const UploadMyMusic = () => {
                     <p className="text-white">가사 보유 X</p>
                   </ToggleButton>
                 </ToggleButtonGroup>
-              </div>
+              </div> */}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={hasLyrics}
+                    onChange={handleCheckboxChange}
+                  />
+                }
+                label="가사 보유 여부"
+              />
               {/* 장르 선택 */}
               <div className="flex justify-center mt-[3%]">
                 <FormControl sx={{ m: 1, width: 300 }}>
@@ -422,7 +466,7 @@ const UploadMyMusic = () => {
                   className="bottom-[5%] p-[2%]"
                   type="submit"
                   form="test"
-                  onClick={() => handleSubmit}
+                  onClick={handleSubmit}
                 >
                   <FileUploadRoundedIcon
                     sx={{ fontSize: 60 }}
