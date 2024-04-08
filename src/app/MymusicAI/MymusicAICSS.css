@@ -30,3 +30,11 @@ textarea {
 .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-selected {
   background-color: rgba(111, 4, 182, 0.151);
 }
+
+form input[type='file']::file-selector-button {
+  font-weight: bold;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
