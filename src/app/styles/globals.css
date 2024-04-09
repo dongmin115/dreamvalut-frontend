@@ -169,3 +169,10 @@ h1 {
 .css-1guuiq7-MuiButtonBase-root-MuiToggleButton-root.Mui-selected {
   background-color: rgb(132, 0, 255);
 }
+
+em {
+  background-color: #6c26ff;
+  font-style: normal;
+  padding: 2px;
+  border-radius: 2px;
+}
