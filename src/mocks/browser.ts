@@ -11,6 +11,7 @@ import {
   genreBooleanhandlers,
   takemygenrehandlers,
 } from './handlers/handlers';
+import { searchHandlers } from './handlers/search';
 
 export const worker = setupWorker(
   ...handlers,
@@ -18,4 +19,5 @@ export const worker = setupWorker(
   ...genrehandlers,
   ...genreBooleanhandlers,
   ...takemygenrehandlers,
+  ...searchHandlers,
 );
