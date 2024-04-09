@@ -83,7 +83,7 @@ export function SearchAppBar() {
         InputProps={{
           startAdornment: (
             <Link href={`/search/${keyward}`}>
-              <IconButton>
+              <IconButton style={{ padding: '0px' }}>
                 <InputAdornment position="start">
                   <SearchIcon color="primary" />
                 </InputAdornment>
