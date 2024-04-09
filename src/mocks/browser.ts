@@ -3,21 +3,22 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
 import { setupWorker } from 'msw/browser';
-
+import { handlers } from './handlers/musicbarHandlers';
 import { chartHandlers } from './handlers/chartHandlers';
+import { uploadmymusichandlers } from './handlers/uploadmymusicHandlers';
 import {
-  handlers,
   genrehandlers,
   genreBooleanhandlers,
   takemygenrehandlers,
-} from './handlers/handlers';
+} from './handlers/genreHandlers';
 import { searchHandlers } from './handlers/search';
 
 export const worker = setupWorker(
-  ...handlers,
   ...chartHandlers,
   ...genrehandlers,
   ...genreBooleanhandlers,
   ...takemygenrehandlers,
+  ...uploadmymusichandlers,
+  ...handlers,
   ...searchHandlers,
 );

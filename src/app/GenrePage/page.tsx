@@ -11,13 +11,14 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
 // import { fetchData } from 'next-auth/client/_utils';
-import { GenreData } from '../types/genre.ts';
-import { EditfetchGenres, fetchGenres } from '../api/genre.ts';
+import { GenreData } from '@/types/genre.ts';
+import { useQuery } from '@tanstack/react-query';
+import { EditfetchGenres, fetchGenres } from '../../api/genre.ts';
 
 const GenrePage = () => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
-  const [retryCount, setRetryCount] = useState(0);
+  // const [retryCount, setRetryCount] = useState(0);
 
   const handleGenreToggle = (genre_id: number) => {
     // 변경: genre_id 타입 명시
@@ -28,15 +29,27 @@ const GenrePage = () => {
     }
   };
 
-  useEffect(() => {
-    fetchGenres()
-      .then((res) => {
-        setGenres(res); // 가져온 데이터를 상태에 설정
-      })
-      .catch((error) => {
-        console.error('오류 발생:', error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetchGenres()
+  //     .then((res) => {
+  //       setGenres(res); // 가져온 데이터를 상태에 설정
+  //     })
+  //     .catch((error) => {
+  //       console.error('오류 발생:', error);
+  //     });
+  // }, []);
+
+  const { data } = useQuery({
+    queryKey: ['genres'],
+    queryFn: fetchGenres,
+  });
+
+  // 받아온 데이터 세팅
+  React.useEffect(() => {
+    if (data) {
+      setGenres(data);
+    }
+  }, [data]);
 
   const theme = createTheme({
     palette: {
