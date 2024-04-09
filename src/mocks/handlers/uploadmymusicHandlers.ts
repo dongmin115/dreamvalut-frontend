@@ -8,7 +8,7 @@ const title: string = '';
 const prompt: string = '';
 const has_lyrics: boolean = false;
 const tags: string[] = [];
-const genre_id: number[] = [];
+const genre_id: number = 0;
 const track_image: File | null = null;
 const track_audio: File | null = null;
 
