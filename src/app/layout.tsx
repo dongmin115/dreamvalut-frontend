@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './styles/globals.css';
 import React from 'react';
-import { MSWComponent } from '@/mocks/MSWComponent';
+import { MSWComponent } from '@/mocks/MSWcomponent';
 import MusicBar from './components/Musicbar/Musicbar';
 import NavBar from './components/NavBar/NavigationBar';
 import QueryProviders from './components/QueryProvider/QueryProvider';
