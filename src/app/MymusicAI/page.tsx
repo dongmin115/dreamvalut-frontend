@@ -52,18 +52,6 @@ const theme = createTheme({
   },
 });
 
-// // 해시태그;
-// const ITEM_HEIGHT2 = 48;
-// const ITEM_PADDING_TOP2 = 8;
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       maxHeight: ITEM_HEIGHT2 * 4.5 + ITEM_PADDING_TOP2,
-//       width: 250,
-//     },
-//   },
-// };
-
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
@@ -72,75 +60,6 @@ const UploadMyMusic = () => {
   const [genreId, setGenreId] = useState<Genre[]>([]);
   const [trackImage, setTrackImage] = useState<File | null>(null);
   const [trackAudio, setTrackAudio] = useState<File | null>(null);
-
-  // 장르
-  function getStyles(name: string, genreName: string[], theme: Theme) {
-    return {
-      fontWeight:
-        genreName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
-
-  // Form의 onSubmit 이벤트 핸들러 - 음악 정보 업로드
-  // const handleSubmit = (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   // 업로드 로직 구현하기
-  //   console.log('음악 업로드:', {
-  //     title,
-  //     prompt,
-  //     tags,
-  //     genre,
-  //     lyrics,
-  //   });
-  //   // 이후에 서버로 데이터를 전송하는 등의 로직을 추가하는 곳
-  // };
-
-  // const handleLyrics = (
-  //   event: React.MouseEvent<HTMLElement>,
-  //   newLyrics: string | null,
-  // ) => {
-  //   setLyrics(newLyrics);
-  // };
-
-  // useEffect(() => {
-  //   fetchGenres()
-  //     .then((res) => {
-  //       setGenres(res); // 가져온 데이터를 상태에 설정
-  //     })
-  //     .catch((error) => {
-  //       console.error('오류 발생:', error);
-  //     });
-  // }, []);
-  // const handleHasLyrics = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setHasLyrics(event.target.checked); // 이벤트 타겟의 타입을 명시적으로 지정합니다.
-  // };
-
-  //   const handleToggleButtonClick = (
-  //     event: React.MouseEvent<HTMLElement>,
-  //     value: boolean,
-  //   ) => {
-  //     setHasLyrics(value === true);
-  //   };
-
-  // React.useEffect(() => {
-  //   if (formData) {
-  //     setGenres(formData);
-  //   }
-  // }, [formData]);
-
-  //   const { data: genresData } = useQuery({
-  //     queryKey: ['genres'],
-  //     queryFn: fetchGenres,
-  //   });
-
-  //   // 받아온 데이터 세팅
-  //   React.useEffect(() => {
-  //     if (genresData) {
-  //       setGenreId(genresData);
-  //     }
-  //   }, [genresData]);
 
   const { data } = useQuery({
     queryKey: ['genres'],
@@ -154,83 +73,15 @@ const UploadMyMusic = () => {
     }
   }, [data]);
 
-  const [genreName, setgenreName] = React.useState<string[]>([]);
-  const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {
-    const {
-      target: { value },
-    } = event;
-
-    setgenreName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+  const [selectedGenreId, setSelectedGenreId] = React.useState('');
+  const handleGenre = (event: SelectChangeEvent) => {
+    const selectedId = event.target.value; // 선택된 장르의 genre_id 값
+    setSelectedGenreId(selectedId); // 선택된 장르의 genre_id 값을 상태에 설정
   };
 
-  //   const addGenreToFormData = (
-  //     formData: FormData,
-  //     genreNames: string[],
-  //     genresData: Genre[],
-  //   ) => {
-  //     // 선택된 genre_name들에 대응하는 genre_id를 찾습니다.
-  //     const selectedGenreIds = genreNames.map((selectedGenreName) => {
-  //       const selectedGenre = genresData.find(
-  //         (genre: Genre) => genre.genre_name === selectedGenreName,
-  //       );
-  //       return selectedGenre ? selectedGenre.genre_id : null;
-  //     });
-
-  //     // genre_id가 유효한 경우에만 formData에 추가합니다.
-  //     selectedGenreIds.forEach((selectedGenreId) => {
-  //       if (selectedGenreId) {
-  //         formData.append('genre_id', selectedGenreId.toString());
-  //       }
-  //     });
-  //   };
-
-  //   const addTrackImageToFormData = (
-  //     formData: FormData,
-  //     trackImage: File | null,
-  //   ) => {
-  //     if (trackImage) {
-  //       const reader = new FileReader();
-  //       reader.onload = (event) => {
-  //         if (event.target?.result) {
-  //           const fileData = event.target.result as ArrayBuffer;
-  //           const blob = new Blob([new Uint8Array(fileData)]);
-  //           formData.append('track_image', blob);
-  //         }
-  //       };
-  //       reader.readAsArrayBuffer(trackImage);
-  //     }
-  //   };
-
-  //   const addTrackAudioToFormData = (
-  //     formData: FormData,
-  //     trackAudio: File | null,
-  //   ) => {
-  //     if (trackAudio) {
-  //       const reader = new FileReader();
-  //       reader.onload = (event) => {
-  //         if (event.target?.result) {
-  //           const fileData = event.target.result as ArrayBuffer;
-  //           const blob = new Blob([new Uint8Array(fileData)]);
-  //           formData.append('track_audio', blob);
-  //         }
-  //       };
-  //       reader.readAsArrayBuffer(trackAudio);
-  //     }
-  //   };
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHasLyrics(event.target.checked);
   };
-  // formData.append('title', title);
-  // formData.append('prompt', prompt);
-  // formData.append('has_lyrics', hasLyrics.toString());
-  // tags.forEach((tag) => formData.append('tags[]', tag));
-  // addGenreToFormData(formData, genreName, genreId);
-  // addTrackImageToFormData(formData, trackImage);
-  // addTrackAudioToFormData(formData, trackAudio);
-  // 폼 제출
 
   // 장르 데이터를 trackInfo에 추가하는 함수
   const addGenreToTrackInfo = (
@@ -249,7 +100,7 @@ const UploadMyMusic = () => {
     });
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
     try {
@@ -259,11 +110,14 @@ const UploadMyMusic = () => {
         title,
         prompt,
         has_lyrics: hasLyrics,
-        tags: tags.join(','),
-        genre: addGenreToTrackInfo(formData, genreName, genreId),
+        tags,
+        genre_id: selectedGenreId,
       };
 
-      formData.append('track_info', JSON.stringify(trackInfo));
+      formData.append(
+        'track_info',
+        new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
+      );
       // 이미지 파일 추가
       if (trackImage !== null) {
         formData.append('track_image', trackImage as Blob);
@@ -275,15 +129,13 @@ const UploadMyMusic = () => {
       }
 
       // axios를 사용하여 FormData를 서버로 보냅니다.
-      axios({
-        method: 'post',
-        url: '/api/v1/tracks',
-        data: formData,
+      // axios를 사용하여 FormData를 서버로 보냅니다.
+      const response = await axios.post('/api/v1/tracks', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Upload response:', formData);
+      console.log('Upload response:', response.data);
     } catch (error) {
       console.error('Error submitting:', error);
     }
@@ -298,7 +150,7 @@ const UploadMyMusic = () => {
               나만의 음악 등록
             </div>
 
-            {/* 등록할 곡 사진, 제목, 가수명, 용량 */}
+            {/* 등록할 곡 제목, 프롬프트, 가사보유여부, 곡 태그, 곡 장르, 이미지 파일&오디오 파일 업로드 */}
             <form
               id="form-data"
               className="flex flex-col w-full h-auto"
@@ -306,11 +158,6 @@ const UploadMyMusic = () => {
             >
               <div className="flex items-center justify-center ">
                 <div className="flex mt-[4%] shadow-lg w-[35%] justify-center rounded-xl shadow-neutral-400 space-x-8 p-[3%]">
-                  {/* <img
-                    src="https://i.ibb.co/8MTGSjd/image.png"
-                    alt="프로필 이미지"
-                    className="size-36 rounded-xl drop-shadow-sm"
-                  /> */}
                   <div className="flex flex-col justify-center items-center">
                     <div className="flex justify-center">
                       <label
@@ -368,16 +215,6 @@ const UploadMyMusic = () => {
                       />
                     </div>
                   </div>
-                  {/* <div className="flex flex-col text-center justify-center">
-                    <input
-                      type="file"
-                      onChange={(e) => setTrackAudio(e.target.files[0])}
-                      accept="audio/*"
-                      required
-                    /> */}
-                  {/* <p className="text-white text-xl mb-[20%]">Dangerously</p>
-                    <p className="text-[#777777] text-base">8.02 MB</p> */}
-                  {/* </div> */}
                 </div>
               </div>
               {/* 제목 */}
@@ -415,30 +252,6 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 가사 보유여부 */}
-              {/* <div className="flex justify-center mt-[3%]">
-                <ToggleButtonGroup
-                  value={!!hasLyrics} // boolean 값을 문자열로 변환하여 전달합니다.
-                  exclusive
-                  onChange={() => {}}
-                  aria-label="text alignment"
-                  color="secondary"
-                >
-                  <ToggleButton
-                    className="bg-[#44334e]"
-                    value="true"
-                    onClick={(e) => handleToggleButtonClick(e, true)}
-                  >
-                    <p className="text-white">가사 보유 O</p>
-                  </ToggleButton>
-                  <ToggleButton
-                    className="bg-[#44334e]"
-                    value="false"
-                    onClick={(e) => handleToggleButtonClick(e, false)}
-                  >
-                    <p className="text-white">가사 보유 X</p>
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </div> */}
               <div className="flex justify-center mt-[3%]">
                 <FormControlLabel
                   control={
@@ -454,17 +267,16 @@ const UploadMyMusic = () => {
               <div className="flex justify-center mt-[3%]">
                 <FormControl sx={{ m: 1, width: 300 }}>
                   <InputLabel
-                    id="demo-multiple-name-label"
+                    id="demo-simple-select-autowidth-label"
                     color="secondary"
                     className="text-[#a97dff]"
                   >
                     Genre
                   </InputLabel>
                   <Select
-                    labelId="demo-multiple-name-label"
-                    id="demo-multiple-name"
-                    multiple // 다수 선택 가능
-                    value={genreName}
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={selectedGenreId} // 선택된 장르의 genre_id 값을 사용
                     onChange={handleGenre}
                     input={<OutlinedInput label="genre" />}
                     color="secondary"
@@ -474,7 +286,6 @@ const UploadMyMusic = () => {
                       <MenuItem
                         key={genre.genre_id}
                         value={genre.genre_id}
-                        style={getStyles(genre.genre_name, genreName, theme)}
                         className=""
                       >
                         {genre.genre_name}
