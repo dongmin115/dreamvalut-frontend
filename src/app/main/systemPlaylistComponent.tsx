@@ -2,10 +2,12 @@
 
 'use client';
 
+import { ThemeProvider } from '@emotion/react';
 import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
+import theme from '../styles/theme.ts';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
 
 function SystemPlaylistComponent() {
@@ -24,7 +26,7 @@ function SystemPlaylistComponent() {
     }
   };
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
@@ -41,7 +43,7 @@ function SystemPlaylistComponent() {
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
       </div>
-    </>
+    </ThemeProvider>
   );
 }
 
