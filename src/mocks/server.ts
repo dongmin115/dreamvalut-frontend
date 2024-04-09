@@ -13,9 +13,11 @@ import {
 import { searchHandlers } from './handlers/search';
 
 export const server = setupServer(
+  ...handlers,
   ...chartHandlers,
   ...genrehandlers,
   ...genreBooleanhandlers,
   ...takemygenrehandlers,
   ...searchHandlers,
+  ...uploadmymusichandlers,
 );
