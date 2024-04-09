@@ -42,7 +42,8 @@ export default function SearchPage(props: any) {
         <div className="pl-[15%] h-fit w-full">
           <div className="flex p-[3%] flex-col gap-8 w-full">
             <p className="text-xl w-fit">
-              <em>{props.params.keyward}</em>에 대한 검색 결과입니다.
+              <em>{decodeURIComponent(props.params.keyward)}</em>에 대한 검색
+              결과입니다.
             </p>
             <div className="flex flex-col bg-[#353535] h-fit rounded-xl w-full p-[2%] gap-4">
               <div className="flex flex-row justify-around items-center h-fit">
@@ -56,7 +57,8 @@ export default function SearchPage(props: any) {
               <ul className="flex flex-col gap-8 min-h-[70vh] h-fit">
                 {isLoading ? (
                   <div className="h-full w-full text-center my-auto text-2xl">
-                    {props.params.keyward}에 대한 검색 결과 가져오는중...
+                    {decodeURIComponent(props.params.keyward)}에 대한 검색 결과
+                    가져오는중...
                   </div>
                 ) : (
                   data.map((e: searchResult, i: number) => (
