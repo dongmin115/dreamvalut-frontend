@@ -1,3 +1,7 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable operator-linebreak */
+/* eslint-disable max-len */
 /* eslint-disable no-shadow */
 /* eslint-disable import/order */
 /* eslint-disable no-console */
@@ -9,7 +13,7 @@
 
 'use client';
 
-import React, { ReactNode, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import {
   createTheme,
@@ -17,15 +21,20 @@ import {
   Theme,
   useTheme,
 } from '@mui/material/styles';
-import './MymusicAICSS.css';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
+// import ToggleButton from '@mui/material/ToggleButton';
+// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { fetchGenres } from '@/api/genre';
+import { Genre, GenreData } from '@/types/genre';
+import { useQuery } from '@tanstack/react-query';
+// import uploadMymusic from '@/api/uploadmymusic';
+import axios from 'axios';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const theme = createTheme({
   palette: {
@@ -43,83 +52,93 @@ const theme = createTheme({
   },
 });
 
-// 해시태그
-const ITEM_HEIGHT2 = 48;
-const ITEM_PADDING_TOP2 = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT2 * 4.5 + ITEM_PADDING_TOP2,
-      width: 250,
-    },
-  },
-};
-
-// 장르 데이터
-const names = [
-  'POP',
-  'RnB',
-  'Jazz',
-  'Ballade',
-  'Classical',
-  'Rock',
-  'Hip-Hap',
-  'Folk',
-  'OST',
-  'JPOP',
-  'Musical',
-  'EDM',
-];
-
 const UploadMyMusic = () => {
   const [title, setTitle] = useState('');
   const [prompt, setPrompt] = useState('');
-  const [tags, setTags] = useState('');
-  const [genre, setGenre] = useState(true);
-  const theme = useTheme();
-  const [genreName, setgenreName] = React.useState<string[]>([]);
-  // 가사 보유 여부 버튼
-  const [lyrics, setLyrics] = React.useState<string | null>('left');
+  const [hasLyrics, setHasLyrics] = useState(Boolean);
+  const [tags, setTags] = useState<string[]>([]);
+  const [genreId, setGenreId] = useState<Genre[]>([]);
+  const [trackImage, setTrackImage] = useState<File | null>(null);
+  const [trackAudio, setTrackAudio] = useState<File | null>(null);
 
-  // 장르
-  function getStyles(name: string, genreName: string[], theme: Theme) {
-    return {
-      fontWeight:
-        genreName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
-    };
-  }
+  const { data } = useQuery({
+    queryKey: ['genres'],
+    queryFn: fetchGenres,
+  });
 
-  const handleGenre = (event: SelectChangeEvent<typeof genreName>) => {
-    const {
-      target: { value },
-    } = event;
-    setgenreName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+  // 받아온 데이터 세팅
+  React.useEffect(() => {
+    if (data) {
+      setGenreId(data);
+    }
+  }, [data]);
+
+  const [selectedGenreId, setSelectedGenreId] = React.useState('');
+  const handleGenre = (event: SelectChangeEvent) => {
+    const selectedId = event.target.value; // 선택된 장르의 genre_id 값
+    setSelectedGenreId(selectedId); // 선택된 장르의 genre_id 값을 상태에 설정
   };
 
-  // Form의 onSubmit 이벤트 핸들러 - 음악 정보 업로드
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // 업로드 로직 구현하기
-    console.log('음악 업로드:', {
-      title,
-      prompt,
-      tags,
-      genre,
-      lyrics,
-    });
-    // 이후에 서버로 데이터를 전송하는 등의 로직을 추가하는 곳
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setHasLyrics(event.target.checked);
   };
 
-  const handleLyrics = (
-    event: React.MouseEvent<HTMLElement>,
-    newLyrics: string | null,
+  // 장르 데이터를 trackInfo에 추가하는 함수
+  const addGenreToTrackInfo = (
+    formData: FormData,
+    genreNames: string[],
+    genresData: Genre[],
   ) => {
-    setLyrics(newLyrics);
+    genreNames.forEach((selectedGenreName) => {
+      const selectedGenre = genresData.find(
+        (genre: Genre) => genre.genre_name === selectedGenreName,
+      );
+
+      if (selectedGenre) {
+        formData.append('genre_id', selectedGenre.genre_id.toString());
+      }
+    });
+  };
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault(); // 폼의 기본 동작을 막습니다.
+
+    try {
+      const formData = new FormData();
+      // 선택된 장르를 formData에 추가합니다.
+      const trackInfo = {
+        title,
+        prompt,
+        has_lyrics: hasLyrics,
+        tags,
+        genre_id: selectedGenreId,
+      };
+
+      formData.append(
+        'track_info',
+        new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
+      );
+      // 이미지 파일 추가
+      if (trackImage !== null) {
+        formData.append('track_image', trackImage as Blob);
+      }
+
+      // 오디오 파일 추가
+      if (trackAudio !== null) {
+        formData.append('track_audio', trackAudio as Blob);
+      }
+
+      // axios를 사용하여 FormData를 서버로 보냅니다.
+      // axios를 사용하여 FormData를 서버로 보냅니다.
+      const response = await axios.post('/api/v1/tracks', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Upload response:', response.data);
+    } catch (error) {
+      console.error('Error submitting:', error);
+    }
   };
 
   return (
@@ -131,23 +150,74 @@ const UploadMyMusic = () => {
               나만의 음악 등록
             </div>
 
-            {/* 등록할 곡 사진, 제목, 가수명, 용량 */}
-            <div className="flex mt-[4%] shadow-lg rounded-xl shadow-neutral-400 space-x-8 p-[3%]">
-              <img
-                src="https://i.ibb.co/8MTGSjd/image.png"
-                alt="프로필 이미지"
-                className="size-36 rounded-xl drop-shadow-sm"
-              />
-              <div className="flex flex-col text-center justify-center">
-                <p className="text-white text-xl mb-[20%]">Dangerously</p>
-                <p className="text-[#777777] text-base">8.02 MB</p>
-              </div>
-            </div>
+            {/* 등록할 곡 제목, 프롬프트, 가사보유여부, 곡 태그, 곡 장르, 이미지 파일&오디오 파일 업로드 */}
             <form
-              id="test"
+              id="form-data"
               className="flex flex-col w-full h-auto"
               onSubmit={handleSubmit}
             >
+              <div className="flex items-center justify-center ">
+                <div className="flex mt-[4%] shadow-lg w-[35%] justify-center rounded-xl shadow-neutral-400 space-x-8 p-[3%]">
+                  <div className="flex flex-col justify-center items-center">
+                    <div className="flex justify-center">
+                      <label
+                        htmlFor="file"
+                        className="absolute text-2xl p-[0.4%] text-center border-2 rounded-xl border-purple-900 bg-purple-800 w-[18%] hover:bg-violet-900"
+                      >
+                        Upload Image
+                      </label>
+                      <input
+                        type="file"
+                        className="flex justify-center"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]; // null 체크를 통해 오류 방지
+                          if (file) {
+                            setTrackImage(file);
+                          }
+                        }}
+                        accept="image/*"
+                        required
+                        style={{
+                          fontWeight: 'bold',
+                          opacity: 0,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          width: '100%',
+                          marginBottom: '10%',
+                        }}
+                      />
+                    </div>
+                    <div className="flex justify-center">
+                      <label
+                        htmlFor="file"
+                        className="absolute text-2xl p-[0.4%] text-center border-2 rounded-xl border-purple-900 bg-purple-800 w-[18%] hover:bg-violet-900"
+                      >
+                        Upload Audio
+                      </label>
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]; // null 체크를 통해 오류 방지
+                          if (file) {
+                            setTrackAudio(file);
+                          }
+                        }}
+                        accept="audio/*"
+                        required
+                        style={{
+                          fontWeight: 'bold',
+                          opacity: 0,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          width: '100%',
+                          marginBottom: '8%',
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* 제목 */}
               <div className="flex justify-center mt-[5%]">
                 <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
                 <input
@@ -158,10 +228,11 @@ const UploadMyMusic = () => {
                   required
                 />
               </div>
+              {/* 프롬프트 */}
               <div className="flex justify-center mt-[3%]">
                 <label className="p-[1%] text-lg text-[#A97DFF] ">설명</label>
                 <textarea
-                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
+                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950 resize-none"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
@@ -174,67 +245,61 @@ const UploadMyMusic = () => {
                   className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
                   type="text"
                   value={tags}
-                  onChange={(e) => setTags(e.target.value)}
+                  onChange={(e) =>
+                    setTags(e.target.value.split(',').map((tag) => tag.trim()))
+                  }
                   required
                 />
               </div>
               {/* 가사 보유여부 */}
               <div className="flex justify-center mt-[3%]">
-                <ToggleButtonGroup
-                  value={lyrics}
-                  exclusive
-                  onChange={handleLyrics}
-                  aria-label="text alignment"
-                  color="secondary"
-                >
-                  <ToggleButton className="bg-[#44334e]" value="left">
-                    <p className="text-white">가사 보유 O</p>
-                  </ToggleButton>
-                  <ToggleButton className="bg-[#44334e]" value="center">
-                    <p className="text-white">가사 보유 X</p>
-                  </ToggleButton>
-                </ToggleButtonGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={hasLyrics}
+                      onChange={handleCheckboxChange}
+                    />
+                  }
+                  label="가사 보유 여부"
+                />
               </div>
               {/* 장르 선택 */}
               <div className="flex justify-center mt-[3%]">
-                <div>
-                  <FormControl sx={{ m: 1, width: 300 }}>
-                    <InputLabel
-                      id="demo-multiple-name-label"
-                      color="secondary"
-                      className="text-[#a97dff]"
-                    >
-                      Genre
-                    </InputLabel>
-                    <Select
-                      labelId="demo-multiple-name-label"
-                      id="demo-multiple-name"
-                      multiple // 다수 선택 가능
-                      value={genreName}
-                      onChange={handleGenre}
-                      input={<OutlinedInput label="genre" />}
-                      MenuProps={MenuProps}
-                      color="secondary"
-                      className="text-[#a0a0a0]"
-                    >
-                      {names.map((name) => (
-                        <MenuItem
-                          key={name}
-                          value={name}
-                          style={getStyles(name, genreName, theme)}
-                        >
-                          {name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <InputLabel
+                    id="demo-simple-select-autowidth-label"
+                    color="secondary"
+                    className="text-[#a97dff]"
+                  >
+                    Genre
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-autowidth-label"
+                    id="demo-simple-select-autowidth"
+                    value={selectedGenreId} // 선택된 장르의 genre_id 값을 사용
+                    onChange={handleGenre}
+                    input={<OutlinedInput label="genre" />}
+                    color="secondary"
+                    className="text-[#a0a0a0]"
+                  >
+                    {genreId.map((genre) => (
+                      <MenuItem
+                        key={genre.genre_id}
+                        value={genre.genre_id}
+                        className=""
+                      >
+                        {genre.genre_name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
               <div className="flex h-full items-center justify-center">
                 <button
                   className="bottom-[5%] p-[2%]"
                   type="submit"
                   form="test"
+                  onClick={handleSubmit}
                 >
                   <FileUploadRoundedIcon
                     sx={{ fontSize: 60 }}
