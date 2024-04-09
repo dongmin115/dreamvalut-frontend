@@ -23,6 +23,7 @@ import {
   TextField,
   ThemeProvider,
 } from '@mui/material';
+import { useRouter } from 'next/navigation';
 
 // 각각의 컴포넌트에 대한 타입 선언
 type HomeProps = {
@@ -61,11 +62,20 @@ const theme = createTheme({
 });
 
 export function SearchAppBar() {
+  const router = useRouter();
   const [keyward, setKeyward] = React.useState('');
+
   const handleKeyward = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyward(e.target.value);
-    console.log(keyward);
   };
+  // Enter키로 검색하는 함수
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const searchUrl = `/search/${encodeURIComponent(keyward)}`;
+      router.push(searchUrl);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <TextField
@@ -91,6 +101,7 @@ export function SearchAppBar() {
         variant="outlined"
         value={keyward}
         onChange={handleKeyward}
+        onKeyDown={handleKeyPress}
         color="primary"
         placeholder="검색"
       />
