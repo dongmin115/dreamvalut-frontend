@@ -10,7 +10,8 @@ import {
   genrehandlers,
   genreBooleanhandlers,
   takemygenrehandlers,
-} from './handlers/genreHandlers';
+} from './handlers/handlers';
+import { searchHandlers } from './handlers/search';
 
 export const worker = setupWorker(
   ...chartHandlers,
@@ -19,4 +20,5 @@ export const worker = setupWorker(
   ...takemygenrehandlers,
   ...uploadmymusichandlers,
   ...handlers,
+  ...searchHandlers,
 );
