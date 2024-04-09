@@ -9,6 +9,7 @@ import {
   genreBooleanhandlers,
   takemygenrehandlers,
 } from './handlers/handlers';
+import { searchHandlers } from './handlers/search';
 
 export const server = setupServer(
   ...handlers,
@@ -16,4 +17,5 @@ export const server = setupServer(
   ...genrehandlers,
   ...genreBooleanhandlers,
   ...takemygenrehandlers,
+  ...searchHandlers,
 );
