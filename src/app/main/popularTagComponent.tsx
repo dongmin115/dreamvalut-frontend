@@ -33,7 +33,7 @@ function popularTagComponent() {
       </div>
       <div className="w-11/12 h-full flex flex-row items-center justify-start">
         <AlbumCoverSystem
-          image="https://i.ibb.co/k55YHSL/Perfect-Night.jpg"
+          image="https://i.ibb.co/xzCjPsv/image.png"
           title="신나는"
         />
       </div>

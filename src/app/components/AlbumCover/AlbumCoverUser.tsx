@@ -1,7 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable import/extensions */
-
-import { albumCoverUserProps } from '@/types/albumCover';
+import { albumCoverUserProps } from '@/types/albumCover.ts';
+import Image from 'next/image';
 
 function AlbumCoverUser({
   image1,
@@ -11,20 +9,26 @@ function AlbumCoverUser({
 }: albumCoverUserProps) {
   return (
     <div className="flex flex-col w-56 h-72 items-center justify-center m-4 cursor-pointer hover-bg-opacity pt-8">
-      <img
+      <Image
         src={image1}
         alt="Album cover"
-        className="h-48 w-48 rounded-lg z-30"
+        className="rounded-lg z-30"
+        width={192}
+        height={192}
       />
-      <img
+      <Image
         src={image2}
         alt="Album cover"
-        className="h-44 w-44 rounded-lg -mt-52 z-20"
+        className="rounded-lg -mt-52 z-20"
+        width={176}
+        height={176}
       />
-      <img
+      <Image
         src={image3}
         alt="Album cover"
-        className="h-40 w-40 rounded-lg -mt-48 z-10"
+        className="rounded-lg -mt-48 z-10"
+        width={160}
+        height={160}
       />
       <p className="text-lg text-white text-center mt-20">{title}</p>
     </div>

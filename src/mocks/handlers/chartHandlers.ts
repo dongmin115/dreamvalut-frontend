@@ -41,9 +41,9 @@ export const chartHandlers = [
           {
             track_id: 5,
             rank: 5,
-            title: '사랑을 했다',
-            uploader_name: 'iKON',
-            thumbnail_image: 'https://i.ibb.co/F7D2cVx/image.png',
+            title: '삐삐',
+            uploader_name: 'IU',
+            thumbnail_image: 'https://i.ibb.co/5FCZZxV/image.png',
           },
           {
             track_id: 6,
