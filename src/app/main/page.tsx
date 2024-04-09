@@ -24,6 +24,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
 import PopularMusicComponent from './popularMusicComponent';
+import PopularTagComponent from './popularTagComponent';
 
 const theme = createTheme({
   palette: {
@@ -98,20 +99,9 @@ function GenreMusic({
 
 // 메인 페이지 컴포넌트
 function Page() {
-  const [tagPageIndex, settagPageIndex] = useState(0); // 인기 태그 페이지 인덱스
   const [genrePageIndex, setgenrePageIndex] = useState(0); // 장르별 음악 페이지 인덱스
   const [otherPlaylistPageIndex, setOtherPlaylistPageIndex] = useState(0); // 다른 유저가 선택한 플레이리스트 페이지 인덱스
   const [systemPlaylistPageIndex, setSystemPlaylistPageIndex] = useState(0); // 시스템 플레이리스트 페이지 인덱스
-
-  const handleTagPageForwardClick = () => {
-    settagPageIndex(tagPageIndex + 1);
-  };
-
-  const handleTagPageBackwardClick = () => {
-    if (tagPageIndex > 0) {
-      settagPageIndex(tagPageIndex - 1);
-    }
-  };
 
   const handleGenrePageForwardClick = () => {
     setgenrePageIndex(genrePageIndex + 1);
@@ -156,21 +146,8 @@ function Page() {
 
           {/* 인기 태그 */}
           <h1 className="">인기 태그</h1>
-          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton className="w-4" onClick={handleTagPageBackwardClick}>
-              {tagPageIndex !== 0 && (
-                <BackIcon color="primary" fontSize="large" />
-              )}
-            </IconButton>
-            <div className="w-11/12 h-full flex flex-row items-center justify-start">
-              <AlbumCoverSystem
-                image="https://i.ibb.co/k55YHSL/Perfect-Night.jpg"
-                title="신나는"
-              />
-            </div>
-            <IconButton onClick={handleTagPageForwardClick}>
-              <ForwardIcon color="primary" fontSize="large" />
-            </IconButton>
+          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
+            <PopularTagComponent />
           </div>
 
           {/* 장르별 음악 */}

@@ -1,13 +1,10 @@
+/* eslint-disable import/extensions */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable import/no-unresolved */
 import React, { useState, useEffect } from 'react';
+import { albumCoverSystemProps } from '@/types/albumCover';
 
-type AlbumCoverSystemProps = {
-  image: string;
-  title: string;
-};
-
-function AlbumCoverSystem({ image, title }: AlbumCoverSystemProps) {
+function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {
   const [albumRandomColor, setAlbumRandomColor] = useState('');
 
   useEffect(() => {
