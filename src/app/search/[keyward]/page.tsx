@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable import/extensions */
@@ -76,7 +77,7 @@ export default function SearchPage(props: any) {
                             className="size-28 rounded-sm"
                           />
                           <p
-                            className="xs:text-xs md:text-xs lg:text-xs xl:text-lg xl:text-md w-fit"
+                            className="xs:text-xs md:text-xs lg:text-xs xl:text-sm w-fit text-center"
                             dangerouslySetInnerHTML={{ __html: e.title }}
                           />
                         </div>
