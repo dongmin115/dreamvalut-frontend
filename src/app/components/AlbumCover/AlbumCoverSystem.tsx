@@ -1,13 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable import/no-unresolved */
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { albumCoverSystemProps } from '@/types/albumCover.ts';
 
-type AlbumCoverSystemProps = {
-  image: string;
-  title: string;
-};
-
-function AlbumCoverSystem({ image, title }: AlbumCoverSystemProps) {
+function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {
   const [albumRandomColor, setAlbumRandomColor] = useState('');
 
   useEffect(() => {
@@ -28,7 +23,13 @@ function AlbumCoverSystem({ image, title }: AlbumCoverSystemProps) {
 
   return (
     <div className="flex flex-col m-4 w-56 h-72 items-center justify-center hover-bg-opacity cursor-pointer">
-      <img src={image} alt="Album cover" className="h-48 w-48 rounded-lg" />
+      <Image
+        src={image}
+        alt="Album cover"
+        className="rounded-lg"
+        width={192}
+        height={192}
+      />
       <div
         className={`h-48 w-48 rounded-lg z-10 -mt-48 ${albumRandomColor} opacity-50`}
       />
