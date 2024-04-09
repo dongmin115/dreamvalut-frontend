@@ -7,9 +7,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { styled, alpha } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import HomeIcon from '@mui/icons-material/Home'; // 홈 아이콘
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay'; // 플리 아이콘
