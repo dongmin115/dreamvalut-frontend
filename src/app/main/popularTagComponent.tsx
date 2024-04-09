@@ -9,7 +9,7 @@ import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
 
-function popularTagComponent() {
+function PopularTagComponent() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const musicList = [];
   const [data, setData] = useState<any>([]);
@@ -46,4 +46,4 @@ function popularTagComponent() {
   );
 }
 
-export default popularTagComponent;
+export default PopularTagComponent;
