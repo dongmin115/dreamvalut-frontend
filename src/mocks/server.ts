@@ -9,13 +9,13 @@ import {
   genrehandlers,
   genreBooleanhandlers,
   takemygenrehandlers,
-} from './handlers/genreHandlers';
+} from './handlers/handlers';
+import { searchHandlers } from './handlers/search';
 
 export const server = setupServer(
   ...chartHandlers,
   ...genrehandlers,
   ...genreBooleanhandlers,
   ...takemygenrehandlers,
-  ...uploadmymusichandlers,
-  ...handlers,
+  ...searchHandlers,
 );
