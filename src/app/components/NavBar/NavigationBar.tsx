@@ -17,6 +17,12 @@ import EditNoteIcon from '@mui/icons-material/EditNote'; // 나만의 음악 등
 import PersonIcon from '@mui/icons-material/Person'; // 프로필 아이콘
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom'; // 로그아웃 아이콘
 import { createTheme } from '@mui/material/styles';
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  ThemeProvider,
+} from '@mui/material';
 
 // 각각의 컴포넌트에 대한 타입 선언
 type HomeProps = {
@@ -54,54 +60,40 @@ const theme = createTheme({
   },
 });
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(0),
-  marginLeft: 0,
-  marginBottom: theme.spacing(5),
-  width: '100%',
-  height: '40px',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(0),
-    width: 'auto',
-  },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 1),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
 export function SearchAppBar() {
+  const [keyward, setKeyward] = React.useState('');
+  const handleKeyward = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyward(e.target.value);
+    console.log(keyward);
+  };
   return (
-    <>
-      {/* <Typography
-        variant="h6"
-        noWrap
-        component="div"
-        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-      /> */}
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <InputBase
-          placeholder="검색"
-          inputProps={{ 'aria-label': 'search' }}
-          className="ml-10 h-full text-sm text-white"
-        />
-      </Search>
-    </>
+    <ThemeProvider theme={theme}>
+      <TextField
+        id="input-with-icon-textfield"
+        InputProps={{
+          startAdornment: (
+            <Link href={`/search/${keyward}`}>
+              <IconButton>
+                <InputAdornment position="start">
+                  <SearchIcon color="primary" />
+                </InputAdornment>
+              </IconButton>
+            </Link>
+          ),
+          style: {
+            color: 'white',
+            backgroundColor: '#353535',
+            height: '5vh',
+            fontSize: '1rem',
+          },
+        }}
+        variant="outlined"
+        value={keyward}
+        onChange={handleKeyward}
+        color="primary"
+        placeholder="검색"
+      />
+    </ThemeProvider>
   );
 }
 
