@@ -35,18 +35,18 @@ function MusicElement({ ranking, thumnailImage, title }: chartProps) {
 }
 
 function PopularMusicComponent() {
-  const [popularPageIndex, setpopularPageIndex] = useState(0); // 인기 음악 페이지 인덱스
+  const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const musicList = [];
   const [data, setData] = useState<any>([]);
-  const handlePopularPageForwardClick = () => {
-    if (Math.ceil(data.length / 3) - 4 > popularPageIndex) {
-      setpopularPageIndex(popularPageIndex + 1);
+  const handleForwardClick = () => {
+    if (Math.ceil(data.length / 3) - 4 > pageIndex) {
+      setPageIndex(pageIndex + 1);
     } // 이때 4는 한번에 보여지는 인기음악의 개수
   };
 
-  const handlePopularPageBackwardClick = () => {
-    if (popularPageIndex > 0) {
-      setpopularPageIndex(popularPageIndex - 1);
+  const handleBackwardClick = () => {
+    if (pageIndex > 0) {
+      setPageIndex(pageIndex - 1);
     }
   };
 
@@ -84,22 +84,20 @@ function PopularMusicComponent() {
   return (
     <>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
-        <IconButton onClick={handlePopularPageBackwardClick}>
-          {popularPageIndex !== 0 && (
-            <BackIcon color="primary" fontSize="large" />
-          )}
+        <IconButton onClick={handleBackwardClick}>
+          {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
       <div
         className={
           'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
         }
-        style={getSlideContentStyle(popularPageIndex)}
+        style={getSlideContentStyle(pageIndex)}
       >
         {musicList}
       </div>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
-        <IconButton onClick={handlePopularPageForwardClick}>
+        <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
       </div>
