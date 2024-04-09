@@ -7,7 +7,9 @@ import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
+import { ThemeProvider } from '@emotion/react';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
+import theme from '../styles/theme.ts';
 
 function PopularTagComponent() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
@@ -25,7 +27,7 @@ function PopularTagComponent() {
     }
   };
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
@@ -42,7 +44,7 @@ function PopularTagComponent() {
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
       </div>
-    </>
+    </ThemeProvider>
   );
 }
 

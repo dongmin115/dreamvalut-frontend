@@ -9,7 +9,9 @@ import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import { ThemeProvider } from '@emotion/react';
 import { GenreMusicProps } from '../../types/genre.ts';
+import theme from '../styles/theme.ts';
 
 // 장르별 음악 컴포넌트
 function GenreMusic({
@@ -74,7 +76,7 @@ function GenreMusicComponent() {
     }
   };
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
@@ -127,7 +129,7 @@ function GenreMusicComponent() {
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
       </div>
-    </>
+    </ThemeProvider>
   );
 }
 
