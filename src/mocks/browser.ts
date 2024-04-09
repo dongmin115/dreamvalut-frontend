@@ -10,7 +10,7 @@ import {
   genrehandlers,
   genreBooleanhandlers,
   takemygenrehandlers,
-} from './handlers/handlers';
+} from './handlers/genreHandlers';
 import { searchHandlers } from './handlers/search';
 
 export const worker = setupWorker(
