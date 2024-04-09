@@ -1,18 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-import './GenreColorList.css';
-import { IconButton } from '@mui/material';
+import './genreColorList.css';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
-import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import BackIcon from '@mui/icons-material/ArrowBackIosNew';
-
-import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
 import PopularMusicComponent from './popularMusicComponent.tsx';
 import PopularTagComponent from './popularTagComponent.tsx';
 import GenreMusicComponent from './genreMusicComponent.tsx';
 import OtherPeoplePlayListComponent from './otherPeoplePlayListComponent.tsx';
+import SystemPlaylistComponent from './systemPlaylistComponent.tsx';
 
 const theme = createTheme({
   palette: {
@@ -29,18 +24,6 @@ const theme = createTheme({
 
 // 메인 페이지 컴포넌트
 function Page() {
-  const [systemPlaylistPageIndex, setSystemPlaylistPageIndex] = useState(0); // 시스템 플레이리스트 페이지 인덱스
-
-  const handleSystemPlaylistPageForwardClick = () => {
-    setSystemPlaylistPageIndex(systemPlaylistPageIndex + 1);
-  };
-
-  const handleSystemPlaylistPageBackwardClick = () => {
-    if (systemPlaylistPageIndex > 0) {
-      setSystemPlaylistPageIndex(systemPlaylistPageIndex - 1);
-    }
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <div className="w-full h-full flex flex-col justify-end items-end">
@@ -73,26 +56,10 @@ function Page() {
           {/* 구독한 플레이리스트 */}
           <h1 className="">DreamVault가 제공하는 플레이리스트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton
-              className="w-4"
-              onClick={handleSystemPlaylistPageBackwardClick}
-            >
-              {systemPlaylistPageIndex !== 0 && (
-                <BackIcon color="primary" fontSize="large" />
-              )}
-            </IconButton>
-            <div className="w-11/12 h-full flex flex-row justify-start items-start">
-              <AlbumCoverSystem
-                image="https://i.ibb.co/ZVGLMxS/wecan-tbefriends.jpg"
-                title="Billboard Hot 100"
-              />
-            </div>
-            <IconButton onClick={handleSystemPlaylistPageForwardClick}>
-              <ForwardIcon color="primary" fontSize="large" />
-            </IconButton>
+            <SystemPlaylistComponent />
           </div>
         </div>
-        {/* 아래 여백 */}
+        {/* 아래 여백, footer 넣을 예정 */}
         <div className="w-full h-40" />
       </div>
     </ThemeProvider>
