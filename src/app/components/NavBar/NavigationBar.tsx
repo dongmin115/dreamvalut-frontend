@@ -85,6 +85,7 @@ export function SearchAppBar() {
             backgroundColor: '#353535',
             height: '5vh',
             fontSize: '1rem',
+            marginBottom: '3rem',
           },
         }}
         variant="outlined"
