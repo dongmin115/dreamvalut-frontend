@@ -1,10 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/named */
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 
 'use client';
 
@@ -12,9 +6,10 @@ import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { useEffect, useState } from 'react';
-import { chartProps } from '../../types/chart';
-import { fetchChartData } from '../../api/chart';
-import { getSlideContentStyle } from '../styles/SlideStyles';
+import Image from 'next/image';
+import { chartProps } from '../../types/chart.ts';
+import { fetchChartData } from '../../api/chart.ts';
+import { getSlideContentStyle } from '../styles/SlideStyles.ts';
 
 function MusicElement({ ranking, thumnailImage, title }: chartProps) {
   return (
@@ -24,7 +19,7 @@ function MusicElement({ ranking, thumnailImage, title }: chartProps) {
         {ranking}
       </p>
       {/* 앨범 커버 */}
-      <img className="w-16" src={thumnailImage} />
+      <Image width={64} height={64} alt="Album Cover" src={thumnailImage} />
 
       {/* 음악 정보 */}
       <div className="flex flex-col justify-center ml-4">
