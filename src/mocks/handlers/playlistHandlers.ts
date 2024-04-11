@@ -4,7 +4,7 @@
 import { HttpResponse, http } from 'msw';
 
 export const playlistHandlers = [
-  http.get('/api/v1/playlists/{playlist_id}', () =>
+  http.get('/api/v1/playlists/playlist_id', () =>
     HttpResponse.json({
       playlist_id: 1,
       playlist_name: 'Chill Vibes',
