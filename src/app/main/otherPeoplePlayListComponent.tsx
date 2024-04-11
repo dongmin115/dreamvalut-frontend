@@ -7,15 +7,21 @@ import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { ThemeProvider } from '@emotion/react';
-import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
+import { useQuery } from '@tanstack/react-query';
+import AlbumCoverUser from '../components/AlbumCover/albumCoverUser.tsx';
 import theme from '../styles/theme.ts';
+import { followPlaylistData } from '../../api/playlist.ts';
 
 function OtherPeoplePlayListComponent() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const musicList = [];
-  const [data, setData] = useState<any>([]);
+  const { isLoading, data } = useQuery({
+    queryKey: ['chartData'],
+    queryFn: followPlaylistData,
+  });
+
   const handleForwardClick = () => {
-    if (Math.ceil(data.length / 3) - 4 > pageIndex) {
+    if (data.length - 4 > pageIndex) {
       setPageIndex(pageIndex + 1);
     } // 이때 4는 한번에 보여지는 인기음악의 개수
   };
@@ -25,6 +31,7 @@ function OtherPeoplePlayListComponent() {
       setPageIndex(pageIndex - 1);
     }
   };
+  if (isLoading) return <div>Loading...</div>;
   return (
     <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
@@ -38,27 +45,6 @@ function OtherPeoplePlayListComponent() {
           image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
           image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
           title="텐션 업!"
-        />
-
-        <AlbumCoverUser
-          image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-          image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-          image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-          title="낭만 있는 플리"
-        />
-
-        <AlbumCoverUser
-          image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-          image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-          image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-          title="올드 팝송"
-        />
-
-        <AlbumCoverUser
-          image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-          image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-          image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-          title="나만 들으려고 저장한 노래"
         />
       </div>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">

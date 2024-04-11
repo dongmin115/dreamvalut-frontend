@@ -9,9 +9,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
+import { getSlideContentStyle } from '@/app/styles/slideStyles.ts';
 import { chartProps } from '../../types/chart.ts';
 import { fetchChartData } from '../../api/chart.ts';
-import { getSlideContentStyle } from '../styles/SlideStyles.ts';
 import theme from '../styles/theme.ts';
 
 function MusicElement({ ranking, thumnailImage, title }: chartProps) {
@@ -69,7 +69,7 @@ function PopularMusicComponent() {
     }
   };
 
-  if (isLoading) return <div>로딩중</div>;
+  if (isLoading) return <div>Loading...</div>;
   return (
     <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">

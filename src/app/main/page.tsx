@@ -1,4 +1,4 @@
-'use client';
+'use server';
 
 import './genreColorList.css';
 import PopularMusicComponent from './popularMusicComponent.tsx';
@@ -8,7 +8,7 @@ import OtherPeoplePlayListComponent from './otherPeoplePlayListComponent.tsx';
 import SystemPlaylistComponent from './systemPlaylistComponent.tsx';
 
 // 메인 페이지 컴포넌트
-function Page() {
+async function Page() {
   return (
     <div className="w-full h-full flex flex-col justify-end items-end">
       {/* NavigationBar 제외 영역 */}
