@@ -38,7 +38,7 @@ export default function SearchPage(props: any) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="h-fit min-h-screen bg-[#1a1a1a]">
+      <div className="h-fit min-h-screen">
         {/* NavBar 제외영역 */}
         <div className="pl-[15%] h-fit w-full">
           <div className="flex p-[3%] flex-col gap-8 w-full">

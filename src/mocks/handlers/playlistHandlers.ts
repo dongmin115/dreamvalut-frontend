@@ -1,0 +1,100 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable import/prefer-default-export */
+import { HttpResponse, http } from 'msw';
+
+export const playlistHandlers = [
+  http.get('/api/v1/playlists/{playlist_id}', () =>
+    HttpResponse.json({
+      playlist_id: 1,
+      playlist_name: 'Chill Vibes',
+      is_public: true,
+      is_curated: false,
+      owner_name: 'Default Display',
+      tracks: {
+        content: [
+          {
+            track_id: 5,
+            title: 'Pop Track 5',
+            uploader_name: 'Default Display',
+            duration: 220,
+            has_lyrics: true,
+            track_url: 'http://trackurl5.com',
+            track_image: 'http://trackimage5.com',
+            thumbnail_image: 'http://thumbnail5.com',
+            prompt: 'Prompt for Pop Track 5',
+          },
+          {
+            track_id: 4,
+            title: 'Pop Track 4',
+            uploader_name: 'Default Display',
+            duration: 190,
+            has_lyrics: false,
+            track_url: 'http://trackurl4.com',
+            track_image: 'http://trackimage4.com',
+            thumbnail_image: 'http://thumbnail4.com',
+            prompt: 'Prompt for Pop Track 4',
+          },
+          {
+            track_id: 3,
+            title: 'Pop Track 3',
+            uploader_name: 'Default Display',
+            duration: 200,
+            has_lyrics: true,
+            track_url: 'http://trackurl3.com',
+            track_image: 'http://trackimage3.com',
+            thumbnail_image: 'http://thumbnail3.com',
+            prompt: 'Prompt for Pop Track 3',
+          },
+          {
+            track_id: 2,
+            title: 'Pop Track 2',
+            uploader_name: 'Default Display',
+            duration: 180,
+            has_lyrics: false,
+            track_url: 'http://trackurl2.com',
+            track_image: 'http://trackimage2.com',
+            thumbnail_image: 'http://thumbnail2.com',
+            prompt: 'Prompt for Pop Track 2',
+          },
+          {
+            track_id: 1,
+            title: 'Pop Track 1',
+            uploader_name: 'Default Display',
+            duration: 210,
+            has_lyrics: true,
+            track_url: 'http://trackurl1.com',
+            track_image: 'http://trackimage1.com',
+            thumbnail_image: 'http://thumbnail1.com',
+            prompt: 'Prompt for Pop Track 1',
+          },
+        ],
+        pageable: {
+          page_number: 0,
+          page_size: 30,
+          sort: {
+            sorted: true,
+            unsorted: false,
+            empty: false,
+          },
+          offset: 0,
+          paged: true,
+          unpaged: false,
+        },
+        total_pages: 1,
+        total_elements: 5,
+        last: true,
+        first: true,
+        number_of_elements: 5,
+        size: 30,
+        number: 0,
+        sort: {
+          sorted: true,
+          unsorted: false,
+          empty: false,
+        },
+        empty: false,
+      },
+    }),
+  ),
+];

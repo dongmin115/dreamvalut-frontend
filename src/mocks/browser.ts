@@ -11,7 +11,8 @@ import {
   genreBooleanhandlers,
   takemygenrehandlers,
 } from './handlers/genreHandlers';
-import { searchHandlers } from './handlers/search';
+import { searchHandlers } from './handlers/searchHandlers';
+import { playlistHandlers } from './handlers/playlistHandlers';
 
 export const worker = setupWorker(
   ...chartHandlers,
@@ -21,4 +22,5 @@ export const worker = setupWorker(
   ...uploadmymusichandlers,
   ...handlers,
   ...searchHandlers,
+  ...playlistHandlers,
 );
