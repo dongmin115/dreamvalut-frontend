@@ -10,7 +10,8 @@ import {
   genreBooleanhandlers,
   takemygenrehandlers,
 } from './handlers/genreHandlers';
-import { searchHandlers } from './handlers/search';
+import { searchHandlers } from './handlers/searchHandlers';
+import { playlistHandlers } from './handlers/playlistHandlers';
 
 export const server = setupServer(
   ...handlers,
@@ -20,4 +21,5 @@ export const server = setupServer(
   ...takemygenrehandlers,
   ...searchHandlers,
   ...uploadmymusichandlers,
+  ...playlistHandlers,
 );
