@@ -9,9 +9,8 @@ export const likePlaylistThumbnail = [
       status: 'success',
       data: {
         thumbnails: [
-          'url/to/thumbnail1.com',
-          'url/to/thumbnail2.com',
-          'url/to/thumbnail3.com',
+          'https://i.ibb.co/HgFcPLj/getaguitar.webp',
+          'https://i.ibb.co/TbQL5kz/thatthat.jpg',
         ],
       },
       message: 'Thumbnails of user liked tracks retrieved successfully.',
