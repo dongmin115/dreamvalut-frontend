@@ -1,4 +1,4 @@
-'use client';
+'use server';
 
 import './genreColorList.css';
 import PopularMusicComponent from './popularMusicComponent.tsx';
@@ -8,7 +8,7 @@ import OtherPeoplePlayListComponent from './otherPeoplePlayListComponent.tsx';
 import SystemPlaylistComponent from './systemPlaylistComponent.tsx';
 
 // 메인 페이지 컴포넌트
-function Page() {
+async function Page() {
   return (
     <div className="w-full h-full flex flex-col justify-end items-end">
       {/* NavigationBar 제외 영역 */}
@@ -34,7 +34,7 @@ function Page() {
         {/* 다른 유저가 선택한 플레이리스트 */}
         <h1 className="">다른 유저가 선택한 플레이리스트</h1>
         <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
-          <OtherPeoplePlayListComponent />
+          {/* <OtherPeoplePlayListComponent /> */}
         </div>
 
         {/* 구독한 플레이리스트 */}
