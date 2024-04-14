@@ -6,7 +6,7 @@ export async function fetchChartData() {
     const response = await axios.get('/api/v1/charts');
     return response.data.data.tracks;
   } catch (error) {
-    console.error('API Fetch Error :', error);
+    console.error('API Fetch Error (chart data) : ', error);
     throw error;
   }
 }

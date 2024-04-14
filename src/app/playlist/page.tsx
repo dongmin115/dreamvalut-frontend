@@ -11,8 +11,8 @@ import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import { useEffect, useState } from 'react';
-import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem';
-import AlbumCoverUser from '../components/AlbumCover/albumCoverUser';
+import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
+import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 import MyPlaylistComponent from './myPlaylistComponent.tsx';
 
 const theme = createTheme({
@@ -59,7 +59,7 @@ function page() {
         <div className="w-10/12 h-full pr-8">
           {/* 내가 생성한 플레이리스트 */}
           <h1 className="">내가 생성한 플레이리스트</h1>
-          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
+          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
             <MyPlaylistComponent />
           </div>
 
