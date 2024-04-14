@@ -1,6 +1,22 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
+export async function fetchAddPlaylist(
+  playlistName: string,
+  isPublic: boolean,
+) {
+  try {
+    const response = await axios.post('/api/v1/playlists', {
+      playlist_name: playlistName,
+      is_public: isPublic,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (add playlist):', error);
+    throw error;
+  }
+}
+
 // 팔로우한 플레이리스트 데이터 가져오기
 export async function fetchFollowPlaylistData() {
   try {

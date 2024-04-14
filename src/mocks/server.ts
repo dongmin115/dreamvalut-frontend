@@ -13,6 +13,7 @@ import {
 import {
   myPlaylistThumbnail,
   likePlaylistThumbnail,
+  addPlaylist,
 } from './handlers/playlistHandlers';
 import { searchHandlers } from './handlers/search';
 
@@ -26,4 +27,5 @@ export const server = setupServer(
   ...uploadmymusichandlers,
   ...myPlaylistThumbnail,
   ...likePlaylistThumbnail,
+  ...addPlaylist,
 );

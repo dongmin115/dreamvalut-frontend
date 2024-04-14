@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import AddIcon from '@mui/icons-material/Add';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -11,12 +11,13 @@ import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
 import {
   fetchMyPlaylistThumbnail,
   fetchLikePlaylistThumbnail,
+  fetchAddPlaylist,
 } from '../../api/playlist.ts';
 import theme from '../styles/theme.ts';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 
 function MyPlaylistComponent() {
-  const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
+  const [pageIndex, setPageIndex] = useState(0);
   const [publicScope, setPublicScope] = useState(false);
   const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(false);
   const musicList = [];
@@ -62,6 +63,20 @@ function MyPlaylistComponent() {
     }
   }
 
+  const handleCancelClick = () => {
+    setCreatePlayListModalOpen(false);
+    setPublicScope(false);
+  };
+
+  const handleAddPlaylist = () => {
+    const playlistName = document.querySelector('input')?.value;
+    if (playlistName) {
+      fetchAddPlaylist(playlistName, publicScope);
+      setCreatePlayListModalOpen(false);
+      setPublicScope(false);
+    }
+  };
+
   const NewPlaylistModal = (
     <div className="fixed inset-0 flex items-center justify-center z-40">
       <div
@@ -100,14 +115,14 @@ function MyPlaylistComponent() {
         <div className="flex flex-row justify-end items-end w-full h-full">
           <p
             className="flex text-xl w-32 h-16 font-bold  justify-center items-center text-white m-4 cursor-pointer hover-bg-opacity hover:rounded-full"
-            onClick={() => setCreatePlayListModalOpen(false)}
+            onClick={() => handleCancelClick()}
           >
             취소
           </p>
 
           <p
             className="flex text-xl w-32 h-16 font-bold rounded-full justify-center items-center bg-white text-purple-700 m-4 cursor-pointer hover-bg-opacity hover:rounded-full"
-            onClick={() => setCreatePlayListModalOpen(false)}
+            onClick={() => handleAddPlaylist()}
           >
             확인
           </p>

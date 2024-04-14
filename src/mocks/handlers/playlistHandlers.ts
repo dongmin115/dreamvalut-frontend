@@ -3,6 +3,18 @@
 /* eslint-disable import/prefer-default-export */
 import { HttpResponse, http } from 'msw';
 
+export const addPlaylist = [
+  http.post('/api/v1/playlists', ({ request }) =>
+    HttpResponse.json({
+      playlist_id: 7,
+      playlist_name: request,
+      is_public: false,
+      is_curated: false,
+    }),
+  ),
+];
+
+// 좋아요 누른 플레이리스트 썸네일 데이터 가져오기
 export const likePlaylistThumbnail = [
   http.get('/api/v1/users/liked', () =>
     HttpResponse.json({
@@ -18,6 +30,7 @@ export const likePlaylistThumbnail = [
   ),
 ];
 
+// 나의 플레이리스트 썸네일 데이터 가져오기
 export const myPlaylistThumbnail = [
   http.get('/api/v1/users/playlists/created', () =>
     HttpResponse.json({

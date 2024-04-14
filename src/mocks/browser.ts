@@ -6,6 +6,7 @@ import { setupWorker } from 'msw/browser';
 import {
   myPlaylistThumbnail,
   likePlaylistThumbnail,
+  addPlaylist,
 } from './handlers/playlistHandlers';
 import { handlers } from './handlers/musicbarHandlers';
 import { chartHandlers } from './handlers/chartHandlers';
@@ -27,4 +28,5 @@ export const worker = setupWorker(
   ...searchHandlers,
   ...myPlaylistThumbnail,
   ...likePlaylistThumbnail,
+  ...addPlaylist,
 );
