@@ -5,12 +5,13 @@
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { ThemeProvider } from '@emotion/react';
+import { useQuery } from '@tanstack/react-query';
+import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
 import { chartProps } from '../../types/chart.ts';
 import { fetchChartData } from '../../api/chart.ts';
-import { getSlideContentStyle } from '../styles/SlideStyles.ts';
 import theme from '../styles/theme.ts';
 
 function MusicElement({ ranking, thumnailImage, title }: chartProps) {
@@ -34,34 +35,11 @@ function MusicElement({ ranking, thumnailImage, title }: chartProps) {
 function PopularMusicComponent() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const musicList = [];
-  const [data, setData] = useState<any>([]);
-  const handleForwardClick = () => {
-    if (Math.ceil(data.length / 3) - 4 > pageIndex) {
-      setPageIndex(pageIndex + 1);
-    } // 이때 4는 한번에 보여지는 인기음악의 개수
-  };
 
-  const handleBackwardClick = () => {
-    if (pageIndex > 0) {
-      setPageIndex(pageIndex - 1);
-    }
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      const fetchData = async () => {
-        try {
-          const res = await fetchChartData();
-          setData(res); // 가져온 데이터를 상태 변수에 저장
-        } catch (error) {
-          console.error('Error fetching chart data:', error);
-        }
-      };
-
-      fetchData(); // fetchData 함수 호출
-    }, 500);
-  }, []);
-
+  const { isLoading, data } = useQuery({
+    queryKey: ['chartData'],
+    queryFn: fetchChartData,
+  });
   if (data) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
     for (let i = 0; i < 30; i += 1) {
@@ -78,6 +56,19 @@ function PopularMusicComponent() {
       }
     }
   }
+
+  const handleForwardClick = () => {
+    if (Math.ceil(data.length / 3) - 4 > pageIndex) {
+      setPageIndex(pageIndex + 1);
+    } // 이때 4는 한번에 보여지는 인기음악의 개수
+  };
+
+  const handleBackwardClick = () => {
+    if (pageIndex > 0) {
+      setPageIndex(pageIndex - 1);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
@@ -89,9 +80,9 @@ function PopularMusicComponent() {
         className={
           'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
         }
-        style={getSlideContentStyle(pageIndex)}
+        style={getSlideContentStyle(pageIndex, 4)}
       >
-        {musicList}
+        {isLoading ? <div>Loading...</div> : musicList}
       </div>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
         <IconButton onClick={handleForwardClick}>
