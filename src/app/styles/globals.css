@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: black;
+  background-color: #1a1a1a;
   color: white;
 }
 
@@ -23,7 +23,7 @@ body {
 }
 
 .hover-bg-opacity:hover {
-  transition: background-color 0.5s ease;
+  transition: background-color 0.3s ease-in;
   background-color: rgba(
     255,
     255,
@@ -163,9 +163,9 @@ h1 {
   background-color: rgb(127, 0, 247);
 }
 
-.hover-bg-opacity:hover {
+/* .hover-bg-opacity:hover {
   background-color: rgba(133, 3, 255, 0.151);
-}
+} */
 .css-1guuiq7-MuiButtonBase-root-MuiToggleButton-root.Mui-selected {
   background-color: rgb(132, 0, 255);
 }

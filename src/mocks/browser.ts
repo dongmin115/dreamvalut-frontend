@@ -3,6 +3,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/prefer-default-export */
 import { setupWorker } from 'msw/browser';
+import {
+  myPlaylistThumbnail,
+  likePlaylistThumbnail,
+  addPlaylist,
+} from './handlers/playlistHandlers';
 import { handlers } from './handlers/musicbarHandlers';
 import { chartHandlers } from './handlers/chartHandlers';
 import { uploadmymusichandlers } from './handlers/uploadmymusicHandlers';
@@ -21,4 +26,7 @@ export const worker = setupWorker(
   ...uploadmymusichandlers,
   ...handlers,
   ...searchHandlers,
+  ...myPlaylistThumbnail,
+  ...likePlaylistThumbnail,
+  ...addPlaylist,
 );
