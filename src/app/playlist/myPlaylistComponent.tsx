@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import AddIcon from '@mui/icons-material/Add';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
+import Swal from 'sweetalert2';
+import Link from 'next/link';
 import {
   fetchMyPlaylistThumbnail,
   fetchLikePlaylistThumbnail,
@@ -50,14 +52,17 @@ function MyPlaylistComponent() {
       if (myPlaylistData[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
-          <div className="flex w-1/6 items-center justify-center">
+          <Link
+            href={`/playlist/${myPlaylistData[i].playlist_name}`} // 플레이리스트 이름으로 링크, 그러나 아이디로 링크할 수도 있음(수정 가능성 있음)
+            className="flex w-1/6 items-center justify-center"
+          >
             <AlbumCoverUser
               image1={myPlaylistData[i].thumbnails[0]}
               image2={myPlaylistData[i].thumbnails[1]}
               image3={myPlaylistData[i].thumbnails[2]}
               title={myPlaylistData[i].playlist_name}
             />
-          </div>,
+          </Link>,
         );
       }
     }
@@ -72,8 +77,38 @@ function MyPlaylistComponent() {
     const playlistName = document.querySelector('input')?.value;
     if (playlistName) {
       fetchAddPlaylist(playlistName, publicScope);
+
+      Swal.fire({
+        toast: true,
+        position: 'top',
+        icon: 'success',
+        title: '플레이리스트 생성 완료',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        },
+        html: `'${playlistName}'가 생성되었어요! 🎶`,
+      });
       setCreatePlayListModalOpen(false);
       setPublicScope(false);
+    } else {
+      Swal.fire({
+        toast: true,
+        position: 'top',
+        icon: 'error',
+        title: '플레이리스트 생성 실패',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        },
+        html: '플레이리스트 이름을 입력해주세요!',
+      });
     }
   };
 
