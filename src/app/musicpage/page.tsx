@@ -19,7 +19,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import getPlaylist from '@/api/playlist';
+import { getPlaylist } from '@/api/playlist';
 
 const theme = createTheme({
   palette: {
