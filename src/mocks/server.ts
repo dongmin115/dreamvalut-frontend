@@ -15,7 +15,7 @@ import {
   likePlaylistThumbnail,
   addPlaylist,
 } from './handlers/playlistHandlers';
-import { searchHandlers } from './handlers/search';
+import { searchHandlers } from './handlers/searchHandlers';
 
 export const server = setupServer(
   ...handlers,
