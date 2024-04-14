@@ -8,7 +8,10 @@ import AddIcon from '@mui/icons-material/Add';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
-import { fetchMyPlaylistThumbnail } from '../../api/playlist.ts';
+import {
+  fetchMyPlaylistThumbnail,
+  fetchLikePlaylistThumbnail,
+} from '../../api/playlist.ts';
 import theme from '../styles/theme.ts';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 
@@ -18,13 +21,18 @@ function MyPlaylistComponent() {
   const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(false);
   const musicList = [];
 
-  const { isLoading, data } = useQuery({
+  const { isLoading, data: myPlaylistData } = useQuery({
     queryKey: ['myPlaylistThumbnail'],
     queryFn: fetchMyPlaylistThumbnail,
   });
 
+  const { data: likePlaylistData } = useQuery({
+    queryKey: ['likePlaylistThumbnail'],
+    queryFn: fetchLikePlaylistThumbnail,
+  });
+
   const handleForwardClick = () => {
-    if (data.length - 4 > pageIndex) {
+    if (myPlaylistData.length - 4 > pageIndex) {
       setPageIndex(pageIndex + 1);
     }
   };
@@ -35,18 +43,18 @@ function MyPlaylistComponent() {
     }
   };
 
-  if (data) {
+  if (myPlaylistData) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
-    for (let i = 0; i < data.length; i += 1) {
-      if (data[i]) {
+    for (let i = 0; i < myPlaylistData.length; i += 1) {
+      if (myPlaylistData[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
           <div className="flex w-1/6 items-center justify-center">
             <AlbumCoverUser
-              image1={data[i].thumbnails[0]}
-              image2={data[i].thumbnails[1]}
-              image3={data[i].thumbnails[2]}
-              title={data[i].playlist_name}
+              image1={myPlaylistData[i].thumbnails[0]}
+              image2={myPlaylistData[i].thumbnails[1]}
+              image3={myPlaylistData[i].thumbnails[2]}
+              title={myPlaylistData[i].playlist_name}
             />
           </div>,
         );
@@ -142,8 +150,8 @@ function MyPlaylistComponent() {
         {/* 좋아요 누른 곡 버튼 */}
         <AlbumCoverUser
           image1="https://i.ibb.co/VQycV7k/like.png"
-          image2="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-          image3="https://i.ibb.co/TbQL5kz/thatthat.jpg"
+          image2={likePlaylistData[0]}
+          image3={likePlaylistData[1]}
           title="좋아요 누른 곡"
         />
 

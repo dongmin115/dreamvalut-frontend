@@ -33,3 +33,13 @@ export async function fetchMyPlaylistThumbnail() {
     throw error;
   }
 }
+
+export async function fetchLikePlaylistThumbnail() {
+  try {
+    const response = await axios.get('/api/v1/users/liked');
+    return response.data.data.thumbnails;
+  } catch (error) {
+    console.error('API Fetch Error (liked playlists thumbnail):', error);
+    throw error;
+  }
+}
