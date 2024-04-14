@@ -34,7 +34,7 @@ async function Page() {
         {/* 다른 유저가 선택한 플레이리스트 */}
         <h1 className="">다른 유저가 선택한 플레이리스트</h1>
         <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
-          <OtherPeoplePlayListComponent />
+          {/* <OtherPeoplePlayListComponent /> */}
         </div>
 
         {/* 구독한 플레이리스트 */}

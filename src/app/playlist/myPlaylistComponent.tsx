@@ -7,7 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import AddIcon from '@mui/icons-material/Add';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import { myPlaylistData } from '../../api/playlist.ts';
+import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
+import { fetchMyPlaylistThumbnail } from '../../api/playlist.ts';
 import theme from '../styles/theme.ts';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 
@@ -15,16 +16,17 @@ function MyPlaylistComponent() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const [publicScope, setPublicScope] = useState(false);
   const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(false);
+  const musicList = [];
 
   const { isLoading, data } = useQuery({
-    queryKey: ['myPlaylistData'],
-    queryFn: myPlaylistData,
+    queryKey: ['myPlaylistThumbnail'],
+    queryFn: fetchMyPlaylistThumbnail,
   });
 
   const handleForwardClick = () => {
     if (data.length - 4 > pageIndex) {
       setPageIndex(pageIndex + 1);
-    } // 이때 4는 한번에 보여지는 인기음악의 개수
+    }
   };
 
   const handleBackwardClick = () => {
@@ -32,6 +34,25 @@ function MyPlaylistComponent() {
       setPageIndex(pageIndex - 1);
     }
   };
+
+  if (data) {
+    // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
+    for (let i = 0; i < data.length; i += 1) {
+      if (data[i]) {
+        // 데이터가 존재하는 경우에만 생성
+        musicList.push(
+          <div className="flex w-1/6 items-center justify-center">
+            <AlbumCoverUser
+              image1={data[i].thumbnails[0]}
+              image2={data[i].thumbnails[1]}
+              image3={data[i].thumbnails[2]}
+              title={data[i].playlist_name}
+            />
+          </div>,
+        );
+      }
+    }
+  }
 
   const NewPlaylistModal = (
     <div className="fixed inset-0 flex items-center justify-center z-40">
@@ -90,13 +111,21 @@ function MyPlaylistComponent() {
   if (isLoading) return <div>Loading...</div>;
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      {/* 모달창 */}
+      {createPlayListModalOpen && NewPlaylistModal}
+
+      <div className="w-1/12 h-full flex flex-row justify-center items-center opacity-95 z-30 bg-gray-650 rounded-2xl">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
 
-      <div className="w-11/12 h-full flex flex-row items-center justify-start">
+      <div
+        className={
+          'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
+        }
+        style={getSlideContentStyle(pageIndex, 6)}
+      >
         {/* 플리 생성 버튼 */}
         <div
           className="flex flex-col w-56 h-auto items-center justify-center m-4 mt-12 hover-bg-big cursor-pointer"
@@ -110,9 +139,6 @@ function MyPlaylistComponent() {
           </p>
         </div>
 
-        {/* 모달창 */}
-        {createPlayListModalOpen && NewPlaylistModal}
-
         {/* 좋아요 누른 곡 버튼 */}
         <AlbumCoverUser
           image1="https://i.ibb.co/VQycV7k/like.png"
@@ -122,14 +148,9 @@ function MyPlaylistComponent() {
         />
 
         {/* 내가 생성한 플리 버튼 */}
-        <AlbumCoverUser
-          image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-          image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-          image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-          title="진우 플리"
-        />
+        {musicList}
       </div>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 opacity-95 bg-gray-650 rounded-2xl">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>

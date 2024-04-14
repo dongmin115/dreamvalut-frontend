@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
-import { getSlideContentStyle } from '@/app/styles/slideStyles.ts';
+import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
 import { chartProps } from '../../types/chart.ts';
 import { fetchChartData } from '../../api/chart.ts';
 import theme from '../styles/theme.ts';
@@ -69,7 +69,6 @@ function PopularMusicComponent() {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
   return (
     <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
@@ -81,9 +80,9 @@ function PopularMusicComponent() {
         className={
           'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
         }
-        style={getSlideContentStyle(pageIndex)}
+        style={getSlideContentStyle(pageIndex, 4)}
       >
-        {musicList}
+        {isLoading ? <div>Loading...</div> : musicList}
       </div>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
         <IconButton onClick={handleForwardClick}>

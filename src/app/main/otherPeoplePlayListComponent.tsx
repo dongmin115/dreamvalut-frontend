@@ -8,7 +8,7 @@ import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
-import AlbumCoverUser from '../components/AlbumCover/albumCoverUser.tsx';
+import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 import theme from '../styles/theme.ts';
 import { followPlaylistData } from '../../api/playlist.ts';
 
