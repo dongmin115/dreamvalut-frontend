@@ -35,11 +35,15 @@ const theme = createTheme({
 });
 
 export default function MusicPage() {
+  // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  // 재생목록 버튼 메뉴 닫기
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -47,6 +51,9 @@ export default function MusicPage() {
   const { data, isLoading } = useQuery({
     queryKey: ['playlist'],
     queryFn: getPlaylist,
+    // () => {
+    //   getPlaylist(selectedPlaylist);
+    // },
   });
 
   // 모든 플레이리스트 가져오기
@@ -54,6 +61,7 @@ export default function MusicPage() {
     queryKey: ['AllPlaylist'],
     queryFn: getMyPlaylists,
   });
+
   return (
     <ThemeProvider theme={theme}>
       <div className="w-screen h-screen flex flex-row justify-around pl-[15%]">
@@ -133,7 +141,13 @@ export default function MusicPage() {
               {listLoading
                 ? 'loading'
                 : listData.data.playlists.map((e: any) => (
-                    <MenuItem key={e.playlist_id} onClick={handleClose}>
+                    <MenuItem
+                      key={e.playlist_id}
+                      onClick={() => {
+                        handleClose();
+                        // setSelectedPlaylist(e.playlist_id);
+                      }}
+                    >
                       {e.playlist_name}
                     </MenuItem>
                   ))}
