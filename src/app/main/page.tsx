@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 'use server';
 
 import './genreColorList.css';

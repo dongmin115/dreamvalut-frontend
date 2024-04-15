@@ -7,6 +7,8 @@ import {
   myPlaylistThumbnail,
   likePlaylistThumbnail,
   addPlaylist,
+  playlistHandlers,
+  getMyPlaylists,
 } from './handlers/playlistHandlers';
 import { handlers } from './handlers/musicbarHandlers';
 import { chartHandlers } from './handlers/chartHandlers';
@@ -16,7 +18,7 @@ import {
   genreBooleanhandlers,
   takemygenrehandlers,
 } from './handlers/genreHandlers';
-import { searchHandlers } from './handlers/search';
+import { searchHandlers } from './handlers/searchHandlers';
 
 export const worker = setupWorker(
   ...chartHandlers,
@@ -26,7 +28,9 @@ export const worker = setupWorker(
   ...uploadmymusichandlers,
   ...handlers,
   ...searchHandlers,
+  ...playlistHandlers,
   ...myPlaylistThumbnail,
   ...likePlaylistThumbnail,
   ...addPlaylist,
+  ...getMyPlaylists,
 );
