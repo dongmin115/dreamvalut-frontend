@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
 /* eslint-disable object-curly-newline */
 /* eslint-disable @next/next/no-img-element */
@@ -16,6 +18,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getMyPlaylists, getPlaylist } from '@/api/playlist';
 
 const theme = createTheme({
   palette: {
@@ -31,14 +35,33 @@ const theme = createTheme({
 });
 
 export default function MusicPage() {
+  // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  // 재생목록 버튼 메뉴 닫기
   const handleClose = () => {
     setAnchorEl(null);
   };
+  // 특정 플레이리스트 가져오기
+  const { data, isLoading } = useQuery({
+    queryKey: ['playlist'],
+    queryFn: getPlaylist,
+    // () => {
+    //   getPlaylist(selectedPlaylist);
+    // },
+  });
+
+  // 모든 플레이리스트 가져오기
+  const { data: listData, isLoading: listLoading } = useQuery({
+    queryKey: ['AllPlaylist'],
+    queryFn: getMyPlaylists,
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <div className="w-screen h-screen flex flex-row justify-around pl-[15%]">
@@ -115,9 +138,19 @@ export default function MusicPage() {
                 'aria-labelledby': 'basic-button',
               }}
             >
-              <MenuItem onClick={handleClose}>재생목록 1</MenuItem>
-              <MenuItem onClick={handleClose}>재생목록 2</MenuItem>
-              <MenuItem onClick={handleClose}>재생목록 3</MenuItem>
+              {listLoading
+                ? 'loading'
+                : listData.data.playlists.map((e: any) => (
+                    <MenuItem
+                      key={e.playlist_id}
+                      onClick={() => {
+                        handleClose();
+                        // setSelectedPlaylist(e.playlist_id);
+                      }}
+                    >
+                      {e.playlist_name}
+                    </MenuItem>
+                  ))}
             </Menu>
           </div>
           <Divider
@@ -126,72 +159,25 @@ export default function MusicPage() {
             flexItem
             className="w-full bg-white drop-shadow-xl"
           />
-          <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
-            <img
-              src="https://i.ibb.co/hLxvjJG/1.jpg"
-              alt="음악 커버이미지"
-              className="w-16 h-16 rounded-md drop-shadow-lg"
-            />
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-white text-lg">music title</p>
-              <p className="text-[#777777]">artist name</p>
-            </div>
-          </li>
-          <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
-            <img
-              src="https://i.ibb.co/hLxvjJG/1.jpg"
-              alt="음악 커버이미지"
-              className="w-16 h-16 rounded-md drop-shadow-lg"
-            />
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-white text-lg">music title</p>
-              <p className="text-[#777777]">artist name</p>
-            </div>
-          </li>
-          <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
-            <img
-              src="https://i.ibb.co/hLxvjJG/1.jpg"
-              alt="음악 커버이미지"
-              className="w-16 h-16 rounded-md drop-shadow-lg"
-            />
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-white text-lg">music title</p>
-              <p className="text-[#777777]">artist name</p>
-            </div>
-          </li>
-          <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
-            <img
-              src="https://i.ibb.co/hLxvjJG/1.jpg"
-              alt="음악 커버이미지"
-              className="w-16 h-16 rounded-md drop-shadow-lg"
-            />
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-white text-lg">music title</p>
-              <p className="text-[#777777]">artist name</p>
-            </div>
-          </li>
-          <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
-            <img
-              src="https://i.ibb.co/hLxvjJG/1.jpg"
-              alt="음악 커버이미지"
-              className="w-16 h-16 rounded-md drop-shadow-lg"
-            />
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-white text-lg">music title</p>
-              <p className="text-[#777777]">artist name</p>
-            </div>
-          </li>
-          <li className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2">
-            <img
-              src="https://i.ibb.co/hLxvjJG/1.jpg"
-              alt="음악 커버이미지"
-              className="w-16 h-16 rounded-md drop-shadow-lg"
-            />
-            <div className="flex flex-col justify-center items-center">
-              <p className="text-white text-lg">music title</p>
-              <p className="text-[#777777]">artist name</p>
-            </div>
-          </li>
+          {/* 재생목록 리스트 */}
+          {isLoading
+            ? 'loading'
+            : data.tracks.content.map((track: any) => (
+                <li
+                  key={track.id}
+                  className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2"
+                >
+                  <img
+                    src={track.thumbnail_image}
+                    alt="음악 커버"
+                    className="w-16 h-16 rounded-md drop-shadow-lg"
+                  />
+                  <div className="flex flex-col justify-center items-center">
+                    <p className="text-white text-lg">{track.title}</p>
+                    <p className="text-[#777777]">{track.uploader_name}</p>
+                  </div>
+                </li>
+              ))}
         </div>
       </div>
     </ThemeProvider>

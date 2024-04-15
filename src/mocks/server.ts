@@ -14,8 +14,9 @@ import {
   myPlaylistThumbnail,
   likePlaylistThumbnail,
   addPlaylist,
+  getMyPlaylists,
 } from './handlers/playlistHandlers';
-import { searchHandlers } from './handlers/search';
+import { searchHandlers } from './handlers/searchHandlers';
 
 export const server = setupServer(
   ...handlers,
@@ -28,4 +29,5 @@ export const server = setupServer(
   ...myPlaylistThumbnail,
   ...likePlaylistThumbnail,
   ...addPlaylist,
+  ...getMyPlaylists,
 );
