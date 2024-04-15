@@ -1,7 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable import/no-duplicates */
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
 
 'use client';
 
@@ -13,14 +10,14 @@ import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlay'; // 플리 아�
 import EditNoteIcon from '@mui/icons-material/EditNote'; // 나만의 음악 등록 아이콘
 import PersonIcon from '@mui/icons-material/Person'; // 프로필 아이콘
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom'; // 로그아웃 아이콘
-import { createTheme } from '@mui/material/styles';
 import {
   IconButton,
   InputAdornment,
   TextField,
   ThemeProvider,
 } from '@mui/material';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import theme from '../../styles/theme.ts';
 
 // 각각의 컴포넌트에 대한 타입 선언
 type HomeProps = {
@@ -44,19 +41,6 @@ type UserProfileProps = {
 type LogOutProps = {
   children: React.ReactNode;
 };
-
-// MUI 색상 커스텀
-const theme = createTheme({
-  palette: {
-    primary: {
-      // style={{ color: theme.palette.primary.main }} 식으로 작성했음
-      main: '#6C26FF',
-    },
-    secondary: {
-      main: '#ffffff',
-    },
-  },
-});
 
 export function SearchAppBar() {
   const router = useRouter();
@@ -121,7 +105,11 @@ const UserProfile: React.FC<UserProfileProps> = ({ children }) => (
 
 const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
-const NavBar: React.FC = () => (
+function NavigationBar() {
+  const path = usePathname();
+  if (path === '/' || path === '/path1' || path === '/path2') {
+    return null;
+  }
   <div className="fixed flex flex-col justify-start left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
     <Link className="flex flex-col cursor-pointer" href={'/main'}>
       <div className="flex items-center mt-5">
@@ -194,7 +182,7 @@ const NavBar: React.FC = () => (
         </LogOut>
       </div>
     </div>
-  </div>
-);
+  </div>;
+}
 
-export default NavBar;
+export default NavigationBar;
