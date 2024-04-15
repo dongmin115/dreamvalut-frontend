@@ -110,79 +110,81 @@ function NavigationBar() {
   if (path === '/' || path === '/path1' || path === '/path2') {
     return null;
   }
-  <div className="fixed flex flex-col justify-start left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
-    <Link className="flex flex-col cursor-pointer" href={'/main'}>
-      <div className="flex items-center mt-5">
-        <img
-          src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
-          alt="DreamVault-logo-img"
-          className="w-12"
-        />
-        <h2 className="p-3 text-2xl font-bold">DreamVault</h2>
-      </div>
-    </Link>
-
-    <div className="flex flex-col mt-12 h-full">
-      <SearchAppBar />
-      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
-        <Home>
-          <HomeIcon style={{ color: theme.palette.primary.main }} />
-          <button className="p-2 text-sm">
-            <Link href={'/main'}>홈</Link>
-          </button>
-        </Home>
-      </div>
-
-      <Link
-        className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer"
-        href={'/playlist'}
-      >
-        <Playlist
-          title="내 플레이리스트"
-          songs={['노래 1', '노래 2', '노래 3']}
-        >
-          <PlaylistPlayIcon style={{ color: theme.palette.primary.main }} />
-          <button className="p-2 text-sm">플레이리스트</button>
-        </Playlist>
-      </Link>
-
-      <Link href={'/MymusicAI'}>
-        <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
-          <Mymusic>
-            <EditNoteIcon style={{ color: theme.palette.primary.main }} />
-            <button className="p-2 text-sm">나만의 음악 등록</button>
-          </Mymusic>
+  return (
+    <div className="fixed flex flex-col justify-start left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
+      <Link className="flex flex-col cursor-pointer" href={'/main'}>
+        <div className="flex items-center mt-5">
+          <img
+            src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
+            alt="DreamVault-logo-img"
+            className="w-12"
+          />
+          <h2 className="p-3 text-2xl font-bold">DreamVault</h2>
         </div>
       </Link>
 
-      <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
-        <PersonIcon style={{ color: theme.palette.primary.main }} />
-        <UserProfile>
-          <button className="p-2 text-sm">
-            <Link href={'/mypage'}>프로필</Link>
-          </button>
-        </UserProfile>
+      <div className="flex flex-col mt-12 h-full">
+        <SearchAppBar />
+        <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
+          <Home>
+            <HomeIcon style={{ color: theme.palette.primary.main }} />
+            <button className="p-2 text-sm">
+              <Link href={'/main'}>홈</Link>
+            </button>
+          </Home>
+        </div>
+
+        <Link
+          className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer"
+          href={'/playlist'}
+        >
+          <Playlist
+            title="내 플레이리스트"
+            songs={['노래 1', '노래 2', '노래 3']}
+          >
+            <PlaylistPlayIcon style={{ color: theme.palette.primary.main }} />
+            <button className="p-2 text-sm">플레이리스트</button>
+          </Playlist>
+        </Link>
+
+        <Link href={'/MymusicAI'}>
+          <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
+            <Mymusic>
+              <EditNoteIcon style={{ color: theme.palette.primary.main }} />
+              <button className="p-2 text-sm">나만의 음악 등록</button>
+            </Mymusic>
+          </div>
+        </Link>
+
+        <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
+          <PersonIcon style={{ color: theme.palette.primary.main }} />
+          <UserProfile>
+            <button className="p-2 text-sm">
+              <Link href={'/mypage'}>프로필</Link>
+            </button>
+          </UserProfile>
+        </div>
+
+        <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
+          <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
+          <UserProfile>
+            <button className="p-2 text-sm">
+              <Link href={'/musicpage'}>음악 상세페이지 (임시)</Link>
+            </button>
+          </UserProfile>
+        </div>
       </div>
 
-      <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
-        <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
-        <UserProfile>
-          <button className="p-2 text-sm">
-            <Link href={'/musicpage'}>음악 상세페이지 (임시)</Link>
-          </button>
-        </UserProfile>
+      <div className="flex flex-col my-4">
+        <div className="flex items-center text-sm rounded-lg hover-bg-opacity">
+          <LogOut>
+            <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
+            <button className="p-2 text-sx">로그아웃</button>
+          </LogOut>
+        </div>
       </div>
     </div>
-
-    <div className="flex flex-col my-4">
-      <div className="flex items-center text-sm rounded-lg hover-bg-opacity">
-        <LogOut>
-          <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
-          <button className="p-2 text-sx">로그아웃</button>
-        </LogOut>
-      </div>
-    </div>
-  </div>;
+  );
 }
 
 export default NavigationBar;
