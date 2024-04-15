@@ -151,6 +151,45 @@ export const myPlaylistThumbnail = [
   ),
 ];
 
+export const followPlaylistData = [
+  http.get('/api/v1/users/playlists/followed', () =>
+    HttpResponse.json({
+      status: 'success',
+      data: {
+        playlists: [
+          {
+            playlist_id: 1,
+            playlist_name: 'Followed Playlist 1',
+            thumbnails: [
+              'https://i.ibb.co/yyDxwy2/image.png',
+              'https://i.ibb.co/kxXMzJw/image.png',
+              'https://i.ibb.co/JmcQcQx/image.png',
+            ],
+            created_at: '2024-02-10T11:20:00Z',
+          },
+          {
+            playlist_id: 2,
+            playlist_name: 'Followed Playlist 2',
+            thumbnails: [
+              'https://i.ibb.co/fprvy6W/image.png',
+              'https://i.ibb.co/5FCZZxV/image.png',
+              'https://i.ibb.co/r5mz6CW/image.png',
+            ],
+            created_at: '2024-02-09T11:20:00Z',
+          },
+        ],
+        page_info: {
+          page: 0,
+          size: 6,
+          total_elements: 15,
+          total_pages: 3,
+        },
+      },
+      message: 'Followed playlists retrieved successfully.',
+    }),
+  ),
+];
+
 // 특정 플레이리스트 정보 가져오기
 export const playlistHandlers = [
   http.get('/api/v1/playlists/playlist_id', () =>
