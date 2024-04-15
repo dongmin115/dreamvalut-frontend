@@ -151,6 +151,7 @@ export const myPlaylistThumbnail = [
   ),
 ];
 
+// 특정 플레이리스트 정보 가져오기
 export const playlistHandlers = [
   http.get('/api/v1/playlists/playlist_id', () =>
     HttpResponse.json({
@@ -243,6 +244,38 @@ export const playlistHandlers = [
         },
         empty: false,
       },
+    }),
+  ),
+];
+
+// 나의 플레이리스트 + 팔로우한 플레이리스트 가져오기
+export const getMyPlaylists = [
+  http.get('/api/v1/users/playlists/list', () =>
+    HttpResponse.json({
+      status: 'success',
+      data: {
+        playlists: [
+          {
+            playlist_id: 1,
+            playlist_name: 'Followed Playlist 1',
+            is_public: true,
+            is_curated: true,
+          },
+          {
+            playlist_id: 2,
+            playlist_name: 'My Playlist 1',
+            is_public: false,
+            is_curated: false,
+          },
+        ],
+        page_info: {
+          page: 0,
+          size: 6,
+          total_elements: 15,
+          total_pages: 3,
+        },
+      },
+      message: 'Followed playlists retrieved successfully.',
     }),
   ),
 ];
