@@ -19,7 +19,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getPlaylist } from '@/api/playlist';
+import { getMyPlaylists, getPlaylist } from '@/api/playlist';
 
 const theme = createTheme({
   palette: {
@@ -43,10 +43,16 @@ export default function MusicPage() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  // 재생목록 가져오기
+  // 특정 플레이리스트 가져오기
   const { data, isLoading } = useQuery({
     queryKey: ['playlist'],
     queryFn: getPlaylist,
+  });
+
+  // 모든 플레이리스트 가져오기
+  const { data: listData, isLoading: listLoading } = useQuery({
+    queryKey: ['AllPlaylist'],
+    queryFn: getMyPlaylists,
   });
   return (
     <ThemeProvider theme={theme}>
@@ -124,9 +130,13 @@ export default function MusicPage() {
                 'aria-labelledby': 'basic-button',
               }}
             >
-              <MenuItem onClick={handleClose}>재생목록 1</MenuItem>
-              <MenuItem onClick={handleClose}>재생목록 2</MenuItem>
-              <MenuItem onClick={handleClose}>재생목록 3</MenuItem>
+              {listLoading
+                ? 'loading'
+                : listData.data.playlists.map((e: any) => (
+                    <MenuItem key={e.playlist_id} onClick={handleClose}>
+                      {e.playlist_name}
+                    </MenuItem>
+                  ))}
             </Menu>
           </div>
           <Divider

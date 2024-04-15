@@ -1,9 +1,21 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
+// 특정 플레이리스트 정보 가져오기
 export async function getPlaylist() {
   try {
     const response = await axios.get('/api/v1/playlists/playlist_id');
+    return response.data;
+  } catch (error) {
+    console.error('오류 발생:', error);
+    throw error;
+  }
+}
+
+// 모든 플레이리스트 정보 가져오기
+export async function getMyPlaylists() {
+  try {
+    const response = await axios.get('/api/v1/users/playlists/list');
     return response.data;
   } catch (error) {
     console.error('오류 발생:', error);
