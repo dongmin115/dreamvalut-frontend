@@ -15,6 +15,7 @@ import {
   likePlaylistThumbnail,
   addPlaylist,
   getMyPlaylists,
+  followPlaylistData,
 } from './handlers/playlistHandlers';
 import { searchHandlers } from './handlers/searchHandlers';
 
@@ -30,4 +31,5 @@ export const server = setupServer(
   ...likePlaylistThumbnail,
   ...addPlaylist,
   ...getMyPlaylists,
+  ...followPlaylistData,
 );

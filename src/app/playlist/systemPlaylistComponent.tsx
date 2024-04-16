@@ -26,6 +26,10 @@ function systemPlaylistComponent() {
       setPageIndex(pageIndex - 1);
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <ThemeProvider theme={theme}>
       <div className="w-1/12 h-full flex flex-row justify-center items-center opacity-95 z-30 bg-gray-650 rounded-2xl">
