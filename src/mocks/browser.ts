@@ -9,6 +9,7 @@ import {
   addPlaylist,
   playlistHandlers,
   getMyPlaylists,
+  followPlaylistData,
 } from './handlers/playlistHandlers';
 import { handlers } from './handlers/musicbarHandlers';
 import { chartHandlers } from './handlers/chartHandlers';
@@ -33,4 +34,5 @@ export const worker = setupWorker(
   ...likePlaylistThumbnail,
   ...addPlaylist,
   ...getMyPlaylists,
+  ...followPlaylistData,
 );

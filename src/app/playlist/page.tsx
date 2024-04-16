@@ -1,60 +1,12 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
+'use server';
 
-'use client';
-
-import { IconButton, ThemeProvider } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import BackIcon from '@mui/icons-material/ArrowBackIosNew';
-
-import { useEffect, useState } from 'react';
-import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
-import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 import MyPlaylistComponent from './myPlaylistComponent.tsx';
+import FollowPlaylistComponent from './followPlaylistComponent.tsx';
+import SystemPlaylistComponent from '../main/systemPlaylistComponent.tsx';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      // 메인 컬러 보라색
-      main: '#6C26FF',
-    },
-    secondary: {
-      // 흰색
-      main: '#ffffff',
-    },
-  },
-});
-
-function page() {
-  const [myPlaylistPage, setMyPlaylistPage] = useState(0);
-  const [followingPlaylistPage, setFollowingPlaylistPage] = useState(0);
-  const [systemPlaylistPage, setSystemPlaylistPage] = useState(0);
-
-  const handleFollowingPlaylistPageBackwardClick = () => {
-    if (followingPlaylistPage > 0) {
-      setFollowingPlaylistPage(followingPlaylistPage - 1);
-    }
-  };
-
-  const handleFollowingPlaylistPageForwardClick = () => {
-    setFollowingPlaylistPage(followingPlaylistPage + 1);
-  };
-
-  const handleSystemPlaylistPageBackwardClick = () => {
-    if (systemPlaylistPage > 0) {
-      setSystemPlaylistPage(systemPlaylistPage - 1);
-    }
-  };
-
-  const handleSystemPlaylistPageForwardClick = () => {
-    setSystemPlaylistPage(systemPlaylistPage + 1);
-  };
-
+async function page() {
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
         <div className="w-10/12 h-full pr-8">
           {/* 내가 생성한 플레이리스트 */}
@@ -65,81 +17,21 @@ function page() {
 
           {/* 팔로우한 플레이리스트 */}
           <h1 className="">팔로우한 플레이리스트</h1>
-          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton
-              className="w-4"
-              onClick={handleFollowingPlaylistPageBackwardClick}
-            >
-              {followingPlaylistPage !== 0 && (
-                <BackIcon color="primary" fontSize="large" />
-              )}
-            </IconButton>
-            <div className="w-11/12 h-full flex flex-row items-center justify-start">
-              <AlbumCoverUser
-                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-                title="텐션 업!"
-              />
-
-              <AlbumCoverUser
-                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-                title="낭만 있는 플리"
-              />
-
-              <AlbumCoverUser
-                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-                title="올드 팝송"
-              />
-
-              <AlbumCoverUser
-                image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-                image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-                image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-                title="나만 들으려고 저장한 노래"
-              />
-            </div>
-            <IconButton onClick={handleFollowingPlaylistPageForwardClick}>
-              <ForwardIcon color="primary" fontSize="large" />
-            </IconButton>
+          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
+            <FollowPlaylistComponent />
           </div>
 
           {/* 시스템 플레이리스트 */}
           <h1 className="">구독한 플레이리스트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <IconButton
-              className="w-4"
-              onClick={handleSystemPlaylistPageBackwardClick}
-            >
-              {systemPlaylistPage !== 0 && (
-                <BackIcon color="primary" fontSize="large" />
-              )}
-            </IconButton>
-            <div className="w-11/12 h-full flex flex-row items-center justify-start">
-              <AlbumCoverSystem
-                image="https://i.ibb.co/ZVGLMxS/wecan-tbefriends.jpg"
-                title="Billboard Hot 100"
-              />
-
-              <AlbumCoverSystem
-                image="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-                title="가사 AI 노래 Top 100"
-              />
-            </div>
-            <IconButton onClick={handleSystemPlaylistPageForwardClick}>
-              <ForwardIcon color="primary" fontSize="large" />
-            </IconButton>
+            <SystemPlaylistComponent />
           </div>
         </div>
 
         {/* 아래 여백 */}
         <div className="w-full h-40" />
       </div>
-    </ThemeProvider>
+    </>
   );
 }
 
