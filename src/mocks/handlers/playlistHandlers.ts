@@ -398,3 +398,46 @@ export const getMyPlaylists = [
     }),
   ),
 ];
+
+// 최근 감상한 곡 가져오기
+export const getRecentList = [
+  http.get('/api/v1/users/tracks/played', () =>
+    HttpResponse.json({
+      status: 'success',
+      data: {
+        tracks: [
+          {
+            track_id: 101,
+            title: 'Summer Vibes',
+            uploader_name: 'DJ Sunny',
+            duration: 120,
+            has_lyrics: false,
+            track_url: 'url/to/track/audio.mp3',
+            track_image: 'url/to/image.png',
+            thumbnail_image: 'url/to/track/thumbnail1.com',
+            prompt: 'This is the prompt how this track was made...',
+          },
+          {
+            track_id: 102,
+            title: 'Night Drive',
+            uploader_name: 'DJ Moon',
+            duration: 120,
+            has_lyrics: false,
+            track_url: 'url/to/track/audio.mp3',
+            track_image: 'url/to/image.png',
+            thumbnail_image: 'url/to/track/thumbnail2.com',
+            prompt: 'This is the prompt how this track was made...',
+          },
+          // Additional tracks...
+        ],
+        page_info: {
+          page: 0,
+          size: 12,
+          total_elements: 50,
+          total_pages: 5,
+        },
+      },
+      message: 'User played tracks retrieved successfully.',
+    }),
+  ),
+];

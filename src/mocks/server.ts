@@ -16,6 +16,7 @@ import {
   addPlaylist,
   getMyPlaylists,
   followPlaylistData,
+  getRecentList,
 } from './handlers/playlistHandlers';
 import { searchHandlers } from './handlers/searchHandlers';
 
@@ -32,4 +33,5 @@ export const server = setupServer(
   ...addPlaylist,
   ...getMyPlaylists,
   ...followPlaylistData,
+  ...getRecentList,
 );
