@@ -1,6 +1,4 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react-hooks/rules-of-hooks */
 
 'use client';
 
@@ -10,33 +8,22 @@ import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import ReplayIcon from '@mui/icons-material/Replay';
 import PauseIcon from '@mui/icons-material/Pause';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-import getMusic from '@/api/music';
+import getMusic from '@/api/music.ts';
 import { useQuery } from '@tanstack/react-query';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      // 메인 컬러 보라색
-      main: '#6C26FF',
-    },
-    secondary: {
-      // 흰색
-      main: '#ffffff',
-    },
-  },
-});
+import { usePathname } from 'next/dist/client/components/navigation';
+import theme from '@/app/styles/theme.ts';
 
 /* eslint-disable @next/next/no-img-element */
 export default function MusicBar() {
-  // const [albumColor, setAlbumColor] = useState<string>('#000000');
-  // useEffect(() => {
-  //   setAlbumColor('#FE4500');
-  // }, []);
+  const path = usePathname();
+  if (path === '/' || path === '/path1' || path === '/path2') {
+    return null;
+  }
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPaused, setIsPaused] = useState<boolean>(true);
