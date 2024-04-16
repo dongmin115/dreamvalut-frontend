@@ -18,6 +18,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { EditfetchGenres, fetchGenres } from '@/api/genre.ts';
 import { Genre, GenreData } from '@/types/genre.ts';
 import { useQuery, useMutation } from '@tanstack/react-query';
+import { getRecentList } from '@/api/playlist.ts';
 
 const theme = createTheme({
   palette: {
@@ -119,6 +120,11 @@ export default function Mypage() {
   const { data } = useQuery({
     queryKey: ['genres'],
     queryFn: EditfetchGenres,
+  });
+
+  const { data: recentList, isLoading: recentListLoading } = useQuery({
+    queryKey: ['recentList'],
+    queryFn: getRecentList,
   });
 
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -235,22 +241,26 @@ export default function Mypage() {
         <div className="flex flex-col w-full h-full p-[2%] space-y-4">
           <h1 className="text-[#D4D4D4] text-3xl">최근 감상한 곡</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md">
-            {recentSongs.map((e, i) => (
-              <div
-                key={i}
-                className="flex flex-row space-x-4 w-full h-fit hover:bg-[#040404] hover:bg-opacity-30 rounded-lg p-4"
-              >
-                <img
-                  src={e.cover}
-                  alt="음악 커버이미지"
-                  className="w-16 h-16 rounded-md drop-shadow-lg items-center"
-                />
-                <div className="flex flex-col justify-center">
-                  <p className="text-white text-lg">{e.title}</p>
-                  <p className="text-[#777777]">{e.artist}</p>
+            {recentListLoading ? (
+              <div>로딩중...</div>
+            ) : (
+              recentList.tracks.map((e: any) => (
+                <div
+                  key={e.track_id}
+                  className="flex flex-row space-x-4 w-full h-fit hover:bg-[#040404] hover:bg-opacity-30 rounded-lg p-4"
+                >
+                  <img
+                    src={e.track_image}
+                    alt="음악 커버이미지"
+                    className="w-16 h-16 rounded-md drop-shadow-lg items-center"
+                  />
+                  <div className="flex flex-col justify-center">
+                    <p className="text-white text-lg">{e.title}</p>
+                    <p className="text-[#777777]">{e.uploader_name}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>
