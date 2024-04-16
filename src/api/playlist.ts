@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
+// const response = await axios.get(`/api/v1/playlists/${playlistId}`); // 실제 api 연결시 사용
+
 // 특정 플레이리스트 정보 가져오기
 export async function getPlaylist() {
   try {
-    // const response = await axios.get(`/api/v1/playlists/${playlistId}`); // 실제 api 연결시 사용
     const response = await axios.get('/api/v1/playlists/playlist_id');
     return response.data;
   } catch (error) {
