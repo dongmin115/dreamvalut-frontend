@@ -88,8 +88,7 @@ export async function fetchLikePlaylistThumbnail() {
 export async function getRecentList() {
   try {
     const response = await axios.get('/api/v1/users/tracks/played');
-    console.log(response.data);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error('API Fetch Error (recent playlists):', error);
     throw error;
