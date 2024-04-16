@@ -83,3 +83,15 @@ export async function fetchLikePlaylistThumbnail() {
     throw error;
   }
 }
+
+// 최근 감상한 곡 목록 가져오기
+export async function getRecentList() {
+  try {
+    const response = await axios.get('/api/v1/users/tracks/played');
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (recent playlists):', error);
+    throw error;
+  }
+}
