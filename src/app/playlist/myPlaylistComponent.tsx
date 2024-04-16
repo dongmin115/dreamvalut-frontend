@@ -1,3 +1,5 @@
+'use client';
+
 import { ThemeProvider } from '@emotion/react';
 import { useState } from 'react';
 import { IconButton } from '@mui/material';

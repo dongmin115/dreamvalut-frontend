@@ -44,6 +44,7 @@ export async function fetchAddPlaylist(
 export async function fetchFollowPlaylistData() {
   try {
     const response = await axios.get('/api/v1/users/playlists/followed');
+    console.log(response.data.data.playlists);
     return response.data.data.playlists;
   } catch (error) {
     console.error('API Fetch Error (followed playlists):', error);

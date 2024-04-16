@@ -17,7 +17,7 @@ async function page() {
 
           {/* 팔로우한 플레이리스트 */}
           <h1 className="">팔로우한 플레이리스트</h1>
-          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
+          <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
             <FollowPlaylistComponent />
           </div>
 
