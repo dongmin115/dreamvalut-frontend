@@ -180,9 +180,10 @@ em {
 /* 음악상세페이지 썸네일 - 프롬프트 Flip 애니메이션*/
 #card {
   display: inline-grid;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease-in-out;
   transform: perspective(1200px) rotateY(0deg);
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 #card > * {

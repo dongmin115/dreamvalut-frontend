@@ -68,7 +68,8 @@ export default function MusicPage(props: any) {
       <div className="w-screen h-screen flex flex-row justify-around pl-[15%]">
         {/* 블러배경 */}
         <img
-          src={musicLoading ? 'loading' : musicData.track_image}
+          // src={musicLoading ? 'loading' : musicData.track_image}
+          src="https://i.ibb.co/hLxvjJG/1.jpg"
           alt="1"
           className="w-full h-full blur -z-20 fixed"
         />
@@ -95,7 +96,8 @@ export default function MusicPage(props: any) {
             </div>
             <img
               id="card-front"
-              src={musicLoading ? 'loading' : musicData.thumbnail_image}
+              // src={musicLoading ? 'loading' : musicData.thumbnail_image}
+              src="https://i.ibb.co/hLxvjJG/1.jpg"
               alt="1"
               className="w-96 h-96 rounded-md drop-shadow-lg"
             />
