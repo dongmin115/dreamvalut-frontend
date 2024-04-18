@@ -56,20 +56,6 @@ export default function MusicBar(trackId: number) {
   const { data } = useQuery({
     queryKey: ['music'],
     queryFn: () => getMusic(trackId),
-    initialData: {
-      track_id: 1,
-      title: 'Sample Track Title',
-      uploader_name: 'Default Display',
-      duration: 120,
-      has_lyrics: true,
-      track_url:
-        'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/audio/8caf4b0f-4edb-4b0d-a4ec-59d4485f6be8-Sample%20Track%20Title.wav',
-      track_image:
-        'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/image/c388151b-041c-460b-806e-9d237e274ba3-Sample%20Track%20Title.jpeg',
-      thumbnail_image:
-        'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/image/bfe8c80e-0af7-4edb-86e4-9d6d9648a8d5-Sample%20Track%20Title-thumbnail.jpeg',
-      prompt: 'What inspired this track',
-    },
   });
 
   return data ? (
