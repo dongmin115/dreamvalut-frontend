@@ -103,10 +103,16 @@ export default function MusicBar(trackId: number) {
       </div>
       {/* 음악 정보 */}
       <div className="flex flex-row space-x-4">
-        <img src={data.thumbnail_image} alt="album" width={50} height={50} />
-        <div className="flex flex-col justify-center items-center">
+        <img
+          src={data.thumbnail_image}
+          alt="album"
+          width={50}
+          height={50}
+          className="rounded-sm drop-shadow-sm"
+        />
+        <div className="flex flex-col justify-center items-center text-md">
           <p className="">{data.title}</p>
-          <p className="text-gray-400">{data.uploader_name}</p>
+          <p className="text-gray-400 text-xs">{data.uploader_name}</p>
         </div>
       </div>
       {/* 볼륨 조절 */}
