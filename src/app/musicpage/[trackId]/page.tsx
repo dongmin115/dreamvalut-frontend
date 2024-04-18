@@ -27,6 +27,9 @@ export default function MusicPage(props: any) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
+  const open2 = Boolean(anchorEl2);
+
   // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,12 +39,22 @@ export default function MusicPage(props: any) {
     setAnchorEl(null);
   };
 
+  // 음악메뉴 버튼 클릭시 메뉴 열기
+  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  // 음악메뉴 버튼 메뉴 닫기
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+
   // 시간 변환 함수
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
+
   // 특정 플레이리스트 가져오기
   const { data, isLoading } = useQuery({
     queryKey: ['playlist'],
@@ -101,9 +114,26 @@ export default function MusicPage(props: any) {
               />
             </div>
             <div className="flex justify-between">
-              <IconButton>
+              <IconButton
+                aria-controls={open2 ? 'music' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open2 ? 'true' : undefined}
+                onClick={handleClick2}
+              >
                 <MenuIcon color="secondary" fontSize="large" />
               </IconButton>
+              <Menu
+                id="music-menu"
+                anchorEl={anchorEl2}
+                open={open2}
+                onClose={handleClose2}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem onClick={() => handleClose2()}>프롬프트</MenuItem>
+                <MenuItem onClick={() => handleClose2()}>좋아요</MenuItem>
+              </Menu>
               <IconButton>
                 <SkipPreviousIcon color="secondary" fontSize="large" />
               </IconButton>
