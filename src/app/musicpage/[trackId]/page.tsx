@@ -48,6 +48,13 @@ export default function MusicPage(props: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // 시간 변환 함수
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  };
   // 특정 플레이리스트 가져오기
   const { data, isLoading } = useQuery({
     queryKey: ['playlist'],
@@ -96,7 +103,7 @@ export default function MusicPage(props: any) {
           <div className="w-96">
             <div className="flex flex-col items-center mt-6">
               <p className="text-white text-sm self-end">
-                {musicLoading ? 'loading' : musicData.duration}
+                {musicLoading ? 'loading' : formatTime(musicData.duration)}
               </p>
               <Slider
                 aria-label="Volume"
