@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react-hooks/rules-of-hooks */
 
@@ -22,7 +23,12 @@ import theme from '@/app/styles/theme.ts';
 /* eslint-disable @next/next/no-img-element */
 export default function MusicBar(trackId: number) {
   const path = usePathname();
-  if (path === '/' || path === '/path1' || path === '/path2') {
+  if (
+    path === '/' ||
+    path === '/path1' ||
+    path === '/path2' ||
+    path.startsWith('/musicpage')
+  ) {
     return null;
   }
 
