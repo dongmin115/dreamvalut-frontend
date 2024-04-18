@@ -17,9 +17,7 @@ import {
   getMyPlaylists,
   followPlaylistData,
   getRecentList,
-  popularTagsData0,
-  popularTagsData1,
-  popularTagsData2,
+  popularTagsData,
 } from './handlers/playlistHandlers';
 import { searchHandlers } from './handlers/searchHandlers';
 
@@ -37,7 +35,5 @@ export const server = setupServer(
   ...getMyPlaylists,
   ...followPlaylistData,
   ...getRecentList,
-  ...popularTagsData0,
-  ...popularTagsData1,
-  ...popularTagsData2,
+  ...popularTagsData,
 );

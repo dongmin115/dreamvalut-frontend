@@ -272,7 +272,7 @@ export const followPlaylistData = [
 ];
 
 // 인기 태그 데이터 가져오기
-export const popularTagsData0 = [
+export const popularTagsData = [
   http.get('/api/v1/tags/list?page=0', () =>
     HttpResponse.json({
       content: [
@@ -334,9 +334,6 @@ export const popularTagsData0 = [
       empty: false,
     }),
   ),
-];
-
-export const popularTagsData1 = [
   http.get('api/v1/tags/list?page=1', () =>
     HttpResponse.json({
       content: [
@@ -398,8 +395,6 @@ export const popularTagsData1 = [
       empty: false,
     }),
   ),
-];
-export const popularTagsData2 = [
   http.get('api/v1/tags/list?page=2', () =>
     HttpResponse.json({
       content: [
