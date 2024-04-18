@@ -13,7 +13,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import ReplayIcon from '@mui/icons-material/Replay';
-import MenuIcon from '@mui/icons-material/Menu';
+import Favorite from '@mui/icons-material/Favorite';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
@@ -23,13 +23,9 @@ import getMusic from '@/api/music';
 import theme from '@/app/styles/theme';
 
 export default function MusicPage(props: any) {
-  const [promptOpen, setPromptOpen] = useState<boolean>(false); // 프롬프트 열기
   // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
-  const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
-  const open2 = Boolean(anchorEl2);
 
   // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,15 +34,6 @@ export default function MusicPage(props: any) {
   // 재생목록 버튼 메뉴 닫기
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  // 음악메뉴 버튼 클릭시 메뉴 열기
-  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl2(event.currentTarget);
-  };
-  // 음악메뉴 버튼 메뉴 닫기
-  const handleClose2 = () => {
-    setAnchorEl2(null);
   };
 
   // 시간 변환 함수
@@ -95,18 +82,24 @@ export default function MusicPage(props: any) {
           <p className="text-[#777777] drop-shadow-md">
             {musicLoading ? 'loading' : musicData.uploader_name}
           </p>
-          {promptOpen ? (
-            <div className="w-96 h-96 rounded-md drop-shadow-lg bg-[#2B2B2B] p-6">
+          {/* 프롬프트 + 썸네일 */}
+          <div id="card">
+            <div
+              id="card-back"
+              className="w-96 h-96 rounded-md drop-shadow-lg bg-[#2B2B2B] p-6"
+            >
               <p className="font-semibold text-lg mb-4">음악생성 프롬프트</p>
-              <p className="text-sm">{musicData.prompt}</p>
+              <p className="text-sm">
+                {musicLoading ? 'loading' : musicData.prompt}
+              </p>
             </div>
-          ) : (
             <img
+              id="card-front"
               src={musicLoading ? 'loading' : musicData.thumbnail_image}
               alt="1"
               className="w-96 h-96 rounded-md drop-shadow-lg"
             />
-          )}
+          </div>
           {/* 재생 컨트롤러 */}
           <div className="w-96">
             <div className="flex flex-col items-center mt-6">
@@ -122,33 +115,9 @@ export default function MusicPage(props: any) {
               />
             </div>
             <div className="flex justify-between">
-              <IconButton
-                aria-controls={open2 ? 'music-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open2 ? 'true' : undefined}
-                onClick={handleClick2}
-              >
-                <MenuIcon color="secondary" fontSize="large" />
+              <IconButton>
+                <Favorite color="secondary" fontSize="large" />
               </IconButton>
-              <Menu
-                id="music-menu"
-                anchorEl={anchorEl2}
-                open={open2}
-                onClose={handleClose2}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              >
-                <MenuItem
-                  onClick={() => {
-                    handleClose2();
-                    setPromptOpen(!promptOpen);
-                  }}
-                >
-                  프롬프트
-                </MenuItem>
-                <MenuItem onClick={() => handleClose2()}>좋아요</MenuItem>
-              </Menu>
               <IconButton>
                 <SkipPreviousIcon color="secondary" fontSize="large" />
               </IconButton>
