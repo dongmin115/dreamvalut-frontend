@@ -8,7 +8,6 @@
 'use client';
 
 import { ThemeProvider } from '@emotion/react';
-import { createTheme } from '@mui/material/styles';
 import { Button, Divider, IconButton, Slider } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
@@ -21,19 +20,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPlaylists, getPlaylist } from '@/api/playlist';
 import getMusic from '@/api/music';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      // 메인 컬러 보라색
-      main: '#6C26FF',
-    },
-    secondary: {
-      // 흰색
-      main: '#ffffff',
-    },
-  },
-});
+import theme from '@/app/styles/theme';
 
 export default function MusicPage(props: any) {
   // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
