@@ -164,15 +164,6 @@ function NavigationBar() {
             </button>
           </UserProfile>
         </div>
-
-        <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
-          <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
-          <UserProfile>
-            <button className="p-2 text-sm">
-              <Link href={'/musicpage'}>음악 상세페이지 (임시)</Link>
-            </button>
-          </UserProfile>
-        </div>
       </div>
 
       <div className="flex flex-col my-4">
