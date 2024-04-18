@@ -7,7 +7,7 @@ import './styles/globals.css';
 import React from 'react';
 import { MSWComponent } from '@/mocks/MSWComponent';
 import MusicBar from './components/Musicbar/Musicbar';
-import NavBar from './components/NavBar/NavigationBar';
+import NavigationBar from './components/NavBar/NavigationBar';
 import QueryProviders from './components/QueryProvider/QueryProvider';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -34,7 +34,7 @@ export default function RootLayout({
           <QueryProviders>
             {children}
             <MusicBar />
-            <NavBar />
+            <NavigationBar />
           </QueryProviders>
         </MSWComponent>
       </body>
