@@ -1,6 +1,8 @@
 const getMusic = async (trackId: number) => {
   try {
-    const response = await fetch(`http://localhost:8080/tracks/${trackId}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}`,
+    );
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
