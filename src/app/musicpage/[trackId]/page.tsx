@@ -23,6 +23,7 @@ import getMusic from '@/api/music';
 import theme from '@/app/styles/theme';
 
 export default function MusicPage(props: any) {
+  const [promptOpen, setPromptOpen] = useState<boolean>(false); // 프롬프트 열기
   // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -94,11 +95,18 @@ export default function MusicPage(props: any) {
           <p className="text-[#777777] drop-shadow-md">
             {musicLoading ? 'loading' : musicData.uploader_name}
           </p>
-          <img
-            src={musicLoading ? 'loading' : musicData.thumbnail_image}
-            alt="1"
-            className="w-96 h-96 rounded-md drop-shadow-lg"
-          />
+          {promptOpen ? (
+            <div className="w-96 h-96 rounded-md drop-shadow-lg bg-[#2B2B2B] p-6">
+              <p className="font-semibold text-lg mb-4">음악생성 프롬프트</p>
+              <p className="text-sm">{musicData.prompt}</p>
+            </div>
+          ) : (
+            <img
+              src={musicLoading ? 'loading' : musicData.thumbnail_image}
+              alt="1"
+              className="w-96 h-96 rounded-md drop-shadow-lg"
+            />
+          )}
           {/* 재생 컨트롤러 */}
           <div className="w-96">
             <div className="flex flex-col items-center mt-6">
@@ -115,7 +123,7 @@ export default function MusicPage(props: any) {
             </div>
             <div className="flex justify-between">
               <IconButton
-                aria-controls={open2 ? 'music' : undefined}
+                aria-controls={open2 ? 'music-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open2 ? 'true' : undefined}
                 onClick={handleClick2}
@@ -131,7 +139,14 @@ export default function MusicPage(props: any) {
                   'aria-labelledby': 'basic-button',
                 }}
               >
-                <MenuItem onClick={() => handleClose2()}>프롬프트</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleClose2();
+                    setPromptOpen(!promptOpen);
+                  }}
+                >
+                  프롬프트
+                </MenuItem>
                 <MenuItem onClick={() => handleClose2()}>좋아요</MenuItem>
               </Menu>
               <IconButton>
