@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react-hooks/rules-of-hooks */
 
 'use client';
@@ -13,13 +14,13 @@ import IconButton from '@mui/material/IconButton';
 import Slider from '@mui/material/Slider';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
-import getMusic from '@/api/music.ts';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/dist/client/components/navigation';
+import getMusic from '@/api/music.ts';
 import theme from '@/app/styles/theme.ts';
 
 /* eslint-disable @next/next/no-img-element */
-export default function MusicBar() {
+export default function MusicBar(trackId: number) {
   const path = usePathname();
   if (path === '/' || path === '/path1' || path === '/path2') {
     return null;
@@ -54,17 +55,20 @@ export default function MusicBar() {
 
   const { data } = useQuery({
     queryKey: ['music'],
-    queryFn: getMusic,
+    queryFn: () => getMusic(trackId),
     initialData: {
       track_id: 1,
-      title: '초기제목',
-      uploader_name: 'Uploader 1',
-      has_lyrics: false,
+      title: 'Sample Track Title',
+      uploader_name: 'Default Display',
+      duration: 120,
+      has_lyrics: true,
       track_url:
-        'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/Melancholy+Motif.wav',
-      track_image: 'url/to/image.png',
-      thumbnail_image: 'url/to/thumbnail.png',
-      prompt: 'This is the prompt how this track was made...',
+        'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/audio/8caf4b0f-4edb-4b0d-a4ec-59d4485f6be8-Sample%20Track%20Title.wav',
+      track_image:
+        'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/image/c388151b-041c-460b-806e-9d237e274ba3-Sample%20Track%20Title.jpeg',
+      thumbnail_image:
+        'https://s3upload-test-s3.s3.ap-northeast-2.amazonaws.com/image/bfe8c80e-0af7-4edb-86e4-9d6d9648a8d5-Sample%20Track%20Title-thumbnail.jpeg',
+      prompt: 'What inspired this track',
     },
   });
 
