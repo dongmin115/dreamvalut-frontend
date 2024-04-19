@@ -7,7 +7,6 @@ const getMusic = async (trackId: number) => {
       throw new Error('Network response was not ok');
     }
     const responseJson = await response.json();
-
     return responseJson;
   } catch (error) {
     console.error('오류 발생:', error);

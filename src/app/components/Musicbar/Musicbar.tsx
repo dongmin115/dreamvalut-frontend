@@ -4,7 +4,7 @@
 
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
@@ -19,6 +19,7 @@ import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/dist/client/components/navigation';
 import getMusic from '@/api/music.ts';
 import theme from '@/app/styles/theme.ts';
+import { useSharedAudio } from '../audio/Audio.tsx';
 
 /* eslint-disable @next/next/no-img-element */
 export default function MusicBar(trackId: number) {
@@ -32,23 +33,9 @@ export default function MusicBar(trackId: number) {
     return null;
   }
 
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const { audioRef, playAudio, pauseAudio } = useSharedAudio();
   const [isPaused, setIsPaused] = useState<boolean>(true);
-  // 재생함수
-  const playAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play();
-      setIsPaused(false);
-    }
-  };
 
-  // 일시정지함수
-  const pauseAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      setIsPaused(true);
-    }
-  };
   // 볼륨조절
   const [volume, setVolume] = useState<number>(30);
 
@@ -68,7 +55,7 @@ export default function MusicBar(trackId: number) {
     <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg z-40">
       {/* 음악소스 */}
       <audio ref={audioRef} controls preload="auto" className="hidden">
-        <source src={data.track_url} id="audio_player" type="audio/wav" />
+        <source src={data.track_url} type="audio/wav" />
       </audio>
       {/* 재생 컨트롤 버튼 */}
       <div className="flex flex-row py-[0.5%] items-center">
@@ -77,11 +64,21 @@ export default function MusicBar(trackId: number) {
             <SkipPreviousIcon color="primary" fontSize="large" />
           </IconButton>
           {isPaused ? (
-            <IconButton onClick={playAudio}>
+            <IconButton
+              onClick={() => {
+                playAudio();
+                setIsPaused(false);
+              }}
+            >
               <PlayArrowIcon color="primary" fontSize="large" />
             </IconButton>
           ) : (
-            <IconButton onClick={pauseAudio}>
+            <IconButton
+              onClick={() => {
+                pauseAudio();
+                setIsPaused(true);
+              }}
+            >
               <PauseIcon color="primary" fontSize="large" />
             </IconButton>
           )}

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable indent */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
@@ -19,17 +20,18 @@ import VolumeUp from '@mui/icons-material/VolumeUp';
 import Favorite from '@mui/icons-material/Favorite';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPlaylists, getPlaylist } from '@/api/playlist';
 import getMusic from '@/api/music';
 import theme from '@/app/styles/theme';
+import { useSharedAudio } from '@/app/components/audio/Audio';
 
 export default function MusicPage(props: any) {
   // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-
+  const { audioRef, playAudio, pauseAudio } = useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -46,30 +48,38 @@ export default function MusicPage(props: any) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const audioRef = useRef<HTMLAudioElement>(null);
   const [isPaused, setIsPaused] = useState<boolean>(true);
-  // 재생함수
-  const playAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play();
-      setIsPaused(false);
-    }
-  };
 
-  // 일시정지함수
-  const pauseAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      setIsPaused(true);
-    }
-  };
   // 볼륨조절
   const [volume, setVolume] = useState<number>(30);
-
   const handleChange = (event: Event, newVolume: number | number[]) => {
     if (audioRef.current) {
       setVolume(newVolume as number);
       audioRef.current.volume = volume / 100;
+    }
+  };
+
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
+  // 재생 시간이 변경될 때마다 현재 재생 시간을 설정합니다.
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      const handleTimeUpdate = () => {
+        setCurrentTime(audioElement.currentTime);
+      };
+      audioElement.addEventListener('timeupdate', handleTimeUpdate);
+      return () => {
+        audioElement.removeEventListener('timeupdate', handleTimeUpdate);
+      };
+    }
+  }, [audioRef]);
+
+  // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      audioElement.currentTime = newValue as number;
     }
   };
 
@@ -99,7 +109,6 @@ export default function MusicPage(props: any) {
       <audio ref={audioRef} controls preload="auto" className="hidden">
         <source
           src={musicLoading ? 'loading' : musicData.track_url}
-          id="audio_player"
           type="audio/wav"
         />
       </audio>
@@ -146,8 +155,8 @@ export default function MusicPage(props: any) {
               </p>
               <Slider
                 aria-label="Volume"
-                // value={value}
-                // onChange={handleChange}
+                value={currentTime}
+                onChange={handleSliderChange}
                 size="medium"
                 color="secondary"
               />
@@ -160,11 +169,22 @@ export default function MusicPage(props: any) {
                 <SkipPreviousIcon color="secondary" fontSize="large" />
               </IconButton>
               {isPaused ? (
-                <IconButton onClick={playAudio} disabled={musicLoading}>
+                <IconButton
+                  onClick={() => {
+                    playAudio();
+                    setIsPaused(false);
+                  }}
+                  disabled={musicLoading}
+                >
                   <PlayArrowIcon color="secondary" fontSize="large" />
                 </IconButton>
               ) : (
-                <IconButton onClick={pauseAudio}>
+                <IconButton
+                  onClick={() => {
+                    pauseAudio();
+                    setIsPaused(true);
+                  }}
+                >
                   <PauseIcon color="secondary" fontSize="large" />
                 </IconButton>
               )}
