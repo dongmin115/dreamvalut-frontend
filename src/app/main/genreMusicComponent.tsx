@@ -118,7 +118,7 @@ function GenreMusicComponent() {
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
-      <div className="w-10/12 h-full flex flex-row items-center justify-start">
+      <div className="w-10/12 h-full flex flex-row items-center justify-start py-8">
         {/* content[0] 배열 내용 */}
         {data.content[0] && (
           <GenreMusic
