@@ -44,7 +44,7 @@ export default function MusicPage(props: any) {
   // 시간 변환 함수
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+    const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
@@ -60,26 +60,38 @@ export default function MusicPage(props: any) {
   };
 
   const [currentTime, setCurrentTime] = useState<number>(0);
+  // 슬라이더를 드래그하는 동안의 상태를 관리합니다.
+  const [isDragging, setIsDragging] = useState(false);
 
   // 재생 시간이 변경될 때마다 현재 재생 시간을 설정합니다.
   useEffect(() => {
     const audioElement = audioRef.current;
     if (audioElement) {
       const handleTimeUpdate = () => {
-        setCurrentTime(audioElement.currentTime);
+        // 슬라이더를 드래그 중이 아닐 때만 현재 재생 시간을 설정합니다.
+        if (!isDragging) {
+          setCurrentTime(audioElement.currentTime);
+        }
       };
       audioElement.addEventListener('timeupdate', handleTimeUpdate);
       return () => {
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef]);
+  }, [audioRef, isDragging]);
 
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    const audioElement = audioRef.current;
-    if (audioElement) {
-      audioElement.currentTime = newValue as number;
+    if (!event.defaultPrevented) {
+      setCurrentTime(newValue as number);
+    }
+  };
+
+  // 슬라이더에서 마우스를 뗄 때 호출되는 함수
+  const handleSliderRelease = () => {
+    // 변경된 시간을 재생 시간으로 설정
+    if (audioRef.current) {
+      audioRef.current.currentTime = currentTime;
     }
   };
 
@@ -150,13 +162,19 @@ export default function MusicPage(props: any) {
           {/* 재생 컨트롤러 */}
           <div className="w-96">
             <div className="flex flex-col items-center mt-6">
-              <p className="text-white text-sm self-end">
-                {musicLoading ? 'loading' : formatTime(musicData.duration)}
-              </p>
+              <div className="flex flex-row justify-between w-full">
+                <p className="text-white text-sm">{formatTime(currentTime)}</p>
+                <p className="text-white text-sm">
+                  {musicLoading ? 'loading' : formatTime(musicData.duration)}
+                </p>
+              </div>
               <Slider
                 aria-label="Volume"
                 value={currentTime}
                 onChange={handleSliderChange}
+                onChangeCommitted={handleSliderRelease}
+                onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
+                onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
                 size="medium"
                 color="secondary"
               />
