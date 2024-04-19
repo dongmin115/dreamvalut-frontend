@@ -41,37 +41,41 @@ function GenreMusic({
   musicTitle2,
   musicTitle3,
 }: GenreMusicProps) {
+  const musicList = [
+    { image: musicImage1, title: musicTitle1 },
+    { image: musicImage2, title: musicTitle2 },
+    { image: musicImage3, title: musicTitle3 },
+  ];
+
   return (
-    <div
-      className={`flex flex-col items-center w-[22%] h-[22rem] rounded-2xl bg-genre-${bgColor} my-12 m-4 mx-8`}
-    >
-      {/* 위에 단색 배경바 */}
+    <div className="flex flex-row justify-center items-center w-72 h-full my-12">
       <div
-        className={`flex flex-row items-center w-full h-20 p-8 rounded-t-2xl bg-nv-${bgColor}`}
+        className={`flex flex-col rounded-2xl w-full h-full bg-genre-${bgColor} mx-4`}
       >
-        <p className="w-11/12 text-lg text-black font-bold">{genre}</p>
-        <IconButton>
-          <PlayCircleIcon style={{ fontSize: 50, opacity: 0.7 }} />
-        </IconButton>
-      </div>
+        {/* 위에 단색 배경바 */}
+        <div
+          className={`flex flex-row items-center w-full h-20 p-6 rounded-t-2xl bg-nv-${bgColor}`}
+        >
+          <p className="w-10/12 text-md text-black font-bold">{genre}</p>
+          <IconButton>
+            <PlayCircleIcon style={{ fontSize: 50, opacity: 0.7 }} />
+          </IconButton>
+        </div>
 
-      {/* 음악 정보 */}
-      {/* 1번째 음악 */}
-      <div className="flex flex-row items-center justify-start m-2 cursor-pointer hover-bg-opacity">
-        <img className="w-1/4 m-2" src={musicImage1} />
-        <p className="text- text-black">{musicTitle1}</p>
-      </div>
-
-      {/* 2번째 음악 */}
-      <div className="flex flex-row items-center justify-start m-2 cursor-pointer hover-bg-opacity">
-        <img className="w-1/4 m-2" src={musicImage2} />
-        <p className="text-lg text-black">{musicTitle2}</p>
-      </div>
-
-      {/* 3번째 음악 */}
-      <div className="flex flex-row items-center justify-start m-2 cursor-pointer hover-bg-opacity">
-        <img className="w-1/4 m-2" src={musicImage3} />
-        <p className="text-lg text-black">{musicTitle3}</p>
+        {/* 음악 정보 */}
+        {musicList.map((music, index) => (
+          <div
+            key={index}
+            className="flex flex-row w-11/12 h-1/3 items-center justify-start m-2 p-1 cursor-pointer hover-bg-opacity hover:bg-opacity-90"
+          >
+            <img
+              className="w-1/3 m-2"
+              src={music.image}
+              alt={`Music ${index + 1}`}
+            />
+            <p className="text-md text-black">{music.title}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
