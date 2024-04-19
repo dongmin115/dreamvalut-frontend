@@ -25,6 +25,19 @@ export async function getMyPlaylists() {
   }
 }
 
+export async function fetchPopularTags(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/tags/list?page=${pageIndex}`,
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (popular tags):', error);
+    throw error;
+  }
+}
+
 export async function fetchAddPlaylist(
   playlistName: string,
   isPublic: boolean,

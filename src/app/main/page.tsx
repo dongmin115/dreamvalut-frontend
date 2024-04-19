@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 
 'use server';
 
 import './genreColorList.css';
-import PopularMusicComponent from './popularMusicComponent.tsx';
+import ChartMusicComponent from './chartMusicComponent.tsx';
 import PopularTagComponent from './popularTagComponent.tsx';
 import GenreMusicComponent from './genreMusicComponent.tsx';
 import OtherPeoplePlayListComponent from './otherPeoplePlayListComponent.tsx';
@@ -18,7 +19,7 @@ async function Page() {
         {/* 인기 차트 */}
         <h1 className="">인기 차트</h1>
         <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
-          <PopularMusicComponent />
+          <ChartMusicComponent />
         </div>
 
         {/* 인기 태그 */}

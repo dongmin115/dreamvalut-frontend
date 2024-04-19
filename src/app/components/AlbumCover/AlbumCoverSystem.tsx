@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 
 function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {
@@ -23,13 +24,14 @@ function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {
 
   return (
     <div className="flex flex-col m-4 w-56 h-72 items-center justify-center hover-bg-opacity cursor-pointer">
-      <Image
+      {/* <Image
         src={image}
         alt="Album cover"
         className="rounded-lg"
         width={192}
         height={192}
-      />
+      /> */}
+      <img src={image} alt="Album cover" className="rounded-lg mt-40" />
       <div
         className={`h-48 w-48 rounded-lg z-10 -mt-48 ${albumRandomColor} opacity-50`}
       />

@@ -32,7 +32,7 @@ function MusicElement({ ranking, thumnailImage, title }: chartProps) {
   );
 }
 
-function PopularMusicComponent() {
+function ChartMusicComponent() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const musicList = [];
 
@@ -93,4 +93,4 @@ function PopularMusicComponent() {
   );
 }
 
-export default PopularMusicComponent;
+export default ChartMusicComponent;

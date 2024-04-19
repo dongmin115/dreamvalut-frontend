@@ -4,6 +4,7 @@
 
 import { HttpResponse, http } from 'msw';
 
+// 플레이리스트 추가
 export const addPlaylist = [
   http.post('/api/v1/playlists', ({ request }) =>
     HttpResponse.json({
@@ -266,6 +267,193 @@ export const followPlaylistData = [
         },
       },
       message: 'Followed playlists retrieved successfully.',
+    }),
+  ),
+];
+
+// 인기 태그 데이터 가져오기
+export const popularTagsData = [
+  http.get('/api/v1/tags/list?page=0', () =>
+    HttpResponse.json({
+      content: [
+        {
+          tag_id: 1,
+          tag_name: 'Chill',
+          tag_image: 'https://i.ibb.co/yyDxwy2/image.png',
+        },
+        {
+          tag_id: 2,
+          tag_name: 'Energetic',
+          tag_image: 'https://i.ibb.co/kxXMzJw/image.png',
+        },
+        {
+          tag_id: 3,
+          tag_name: 'Happy',
+          tag_image: 'https://i.ibb.co/JmcQcQx/image.png',
+        },
+        {
+          tag_id: 4,
+          tag_name: 'Sad',
+          tag_image: 'https://i.ibb.co/fprvy6W/image.png',
+        },
+        {
+          tag_id: 5,
+          tag_name: 'Angry',
+          tag_image: 'https://i.ibb.co/5FCZZxV/image.png',
+        },
+        {
+          tag_id: 6,
+          tag_name: 'Relaxing',
+          tag_image: 'https://i.ibb.co/r5mz6CW/image.png',
+        },
+      ],
+      pageable: {
+        page_number: 0,
+        page_size: 6,
+        sort: {
+          sorted: true,
+          unsorted: false,
+          empty: false,
+        },
+        offset: 0,
+        paged: true,
+        unpaged: false,
+      },
+      total_pages: 3,
+      total_elements: 15,
+      last: false,
+      first: true,
+      number_of_elements: 6,
+      size: 6,
+      number: 0,
+      sort: {
+        sorted: true,
+        unsorted: false,
+        empty: false,
+      },
+      empty: false,
+    }),
+  ),
+  http.get('api/v1/tags/list?page=1', () =>
+    HttpResponse.json({
+      content: [
+        {
+          tag_id: 7,
+          tag_name: 'Hip Hop',
+          tag_image: 'https://i.ibb.co/crQW4Cc/image.png',
+        },
+        {
+          tag_id: 8,
+          tag_name: 'Pop',
+          tag_image: 'https://i.ibb.co/6tDNRqn/image.png',
+        },
+        {
+          tag_id: 9,
+          tag_name: 'IU',
+          tag_image: 'https://i.ibb.co/z22qCzv/image.png',
+        },
+        {
+          tag_id: 10,
+          tag_name: 'BTS',
+          tag_image: 'https://i.ibb.co/5WXYCf9/image.png',
+        },
+        {
+          tag_id: 11,
+          tag_name: 'Drive',
+          tag_image: 'https://i.ibb.co/tQ1624m/image.png',
+        },
+        {
+          tag_id: 12,
+          tag_name: 'Study',
+          tag_image: 'https://i.ibb.co/Jzdn2SN/image.png',
+        },
+      ],
+      pageable: {
+        page_number: 1,
+        page_size: 6,
+        sort: {
+          sorted: true,
+          unsorted: false,
+          empty: false,
+        },
+        offset: 6,
+        paged: true,
+        unpaged: false,
+      },
+      total_pages: 3,
+      total_elements: 15,
+      last: false,
+      first: false,
+      number_of_elements: 6,
+      size: 6,
+      number: 1,
+      sort: {
+        sorted: true,
+        unsorted: false,
+        empty: false,
+      },
+      empty: false,
+    }),
+  ),
+  http.get('api/v1/tags/list?page=2', () =>
+    HttpResponse.json({
+      content: [
+        {
+          tag_id: 13,
+          tag_name: 'Rock',
+          tag_image: 'https://i.ibb.co/fkx9pJ7/image.png',
+        },
+        {
+          tag_id: 14,
+          tag_name: 'Jazz',
+          tag_image: 'https://i.ibb.co/Qv6b7VD/image.png',
+        },
+        {
+          tag_id: 15,
+          tag_name: 'Classical',
+          tag_image: 'https://i.ibb.co/rZwTCSS/image.png',
+        },
+        {
+          tag_id: 16,
+          tag_name: 'Sad',
+          tag_image: 'https://i.ibb.co/ThpD5fX/image.png',
+        },
+        {
+          tag_id: 17,
+          tag_name: 'EDM',
+          tag_image: 'https://i.ibb.co/vZYNDVN/image.png',
+        },
+        {
+          tag_id: 18,
+          tag_name: 'J',
+          tag_image: 'https://i.ibb.co/Y3ZRLhT/image.png',
+        },
+      ],
+      pageable: {
+        page_number: 2,
+        page_size: 6,
+        sort: {
+          sorted: true,
+          unsorted: false,
+          empty: false,
+        },
+        offset: 12,
+        paged: true,
+        unpaged: false,
+      },
+      total_pages: 3,
+      total_elements: 15,
+      last: true,
+      first: false,
+      number_of_elements: 3,
+      size: 3,
+      number: 2,
+      sort: {
+        sorted: true,
+        unsorted: false,
+        empty: false,
+      },
+      empty: false,
     }),
   ),
 ];
