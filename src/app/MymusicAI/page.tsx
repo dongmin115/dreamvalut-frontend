@@ -45,7 +45,6 @@ const UploadMyMusic = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [genreData, setgenreData] = useState<GenreData[]>([]);
   const [genreId, setGenreId] = useState<number | null>(null);
-  const [selectedgenreIndex, setSelectedGenreId] = useState<number>(-1);
   const [trackImage, setTrackImage] = useState<File | null>(null);
   const [trackAudio, setTrackAudio] = useState<File | null>(null);
 
@@ -69,23 +68,6 @@ const UploadMyMusic = () => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHasLyrics(event.target.checked);
   };
-
-  // // 장르 데이터를 trackInfo에 추가하는 함수
-  // const addGenreToTrackInfo = (
-  //   formData: FormData,
-  //   genreNames: string[],
-  //   genresData: Genre[],
-  // ) => {
-  //   genreNames.forEach((selectedGenreName) => {
-  //     const selectedGenre = genresData.find(
-  //       (genre: Genre) => genre.genre_name === selectedGenreName,
-  //     );
-
-  //     if (selectedGenre) {
-  //       formData.append('genre_id', selectedGenre.genre_id.toString());
-  //     }
-  //   });
-  // };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.

@@ -1,10 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable import/extensions */
-// import MusicBar from './components/Musicbar/Musicbar';
-// import NavBar from './components/NavBar/NavigationBar';
-
-import LogIn from './LogInPage/page';
-// import GenrePage from './GenrePage/page';
+import LogIn from './LogInPage/page.tsx';
+// import GenrePage from './GenrePage/page.tsx';
 // import Page from './main/page';
 // import React from 'react';
 // import UploadMyMusic from './MymusicAI/page';
