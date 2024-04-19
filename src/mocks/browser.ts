@@ -11,6 +11,7 @@ import {
   getMyPlaylists,
   followPlaylistData,
   getRecentList,
+  popularTagsData,
 } from './handlers/playlistHandlers';
 import { handlers } from './handlers/musicbarHandlers';
 import { chartHandlers } from './handlers/chartHandlers';
@@ -37,4 +38,5 @@ export const worker = setupWorker(
   ...getMyPlaylists,
   ...followPlaylistData,
   ...getRecentList,
+  ...popularTagsData,
 );

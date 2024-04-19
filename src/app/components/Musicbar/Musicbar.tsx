@@ -17,11 +17,12 @@ import getMusic from '@/api/music.ts';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/dist/client/components/navigation';
 import theme from '@/app/styles/theme.ts';
+import ignorePath from '@/types/ignorePath.ts';
 
 /* eslint-disable @next/next/no-img-element */
 export default function MusicBar() {
   const path = usePathname();
-  if (path === '/' || path === '/path1' || path === '/path2') {
+  if (ignorePath().includes(path)) {
     return null;
   }
 
