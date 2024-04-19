@@ -108,3 +108,15 @@ export async function getRecentList() {
     throw error;
   }
 }
+
+export async function fetchGenrePlaylist(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/genres?page=${pageIndex}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (genre playlists):', error);
+    throw error;
+  }
+}
