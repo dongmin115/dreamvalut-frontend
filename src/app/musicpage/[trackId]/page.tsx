@@ -9,12 +9,11 @@
 'use client';
 
 import { ThemeProvider } from '@emotion/react';
-import { Button, Divider, IconButton, Slider } from '@mui/material';
+import { Button, Divider, IconButton, Popover, Slider } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import PauseIcon from '@mui/icons-material/Pause';
-import ReplayIcon from '@mui/icons-material/Replay';
 import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import Favorite from '@mui/icons-material/Favorite';
@@ -30,7 +29,10 @@ import { useSharedAudio } from '@/app/components/audio/Audio';
 export default function MusicPage(props: any) {
   // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorEl2);
+  const id = open2 ? 'simple-popover' : undefined;
   const { audioRef, playAudio, pauseAudio } = useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,6 +42,14 @@ export default function MusicPage(props: any) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  // 재생목록 버튼 클릭시 메뉴 열기
+  const handleClick2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  // 재생목록 버튼 메뉴 닫기
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
 
   // 시간 변환 함수
   const formatTime = (seconds: number) => {
@@ -48,10 +58,10 @@ export default function MusicPage(props: any) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const [isPaused, setIsPaused] = useState<boolean>(true);
-
-  // 볼륨조절
+  // 볼륨
   const [volume, setVolume] = useState<number>(30);
+
+  // 볼륨 크기 조절
   const handleChange = (event: Event, newVolume: number | number[]) => {
     if (audioRef.current) {
       setVolume(newVolume as number);
@@ -59,9 +69,10 @@ export default function MusicPage(props: any) {
     }
   };
 
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  // 슬라이더를 드래그하는 동안의 상태를 관리합니다.
-  const [isDragging, setIsDragging] = useState(false);
+  // 음악재생
+  const [isPaused, setIsPaused] = useState<boolean>(true);
+  const [currentTime, setCurrentTime] = useState<number>(0); // 현재 재생 시간
+  const [isDragging, setIsDragging] = useState(false); // 슬라이더를 드래그 중인지 여부를 나타내는 상태
 
   // 재생 시간이 변경될 때마다 현재 재생 시간을 설정합니다.
   useEffect(() => {
@@ -95,6 +106,7 @@ export default function MusicPage(props: any) {
     }
   };
 
+  // API 호출
   // 특정 플레이리스트 가져오기
   const { data, isLoading } = useQuery({
     queryKey: ['playlist'],
@@ -209,9 +221,42 @@ export default function MusicPage(props: any) {
               <IconButton>
                 <SkipNextIcon color="secondary" fontSize="large" />
               </IconButton>
-              <IconButton>
-                <ReplayIcon color="secondary" fontSize="large" />
+              <IconButton aria-describedby={id} onClick={handleClick2}>
+                <VolumeUp color="secondary" fontSize="large" />
               </IconButton>
+              <Popover
+                id={id}
+                open={open2}
+                anchorEl={anchorEl2}
+                onClose={handleClose2}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'center',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+                sx={{
+                  '& .MuiPopover-paper': {
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    boxShadow: 'none',
+                  },
+                }}
+              >
+                <div className="w-[10vw] py-2 px-4 flex flex-row items-center space-x-2 bg-black bg-opacity-40 rounded-full shadow-md">
+                  <VolumeDown color="secondary" fontSize="medium" />
+                  <Slider
+                    aria-label="Volume"
+                    value={volume}
+                    onChange={handleChange}
+                    size="small"
+                    color="secondary"
+                  />
+                  <VolumeUp color="secondary" fontSize="medium" />
+                </div>
+              </Popover>
             </div>
           </div>
         </div>
@@ -261,18 +306,6 @@ export default function MusicPage(props: any) {
             flexItem
             className="w-full bg-white drop-shadow-xl"
           />
-          {/* 볼륨 조절 */}
-          <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
-            <VolumeDown color="secondary" fontSize="medium" />
-            <Slider
-              aria-label="Volume"
-              value={volume}
-              onChange={handleChange}
-              size="small"
-              color="secondary"
-            />
-            <VolumeUp color="secondary" fontSize="medium" />
-          </div>
           {/* 재생목록 리스트 */}
           {isLoading
             ? 'loading'
