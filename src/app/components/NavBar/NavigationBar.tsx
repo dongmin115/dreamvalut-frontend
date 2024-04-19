@@ -17,6 +17,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
+import ignorePath from '@/types/ignorePath.ts';
 import theme from '../../styles/theme.ts';
 
 // 각각의 컴포넌트에 대한 타입 선언
@@ -107,7 +108,7 @@ const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 function NavigationBar() {
   const path = usePathname();
-  if (path === '/' || path === '/path1' || path === '/path2') {
+  if (ignorePath().includes(path)) {
     return null;
   }
   return (
