@@ -7,7 +7,7 @@ import './genreColorList.css';
 import ChartMusicComponent from './chartMusicComponent.tsx';
 import PopularTagComponent from './popularTagComponent.tsx';
 import GenreMusicComponent from './genreMusicComponent.tsx';
-import OtherPeoplePlayListComponent from './otherPeoplePlayListComponent.tsx';
+import AllPlaylistComponent from './allPlayListComponent.tsx';
 import SystemPlaylistComponent from './systemPlaylistComponent.tsx';
 
 // 메인 페이지 컴포넌트
@@ -30,14 +30,14 @@ async function Page() {
 
         {/* 장르별 음악 */}
         <h1 className="">장르별 음악</h1>
-        <div className="flex flex-row justify-center items-center w-full h-auto bg-gray-650 rounded-2xl overflow-hidden">
+        <div className="flex flex-row justify-center items-center w-full h-[30rem] bg-gray-650 rounded-2xl overflow-hidden">
           <GenreMusicComponent />
         </div>
 
         {/* 다른 유저가 선택한 플레이리스트 */}
         <h1 className="">다른 유저가 선택한 플레이리스트</h1>
-        <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
-          {/* <OtherPeoplePlayListComponent /> */}
+        <div className="flex flex-row justify-center items-center w-full h-96 bg-gray-650 rounded-2xl overflow-hidden">
+          <AllPlaylistComponent />
         </div>
 
         {/* 구독한 플레이리스트 */}

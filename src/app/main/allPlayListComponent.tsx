@@ -10,18 +10,17 @@ import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
 import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 import theme from '../styles/theme.ts';
-import { followPlaylistData } from '../../api/playlist.ts';
+import { fetchAllPlaylist } from '../../api/playlist.ts';
 
-function OtherPeoplePlayListComponent() {
+function AllPlayListComponent() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
-  const musicList = [];
   const { isLoading, data } = useQuery({
-    queryKey: ['chartData'],
-    queryFn: followPlaylistData,
+    queryKey: ['All Playlist Data', pageIndex],
+    queryFn: () => fetchAllPlaylist(pageIndex),
   });
 
   const handleForwardClick = () => {
-    if (data.length - 4 > pageIndex) {
+    if (data.pageable.page_size - 1 > pageIndex) {
       setPageIndex(pageIndex + 1);
     } // 이때 4는 한번에 보여지는 인기음악의 개수
   };
@@ -39,13 +38,16 @@ function OtherPeoplePlayListComponent() {
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
-      <div className="w-11/12 h-full flex flex-row justify-start items-start">
-        <AlbumCoverUser
-          image1="https://i.ibb.co/HgFcPLj/getaguitar.webp"
-          image2="https://i.ibb.co/TbQL5kz/thatthat.jpg"
-          image3="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-          title="텐션 업!"
-        />
+      <div className="w-11/12 h-full flex flex-row justify-start items-center">
+        {data.content.map((content: any, index: number) => (
+          <AlbumCoverUser
+            key={index}
+            image1={content.tracks[0].thumbnail_image}
+            image2={content.tracks[1].thumbnail_image}
+            image3={content.tracks[2].thumbnail_image}
+            title={content.playlist_name}
+          />
+        ))}
       </div>
       <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
         <IconButton onClick={handleForwardClick}>
@@ -56,4 +58,4 @@ function OtherPeoplePlayListComponent() {
   );
 }
 
-export default OtherPeoplePlayListComponent;
+export default AllPlayListComponent;
