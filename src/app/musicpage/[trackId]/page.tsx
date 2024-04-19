@@ -12,11 +12,14 @@ import { Button, Divider, IconButton, Slider } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import PauseIcon from '@mui/icons-material/Pause';
 import ReplayIcon from '@mui/icons-material/Replay';
+import VolumeDown from '@mui/icons-material/VolumeDown';
+import VolumeUp from '@mui/icons-material/VolumeUp';
 import Favorite from '@mui/icons-material/Favorite';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getMyPlaylists, getPlaylist } from '@/api/playlist';
 import getMusic from '@/api/music';
@@ -43,6 +46,33 @@ export default function MusicPage(props: any) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPaused, setIsPaused] = useState<boolean>(true);
+  // 재생함수
+  const playAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      setIsPaused(false);
+    }
+  };
+
+  // 일시정지함수
+  const pauseAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPaused(true);
+    }
+  };
+  // 볼륨조절
+  const [volume, setVolume] = useState<number>(30);
+
+  const handleChange = (event: Event, newVolume: number | number[]) => {
+    if (audioRef.current) {
+      setVolume(newVolume as number);
+      audioRef.current.volume = volume / 100;
+    }
+  };
+
   // 특정 플레이리스트 가져오기
   const { data, isLoading } = useQuery({
     queryKey: ['playlist'],
@@ -65,6 +95,14 @@ export default function MusicPage(props: any) {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* 음악소스 */}
+      <audio ref={audioRef} controls preload="auto" className="hidden">
+        <source
+          src={musicLoading ? 'loading' : musicData.track_url}
+          id="audio_player"
+          type="audio/wav"
+        />
+      </audio>
       <div className="w-screen h-screen flex flex-row justify-around pl-[15%]">
         {/* 블러배경 */}
         <img
@@ -121,9 +159,15 @@ export default function MusicPage(props: any) {
               <IconButton>
                 <SkipPreviousIcon color="secondary" fontSize="large" />
               </IconButton>
-              <IconButton>
-                <PlayArrowIcon color="secondary" fontSize="large" />
-              </IconButton>
+              {isPaused ? (
+                <IconButton onClick={playAudio} disabled={musicLoading}>
+                  <PlayArrowIcon color="secondary" fontSize="large" />
+                </IconButton>
+              ) : (
+                <IconButton onClick={pauseAudio}>
+                  <PauseIcon color="secondary" fontSize="large" />
+                </IconButton>
+              )}
               <IconButton>
                 <SkipNextIcon color="secondary" fontSize="large" />
               </IconButton>
@@ -179,6 +223,18 @@ export default function MusicPage(props: any) {
             flexItem
             className="w-full bg-white drop-shadow-xl"
           />
+          {/* 볼륨 조절 */}
+          <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
+            <VolumeDown color="secondary" fontSize="medium" />
+            <Slider
+              aria-label="Volume"
+              value={volume}
+              onChange={handleChange}
+              size="small"
+              color="secondary"
+            />
+            <VolumeUp color="secondary" fontSize="medium" />
+          </div>
           {/* 재생목록 리스트 */}
           {isLoading
             ? 'loading'
