@@ -120,3 +120,27 @@ export async function fetchGenrePlaylist(pageIndex: number) {
     throw error;
   }
 }
+
+export async function fetchAllPlaylist(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=user_created&page=${pageIndex}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (genre playlists):', error);
+    throw error;
+  }
+}
+
+export async function fetchSystemPlaylist(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (genre playlists):', error);
+    throw error;
+  }
+}
