@@ -101,6 +101,17 @@ export default function MusicBar(trackId: number) {
       <audio ref={audioRef} controls preload="auto" className="hidden">
         <source src={data.track_url} type="audio/wav" />
       </audio>
+      <Slider
+        aria-label="Volume"
+        value={currentTime}
+        onChange={handleSliderChange}
+        onChangeCommitted={handleSliderRelease}
+        onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
+        onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
+        size="medium"
+        color="secondary"
+        className="absolute top-0 left-0 w-full p-0"
+      />
       {/* 재생 컨트롤 버튼 */}
       <div className="flex flex-row py-[0.5%] items-center">
         <ThemeProvider theme={theme}>
