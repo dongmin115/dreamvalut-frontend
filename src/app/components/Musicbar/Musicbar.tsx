@@ -96,25 +96,27 @@ export default function MusicBar(trackId: number) {
   });
 
   return data ? (
-    <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg z-40">
-      {/* 음악소스 */}
-      <audio ref={audioRef} controls preload="auto" className="hidden">
-        <source src={data.track_url} type="audio/wav" />
-      </audio>
-      <Slider
-        aria-label="Volume"
-        value={currentTime}
-        onChange={handleSliderChange}
-        onChangeCommitted={handleSliderRelease}
-        onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
-        onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
-        size="medium"
-        color="secondary"
-        className="absolute top-0 left-0 w-full p-0"
-      />
-      {/* 재생 컨트롤 버튼 */}
-      <div className="flex flex-row py-[0.5%] items-center">
-        <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#7c7a47] via-50%  to-[#333333] to-90% shadow-lg z-40">
+        {/* 음악소스 */}
+        <audio ref={audioRef} controls preload="auto" className="hidden">
+          <source src={data.track_url} type="audio/wav" />
+        </audio>
+        <Slider
+          aria-label="Volume"
+          valueLabelDisplay="auto"
+          valueLabelFormat={(value) => `${formatTime(value)}`} // 형식화된 값 설정
+          value={currentTime}
+          onChange={handleSliderChange}
+          onChangeCommitted={handleSliderRelease}
+          onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
+          onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
+          size="medium"
+          color="primary"
+          className="absolute top-0 left-0 w-full p-0"
+        />
+        {/* 재생 컨트롤 버튼 */}
+        <div className="flex flex-row py-[0.5%] items-center">
           <IconButton>
             <SkipPreviousIcon color="primary" fontSize="large" />
           </IconButton>
@@ -143,26 +145,23 @@ export default function MusicBar(trackId: number) {
           <IconButton>
             <ReplayIcon color="primary" fontSize="medium" />
           </IconButton>
-        </ThemeProvider>
-      </div>
-      {/* 음악 정보 */}
-      <div className="flex flex-row space-x-4">
-        <img
-          src={data.thumbnail_image}
-          alt="album"
-          width={50}
-          height={50}
-          className="rounded-sm drop-shadow-sm"
-        />
-        <div className="flex flex-col justify-center items-center text-md">
-          <p className="">{data.title}</p>
-          <p className="text-gray-400 text-xs">{data.uploader_name}</p>
         </div>
-        <p>{formatTime(currentTime)}</p>
-      </div>
-      {/* 볼륨 조절 */}
-      <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
-        <ThemeProvider theme={theme}>
+        {/* 음악 정보 */}
+        <div className="flex flex-row space-x-4">
+          <img
+            src={data.thumbnail_image}
+            alt="album"
+            width={50}
+            height={50}
+            className="rounded-sm drop-shadow-sm"
+          />
+          <div className="flex flex-col justify-center items-center text-md">
+            <p className="">{data.title}</p>
+            <p className="text-gray-400 text-xs">{data.uploader_name}</p>
+          </div>
+        </div>
+        {/* 볼륨 조절 */}
+        <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
           <VolumeDown color="primary" fontSize="medium" />
           <Slider
             aria-label="Volume"
@@ -171,8 +170,8 @@ export default function MusicBar(trackId: number) {
             size="small"
           />
           <VolumeUp color="primary" fontSize="medium" />
-        </ThemeProvider>
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   ) : null;
 }
