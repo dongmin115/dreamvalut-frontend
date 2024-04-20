@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable camelcase */
@@ -11,8 +12,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
 // import { fetchData } from 'next-auth/client/_utils';
-import { GenreData } from '@/types/genre.ts';
 import { useQuery } from '@tanstack/react-query';
+import { GenreData } from '@/types/genre.ts';
 import { EditfetchGenres, fetchGenres } from '../../api/genre.ts';
 
 const GenrePage = () => {
