@@ -9,18 +9,11 @@ const KakaoLogin = () => {
     window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
 
     try {
-      // Axios를 사용하여 API를 호출하여 JSON 형태의 토큰을 받아옵니다.
-      console.log('try시작');
-
       // 액세스 토큰과 리프레시 토큰이 유효한 경우에만 쿠키에 저장합니다.
 
       // 쿠키에 토큰 데이터를 저장합니다.
       const a = await getCookie('accessToken');
       const r = await getCookie('refreshToken');
-
-      console.log('액세스 토큰과 리프레시 토큰을 쿠키에 저장했습니다.');
-      console.log(a);
-      console.log(r);
 
       // 쿠키를 헤더에 포함하여 Axios POST 요청을 보냅니다.
       const headers = {
