@@ -15,8 +15,8 @@ const KakaoLogin = () => {
       // 액세스 토큰과 리프레시 토큰이 유효한 경우에만 쿠키에 저장합니다.
 
       // 쿠키에 토큰 데이터를 저장합니다.
-      const a = getCookie('accessToken');
-      const r = getCookie('refreshToken');
+      const a = await getCookie('accessToken');
+      const r = await getCookie('refreshToken');
 
       console.log('액세스 토큰과 리프레시 토큰을 쿠키에 저장했습니다.');
       console.log(a);
