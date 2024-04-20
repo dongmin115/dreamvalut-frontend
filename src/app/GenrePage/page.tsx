@@ -18,7 +18,6 @@ import { EditfetchGenres, fetchGenres } from '../../api/genre.ts';
 const GenrePage = () => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
-  // const [retryCount, setRetryCount] = useState(0);
 
   const handleGenreToggle = (genre_id: number) => {
     // 변경: genre_id 타입 명시
@@ -28,16 +27,6 @@ const GenrePage = () => {
       setSelectedGenres([...selectedGenres, genre_id]);
     }
   };
-
-  // useEffect(() => {
-  //   fetchGenres()
-  //     .then((res) => {
-  //       setGenres(res); // 가져온 데이터를 상태에 설정
-  //     })
-  //     .catch((error) => {
-  //       console.error('오류 발생:', error);
-  //     });
-  // }, []);
 
   const { data } = useQuery({
     queryKey: ['genres'],

@@ -5,9 +5,11 @@ import axios from 'axios';
 // 모든 장르 데이터 가져오기
 const fetchGenres = async () => {
   try {
-    const response = await axios.get('/api/v1/genres/list');
-    if (response.data) {
-      return response.data.data; // 장르 데이터 반환
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/genres/list`,
+    );
+    if (response) {
+      return response.data; // 장르 데이터 반환
     }
   } catch (error) {
     console.error('오류 발생', error);
