@@ -1,4 +1,4 @@
-import LogIn from './LogInPage/page.tsx';
+import LogIn from './login/page.tsx';
 // import GenrePage from './GenrePage/page.tsx';
 // import Page from './main/page';
 // import React from 'react';
