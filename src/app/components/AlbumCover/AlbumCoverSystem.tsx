@@ -23,7 +23,7 @@ function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {
   }, []); // 빈 배열을 넣어서 처음 렌더링 시에만 실행되도록 함
 
   return (
-    <div className="flex flex-col m-4 w-56 h-72 items-center justify-center hover-bg-opacity cursor-pointer">
+    <div className="flex flex-col m-4 p-4 w-56 h-72 items-center justify-center hover-bg-opacity cursor-pointer">
       {/* <Image
         src={image}
         alt="Album cover"
@@ -35,10 +35,16 @@ function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {
       <div
         className={`h-48 w-48 rounded-lg z-10 -mt-48 ${albumRandomColor} opacity-50`}
       />
-      <p className={'text-xl z-20 font-bold drop-shadow-text -mt-28'}>
+      <p
+        className={
+          'flex flex-wrap text-xl w-48 h-48 justify-center items-center z-20 font-bold drop-shadow-text p-4 -mt-48'
+        }
+      >
         {title}
       </p>
-      <p className="text-white text-xl z-20 mt-24">{title}</p>
+      <p className="flex w-48 h-16 justify-center items-start text-white text-xl z-20 pt-4">
+        {title}
+      </p>
     </div>
   );
 }
