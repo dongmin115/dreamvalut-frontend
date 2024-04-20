@@ -1,2 +1,2 @@
-const ignorePath = () => ['/', '/GenrePage', '/LogInPage'];
+const ignorePath = () => ['/', '/genre_select', '/login'];
 export default ignorePath;
