@@ -19,6 +19,8 @@ interface SharedAudioState {
   pauseAudio: () => void;
   currentTime: number;
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
+  volume: number;
+  setVolume: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SharedAudioContext = createContext<SharedAudioState | undefined>(
@@ -30,6 +32,8 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentTime, setCurrentTime] = useState<number>(0); // 초기 값은 0으로 설정
+  // 볼륨조절
+  const [volume, setVolume] = useState<number>(30);
 
   // 재생 함수
   const playAudio = () => {
@@ -78,6 +82,8 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
     pauseAudio,
     currentTime,
     setCurrentTime,
+    volume,
+    setVolume,
   };
 
   return (

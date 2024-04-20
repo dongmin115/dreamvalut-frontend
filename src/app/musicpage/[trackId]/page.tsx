@@ -34,8 +34,15 @@ export default function MusicPage(props: any) {
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorEl2);
   const id = open2 ? 'simple-popover' : undefined;
-  const { audioRef, playAudio, pauseAudio, currentTime, setCurrentTime } =
-    useSharedAudio();
+  const {
+    audioRef,
+    playAudio,
+    pauseAudio,
+    currentTime,
+    setCurrentTime,
+    volume,
+    setVolume,
+  } = useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -59,9 +66,6 @@ export default function MusicPage(props: any) {
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
-
-  // 볼륨
-  const [volume, setVolume] = useState<number>(30);
 
   // 볼륨 크기 조절
   const handleChange = (event: Event, newVolume: number | number[]) => {

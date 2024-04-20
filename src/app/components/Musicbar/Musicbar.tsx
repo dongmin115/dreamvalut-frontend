@@ -42,8 +42,15 @@ export default function MusicBar(trackId: number) {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const { audioRef, playAudio, pauseAudio, currentTime, setCurrentTime } =
-    useSharedAudio();
+  const {
+    audioRef,
+    playAudio,
+    pauseAudio,
+    currentTime,
+    setCurrentTime,
+    volume,
+    setVolume,
+  } = useSharedAudio();
   const [isPaused, setIsPaused] = useState<boolean>(true);
 
   const [isDragging, setIsDragging] = useState(false); // 슬라이더를 드래그 중인지 여부를 나타내는 상태
@@ -79,9 +86,6 @@ export default function MusicBar(trackId: number) {
       audioRef.current.currentTime = currentTime;
     }
   };
-
-  // 볼륨조절
-  const [volume, setVolume] = useState<number>(30);
 
   const handleChange = (event: Event, newVolume: number | number[]) => {
     if (audioRef.current) {
