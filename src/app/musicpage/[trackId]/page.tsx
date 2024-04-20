@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable consistent-return */
 /* eslint-disable indent */
 /* eslint-disable import/no-unresolved */
@@ -33,7 +34,8 @@ export default function MusicPage(props: any) {
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorEl2);
   const id = open2 ? 'simple-popover' : undefined;
-  const { audioRef, playAudio, pauseAudio } = useSharedAudio();
+  const { audioRef, playAudio, pauseAudio, currentTime, setCurrentTime } =
+    useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -71,7 +73,6 @@ export default function MusicPage(props: any) {
 
   // 음악재생
   const [isPaused, setIsPaused] = useState<boolean>(true);
-  const [currentTime, setCurrentTime] = useState<number>(0); // 현재 재생 시간
   const [isDragging, setIsDragging] = useState(false); // 슬라이더를 드래그 중인지 여부를 나타내는 상태
 
   // 재생 시간이 변경될 때마다 현재 재생 시간을 설정합니다.

@@ -1,14 +1,24 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-undef */
 
 'use client';
 
 // eslint-disable-next-line object-curly-newline
-import { createContext, useContext, useRef, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useRef,
+  ReactNode,
+  useState,
+  useEffect,
+} from 'react';
 
 interface SharedAudioState {
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
   playAudio: () => void;
   pauseAudio: () => void;
+  currentTime: number;
+  setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SharedAudioContext = createContext<SharedAudioState | undefined>(
@@ -19,10 +29,12 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [currentTime, setCurrentTime] = useState<number>(0); // 초기 값은 0으로 설정
 
   // 재생 함수
   const playAudio = () => {
     if (audioRef.current) {
+      audioRef.current.currentTime = currentTime; // 시작 시간 설정
       audioRef.current
         .play()
         .then(() => {
@@ -41,11 +53,31 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  // 시간 업데이트 핸들러
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(currentTime);
+    }
+  };
+
+  // useEffect를 사용하여 재생 시간이 변경될 때마다 핸들러를 등록
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      audioElement.addEventListener('timeupdate', handleTimeUpdate);
+      return () => {
+        audioElement.removeEventListener('timeupdate', handleTimeUpdate);
+      };
+    }
+  }, [audioRef]);
+
   // 오디오 상태 및 제어 함수 공유
   const sharedState: SharedAudioState = {
     audioRef,
     playAudio,
     pauseAudio,
+    currentTime,
+    setCurrentTime,
   };
 
   return (

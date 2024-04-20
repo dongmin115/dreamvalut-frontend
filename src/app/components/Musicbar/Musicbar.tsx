@@ -1,10 +1,12 @@
+/* eslint-disable consistent-return */
+/* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react-hooks/rules-of-hooks */
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
@@ -33,8 +35,50 @@ export default function MusicBar(trackId: number) {
     return null;
   }
 
-  const { audioRef, playAudio, pauseAudio } = useSharedAudio();
+  // 시간 변환 함수
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  };
+
+  const { audioRef, playAudio, pauseAudio, currentTime, setCurrentTime } =
+    useSharedAudio();
   const [isPaused, setIsPaused] = useState<boolean>(true);
+
+  const [isDragging, setIsDragging] = useState(false); // 슬라이더를 드래그 중인지 여부를 나타내는 상태
+
+  // 재생 시간이 변경될 때마다 현재 재생 시간을 설정합니다.
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+      const handleTimeUpdate = () => {
+        // 슬라이더를 드래그 중이 아닐 때만 현재 재생 시간을 설정합니다.
+        if (!isDragging) {
+          setCurrentTime(audioElement.currentTime);
+        }
+      };
+      audioElement.addEventListener('timeupdate', handleTimeUpdate);
+      return () => {
+        audioElement.removeEventListener('timeupdate', handleTimeUpdate);
+      };
+    }
+  }, [audioRef, isDragging]);
+
+  // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
+  const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    if (!event.defaultPrevented) {
+      setCurrentTime(newValue as number);
+    }
+  };
+
+  // 슬라이더에서 마우스를 뗄 때 호출되는 함수
+  const handleSliderRelease = () => {
+    // 변경된 시간을 재생 시간으로 설정
+    if (audioRef.current) {
+      audioRef.current.currentTime = currentTime;
+    }
+  };
 
   // 볼륨조절
   const [volume, setVolume] = useState<number>(30);
@@ -103,6 +147,7 @@ export default function MusicBar(trackId: number) {
           <p className="">{data.title}</p>
           <p className="text-gray-400 text-xs">{data.uploader_name}</p>
         </div>
+        <p>{formatTime(currentTime)}</p>
       </div>
       {/* 볼륨 조절 */}
       <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
