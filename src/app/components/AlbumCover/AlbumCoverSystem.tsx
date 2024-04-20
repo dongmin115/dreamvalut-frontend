@@ -31,7 +31,7 @@ function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {
         width={192}
         height={192}
       /> */}
-      <img src={image} alt="Album cover" className="rounded-lg mt-40" />
+      <img src={image} alt="Album cover" className="w-48 h-48 rounded-lg" />
       <div
         className={`h-48 w-48 rounded-lg z-10 -mt-48 ${albumRandomColor} opacity-50`}
       />
