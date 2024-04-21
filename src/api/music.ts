@@ -1,12 +1,13 @@
-const getMusic = async () => {
+const getMusic = async (trackId: number) => {
   try {
-    const response = await fetch('/api/v1/tracks/track_id');
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}`,
+    );
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     const responseJson = await response.json();
-
-    return responseJson.data;
+    return responseJson;
   } catch (error) {
     console.error('오류 발생:', error);
     throw error;

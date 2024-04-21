@@ -9,6 +9,7 @@ import { MSWComponent } from '@/mocks/MSWComponent';
 import MusicBar from './components/Musicbar/Musicbar';
 import NavigationBar from './components/NavBar/NavigationBar';
 import QueryProviders from './components/QueryProvider/QueryProvider';
+import { SharedAudioProvider } from './components/audio/Audio';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -32,8 +33,10 @@ export default function RootLayout({
         />
         <MSWComponent>
           <QueryProviders>
-            {children}
-            <MusicBar />
+            <SharedAudioProvider>
+              {children}
+              <MusicBar />
+            </SharedAudioProvider>
             <NavigationBar />
           </QueryProviders>
         </MSWComponent>
