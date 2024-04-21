@@ -148,7 +148,7 @@ function NavigationBar() {
           </Playlist>
         </Link>
 
-        <Link href={'/MymusicAI'}>
+        <Link href={'/post_music'}>
           <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
             <Mymusic>
               <EditNoteIcon style={{ color: theme.palette.primary.main }} />
