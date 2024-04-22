@@ -1,8 +1,8 @@
 'use server';
 
-import MyPlaylistComponent from './myPlaylistComponent.tsx';
-import FollowPlaylistComponent from './followPlaylistComponent.tsx';
-import SystemPlaylistComponent from '../main/systemPlaylistComponent.tsx';
+import MyPlaylistComponent from './MyPlaylist.tsx';
+import FollowPlaylistComponent from './FollowPlaylist.tsx';
+import SystemPlaylistComponent from '../main/SystemPlaylist.tsx';
 
 async function page() {
   return (

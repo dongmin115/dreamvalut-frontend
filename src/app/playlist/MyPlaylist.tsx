@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import AddIcon from '@mui/icons-material/Add';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
+import { getSlideContentStyle } from '@/app/styles/slide.ts';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 import {

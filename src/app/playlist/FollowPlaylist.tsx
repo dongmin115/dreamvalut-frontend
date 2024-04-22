@@ -8,7 +8,7 @@ import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { useQuery } from '@tanstack/react-query';
-import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
+import { getSlideContentStyle } from '@/app/styles/slide.ts';
 import { fetchFollowPlaylistData } from '@/api/playlist.ts';
 import Link from 'next/link';
 import theme from '../styles/theme.ts';

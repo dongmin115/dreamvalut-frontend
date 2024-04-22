@@ -4,11 +4,11 @@
 'use server';
 
 import './genreColorList.css';
-import ChartMusicComponent from './chartMusicComponent.tsx';
-import PopularTagComponent from './popularTagComponent.tsx';
-import GenreMusicComponent from './genreMusicComponent.tsx';
-import AllPlaylistComponent from './allPlayListComponent.tsx';
-import SystemPlaylistComponent from './systemPlaylistComponent.tsx';
+import ChartMusicComponent from './ChartMusic.tsx';
+import PopularTagComponent from './PopularTag.tsx';
+import GenreMusicComponent from './GenreMusic.tsx';
+import AllPlaylistComponent from './AllPlayList.tsx';
+import SystemPlaylistComponent from './SystemPlaylist.tsx';
 
 // 메인 페이지 컴포넌트
 async function Page() {

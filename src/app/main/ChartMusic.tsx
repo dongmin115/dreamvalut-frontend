@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
-import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
+import { getSlideContentStyle } from '@/app/styles/slide.ts';
 import { chartProps } from '../../types/chart.ts';
 import { fetchChartData } from '../../api/chart.ts';
 import theme from '../styles/theme.ts';
