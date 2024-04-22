@@ -101,7 +101,7 @@ export default function MusicBar(trackId: number) {
 
   return data ? (
     <ThemeProvider theme={theme}>
-      <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r from-[#333333] from-20% via-[#4b627e] via-50%  to-[#333333] to-80% shadow-lg z-40">
+      <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r  from-[#333333] via-[#6b26ff75] to-[#333333] shadow-lg z-40">
         {/* 음악소스 */}
         <audio ref={audioRef} controls preload="auto" className="hidden">
           <source src={data.track_url} type="audio/wav" />
