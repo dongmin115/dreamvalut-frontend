@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @next/next/no-img-element */
 
 'use client';
@@ -17,6 +18,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
+import ignorePath from '@/types/ignorePath.ts';
 import theme from '../../styles/theme.ts';
 
 // 각각의 컴포넌트에 대한 타입 선언
@@ -107,7 +109,7 @@ const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
 
 function NavigationBar() {
   const path = usePathname();
-  if (path === '/' || path === '/path1' || path === '/path2') {
+  if (ignorePath().includes(path)) {
     return null;
   }
   return (
@@ -161,15 +163,6 @@ function NavigationBar() {
           <UserProfile>
             <button className="p-2 text-sm">
               <Link href={'/mypage'}>프로필</Link>
-            </button>
-          </UserProfile>
-        </div>
-
-        <div className="flex items-center rounded-lg hover-bg-opacity cursor-pointer">
-          <div className="bg-gray-500 w-8 h-8 rounded-full"></div>
-          <UserProfile>
-            <button className="p-2 text-sm">
-              <Link href={'/musicpage'}>음악 상세페이지 (임시)</Link>
             </button>
           </UserProfile>
         </div>

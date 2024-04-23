@@ -1,26 +1,13 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable operator-linebreak */
-/* eslint-disable max-len */
-/* eslint-disable no-shadow */
-/* eslint-disable import/order */
-/* eslint-disable no-console */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-unused-vars */
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
-import {
-  createTheme,
-  ThemeProvider,
-  Theme,
-  useTheme,
-} from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import ToggleButton from '@mui/material/ToggleButton';
 // import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -28,13 +15,15 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { fetchGenres } from '@/api/genre';
-import { Genre, GenreData } from '@/types/genre';
+
 import { useQuery } from '@tanstack/react-query';
 // import uploadMymusic from '@/api/uploadmymusic';
 import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import uploadMymusic from '@/api/uploadmymusic.ts';
+import { fetchGenres } from '@/api/genre.ts';
+import { Genre, GenreData } from '@/types/genre.ts';
 
 const theme = createTheme({
   palette: {
@@ -57,7 +46,8 @@ const UploadMyMusic = () => {
   const [prompt, setPrompt] = useState('');
   const [hasLyrics, setHasLyrics] = useState(Boolean);
   const [tags, setTags] = useState<string[]>([]);
-  const [genreId, setGenreId] = useState<Genre[]>([]);
+  const [genreData, setgenreData] = useState<GenreData[]>([]);
+  const [genreId, setGenreId] = useState<number | null>(null);
   const [trackImage, setTrackImage] = useState<File | null>(null);
   const [trackAudio, setTrackAudio] = useState<File | null>(null);
 
@@ -69,75 +59,61 @@ const UploadMyMusic = () => {
   // 받아온 데이터 세팅
   React.useEffect(() => {
     if (data) {
-      setGenreId(data);
+      setgenreData(data);
     }
   }, [data]);
 
-  const [selectedGenreId, setSelectedGenreId] = React.useState('');
   const handleGenre = (event: SelectChangeEvent) => {
-    const selectedId = event.target.value; // 선택된 장르의 genre_id 값
-    setSelectedGenreId(selectedId); // 선택된 장르의 genre_id 값을 상태에 설정
+    const selectedGenreId: number = parseInt(event.target.value, 10); // 문자열을 숫자로 변환
+    setGenreId(selectedGenreId);
   };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setHasLyrics(event.target.checked);
   };
 
-  // 장르 데이터를 trackInfo에 추가하는 함수
-  const addGenreToTrackInfo = (
-    formData: FormData,
-    genreNames: string[],
-    genresData: Genre[],
-  ) => {
-    genreNames.forEach((selectedGenreName) => {
-      const selectedGenre = genresData.find(
-        (genre: Genre) => genre.genre_name === selectedGenreName,
-      );
-
-      if (selectedGenre) {
-        formData.append('genre_id', selectedGenre.genre_id.toString());
-      }
-    });
-  };
-
   const handleSubmit = async (event: any) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    try {
-      const formData = new FormData();
-      // 선택된 장르를 formData에 추가합니다.
-      const trackInfo = {
+    const formData = new FormData();
+    // 선택된 장르를 formData에 추가합니다.
+    const trackInfo = {
+      title,
+      prompt,
+      has_lyrics: hasLyrics,
+      tags,
+      genre_id: genreId,
+    };
+
+    formData.append(
+      'track_info',
+      new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
+    );
+    // 이미지 파일 추가
+    if (trackImage !== null) {
+      formData.append('track_image', trackImage as Blob);
+    }
+
+    // 오디오 파일 추가
+    if (trackAudio !== null) {
+      formData.append('track_audio', trackAudio as Blob);
+    }
+
+    // axios를 사용하여 FormData를 서버로 보냅니다.
+    // axios를 사용하여 FormData를 서버로 보냅니다.
+    if (trackImage !== null && trackAudio !== null && genreId !== null) {
+      uploadMymusic(
         title,
         prompt,
-        has_lyrics: hasLyrics,
+        hasLyrics,
         tags,
-        genre_id: selectedGenreId,
-      };
-
-      formData.append(
-        'track_info',
-        new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
+        genreId,
+        trackImage,
+        trackAudio,
       );
-      // 이미지 파일 추가
-      if (trackImage !== null) {
-        formData.append('track_image', trackImage as Blob);
-      }
-
-      // 오디오 파일 추가
-      if (trackAudio !== null) {
-        formData.append('track_audio', trackAudio as Blob);
-      }
-
-      // axios를 사용하여 FormData를 서버로 보냅니다.
-      // axios를 사용하여 FormData를 서버로 보냅니다.
-      const response = await axios.post('/api/v1/tracks', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Upload response:', response.data);
-    } catch (error) {
-      console.error('Error submitting:', error);
+      console.log('Upload response:');
+    } else {
+      console.error('이미지 또는 오디오가 업로드 되지 않았습니다!');
     }
   };
 
@@ -276,13 +252,13 @@ const UploadMyMusic = () => {
                   <Select
                     labelId="demo-simple-select-autowidth-label"
                     id="demo-simple-select-autowidth"
-                    value={selectedGenreId} // 선택된 장르의 genre_id 값을 사용
+                    value={genreId ? String(genreId) : ''} // 선택된 장르의 genre_id 값을 사용
                     onChange={handleGenre}
                     input={<OutlinedInput label="genre" />}
                     color="secondary"
                     className="text-[#a0a0a0]"
                   >
-                    {genreId.map((genre) => (
+                    {genreData.map((genre) => (
                       <MenuItem
                         key={genre.genre_id}
                         value={genre.genre_id}

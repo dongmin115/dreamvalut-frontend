@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import axios from 'axios';
 
+// const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres/list`);
+
 // 특정 플레이리스트 정보 가져오기
 export async function getPlaylist() {
   try {
-    // const response = await axios.get(`/api/v1/playlists/${playlistId}`); // 실제 api 연결시 사용
     const response = await axios.get('/api/v1/playlists/playlist_id');
     return response.data;
   } catch (error) {
@@ -20,6 +21,19 @@ export async function getMyPlaylists() {
     return response.data;
   } catch (error) {
     console.error('오류 발생:', error);
+    throw error;
+  }
+}
+
+export async function fetchPopularTags(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/tags/list?page=${pageIndex}`,
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (popular tags):', error);
     throw error;
   }
 }
@@ -91,6 +105,42 @@ export async function getRecentList() {
     return response.data.data;
   } catch (error) {
     console.error('API Fetch Error (recent playlists):', error);
+    throw error;
+  }
+}
+
+export async function fetchGenrePlaylist(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/genres?page=${pageIndex}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (genre playlists):', error);
+    throw error;
+  }
+}
+
+export async function fetchAllPlaylist(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=user_created&page=${pageIndex}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (genre playlists):', error);
+    throw error;
+  }
+}
+
+export async function fetchSystemPlaylist(pageIndex: number) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (genre playlists):', error);
     throw error;
   }
 }

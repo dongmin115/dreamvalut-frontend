@@ -14,37 +14,48 @@
   background: linear-gradient(#e7d3c0 50%, #c9f1ef 100%);
 }
 
-/*  500 ~ 1200까지 미완성 */
 .bg-genre-500 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#fdd7ca 50%, #d2cbe4 100%);
 }
 
 .bg-genre-600 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#fdcaca 50%, #f5e1e1 100%);
 }
 
 .bg-genre-700 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#fdfbca 50%, #e1f5e3 100%);
 }
 
 .bg-genre-800 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#e0fdca 50%, #e1eff5 100%);
 }
 
 .bg-genre-900 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#fdcaef 50%, #f1f9c1 100%);
 }
 
 .bg-genre-1000 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#caf7fd 50%, #f1f9c1 100%);
 }
 
 .bg-genre-1100 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#e6d6ff 50%, #c1e8f9 100%);
 }
 
 .bg-genre-1200 {
-  background: linear-gradient(#c0d9e7 50%, #f1ddc9 100%);
+  background: linear-gradient(#c1e8f9 50%, #e6d6ff 100%);
+}
+
+.bg-genre-1300 {
+  background: linear-gradient(#f1ddc9 50%, #c0d9e7 100%);
+}
+
+.bg-genre-1400 {
+  background: linear-gradient(#feffda 50%, #f2ffdc 100%);
+}
+
+.bg-genre-1500 {
+  background: linear-gradient(#eeeeee 50%, #f3f3f3 100%);
 }
 
 .bg-nv-100 {
@@ -61,4 +72,48 @@
 
 .bg-nv-400 {
   background-color: #f1eadd;
+}
+
+.bg-nv-500 {
+  background-color: #f2e2e1;
+}
+
+.bg-nv-600 {
+  background-color: #f2e2e1;
+}
+
+.bg-nv-700 {
+  background-color: #f1eadd;
+}
+
+.bg-nv-800 {
+  background-color: #f1eadd;
+}
+
+.bg-nv-900 {
+  background-color: #f2e1ea;
+}
+
+.bg-nv-1000 {
+  background-color: #e1f2f1;
+}
+
+.bg-nv-1100 {
+  background-color: #e1e1f2;
+}
+
+.bg-nv-1200 {
+  background-color: #dde8f1;
+}
+
+.bg-nv-1300 {
+  background-color: #f1eadd;
+}
+
+.bg-nv-1400 {
+  background-color: #fdfce3;
+}
+
+.bg-nv-1500 {
+  background-color: #f5f5f5;
 }
