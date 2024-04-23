@@ -1,9 +1,11 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-unused-vars */
 
 'use client';
 
 import React, { useState } from 'react';
+
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import ToggleButton from '@mui/material/ToggleButton';
@@ -13,14 +15,15 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { fetchGenres } from '@/api/genre.ts';
-import { Genre, GenreData } from '@/types/genre.ts';
+
 import { useQuery } from '@tanstack/react-query';
 // import uploadMymusic from '@/api/uploadmymusic';
 import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import uploadMymusic from '@/api/uploadmymusic.ts';
+import { fetchGenres } from '@/api/genre.ts';
+import { Genre, GenreData } from '@/types/genre.ts';
 
 const theme = createTheme({
   palette: {

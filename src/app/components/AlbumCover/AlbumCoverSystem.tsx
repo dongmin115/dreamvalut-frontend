@@ -1,6 +1,6 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
-// import Image from 'next/image';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 
 function AlbumCoverSystem({ image, title }: albumCoverSystemProps) {

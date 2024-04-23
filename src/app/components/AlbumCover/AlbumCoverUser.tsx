@@ -1,7 +1,7 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 import { albumCoverUserProps } from '@/types/albumCover.ts';
-import Image from 'next/image';
 
 function AlbumCoverUser({
   image1,
