@@ -15,6 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { GenreMusicProps } from '../../types/genre.ts';
 import theme from '../styles/theme.ts';
 import { fetchGenrePlaylist } from '../../api/playlist.ts';
+import './GenreColorArr.css';
 
 // 1부터 n까지의 정수를 포함하는 배열을 생성하는 함수
 function rangeArray(n: number): number[] {

@@ -3,7 +3,6 @@
 
 'use server';
 
-import './genreColorList.css';
 import ChartMusicComponent from './ChartMusic.tsx';
 import PopularTagComponent from './PopularTag.tsx';
 import GenreMusicComponent from './GenreMusic.tsx';

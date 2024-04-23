@@ -2,7 +2,7 @@
 
 import MyPlaylistComponent from './MyPlaylist.tsx';
 import FollowPlaylistComponent from './FollowPlaylist.tsx';
-import SystemPlaylistComponent from '../main/SystemPlaylist.tsx';
+import FollowSystemPlaylist from './FollowSystemPlaylist.tsx';
 
 async function page() {
   return (
@@ -24,7 +24,7 @@ async function page() {
           {/* 시스템 플레이리스트 */}
           <h1 className="">구독한 플레이리스트</h1>
           <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl">
-            <SystemPlaylistComponent />
+            <FollowSystemPlaylist />
           </div>
         </div>
 
