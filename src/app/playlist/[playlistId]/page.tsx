@@ -70,17 +70,15 @@ function MusicElement({ image, title, like, isLiked }: MusicElementProps) {
 }
 
 function page(props: any) {
-  const playlistTitle = decodeURIComponent(props.params.playlistTitle);
+  const playlistId = decodeURIComponent(props.params.playlistId);
   return (
     <ThemeProvider theme={theme}>
       <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
-        <NavigationBar />
-        <MusicBar />
         {/* NavigationBar 제외 영역 */}
         <div className="w-10/12 h-full pr-8">
           {/* 플리 제목 및 플레이 아이콘 */}
           <div className="flex flex-row w-full justify-center items-center ">
-            <h1 className="w-full text-start">{playlistTitle}</h1>
+            <h1 className="w-full text-start">{playlistId}</h1>
             <IconButton className="mx-28">
               <PlayCircleIcon
                 color="primary"

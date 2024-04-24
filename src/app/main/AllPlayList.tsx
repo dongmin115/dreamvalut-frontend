@@ -46,6 +46,7 @@ function AllPlayListComponent() {
             image2={content.tracks[1].thumbnail_image}
             image3={content.tracks[2].thumbnail_image}
             title={content.playlist_name}
+            Id={content.playlist_id}
           />
         ))}
       </div>

@@ -47,6 +47,7 @@ function SystemPlaylistComponent() {
             key={index}
             image={content.tracks[0].thumbnail_image}
             title={content.playlist_name}
+            Id={content.playlist_id}
           />
         ))}
       </div>

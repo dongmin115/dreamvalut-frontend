@@ -63,6 +63,7 @@ function MyPlaylistComponent() {
               image2={myPlaylistData[i].thumbnails[1]}
               image3={myPlaylistData[i].thumbnails[2]}
               title={myPlaylistData[i].playlist_name}
+              Id={1}
             />
           </Link>,
         );

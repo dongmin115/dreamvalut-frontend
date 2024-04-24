@@ -42,6 +42,7 @@ function PopularTagComponent() {
               key={i}
               image={data.content[i].tag_image}
               title={data.content[i].tag_name}
+              Id={-1}
             />
           </div>,
         );
