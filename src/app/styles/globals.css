@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 웹킷(Chrome, Safari 등) 브라우저의 스크롤바 */
+::-webkit-scrollbar {
+  width: 0.5rem; /* 스크롤바의 너비 */
+}
+
+/* 스크롤바의 Track (배경) */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 스크롤바의 Thumb (드래그할 수 있는 부분) */
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 500px;
+}
+
+/* 호버 상태일 때 스크롤바의 Thumb 색 변경 */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 호버 시 배경색 변경 */
+}
+
 body {
   background-color: #1a1a1a;
   color: white;

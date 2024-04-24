@@ -30,7 +30,7 @@ export default function MusicBar(trackId: number) {
     path === '/' ||
     path === '/path1' ||
     path === '/path2' ||
-    path.startsWith('/musicpage')
+    path.startsWith('/track')
   ) {
     return null;
   }
