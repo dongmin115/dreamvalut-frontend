@@ -101,7 +101,7 @@ export default function MusicBar(trackId: number) {
 
   return data ? (
     <ThemeProvider theme={theme}>
-      <div className="fixed bottom-[1%] items-center w-[83%] h-[7%] rounded-md ml-[16%] px-[2%] py-[0.5%] flex justify-between bg-gradient-to-r  from-[#333333] via-[#6b26ff75] to-[#333333] shadow-lg z-40">
+      <div className="fixed bottom-[1%] z-40 ml-[16%] flex h-[7%] w-[83%] items-center justify-between rounded-md bg-gradient-to-r from-[#333333]  via-[#6b26ff75] to-[#333333] px-[2%] py-[0.5%] shadow-lg">
         {/* 음악소스 */}
         <audio ref={audioRef} controls preload="auto" className="hidden">
           <source src={data.track_url} type="audio/wav" />
@@ -118,10 +118,10 @@ export default function MusicBar(trackId: number) {
           max={data.duration}
           size="medium"
           color="primary"
-          className="absolute top-0 left-0 w-full p-0"
+          className="absolute left-0 top-0 w-full p-0"
         />
         {/* 재생 컨트롤 버튼 */}
-        <div className="flex flex-row py-[0.5%] items-center">
+        <div className="flex flex-row items-center py-[0.5%]">
           <IconButton>
             <SkipPreviousIcon color="primary" fontSize="large" />
           </IconButton>
@@ -160,13 +160,13 @@ export default function MusicBar(trackId: number) {
             height={50}
             className="rounded-sm drop-shadow-sm"
           />
-          <div className="flex flex-col justify-center items-center text-md">
+          <div className="text-md flex flex-col items-center justify-center">
             <p className="">{data.title}</p>
-            <p className="text-gray-400 text-xs">{data.uploader_name}</p>
+            <p className="text-xs text-gray-400">{data.uploader_name}</p>
           </div>
         </div>
         {/* 볼륨 조절 */}
-        <div className="w-[12%] flex items-center space-x-2 min-w-[120px]">
+        <div className="flex w-[12%] min-w-[120px] items-center space-x-2">
           <VolumeDown color="primary" fontSize="medium" />
           <Slider
             aria-label="Volume"
