@@ -8,15 +8,15 @@ import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
 import theme from '../styles/theme.ts';
-import { fetchPopularTags } from '../../api/playlist.ts';
+import { fetchTags } from '../../api/playlist.ts';
 
-function PopularTagComponent() {
+function Tag() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
   const musicList = [];
 
   const { isLoading, data } = useQuery({
     queryKey: ['TagsData', pageIndex], // pageIndex를 queryKey에 추가
-    queryFn: () => fetchPopularTags(pageIndex),
+    queryFn: () => fetchTags(pageIndex),
   });
 
   const handleForwardClick = () => {
@@ -75,4 +75,4 @@ function PopularTagComponent() {
   );
 }
 
-export default PopularTagComponent;
+export default Tag;

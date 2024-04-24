@@ -25,7 +25,7 @@ export async function getMyPlaylists() {
   }
 }
 
-export async function fetchPopularTags(pageIndex: number) {
+export async function fetchTags(pageIndex: number) {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/tags/list?page=${pageIndex}`,
@@ -141,6 +141,18 @@ export async function fetchSystemPlaylist(pageIndex: number) {
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (genre playlists):', error);
+    throw error;
+  }
+}
+
+export async function fetchPlaylistDetail(playlistId: string) {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (playlist detail):', error);
     throw error;
   }
 }

@@ -4,7 +4,7 @@
 'use server';
 
 import ChartMusicComponent from './ChartMusic.tsx';
-import PopularTagComponent from './PopularTag.tsx';
+import Tag from './Tag.tsx';
 import GenreMusicComponent from './GenreMusic.tsx';
 import AllPlaylistComponent from './AllPlayList.tsx';
 import SystemPlaylistComponent from './SystemPlaylist.tsx';
@@ -22,9 +22,9 @@ async function Page() {
         </div>
 
         {/* 인기 태그 */}
-        <h1 className="">인기 태그</h1>
+        <h1 className="">태그별 음악</h1>
         <div className="flex flex-row justify-center items-center w-full h-80 bg-gray-650 rounded-2xl overflow-hidden">
-          <PopularTagComponent />
+          <Tag />
         </div>
 
         {/* 장르별 음악 */}
