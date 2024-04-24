@@ -115,6 +115,7 @@ export default function MusicBar(trackId: number) {
           onChangeCommitted={handleSliderRelease}
           onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
           onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
+          max={data.duration}
           size="medium"
           color="primary"
           className="absolute top-0 left-0 w-full p-0"
