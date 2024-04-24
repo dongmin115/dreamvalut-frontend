@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
+
 'use client';
 
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 
@@ -10,6 +11,7 @@ import { IconButton, ThemeProvider } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { fetchAddLike, fetchCancelLike } from '@/api/like.ts';
 import theme from '../../styles/theme.ts';
 
 export default function MusicElement({
@@ -17,9 +19,19 @@ export default function MusicElement({
   title,
   like,
   isLiked,
+  trackId,
 }: MusicElementProps) {
   const formattedLike =
     like > 999 ? numeral(like).format('0.0a') : numeral(like).format('0a');
+
+  const handleLike = async () => {
+    if (isLiked) {
+      await fetchCancelLike(trackId);
+    } else {
+      await fetchAddLike(trackId);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-row w-full justify-start py-4 items-center hover-bg-opacity">
@@ -28,7 +40,7 @@ export default function MusicElement({
           <p className="flex mx-6 text-2xl">{title}</p>
         </div>
         <div className="flex w-2/12 text-2xl justify-center items-center">
-          <IconButton>
+          <IconButton onClick={handleLike}>
             {isLiked ? (
               <FavoriteIcon color="primary" fontSize="inherit" />
             ) : (

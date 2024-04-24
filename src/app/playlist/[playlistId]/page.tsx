@@ -1,21 +1,30 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 
-'use server';
+'use client';
 
-import MusicElement from './MusicElement.tsx';
+import { fetchPlaylistDetail } from '@/api/playlist.ts';
+import { useQuery } from '@tanstack/react-query';
 import PlayButton from './PlayButton.tsx';
+import MusicElement from './MusicElement.tsx';
 
-async function page(props: any) {
+function page(props: any) {
   const playlistId = decodeURIComponent(props.params.playlistId);
+  const { isLoading, data } = useQuery({
+    queryKey: ['Playlist Details', playlistId],
+    queryFn: () => fetchPlaylistDetail(playlistId),
+  });
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
       <div className="w-10/12 h-full pr-8">
         {/* 플리 제목 및 플레이 아이콘 */}
         <div className="flex flex-row w-full justify-center items-center ">
-          <h1 className="w-full text-start">{playlistId}</h1>
+          <h1 className="w-full text-start">{data.playlist_name}</h1>
           <PlayButton playlistId={playlistId} />
         </div>
         {/* 플리 박스 */}
@@ -30,28 +39,13 @@ async function page(props: any) {
           <hr className="w-full my-6 border-zinc-600" />
           {/* 음악 요소들 */}
           <MusicElement
-            image="https://i.ibb.co/L0GHzbR/202402211005009.jpg"
-            title="Shopper"
-            like={1234123}
-            isLiked={true}
-          />
-          <MusicElement
-            image="https://i.ibb.co/HV9HB6G/bigbangM.jpg"
-            title="삐딱하게"
-            like={511234}
-            isLiked={true}
-          />
-          <MusicElement
-            image="https://i.ibb.co/DGWrD6M/image.jpg"
-            title="불꽃놀이"
-            like={1534}
-            isLiked={false}
-          />
-          <MusicElement
-            image="https://i.ibb.co/4d0pj5j/dynamite.webp"
-            title="Dynamite"
-            like={34}
-            isLiked={false}
+            image={data.tracks.content[0].thumbnail_image}
+            title={data.tracks.content[0].title}
+            // like={data.tracks.content[0]like} // 테스트 서버에 해당 값이 없음
+            // isLiked={data.tracks.content[0].is_liked} // 테스트 서버에 해당 값이 없음
+            like={data.tracks.content[0].duration} // 임시로 값 부여
+            isLiked={data.tracks.content[0].has_lyrics} // 임시 값 부여
+            trackId={data.tracks.content[0].track_id}
           />
         </div>
       </div>

@@ -206,6 +206,7 @@ function MyPlaylistComponent() {
           image2={likePlaylistData[0]}
           image3={likePlaylistData[1]}
           title="좋아요 누른 곡"
+          Id={1}
         />
 
         {/* 내가 생성한 플리 버튼 */}

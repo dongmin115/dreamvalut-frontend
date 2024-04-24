@@ -3,4 +3,5 @@ export interface MusicElementProps {
   title: string;
   like: number;
   isLiked: boolean;
+  trackId: string;
 }
