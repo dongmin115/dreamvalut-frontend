@@ -194,6 +194,7 @@ export default function MusicPage(props: any) {
                 onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
                 size="medium"
                 color="secondary"
+                max={musicLoading ? null : musicData.duration}
               />
             </div>
             <div className="flex justify-between">
