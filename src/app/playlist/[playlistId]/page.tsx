@@ -20,23 +20,23 @@ function page(props: any) {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full h-full flex flex-col justify-end items-end overflow-hidden">
-      <div className="w-10/12 h-full pr-8">
+    <div className="flex h-full w-full flex-col items-end justify-end overflow-hidden">
+      <div className="h-full w-10/12 pr-8">
         {/* 플리 제목 및 플레이 아이콘 */}
-        <div className="flex flex-row w-full justify-center items-center ">
+        <div className="flex w-full flex-row items-center justify-center ">
           <h1 className="w-full text-start">{data.playlist_name}</h1>
           <PlayButton playlistId={playlistId} />
         </div>
         {/* 플리 박스 */}
-        <div className="flex flex-col items-center w-full h-auto p-8 bg-gray-650 rounded-2xl">
-          <div className="flex flex-row w-full">
-            <p className="flex w-full text-2xl px-20"> 곡 정보</p>
-            <p className="flex w-2/12 text-2xl justify-center items-center">
+        <div className="bg-gray-650 flex h-auto w-full flex-col items-center rounded-2xl p-8">
+          <div className="flex w-full flex-row">
+            <p className="flex w-full px-20 text-2xl"> 곡 정보</p>
+            <p className="flex w-2/12 items-center justify-center text-2xl">
               좋아요
             </p>
-            <p className="flex w-24 text-2xl justify-center ">재생</p>
+            <p className="flex w-24 justify-center text-2xl ">재생</p>
           </div>
-          <hr className="w-full my-6 border-zinc-600" />
+          <hr className="my-6 w-full border-zinc-600" />
           {/* 음악 요소들 */}
           <MusicElement
             image={data.tracks.content[0].thumbnail_image}

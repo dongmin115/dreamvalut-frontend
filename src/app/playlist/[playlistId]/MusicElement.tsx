@@ -34,12 +34,12 @@ export default function MusicElement({
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex flex-row w-full justify-start py-4 items-center hover-bg-opacity">
-        <div className="flex flex-row w-full px-12 items-center">
+      <div className="hover-bg-opacity flex w-full flex-row items-center justify-start py-4">
+        <div className="flex w-full flex-row items-center px-12">
           <img src={image} alt="Album cover" className="h-24 w-24 rounded-lg" />
-          <p className="flex mx-6 text-2xl">{title}</p>
+          <p className="mx-6 flex text-2xl">{title}</p>
         </div>
-        <div className="flex w-2/12 text-2xl justify-center items-center">
+        <div className="flex w-2/12 items-center justify-center text-2xl">
           <IconButton onClick={handleLike}>
             {isLiked ? (
               <FavoriteIcon color="primary" fontSize="inherit" />
@@ -50,7 +50,7 @@ export default function MusicElement({
 
           {formattedLike}
         </div>
-        <div className="flex w-24 justify-center items-center">
+        <div className="flex w-24 items-center justify-center">
           <IconButton>
             <PlayCircleIcon
               color="primary"
