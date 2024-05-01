@@ -11,7 +11,7 @@ export const getMusic = async (trackId: number) => {
       `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}`,
       {
         headers: {
-          Authorization: `Bearer ${refreshToken}`,
+          Authorization: `Bearer ${accessToken}`,
           'x-refresh-token': refreshToken,
         },
       },
@@ -31,7 +31,7 @@ export const likes = async (trackId: number) => {
       {},
       {
         headers: {
-          Authorization: `Bearer ${refreshToken}`,
+          Authorization: `Bearer ${accessToken}`,
           'x-refresh-token': refreshToken,
         },
       },
@@ -51,7 +51,7 @@ export const disLikes = async (trackId: number) => {
       `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/disLikes`,
       {
         headers: {
-          Authorization: `Bearer ${refreshToken}`,
+          Authorization: `Bearer ${accessToken}`,
           'x-refresh-token': refreshToken,
         },
       },
