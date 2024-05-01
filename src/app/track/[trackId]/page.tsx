@@ -141,17 +141,17 @@ export default function MusicPage(props: any) {
           type="audio/wav"
         />
       </audio>
-      <div className="w-screen h-screen flex flex-row justify-around pl-[15%]">
+      <div className="flex h-screen w-screen flex-row justify-around pl-[15%]">
         {/* 블러배경 */}
         <img
           src={musicLoading ? 'loading' : musicData.track_image}
           alt="1"
-          className="w-full h-full blur -z-20 fixed"
+          className="fixed -z-20 h-full w-full blur"
         />
         {/* 검은색 레이어 */}
-        <div className="w-full h-full bg-black bg-opacity-30 fixed -z-10" />
+        <div className="fixed -z-10 h-full w-full bg-black bg-opacity-30" />
         {/* 음악정보 */}
-        <div className="flex flex-col items-center justify-center h-full w-[40%] space-y-4">
+        <div className="flex h-full w-[40%] flex-col items-center justify-center space-y-4">
           <h1 className="text-4xl text-white drop-shadow-lg">
             {musicLoading ? 'loading' : musicData.title}
           </h1>
@@ -162,9 +162,9 @@ export default function MusicPage(props: any) {
           <div id="card">
             <div
               id="card-back"
-              className="w-96 h-96 rounded-md drop-shadow-lg bg-[#2B2B2B] p-6"
+              className="h-96 w-96 rounded-md bg-[#2B2B2B] p-6 drop-shadow-lg"
             >
-              <p className="font-semibold text-lg mb-4">음악생성 프롬프트</p>
+              <p className="mb-4 text-lg font-semibold">음악생성 프롬프트</p>
               <p className="text-sm">
                 {musicLoading ? 'loading' : musicData.prompt}
               </p>
@@ -173,15 +173,15 @@ export default function MusicPage(props: any) {
               id="card-front"
               src={musicLoading ? 'loading' : musicData.thumbnail_image}
               alt="1"
-              className="w-96 h-96 rounded-md drop-shadow-lg"
+              className="h-96 w-96 rounded-md drop-shadow-lg"
             />
           </div>
           {/* 재생 컨트롤러 */}
           <div className="w-96">
-            <div className="flex flex-col items-center mt-6">
-              <div className="flex flex-row justify-between w-full">
-                <p className="text-white text-sm">{formatTime(currentTime)}</p>
-                <p className="text-white text-sm">
+            <div className="mt-6 flex flex-col items-center">
+              <div className="flex w-full flex-row justify-between">
+                <p className="text-sm text-white">{formatTime(currentTime)}</p>
+                <p className="text-sm text-white">
                   {musicLoading ? 'loading' : formatTime(musicData.duration)}
                 </p>
               </div>
@@ -194,6 +194,7 @@ export default function MusicPage(props: any) {
                 onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
                 size="medium"
                 color="secondary"
+                max={musicLoading ? null : musicData.duration}
               />
             </div>
             <div className="flex justify-between">
@@ -250,7 +251,7 @@ export default function MusicPage(props: any) {
                   },
                 }}
               >
-                <div className="w-[10vw] py-2 px-4 flex flex-row items-center space-x-2 bg-black bg-opacity-40 rounded-full shadow-md">
+                <div className="flex w-[10vw] flex-row items-center space-x-2 rounded-full bg-black bg-opacity-40 px-4 py-2 shadow-md">
                   <VolumeDown color="secondary" fontSize="medium" />
                   <Slider
                     aria-label="Volume"
@@ -266,9 +267,9 @@ export default function MusicPage(props: any) {
           </div>
         </div>
         {/* 재생목록 */}
-        <div className="flex flex-col items-center justify-center h-full w-[30%] space-y-4">
-          <div className="flex flex-row justify-between w-full h-fit items-center">
-            <h1 className="text-4xl text-white drop-shadow-lg h-fit m-0">
+        <div className="flex h-full w-[30%] flex-col items-center justify-center space-y-4">
+          <div className="flex h-fit w-full flex-row items-center justify-between">
+            <h1 className="m-0 h-fit text-4xl text-white drop-shadow-lg">
               Playlist
             </h1>
             <Button
@@ -317,15 +318,15 @@ export default function MusicPage(props: any) {
             : data.tracks.content.map((track: any) => (
                 <li
                   key={track.id}
-                  className="flex flex-row space-x-4 self-start hover:bg-[#040404] hover:bg-opacity-30 hover:rounded-md w-full p-2"
+                  className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
                 >
                   <img
                     src={track.thumbnail_image}
                     alt="음악 커버"
-                    className="w-16 h-16 rounded-md drop-shadow-lg"
+                    className="h-16 w-16 rounded-md drop-shadow-lg"
                   />
-                  <div className="flex flex-col justify-center items-center">
-                    <p className="text-white text-lg">{track.title}</p>
+                  <div className="flex flex-col items-center justify-center">
+                    <p className="text-lg text-white">{track.title}</p>
                     <p className="text-[#777777]">{track.uploader_name}</p>
                   </div>
                 </li>
