@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable consistent-return */
 
 import { getCookie } from '@/app/Cookies.tsx';
@@ -5,18 +7,16 @@ import axios from 'axios';
 
 // 모든 장르 데이터 가져오기
 const fetchGenres = async () => {
-  const accessToken = getCookie('accessToken');
-
-  console.log('accessToken:', accessToken);
-
-  const headers = {
-    Authorization: `Bearer ${accessToken}`,
-  };
-
   try {
+    const accessToken = await getCookie('accessToken');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/genres/list`,
-      { headers },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
     );
 
     if (response) {
