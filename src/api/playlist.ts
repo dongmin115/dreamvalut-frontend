@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
@@ -182,16 +183,29 @@ export async function fetchPlaylistDetail(
 ) {
   try {
     const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}?page=${pageIndex}&size=${size}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
+    if (playlistId === 'like') {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/liked/tracks`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      },
-    );
-    return response.data;
+      );
+      return response.data;
+    } else {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}?page=${pageIndex}&size=${size}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      return response.data;
+    }
   } catch (error) {
     console.error('API Fetch Error (playlist detail):', error);
     throw error;

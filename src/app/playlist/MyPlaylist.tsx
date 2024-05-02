@@ -116,22 +116,22 @@ function MyPlaylistComponent() {
   };
 
   const NewPlaylistModal = (
-    <div className="fixed inset-0 flex items-center justify-center z-40">
+    <div className="fixed inset-0 z-40 flex items-center justify-center">
       <div
-        className="fixed w-screen h-screen inset-0 bg-black opacity-90"
+        className="fixed inset-0 h-screen w-screen bg-black opacity-90"
         onClick={() => {
           setCreatePlayListModalOpen(false);
         }}
       />
-      <div className="bg-zinc-800 p-8 w-3/5 h-3/5 flex flex-col z-50 rounded-2xl border-4 drop-shadow-md border-gray-400">
-        <h1 className="text-4xl mt-16 text-white">새로운 플레이리스트</h1>
+      <div className="z-50 flex h-3/5 w-3/5 flex-col rounded-2xl border-4 border-gray-400 bg-zinc-800 p-8 drop-shadow-md">
+        <h1 className="mt-16 text-4xl text-white">새로운 플레이리스트</h1>
         <input
-          className="w-3/4 h-12 text-xl bg-zinc-800 my-24 p-4 text-gray-100 border-b border-gray-500 focus:outline-none"
+          className="my-24 h-12 w-3/4 border-b border-gray-500 bg-zinc-800 p-4 text-xl text-gray-100 focus:outline-none"
           placeholder="플레이리스트 이름을 입력하세요"
         />
-        <p className="text-sm text-zinc-600 my-6">공개 범위</p>
+        <p className="my-6 text-sm text-zinc-600">공개 범위</p>
         <div
-          className="flex flex-row items-center w-1/5 text-xl border-b border-gray-500 px-4 cursor-pointer"
+          className="flex w-1/5 cursor-pointer flex-row items-center border-b border-gray-500 px-4 text-xl"
           style={{ userSelect: 'none' }}
           onClick={() => setPublicScope(!publicScope)}
         >
@@ -145,21 +145,21 @@ function MyPlaylistComponent() {
           </IconButton>
         </div>
         {publicScope && (
-          <div className="text-sm text-zinc-600 my-6">
+          <div className="my-6 text-sm text-zinc-600">
             ! 공개 범위를 Public으로 설정하면 모든 사람들이 회원님의
             플레이리스트를 볼 수 있습니다.
           </div>
         )}
-        <div className="flex flex-row justify-end items-end w-full h-full">
+        <div className="flex h-full w-full flex-row items-end justify-end">
           <p
-            className="flex text-xl w-32 h-16 font-bold  justify-center items-center text-white m-4 cursor-pointer hover-bg-opacity hover:rounded-full"
+            className="hover-bg-opacity m-4 flex h-16 w-32  cursor-pointer items-center justify-center text-xl font-bold text-white hover:rounded-full"
             onClick={() => handleCancelClick()}
           >
             취소
           </p>
 
           <p
-            className="flex text-xl w-32 h-16 font-bold rounded-full justify-center items-center bg-white text-purple-700 m-4 cursor-pointer hover-bg-opacity hover:rounded-full"
+            className="hover-bg-opacity m-4 flex h-16 w-32 cursor-pointer items-center justify-center rounded-full bg-white text-xl font-bold text-purple-700 hover:rounded-full"
             onClick={() => handleAddPlaylist()}
           >
             확인
@@ -175,7 +175,7 @@ function MyPlaylistComponent() {
       {/* 모달창 */}
       {createPlayListModalOpen && NewPlaylistModal}
 
-      <div className="w-1/12 h-full flex flex-row justify-center items-center opacity-95 z-30 bg-gray-650 rounded-2xl">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
@@ -183,19 +183,19 @@ function MyPlaylistComponent() {
 
       <div
         className={
-          'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
+          'slide-content flex h-full w-5/6 flex-col flex-wrap items-start justify-center'
         }
         style={getSlideContentStyle(pageIndex, 6)}
       >
         {/* 플리 생성 버튼 */}
         <div
-          className="flex flex-col w-56 h-auto items-center justify-center m-4 mt-12 hover-bg-big cursor-pointer"
+          className="hover-bg-big m-4 mt-12 flex h-auto w-56 cursor-pointer flex-col items-center justify-center"
           onClick={() => setCreatePlayListModalOpen(true)}
         >
-          <div className="flex h-48 w-48 justify-center items-center bg-zinc-500 rounded-lg">
+          <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-zinc-500">
             <AddIcon color="primary" fontSize="large" />
           </div>
-          <p className="text-lg text-white text-center mt-4">
+          <p className="mt-4 text-center text-lg text-white">
             플레이리스트 생성
           </p>
         </div>
@@ -206,13 +206,13 @@ function MyPlaylistComponent() {
           image2={likePlaylistData[0]}
           image3={likePlaylistData[1]}
           title="좋아요 누른 곡"
-          Id={1}
+          Id="like"
         />
 
         {/* 내가 생성한 플리 버튼 */}
         {musicList}
       </div>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 opacity-95 bg-gray-650 rounded-2xl">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>

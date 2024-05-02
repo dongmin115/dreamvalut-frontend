@@ -3,7 +3,7 @@ export interface albumCoverUserProps {
   image2: string;
   image3: string;
   title: string;
-  Id: number;
+  Id: string;
 }
 
 export interface albumCoverSystemProps {
