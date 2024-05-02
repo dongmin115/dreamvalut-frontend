@@ -1,29 +1,22 @@
-/* eslint-disable import/no-unresolved */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-unused-vars */
 
 'use client';
 
 import React, { useState } from 'react';
-
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import ToggleButton from '@mui/material/ToggleButton';
-// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
+import { fetchGenres } from '@/api/genre.ts';
+import { Genre, GenreData } from '@/types/genre.ts';
 import { useQuery } from '@tanstack/react-query';
-// import uploadMymusic from '@/api/uploadmymusic';
-import axios from 'axios';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import uploadMymusic from '@/api/uploadmymusic.ts';
-import { fetchGenres } from '@/api/genre.ts';
-import { Genre, GenreData } from '@/types/genre.ts';
 
 const theme = createTheme({
   palette: {
@@ -75,32 +68,7 @@ const UploadMyMusic = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    const formData = new FormData();
-    // 선택된 장르를 formData에 추가합니다.
-    const trackInfo = {
-      title,
-      prompt,
-      has_lyrics: hasLyrics,
-      tags,
-      genre_id: genreId,
-    };
-
-    formData.append(
-      'track_info',
-      new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
-    );
-    // 이미지 파일 추가
-    if (trackImage !== null) {
-      formData.append('track_image', trackImage as Blob);
-    }
-
-    // 오디오 파일 추가
-    if (trackAudio !== null) {
-      formData.append('track_audio', trackAudio as Blob);
-    }
-
-    // axios를 사용하여 FormData를 서버로 보냅니다.
-    // axios를 사용하여 FormData를 서버로 보냅니다.
+    // // axios를 사용하여 FormData를 서버로 보냅니다.
     if (trackImage !== null && trackAudio !== null && genreId !== null) {
       uploadMymusic(
         title,
@@ -129,6 +97,7 @@ const UploadMyMusic = () => {
             {/* 등록할 곡 제목, 프롬프트, 가사보유여부, 곡 태그, 곡 장르, 이미지 파일&오디오 파일 업로드 */}
             <form
               id="form-data"
+              encType="multipart/form-data"
               className="flex flex-col w-full h-auto"
               onSubmit={handleSubmit}
             >
