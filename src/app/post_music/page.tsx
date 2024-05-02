@@ -69,35 +69,79 @@ const UploadMyMusic = () => {
     setHasLyrics(event.target.checked);
   };
 
+  // const handleSubmit = async (event: any) => {
+  //   event.preventDefault(); // 폼의 기본 동작을 막습니다.
+
+  //   const formData = new FormData();
+  //   // 선택된 장르를 formData에 추가합니다.
+  //   const trackInfo = {
+  //     title,
+  //     prompt,
+  //     has_lyrics: hasLyrics,
+  //     tags,
+  //     genre_id: genreId,
+  //   };
+
+  //   formData.append(
+  //     'track_info',
+  //     new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
+  //   );
+  //   // 이미지 파일 추가
+  //   if (trackImage !== null) {
+  //     formData.append('track_image', trackImage as Blob);
+  //   }
+
+  //   // 오디오 파일 추가
+  //   if (trackAudio !== null) {
+  //     formData.append('track_audio', trackAudio as Blob);
+  //   }
+
+  //   // axios를 사용하여 FormData를 서버로 보냅니다.
+
+  //   if (trackImage !== null && trackAudio !== null && genreId !== null) {
+  //     uploadMymusic(
+  //       title,
+  //       prompt,
+  //       hasLyrics,
+  //       tags,
+  //       genreId,
+  //       trackImage,
+  //       trackAudio,
+  //     );
+  //     console.log('Upload response:');
+  //   } else {
+  //     console.error('이미지 또는 오디오가 업로드 되지 않았습니다!');
+  //   }
+  // };
   const handleSubmit = async (event: any) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    const formData = new FormData();
-    // 선택된 장르를 formData에 추가합니다.
-    const trackInfo = {
-      title,
-      prompt,
-      has_lyrics: hasLyrics,
-      tags,
-      genre_id: genreId,
-    };
+    // const formData = new FormData();
+    // // 선택된 장르를 formData에 추가합니다.
+    // const trackInfo = {
+    //   title,
+    //   prompt,
+    //   has_lyrics: hasLyrics,
+    //   tags,
+    //   genre_id: genreId,
+    // };
 
-    formData.append(
-      'track_info',
-      new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
-    );
-    // 이미지 파일 추가
-    if (trackImage !== null) {
-      formData.append('track_image', trackImage as Blob);
-    }
+    // formData.append(
+    //   'track_info',
+    //   new Blob([JSON.stringify(trackInfo)], { type: 'application/json' }),
+    // );
+    // // 이미지 파일 추가
+    // if (trackImage !== null) {
+    //   formData.append('track_image', trackImage as Blob);
+    // }
 
-    // 오디오 파일 추가
-    if (trackAudio !== null) {
-      formData.append('track_audio', trackAudio as Blob);
-    }
+    // // 오디오 파일 추가
+    // if (trackAudio !== null) {
+    //   formData.append('track_audio', trackAudio as Blob);
+    // }
 
-    // axios를 사용하여 FormData를 서버로 보냅니다.
-    // axios를 사용하여 FormData를 서버로 보냅니다.
+    // // axios를 사용하여 FormData를 서버로 보냅니다.
+    // // axios를 사용하여 FormData를 서버로 보냅니다.
     if (trackImage !== null && trackAudio !== null && genreId !== null) {
       uploadMymusic(
         title,
@@ -126,6 +170,7 @@ const UploadMyMusic = () => {
             {/* 등록할 곡 제목, 프롬프트, 가사보유여부, 곡 태그, 곡 장르, 이미지 파일&오디오 파일 업로드 */}
             <form
               id="form-data"
+              encType="multipart/form-data"
               className="flex flex-col w-full h-auto"
               onSubmit={handleSubmit}
             >
