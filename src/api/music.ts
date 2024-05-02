@@ -1,18 +1,17 @@
-/* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 
 export const getMusic = async (trackId: number) => {
   try {
     const accessToken = await getCookie('accessToken');
-    const refreshToken = await getCookie('refreshToken');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}`,
       {
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
-          'x-refresh-token': refreshToken,
         },
       },
     );
@@ -22,17 +21,17 @@ export const getMusic = async (trackId: number) => {
     throw error;
   }
 };
+
 export const likes = async (trackId: number) => {
   try {
     const accessToken = await getCookie('accessToken');
-    const refreshToken = await getCookie('refreshToken');
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/likes`,
       {},
       {
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
-          'x-refresh-token': refreshToken,
         },
       },
     );
@@ -46,13 +45,12 @@ export const likes = async (trackId: number) => {
 export const disLikes = async (trackId: number) => {
   try {
     const accessToken = await getCookie('accessToken');
-    const refreshToken = await getCookie('refreshToken');
     const response = await axios.delete(
       `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/disLikes`,
       {
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${accessToken}`,
-          'x-refresh-token': refreshToken,
         },
       },
     );

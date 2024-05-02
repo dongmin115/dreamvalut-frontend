@@ -1,7 +1,8 @@
-import axios from 'axios';
-import { getCookie } from '@/app/Cookies.tsx';
 // import { Cookie } from 'next/font/google';
 // import jwt from 'jsonwebtoken';
+
+import axios from 'axios';
+import { getCookie } from '@/app/Cookies.tsx';
 
 const KakaoLogin = () => {
   const handleCallback = async () => {
