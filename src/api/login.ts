@@ -1,12 +1,12 @@
-import { getCookie } from '@/app/Cookies.tsx';
 import axios from 'axios';
+import { getCookie } from '@/app/Cookies.tsx';
 // import { Cookie } from 'next/font/google';
 // import jwt from 'jsonwebtoken';
 
 const KakaoLogin = () => {
   const handleCallback = async () => {
     // 카카오 로그인 페이지로 리다이렉트합니다.
-    window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/kakao`;
 
     try {
       // 액세스 토큰과 리프레시 토큰이 유효한 경우에만 쿠키에 저장합니다.
@@ -22,7 +22,7 @@ const KakaoLogin = () => {
       };
       try {
         const response = await axios.post(
-          'http://localhost:8080/refresh',
+          `${process.env.NEXT_PUBLIC_API_URL}/refresh`,
           {},
           {
             headers,
