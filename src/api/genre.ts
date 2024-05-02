@@ -2,8 +2,8 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable consistent-return */
 
+import { getCookie } from '@/app/Cookies.tsx';
 import axios from 'axios';
-import { getCookie } from '@/app/Cookies';
 
 // 모든 장르 데이터 가져오기
 const fetchGenres = async () => {
@@ -18,6 +18,7 @@ const fetchGenres = async () => {
         },
       },
     );
+
     if (response) {
       return response.data; // 장르 데이터 반환
     }
