@@ -175,10 +175,21 @@ export async function fetchSystemPlaylist(pageIndex: number) {
   }
 }
 
-export async function fetchPlaylistDetail(playlistId: string) {
+export async function fetchPlaylistDetail(
+  playlistId: string,
+  pageIndex: number,
+  size: number,
+) {
   try {
+    const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}?page=${pageIndex}&size=${size}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
     );
     return response.data;
   } catch (error) {
