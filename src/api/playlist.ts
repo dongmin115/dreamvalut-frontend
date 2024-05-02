@@ -1,7 +1,9 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
-import axios from 'axios';
 
-// const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/genres/list`);
+import axios from 'axios';
+import { getCookie } from '@/app/Cookies';
 
 // 특정 플레이리스트 정보 가져오기
 export async function getPlaylist() {
@@ -27,8 +29,15 @@ export async function getMyPlaylists() {
 
 export async function fetchPopularTags(pageIndex: number) {
   try {
+    const accessToken = await getCookie('accessToken');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/tags/list?page=${pageIndex}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
     );
     console.log(response.data);
     return response.data;
@@ -111,8 +120,15 @@ export async function getRecentList() {
 
 export async function fetchGenrePlaylist(pageIndex: number) {
   try {
+    const accessToken = await getCookie('accessToken');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/genres?page=${pageIndex}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
     );
     return response.data;
   } catch (error) {
@@ -123,8 +139,15 @@ export async function fetchGenrePlaylist(pageIndex: number) {
 
 export async function fetchAllPlaylist(pageIndex: number) {
   try {
+    const accessToken = await getCookie('accessToken');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=user_created&page=${pageIndex}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
     );
     return response.data;
   } catch (error) {
@@ -135,8 +158,15 @@ export async function fetchAllPlaylist(pageIndex: number) {
 
 export async function fetchSystemPlaylist(pageIndex: number) {
   try {
+    const accessToken = await getCookie('accessToken');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
     );
     return response.data;
   } catch (error) {
