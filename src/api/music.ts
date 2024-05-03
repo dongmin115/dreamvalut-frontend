@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 
-export const getMusic = async (trackId: number) => {
+export const getMusic = async (trackId: number, setIsLiked) => {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
@@ -15,6 +15,7 @@ export const getMusic = async (trackId: number) => {
         },
       },
     );
+    setIsLiked(response.data.likes_flag);
     return response.data;
   } catch (error) {
     console.error('오류 발생:', error);

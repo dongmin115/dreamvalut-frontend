@@ -132,15 +132,8 @@ export default function MusicPage(props: any) {
 
   const { data: musicData, isLoading: musicLoading } = useQuery({
     queryKey: ['music'],
-    queryFn: () => getMusic(props.params.trackId),
+    queryFn: () => getMusic(props.params.trackId, setIsLiked),
   });
-
-  // useEffect를 사용하여 데이터 로딩이 성공적으로 완료된 후에 상태를 업데이트합니다.
-  useEffect(() => {
-    if (!musicLoading) {
-      setIsLiked(musicData.likes_flag);
-    }
-  }, [musicLoading, musicData]);
 
   return (
     <ThemeProvider theme={theme}>
