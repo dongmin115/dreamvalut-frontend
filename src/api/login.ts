@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 // import { Cookie } from 'next/font/google';
 // import jwt from 'jsonwebtoken';
 
