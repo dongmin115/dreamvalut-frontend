@@ -8,12 +8,12 @@
 import { ThemeProvider } from '@emotion/react';
 import { IconButton, createTheme } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 import { Tag, TrackInfo, searchResult } from '@/types/search';
+import FavoriteButton from '@/app/components/FavoriteButton';
 
 const theme = createTheme({
   palette: {
@@ -37,6 +37,7 @@ const SearchResult = ({
   isLoading: boolean;
   keyward: string;
 }) => {
+  // 로딩중일 경우
   if (isLoading) {
     return (
       <div className="my-auto h-full w-full items-center text-center text-2xl">
@@ -44,7 +45,7 @@ const SearchResult = ({
       </div>
     );
   }
-
+  // 검색 결과가 없을 경우
   if (data && data.total_elements === 0) {
     return (
       <div className="my-auto h-fit w-full items-center text-center text-2xl">
@@ -93,10 +94,13 @@ const SearchResult = ({
             dangerouslySetInnerHTML={{ __html: e.uploader_name }}
           />
           <div className="flex w-[10%] flex-row items-center justify-center gap-2">
-            <IconButton>
-              <FavoriteIcon color="primary" fontSize="medium" />
-            </IconButton>
-            <p className="w-fit text-center text-lg">{e.likes}</p>
+            <FavoriteButton
+              color="primary"
+              fontSize="medium"
+              likes_flag={e.likes_flag}
+              track_id={e.id}
+              likes_count={e.likes}
+            />
           </div>
           <div className="w-[10%] text-center">
             <IconButton>
