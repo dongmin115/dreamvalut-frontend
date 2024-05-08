@@ -12,8 +12,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { searchResult } from '@/types/search';
 import { getCookie } from '@/app/Cookies';
+import { Tag, TrackInfo } from '@/types/search';
 
 const theme = createTheme({
   palette: {
@@ -57,10 +57,14 @@ export default function SearchPage(props: any) {
         {/* NavBar 제외영역 */}
         <div className="h-fit w-full pl-[15%]">
           <div className="flex w-full flex-col gap-8 p-[3%]">
-            <p className="w-fit text-xl">
-              <em>{decodeURIComponent(props.params.keyward)}</em> 에 대한 검색
-              결과 {data.total_elements}건 입니다.
-            </p>
+            {isLoading ? (
+              <p className="w-fit text-xl">검색결과 가져오는 중 ...</p>
+            ) : (
+              <p className="w-fit text-xl">
+                <em>{decodeURIComponent(props.params.keyward)}</em> 에 대한 검색
+                결과 {data.total_elements}건 입니다.
+              </p>
+            )}
             <div className="flex h-fit w-full flex-col gap-4 rounded-xl bg-[#353535] p-[2%]">
               <div className="flex h-fit flex-row items-center justify-around">
                 <p className="w-[60%] text-center text-xl">곡정보</p>
@@ -77,7 +81,7 @@ export default function SearchPage(props: any) {
                     가져오는중...
                   </div>
                 ) : (
-                  data.content.map((e: searchResult, i: number) => (
+                  data.content.map((e: TrackInfo, i: number) => (
                     <li
                       key={i}
                       className="flex h-fit flex-row items-center justify-around"
@@ -101,14 +105,14 @@ export default function SearchPage(props: any) {
                           {/* 태그 flexbox */}
                           <div className="flex flex-row gap-2 self-start">
                             {/* 태그 */}
-                            {/* {e.tags.map((tags, idx) => (
+                            {e.track_tags.map((tags: Tag) => (
                               <div
-                                key={idx}
-                                className="rounded-full bg-[#5419d4] p-2 text-xs w-fit"
+                                key={tags.tag_id}
+                                className="w-fit rounded-full bg-[#5419d4] p-2 text-xs"
                               >
-                                {tags}
+                                {tags.tag_name}
                               </div>
-                            ))} */}
+                            ))}
                           </div>
                           {/* 프롬프트 내용 */}
                           <p
