@@ -23,7 +23,7 @@ import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 function MyPlaylistComponent() {
   const [pageIndex, setPageIndex] = useState(0);
   const [publicScope, setPublicScope] = useState(false);
-  const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(false);
+  const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(true);
   const musicList = [];
 
   const { isLoading, data: myPlaylistData } = useQuery({
