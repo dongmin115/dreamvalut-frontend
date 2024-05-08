@@ -14,6 +14,7 @@ import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 import { Tag, TrackInfo, searchResult } from '@/types/search';
 import FavoriteButton from '@/app/components/FavoriteButton';
+import Link from 'next/link';
 
 const theme = createTheme({
   palette: {
@@ -58,56 +59,62 @@ const SearchResult = ({
   return (
     <>
       {data.content.map((e: TrackInfo, i: number) => (
-        <li key={i} className="flex h-fit flex-row items-center justify-around">
-          {/* 검색 결과 내용 */}
-          <div className="flex w-[60%] flex-row items-center justify-between gap-8">
-            <div className="flex w-fit flex-col items-center justify-center gap-4">
-              <img
-                src={e.thumbnail_image}
-                alt="cover"
-                className="size-28 rounded-sm"
-              />
-              <p
-                className="xs:text-xs w-fit text-center md:text-xs lg:text-xs xl:text-sm"
-                dangerouslySetInnerHTML={{ __html: e.title }}
-              />
-            </div>
-            <div className="flex w-[80%] flex-col items-center justify-center gap-2">
-              <div className="flex flex-row gap-2 self-start">
-                {e.track_tags.map((tags: Tag) => (
-                  <div
-                    key={tags.tag_id}
-                    className="w-fit rounded-full bg-[#5419d4] p-2 text-xs"
-                  >
-                    {tags.tag_name}
-                  </div>
-                ))}
+        <Link key={i} href={`/track/${e.id}`}>
+          <li
+            key={i}
+            className="flex h-fit flex-row items-center justify-around"
+          >
+            {/* 검색 결과 내용 */}
+            <div className="flex w-[60%] flex-row items-center justify-between gap-8">
+              <div className="flex w-fit flex-col items-center justify-center gap-4">
+                <img
+                  src={e.thumbnail_image}
+                  alt="cover"
+                  className="size-28 rounded-sm"
+                />
+                <p
+                  className="xs:text-xs w-fit text-center md:text-xs lg:text-xs xl:text-sm"
+                  dangerouslySetInnerHTML={{ __html: e.title }}
+                />
               </div>
-              <p
-                className="text-md w-full items-center"
-                dangerouslySetInnerHTML={{ __html: e.prompt }}
+              <div className="flex w-[80%] flex-col items-center justify-center gap-2">
+                <div className="flex flex-row gap-2 self-start">
+                  {e.track_tags.map((tags: Tag) => (
+                    <div
+                      key={tags.tag_id}
+                      className="w-fit rounded-full bg-[#5419d4] p-2 text-xs"
+                    >
+                      {tags.tag_name}
+                    </div>
+                  ))}
+                </div>
+                <p
+                  className="text-md w-full items-center"
+                  dangerouslySetInnerHTML={{ __html: e.prompt }}
+                />
+              </div>
+            </div>
+            <p
+              className="w-[10%] text-center text-lg text-[#777777]"
+              dangerouslySetInnerHTML={{ __html: e.uploader_name }}
+            />
+            <div className="flex w-[10%] flex-row items-center justify-center gap-2">
+              <FavoriteButton
+                color="primary"
+                fontSize="medium"
+                likes_flag={e.likes_flag}
+                track_id={e.id}
+                likes_count={e.likes}
+                count_visible={true}
               />
             </div>
-          </div>
-          <p
-            className="w-[10%] text-center text-lg text-[#777777]"
-            dangerouslySetInnerHTML={{ __html: e.uploader_name }}
-          />
-          <div className="flex w-[10%] flex-row items-center justify-center gap-2">
-            <FavoriteButton
-              color="primary"
-              fontSize="medium"
-              likes_flag={e.likes_flag}
-              track_id={e.id}
-              likes_count={e.likes}
-            />
-          </div>
-          <div className="w-[10%] text-center">
-            <IconButton>
-              <PlayArrowIcon color="primary" fontSize="large" />
-            </IconButton>
-          </div>
-        </li>
+            <div className="w-[10%] text-center">
+              <IconButton>
+                <PlayArrowIcon color="primary" fontSize="large" />
+              </IconButton>
+            </div>
+          </li>
+        </Link>
       ))}
     </>
   );
@@ -131,7 +138,6 @@ export default function SearchPage(props: any) {
           },
         },
       );
-      console.log(response.data);
       return response.data;
     },
   });

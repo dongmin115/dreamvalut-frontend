@@ -16,17 +16,20 @@ export default function FavoriteButton({
   likes_flag,
   track_id,
   likes_count,
+  count_visible,
 }: {
   color: ColorType;
   fontSize: FontSizeType;
   likes_flag: boolean;
   track_id: number;
   likes_count: number;
+  count_visible: boolean;
 }) {
   const [isLiked, setIsLiked] = useState<boolean>(likes_flag);
   const [likeCount, setLikeCount] = useState<number>(likes_count);
 
-  const onClick = () => {
+  const onClick = (e) => {
+    e.preventDefault();
     setIsLiked(!isLiked);
     if (isLiked) {
       disLikes(track_id);
@@ -45,14 +48,18 @@ export default function FavoriteButton({
           <IconButton onClick={onClick}>
             <Favorite color={color} fontSize={fontSize} />
           </IconButton>
-          <p className="w-fit text-center text-lg text-white">{likeCount}</p>
+          {count_visible ? (
+            <p className="w-fit text-center text-lg text-white">{likeCount}</p>
+          ) : null}
         </>
       ) : (
         <>
           <IconButton onClick={onClick}>
             <FavoriteBorder color={color} fontSize={fontSize} />
           </IconButton>
-          <p className="w-fit text-center text-lg text-white">{likeCount}</p>
+          {count_visible ? (
+            <p className="w-fit text-center text-lg text-white">{likeCount}</p>
+          ) : null}
         </>
       )}
     </>
