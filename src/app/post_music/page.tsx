@@ -68,7 +68,6 @@ const UploadMyMusic = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    // // axios를 사용하여 FormData를 서버로 보냅니다.
     if (trackImage !== null && trackAudio !== null && genreId !== null) {
       uploadMymusic(
         title,
@@ -87,10 +86,10 @@ const UploadMyMusic = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="pl-[15%] w-full h-screen">
-        <div className="flex w-[70%] ml-[15%] mt-[2%]">
-          <div className="flex flex-col shadow-indigo-500/100 shadow-lg items-center space-x-4 bg-[#1e1e1e] w-full rounded-xl mb-[4%]">
-            <div className="flex flex-col p-[3%] w-[90%] text-[#A97DFF] border-b border-[#727272] text-3xl text-center items-center">
+      <div className="h-screen w-full pl-[15%]">
+        <div className="ml-[15%] mt-[2%] flex w-[70%]">
+          <div className="mb-[4%] flex w-full flex-col items-center space-x-4 rounded-xl bg-[#1e1e1e] shadow-lg shadow-indigo-500/100">
+            <div className="flex w-[90%] flex-col items-center border-b border-[#727272] p-[3%] text-center text-3xl text-[#A97DFF]">
               나만의 음악 등록
             </div>
 
@@ -98,16 +97,16 @@ const UploadMyMusic = () => {
             <form
               id="form-data"
               encType="multipart/form-data"
-              className="flex flex-col w-full h-auto"
+              className="flex h-auto w-full flex-col"
               onSubmit={handleSubmit}
             >
               <div className="flex items-center justify-center ">
-                <div className="flex mt-[4%] shadow-lg w-[35%] justify-center rounded-xl shadow-neutral-400 space-x-8 p-[3%]">
-                  <div className="flex flex-col justify-center items-center">
+                <div className="mt-[4%] flex w-[35%] justify-center space-x-8 rounded-xl p-[3%] shadow-lg shadow-neutral-400">
+                  <div className="flex flex-col items-center justify-center">
                     <div className="flex justify-center">
                       <label
                         htmlFor="file"
-                        className="absolute text-2xl p-[0.4%] text-center border-2 rounded-xl border-purple-900 bg-purple-800 w-[18%] hover:bg-violet-900"
+                        className="absolute w-[18%] rounded-xl border-2 border-purple-900 bg-purple-800 p-[0.4%] text-center text-2xl hover:bg-violet-900"
                       >
                         Upload Image
                       </label>
@@ -135,7 +134,7 @@ const UploadMyMusic = () => {
                     <div className="flex justify-center">
                       <label
                         htmlFor="file"
-                        className="absolute text-2xl p-[0.4%] text-center border-2 rounded-xl border-purple-900 bg-purple-800 w-[18%] hover:bg-violet-900"
+                        className="absolute w-[18%] rounded-xl border-2 border-purple-900 bg-purple-800 p-[0.4%] text-center text-2xl hover:bg-violet-900"
                       >
                         Upload Audio
                       </label>
@@ -163,10 +162,10 @@ const UploadMyMusic = () => {
                 </div>
               </div>
               {/* 제목 */}
-              <div className="flex justify-center mt-[5%]">
+              <div className="mt-[5%] flex justify-center">
                 <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
                 <input
-                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
+                  className="w-[50%] rounded-lg border-2 border-purple-950 bg-neutral-700 p-[1%] text-white outline-none"
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -174,20 +173,20 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 프롬프트 */}
-              <div className="flex justify-center mt-[3%]">
+              <div className="mt-[3%] flex justify-center">
                 <label className="p-[1%] text-lg text-[#A97DFF] ">설명</label>
                 <textarea
-                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950 resize-none"
+                  className="w-[50%] resize-none rounded-lg border-2 border-purple-950 bg-neutral-700 p-[1%] text-white outline-none"
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                   required
                 />
               </div>
               {/* 해시태그 선택 */}
-              <div className="flex justify-center mt-[3%]">
+              <div className="mt-[3%] flex justify-center">
                 <label className="p-[1%] text-lg text-[#A97DFF]">태그</label>
                 <input
-                  className="w-[50%] p-[1%] bg-neutral-700 text-white rounded-lg outline-none border-2 border-purple-950"
+                  className="w-[50%] rounded-lg border-2 border-purple-950 bg-neutral-700 p-[1%] text-white outline-none"
                   type="text"
                   value={tags}
                   onChange={(e) =>
@@ -197,7 +196,7 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 가사 보유여부 */}
-              <div className="flex justify-center mt-[3%]">
+              <div className="mt-[3%] flex justify-center">
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -209,7 +208,7 @@ const UploadMyMusic = () => {
                 />
               </div>
               {/* 장르 선택 */}
-              <div className="flex justify-center mt-[3%]">
+              <div className="mt-[3%] flex justify-center">
                 <FormControl sx={{ m: 1, width: 300 }}>
                   <InputLabel
                     id="demo-simple-select-autowidth-label"
