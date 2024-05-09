@@ -1,4 +1,4 @@
-const KakaoLogin = () => {
+export const KakaoLogin = () => {
   const handleCallback = async () => {
     try {
       // API 호출
@@ -11,7 +11,7 @@ const KakaoLogin = () => {
   handleCallback();
 };
 
-const GoogleLogin = () => {
+export const GoogleLogin = () => {
   const handleCallback = async () => {
     try {
       // API 호출
@@ -24,7 +24,7 @@ const GoogleLogin = () => {
   handleCallback();
 };
 
-const NaverLogin = () => {
+export const NaverLogin = () => {
   const handleCallback = async () => {
     try {
       // API 호출
@@ -36,4 +36,3 @@ const NaverLogin = () => {
   // 컴포넌트가 마운트되었을 때 콜백을 실행합니다.
   handleCallback();
 };
-export { KakaoLogin, GoogleLogin, NaverLogin };

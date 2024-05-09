@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
@@ -10,11 +11,11 @@ import { IconButton, createTheme } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Divider from '@mui/material/Divider';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 import { Tag, TrackInfo, searchResult } from '@/types/search';
 import FavoriteButton from '@/app/components/FavoriteButton';
-import Link from 'next/link';
 
 const theme = createTheme({
   palette: {
@@ -62,7 +63,7 @@ const SearchResult = ({
         <Link key={i} href={`/track/${e.id}`}>
           <li
             key={i}
-            className="flex h-fit flex-row items-center justify-around"
+            className="hover-bg-opacity flex h-fit flex-row items-center justify-around gap-y-2 rounded-xl py-[1%]"
           >
             {/* 검색 결과 내용 */}
             <div className="flex w-[60%] flex-row items-center justify-between gap-8">
@@ -95,7 +96,7 @@ const SearchResult = ({
               </div>
             </div>
             <p
-              className="w-[10%] text-center text-lg text-[#777777]"
+              className="w-[10%] text-center text-lg"
               dangerouslySetInnerHTML={{ __html: e.uploader_name }}
             />
             <div className="flex w-[10%] flex-row items-center justify-center gap-2">

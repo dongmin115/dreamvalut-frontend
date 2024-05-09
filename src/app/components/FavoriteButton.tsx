@@ -4,7 +4,7 @@
 import Favorite from '@mui/icons-material/Favorite';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { IconButton, SvgIconProps } from '@mui/material';
-import { useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { disLikes, likes } from '@/api/music';
 
 type ColorType = SvgIconProps['color'];
@@ -28,7 +28,7 @@ export default function FavoriteButton({
   const [isLiked, setIsLiked] = useState<boolean>(likes_flag);
   const [likeCount, setLikeCount] = useState<number>(likes_count);
 
-  const onClick = (e) => {
+  const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLiked(!isLiked);
     if (isLiked) {
