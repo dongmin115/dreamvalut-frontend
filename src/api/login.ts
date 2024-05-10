@@ -28,7 +28,7 @@ const NaverLogin = () => {
   const handleCallback = async () => {
     try {
       // API 호출
-      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`;
+      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/naver`;
     } catch (error) {
       console.error('API 요청 받아오기 실패:', error);
     }
