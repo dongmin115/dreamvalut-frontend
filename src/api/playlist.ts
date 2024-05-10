@@ -89,9 +89,18 @@ export async function fetchMyPlaylistData() {
 
 // 내 플레이리스트 목록(썸네일) 가져오기
 export async function fetchMyPlaylistThumbnail() {
+  const accessToken = await getCookie('accessToken');
   try {
-    const response = await axios.get('/api/v1/users/playlists/created');
-    return response.data.data.playlists;
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/created?page=1&size=12`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
   } catch (error) {
     console.error('API Fetch Error (my playlists thumbnail):', error);
     throw error;
@@ -99,9 +108,19 @@ export async function fetchMyPlaylistThumbnail() {
 }
 
 export async function fetchLikePlaylistThumbnail() {
+  const accessToken = await getCookie('accessToken');
+  console.log(accessToken);
   try {
-    const response = await axios.get('/api/v1/users/liked');
-    return response.data.data.thumbnails;
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/liked`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
   } catch (error) {
     console.error('API Fetch Error (liked playlists thumbnail):', error);
     throw error;

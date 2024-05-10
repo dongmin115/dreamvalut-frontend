@@ -23,7 +23,7 @@ import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 function MyPlaylistComponent() {
   const [pageIndex, setPageIndex] = useState(0);
   const [publicScope, setPublicScope] = useState(false);
-  const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(true);
+  const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(false);
   const musicList = [];
 
   const { isLoading, data: myPlaylistData } = useQuery({
@@ -48,22 +48,22 @@ function MyPlaylistComponent() {
     }
   };
 
-  if (myPlaylistData) {
+  if (myPlaylistData.content) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
-    for (let i = 0; i < myPlaylistData.length; i += 1) {
+    for (let i = 0; i < myPlaylistData.content.length; i += 1) {
       if (myPlaylistData[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
           <Link
-            href={`/playlist/${myPlaylistData[i].playlist_name}`} // 플레이리스트 이름으로 링크, 그러나 아이디로 링크할 수도 있음(수정 가능성 있음)
+            href={`/playlist/${myPlaylistData.content[i].playlist_name}`} // 플레이리스트 이름으로 링크, 그러나 아이디로 링크할 수도 있음(수정 가능성 있음)
             className="flex w-1/6 items-center justify-center"
           >
             <AlbumCoverUser
-              image1={myPlaylistData[i].thumbnails[0]}
-              image2={myPlaylistData[i].thumbnails[1]}
-              image3={myPlaylistData[i].thumbnails[2]}
-              title={myPlaylistData[i].playlist_name}
-              Id={1}
+              image1={myPlaylistData.content[i].thumbnails[0]}
+              image2={myPlaylistData.content[i].thumbnails[1]}
+              image3={myPlaylistData.content[i].thumbnails[2]}
+              title={myPlaylistData.content[i].playlist_name}
+              Id={myPlaylistData.content[i].playlist_id}
             />
           </Link>,
         );
@@ -203,8 +203,8 @@ function MyPlaylistComponent() {
         {/* 좋아요 누른 곡 버튼 */}
         <AlbumCoverUser
           image1="https://i.ibb.co/VQycV7k/like.png"
-          image2={likePlaylistData[0]}
-          image3={likePlaylistData[1]}
+          image2={likePlaylistData.thumbnails[0]}
+          image3={likePlaylistData.thumbnails[1]}
           title="좋아요 누른 곡"
           Id="like"
         />

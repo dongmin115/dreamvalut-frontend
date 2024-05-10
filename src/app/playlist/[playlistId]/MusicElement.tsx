@@ -11,7 +11,7 @@ import { IconButton, ThemeProvider } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { fetchAddLike, fetchCancelLike } from '@/api/like.ts';
+import { likes, disLikes } from '@/api/music.ts';
 import theme from '../../styles/theme.ts';
 
 export default function MusicElement({
@@ -26,9 +26,9 @@ export default function MusicElement({
 
   const handleLike = async () => {
     if (isLiked) {
-      await fetchCancelLike(trackId);
+      await likes(trackId);
     } else {
-      await fetchAddLike(trackId);
+      await disLikes(trackId);
     }
   };
 
