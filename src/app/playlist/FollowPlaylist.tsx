@@ -39,21 +39,22 @@ function followPlaylistComponent() {
     return <div>Loading...</div>;
   }
 
-  if (data) {
+  if (data.content) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
-    for (let i = 0; i < data.length; i += 1) {
+    for (let i = 0; i < data.content.length; i += 1) {
       if (data[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
           <Link
-            href={`/playlist/${data[i].playlist_name}`} // 플레이리스트 이름으로 링크, 그러나 아이디로 링크할 수도 있음(수정 가능성 있음)
+            href={`/playlist/${data.content[i].playlist_Id}`} // 플레이리스트 이름으로 링크, 그러나 아이디로 링크할 수도 있음(수정 가능성 있음)
             className="flex w-1/6 items-center justify-center"
           >
             <AlbumCoverUser
-              image1={data[i].thumbnails[0]}
-              image2={data[i].thumbnails[1]}
-              image3={data[i].thumbnails[2]}
-              title={data[i].playlist_name}
+              image1={data.content[i].thumbnails[0]}
+              image2={data.content[i].thumbnails[1]}
+              image3={data.content[i].thumbnails[2]}
+              title={data.content[i].playlist_name}
+              Id={data.content[i].playlist_id}
             />
           </Link>,
         );
@@ -62,20 +63,20 @@ function followPlaylistComponent() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center opacity-95 z-30 bg-gray-650 rounded-2xl">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
       <div
         className={
-          'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
+          'slide-content flex h-full w-5/6 flex-col flex-wrap items-start justify-center'
         }
         style={getSlideContentStyle(pageIndex, 6)}
       >
         {musicList}
       </div>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 opacity-95 bg-gray-650 rounded-2xl">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>

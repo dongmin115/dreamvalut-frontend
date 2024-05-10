@@ -66,10 +66,18 @@ export async function fetchAddPlaylist(
 
 // 팔로우한 플레이리스트 데이터 가져오기
 export async function fetchFollowPlaylistData() {
+  const accessToken = await getCookie('accessToken');
   try {
-    const response = await axios.get('/api/v1/users/playlists/followed');
-    console.log(response.data.data.playlists);
-    return response.data.data.playlists;
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/followed?page=1&size=6`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
   } catch (error) {
     console.error('API Fetch Error (followed playlists):', error);
     throw error;

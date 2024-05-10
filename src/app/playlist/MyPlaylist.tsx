@@ -48,7 +48,7 @@ function MyPlaylistComponent() {
     }
   };
 
-  if (myPlaylistData.content) {
+  if (myPlaylistData) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
     for (let i = 0; i < myPlaylistData.content.length; i += 1) {
       if (myPlaylistData[i]) {
