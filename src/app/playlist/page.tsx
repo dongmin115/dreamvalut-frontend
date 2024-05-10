@@ -24,7 +24,7 @@ async function page() {
           {/* 시스템 플레이리스트 */}
           <h1 className="">구독한 플레이리스트</h1>
           <div className="bg-gray-650 flex h-80 w-full flex-row items-center justify-center rounded-2xl">
-            {/* <FollowSystemPlaylist /> */}
+            <FollowSystemPlaylist />
           </div>
         </div>
 

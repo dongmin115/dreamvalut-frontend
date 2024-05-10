@@ -14,6 +14,7 @@ import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
 
 function systemPlaylistComponent() {
   const [pageIndex, setPageIndex] = useState<number>(0);
+  const [data, setData] = useState<any>([]);
 
   const handleForwardClick = () => {
     if (data.length - 4 > pageIndex) {
@@ -32,13 +33,13 @@ function systemPlaylistComponent() {
   // }
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center opacity-95 z-30 bg-gray-650 rounded-2xl">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
-      <div className="w-10/12 h-full flex flex-row items-center justify-start rounded-2xl"></div>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 opacity-95 bg-gray-650 rounded-2xl">
+      <div className="flex h-full w-10/12 flex-row items-center justify-start rounded-2xl"></div>
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
