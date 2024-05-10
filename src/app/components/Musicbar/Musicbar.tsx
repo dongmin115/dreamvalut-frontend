@@ -19,7 +19,7 @@ import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/dist/client/components/navigation';
-import getMusic from '@/api/music.ts';
+import { getMusic } from '@/api/music.ts';
 import theme from '@/app/styles/theme.ts';
 import { useSharedAudio } from '../audio/Audio.tsx';
 

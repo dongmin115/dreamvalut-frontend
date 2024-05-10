@@ -3,11 +3,32 @@
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 
-const getMusic = async (trackId: number) => {
+export const getMusic = async (trackId: number, setIsLiked) => {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    setIsLiked(response.data.likes_flag);
+    return response.data;
+  } catch (error) {
+    console.error('오류 발생:', error);
+    throw error;
+  }
+};
+
+export const likes = async (trackId: number) => {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/likes`,
+      {},
       {
         headers: {
           'Content-Type': 'application/json',
@@ -21,4 +42,22 @@ const getMusic = async (trackId: number) => {
     throw error;
   }
 };
-export default getMusic;
+
+export const disLikes = async (trackId: number) => {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/disLikes`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('오류 발생:', error);
+    throw error;
+  }
+};

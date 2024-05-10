@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { getCookie } from '@/app/Cookies.tsx';
+
 const KakaoLogin = () => {
   const handleCallback = async () => {
     try {
