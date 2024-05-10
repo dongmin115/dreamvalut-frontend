@@ -14,11 +14,26 @@ import Link from 'next/link';
 // import { fetchData } from 'next-auth/client/_utils';
 import { useQuery } from '@tanstack/react-query';
 import { GenreData } from '@/types/genre.ts';
+import { Cookies } from 'react-cookie';
+import { useSearchParams } from 'next/navigation';
 import { EditfetchGenres, fetchGenres } from '../../api/genre.ts';
 
-const GenrePage = () => {
+interface ClientSearchParamSetterOptions {
+  scroll?: boolean
+  replace?: boolean
+}
+
+const GenrePage = (options: ClientSearchParamSetterOptions) => {
+  const searchParams = useSearchParams();
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
+  const cookies = new Cookies();
+
+  const accessToken = searchParams.get('accessToken');
+  const refreshToken = searchParams.get('refreshToken');
+
+  cookies.set('accessToken', accessToken, { path: '/' });
+  cookies.set('refreshToken', refreshToken, { path: '/' });
 
   const handleGenreToggle = (genre_id: number) => {
     // 변경: genre_id 타입 명시
