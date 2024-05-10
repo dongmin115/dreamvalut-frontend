@@ -76,19 +76,14 @@ const GenrePage = (options: ClientSearchParamSetterOptions) => {
   const handleNextPage = async () => {
     try {
       const access_Token = await getCookie('accessToken');
-      console.log('Sending request with genres:', selectedGenres);
-      console.log('Using access token:', access_Token);
-
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/preference`, { genre_ids: selectedGenres }, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${access_Token}`,
         },
       });
-      console.log('Server response:', response.data);
     } catch (error) {
       console.error('Error navigating to next page:', error);
-      console.log('에러!!비상비상!', error);
     }
   };
 

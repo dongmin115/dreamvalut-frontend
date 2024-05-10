@@ -24,7 +24,6 @@ const fetchGenres = async () => {
     }
   } catch (error) {
     console.error('오류 발생', error);
-    throw new Error('API 호출 중 오류 발생');
   }
 };
 
@@ -38,11 +37,9 @@ const EditfetchGenres = async () => {
       },
     });
     const genresData = response.data.data.genres;
-    console.log('데이터잘받아와쪙', genresData);
     return genresData; // 장르 데이터 반환
   } catch (error) {
     console.error('오류 발생', error);
-    throw new Error('API 호출 중 오류 발생');
   }
 };
 
