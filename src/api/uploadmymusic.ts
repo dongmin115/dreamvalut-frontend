@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+import { getCookie } from '@/app/Cookies.tsx';
 import axios from 'axios';
 
 // 특정 곡 등록하기
@@ -23,9 +24,11 @@ const uploadMymusic = async (
   formData.append('track_audio', trackAudio as Blob);
 
   try {
+    const accessToken = getCookie('accessToken');
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/tracks`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${accessToken}`,
       },
     });
     if (response.data) {
