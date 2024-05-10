@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
@@ -14,11 +15,27 @@ import Link from 'next/link';
 // import { fetchData } from 'next-auth/client/_utils';
 import { useQuery } from '@tanstack/react-query';
 import { GenreData } from '@/types/genre.ts';
+import { Cookies } from 'react-cookie';
+import { useSearchParams } from 'next/navigation';
 import { EditfetchGenres, fetchGenres } from '../../api/genre.ts';
+import { getCookie } from '../Cookies.tsx';
 
-const GenrePage = () => {
+interface ClientSearchParamSetterOptions {
+  scroll?: boolean
+  replace?: boolean
+}
+
+const GenrePage = (options: ClientSearchParamSetterOptions) => {
+  const searchParams = useSearchParams();
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
+  const cookies = new Cookies();
+
+  const accessToken = searchParams.get('accessToken');
+  const refreshToken = searchParams.get('refreshToken');
+
+  cookies.set('accessToken', accessToken, { path: '/' });
+  cookies.set('refreshToken', refreshToken, { path: '/' });
 
   const handleGenreToggle = (genre_id: number) => {
     // 변경: genre_id 타입 명시
@@ -58,8 +75,13 @@ const GenrePage = () => {
   // 내 장르 취향 설정하기
   const handleNextPage = async () => {
     try {
-      // API 호출
-      await axios.post('/api/v1/users/preference', { genres: selectedGenres });
+      const access_Token = await getCookie('accessToken');
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/preference`, { genre_ids: selectedGenres }, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access_Token}`,
+        },
+      });
     } catch (error) {
       console.error('Error navigating to next page:', error);
     }
@@ -77,7 +99,6 @@ const GenrePage = () => {
                     value={genre.genre_id}
                     onClick={() => {
                       handleGenreToggle(genre.genre_id);
-                      // fetchGenres(); // fetchGenres 호출
                     }}
                     className={`flex fade-in-box flex-col w-full h-full text-center hover-bg-opacity ${selectedGenres.includes(genre.genre_id) ? '#341672' : ''}`}
                     style={{
@@ -116,7 +137,7 @@ const GenrePage = () => {
           onClick={handleNextPage}
         >
           <ArrowForwardIosIcon color="primary" fontSize="large" />
-        </button>{' '}
+        </button>
       </Link>
     </ThemeProvider>
   );

@@ -68,7 +68,6 @@ const UploadMyMusic = () => {
   const handleSubmit = async (event: any) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    // // axios를 사용하여 FormData를 서버로 보냅니다.
     if (trackImage !== null && trackAudio !== null && genreId !== null) {
       uploadMymusic(
         title,
