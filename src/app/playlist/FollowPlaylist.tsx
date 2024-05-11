@@ -24,7 +24,7 @@ function followPlaylistComponent() {
   });
 
   const handleForwardClick = () => {
-    if (data.length - 6 > pageIndex) {
+    if (data.content.length - 6 > pageIndex) {
       setPageIndex(pageIndex + 1);
     }
   };
@@ -42,7 +42,7 @@ function followPlaylistComponent() {
   if (data.content) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
     for (let i = 0; i < data.content.length; i += 1) {
-      if (data[i]) {
+      if (data.content[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
           <Link

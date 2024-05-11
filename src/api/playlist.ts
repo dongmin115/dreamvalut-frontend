@@ -80,7 +80,7 @@ export async function fetchFollowPlaylistData() {
   const accessToken = await getCookie('accessToken');
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/followed?page=1&size=6`, // 하드코딩 수정 필요
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/followed?page=0&size=60`, // 하드코딩 수정 필요
       {
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export async function fetchMyPlaylistThumbnail() {
   const accessToken = await getCookie('accessToken');
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/created?page=1&size=12`, // 하드코딩 수정 필요
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/created?page=0&size=30`, // 하드코딩 수정 필요
       {
         headers: {
           'Content-Type': 'application/json',

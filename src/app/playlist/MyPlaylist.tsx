@@ -37,7 +37,7 @@ function MyPlaylistComponent() {
   });
 
   const handleForwardClick = () => {
-    if (myPlaylistData.length - 4 > pageIndex) {
+    if (myPlaylistData.content.length - 4 > pageIndex) {
       setPageIndex(pageIndex + 1);
     }
   };
@@ -48,10 +48,10 @@ function MyPlaylistComponent() {
     }
   };
 
-  if (myPlaylistData) {
+  if (myPlaylistData !== undefined) {
     // 데이터가 존재할 때만 PopularMusic 컴포넌트 생성
     for (let i = 0; i < myPlaylistData.content.length; i += 1) {
-      if (myPlaylistData[i]) {
+      if (myPlaylistData.content[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
           <Link
