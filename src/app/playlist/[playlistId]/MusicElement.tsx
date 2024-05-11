@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-
 'use client';
 
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable object-curly-newline */
 /* eslint-disable operator-linebreak */
 
@@ -12,6 +11,7 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { likes, disLikes } from '@/api/music.ts';
+import { useState } from 'react';
 import theme from '../../styles/theme.ts';
 
 export default function MusicElement({
@@ -21,16 +21,57 @@ export default function MusicElement({
   isLiked,
   trackId,
 }: MusicElementProps) {
-  const formattedLike =
-    like > 999 ? numeral(like).format('0.0a') : numeral(like).format('0a');
+  // const formattedLike =
+  //   like > 999 ? numeral(like).format('0.0a') : numeral(like).format('0a');
+  const [isLikedStore, setIsLikedStore] = useState(isLiked);
+  const [likeStore, setLikeStore] = useState(like);
+  const [formattedLike, setFormattedLike] = useState(
+    likeStore > 999
+      ? numeral(likeStore).format('0.0a')
+      : numeral(likeStore).format('0a'),
+  );
 
   const handleLike = async () => {
-    if (isLiked) {
-      await likes(trackId);
+    if (isLikedStore) {
+      setIsLikedStore(false);
+      setLikeStore(likeStore - 1);
+      setFormattedLike(
+        likeStore > 999
+          ? numeral(likeStore - 1).format('0.0a')
+          : numeral(likeStore - 1).format('0a'),
+      );
+      disLikes(trackId).catch(() => {
+        // API 호출이 실패하면 상태를 되돌립니다
+        setIsLikedStore(true);
+        setLikeStore(likeStore);
+        setFormattedLike(
+          likeStore > 999
+            ? numeral(likeStore).format('0.0a')
+            : numeral(likeStore).format('0a'),
+        );
+      });
     } else {
-      await disLikes(trackId);
+      setIsLikedStore(true);
+      setLikeStore(likeStore + 1);
+      setFormattedLike(
+        likeStore > 999
+          ? numeral(likeStore + 1).format('0.0a')
+          : numeral(likeStore + 1).format('0a'),
+      );
+      likes(trackId).catch(() => {
+        // API 호출이 실패하면 상태를 되돌립니다
+        setIsLikedStore(false);
+        setLikeStore(likeStore);
+        setFormattedLike(
+          likeStore > 999
+            ? numeral(likeStore).format('0.0a')
+            : numeral(likeStore).format('0a'),
+        );
+      });
     }
   };
+
+  console.log('likeStore: ', likeStore, 'formattedLike: ', formattedLike);
 
   return (
     <ThemeProvider theme={theme}>
@@ -41,7 +82,7 @@ export default function MusicElement({
         </div>
         <div className="flex w-2/12 items-center justify-center text-2xl">
           <IconButton onClick={handleLike}>
-            {isLiked ? (
+            {isLikedStore ? (
               <FavoriteIcon color="primary" fontSize="inherit" />
             ) : (
               <FavoriteBorderIcon color="primary" />

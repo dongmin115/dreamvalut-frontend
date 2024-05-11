@@ -55,8 +55,6 @@ function page(props: any) {
     };
   }, [hasNextPage, fetchNextPage]);
 
-  console.log('next? ', hasNextPage);
-
   if (isLoading || data === undefined) return <div>Loading...</div>;
   return (
     <div className="flex h-full w-full flex-col items-end justify-end overflow-hidden">
