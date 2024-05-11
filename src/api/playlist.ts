@@ -28,6 +28,7 @@ export async function getMyPlaylists() {
   }
 }
 
+// 플레이리스트 생성
 export async function fetchTags(pageIndex: number) {
   try {
     const accessToken = await getCookie('accessToken');
@@ -40,7 +41,6 @@ export async function fetchTags(pageIndex: number) {
         },
       },
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (popular tags):', error);
@@ -48,15 +48,26 @@ export async function fetchTags(pageIndex: number) {
   }
 }
 
+// 플레이리스트 생성
 export async function fetchAddPlaylist(
   playlistName: string,
   isPublic: boolean,
 ) {
   try {
-    const response = await axios.post('/api/v1/playlists', {
-      playlist_name: playlistName,
-      is_public: isPublic,
-    });
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists`,
+      {
+        playlist_name: playlistName,
+        is_public: isPublic,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (add playlist):', error);
@@ -69,7 +80,7 @@ export async function fetchFollowPlaylistData() {
   const accessToken = await getCookie('accessToken');
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/followed?page=1&size=6`,
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/followed?page=1&size=6`, // 하드코딩 수정 필요
       {
         headers: {
           'Content-Type': 'application/json',
@@ -84,23 +95,12 @@ export async function fetchFollowPlaylistData() {
   }
 }
 
-// 내 플레이리스트 데이터 가져오기
-export async function fetchMyPlaylistData() {
-  try {
-    const response = await axios.get('/api/v1/users/playlists');
-    return response.data.data.playlists;
-  } catch (error) {
-    console.error('API Fetch Error (my playlists):', error);
-    throw error;
-  }
-}
-
 // 내 플레이리스트 목록(썸네일) 가져오기
 export async function fetchMyPlaylistThumbnail() {
   const accessToken = await getCookie('accessToken');
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/created?page=1&size=12`,
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/created?page=1&size=12`, // 하드코딩 수정 필요
       {
         headers: {
           'Content-Type': 'application/json',
@@ -115,9 +115,9 @@ export async function fetchMyPlaylistThumbnail() {
   }
 }
 
+// 좋아요한 플레이리스트 목록(썸네일) 가져오기
 export async function fetchLikePlaylistThumbnail() {
   const accessToken = await getCookie('accessToken');
-  console.log(accessToken);
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/users/liked`,
@@ -146,6 +146,7 @@ export async function getRecentList() {
   }
 }
 
+// 장르별 플레이리스트 목록 가져오기
 export async function fetchGenrePlaylist(pageIndex: number) {
   try {
     const accessToken = await getCookie('accessToken');
@@ -165,6 +166,7 @@ export async function fetchGenrePlaylist(pageIndex: number) {
   }
 }
 
+// 모든 플레이리스트 목록 가져오기
 export async function fetchAllPlaylist(pageIndex: number) {
   try {
     const accessToken = await getCookie('accessToken');
@@ -184,6 +186,7 @@ export async function fetchAllPlaylist(pageIndex: number) {
   }
 }
 
+// 시스템 플레이리스트 목록 가져오기
 export async function fetchSystemPlaylist(pageIndex: number) {
   try {
     const accessToken = await getCookie('accessToken');
@@ -203,6 +206,7 @@ export async function fetchSystemPlaylist(pageIndex: number) {
   }
 }
 
+// 플레이리스트 상세 정보 가져오기
 export async function fetchPlaylistDetail(
   playlistId: string,
   pageIndex: number,
