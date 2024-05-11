@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 
-export const getMusic = async (trackId: number, setIsLiked) => {
+export const getMusic = async (trackId: number, setIsLiked: any) => {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
@@ -23,7 +23,7 @@ export const getMusic = async (trackId: number, setIsLiked) => {
   }
 };
 
-export const likes = async (trackId: number) => {
+export const likes = async (trackId: string) => {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.post(
@@ -43,7 +43,7 @@ export const likes = async (trackId: number) => {
   }
 };
 
-export const disLikes = async (trackId: number) => {
+export const disLikes = async (trackId: string) => {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.delete(
