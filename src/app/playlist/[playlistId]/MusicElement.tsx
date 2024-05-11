@@ -71,8 +71,6 @@ export default function MusicElement({
     }
   };
 
-  console.log('likeStore: ', likeStore, 'formattedLike: ', formattedLike);
-
   return (
     <ThemeProvider theme={theme}>
       <div className="hover-bg-opacity flex w-full flex-row items-center justify-start py-4">
