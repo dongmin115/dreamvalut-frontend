@@ -623,6 +623,11 @@
   dependencies:
     tslib "^2.4.0"
 
+"@sweetalert2/theme-dark@^5.0.16":
+  version "5.0.16"
+  resolved "https://registry.yarnpkg.com/@sweetalert2/theme-dark/-/theme-dark-5.0.16.tgz#2b423df3ab5031a47214f733425e63aa381655ef"
+  integrity sha512-SFXEVfp9jmaBLhYEeRilrcpQP/sQimfjtZdvazJ+l5jEdNVKDkPD/CD3T7V8VqUqk/q2zUBSvr0WOMrHoAvfCA==
+
 "@tanstack/query-core@5.29.0":
   version "5.29.0"
   resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.29.0.tgz#d0b3d12c07d5a47f42ab0c1ed4f317106f3d4b20"
