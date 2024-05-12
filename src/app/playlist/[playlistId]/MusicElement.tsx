@@ -21,8 +21,6 @@ export default function MusicElement({
   isLiked,
   trackId,
 }: MusicElementProps) {
-  // const formattedLike =
-  //   like > 999 ? numeral(like).format('0.0a') : numeral(like).format('0a');
   const [isLikedStore, setIsLikedStore] = useState(isLiked);
   const [likeStore, setLikeStore] = useState(like);
   const [formattedLike, setFormattedLike] = useState(

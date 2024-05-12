@@ -216,7 +216,7 @@ export async function fetchPlaylistDetail(
     const accessToken = await getCookie('accessToken');
     if (playlistId === 'like') {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/liked/tracks`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/liked/tracks?page=${pageIndex}&size=${size}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -239,6 +239,32 @@ export async function fetchPlaylistDetail(
     }
   } catch (error) {
     console.error('API Fetch Error (playlist detail):', error);
+    throw error;
+  }
+}
+
+// 플레이리스트 수정
+export async function patchPlaylistName(
+  playlistId: string,
+  playlistName: string,
+) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.patch(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}`,
+      {
+        playlist_name: playlistName,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (patch playlist name):', error);
     throw error;
   }
 }

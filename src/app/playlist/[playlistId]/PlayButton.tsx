@@ -9,7 +9,7 @@ import theme from '../../styles/theme.ts';
 function PlayButton(playlistId: any) {
   return (
     <ThemeProvider theme={theme}>
-      <IconButton className="mx-28">
+      <IconButton className="mx-8">
         <PlayCircleIcon color="primary" style={{ fontSize: 60, opacity: 1 }} />
       </IconButton>
     </ThemeProvider>
