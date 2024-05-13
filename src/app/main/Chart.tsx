@@ -9,24 +9,24 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
-import { getSlideContentStyle } from '@/app/styles/SlideStyles.ts';
+import { getSlideContentStyle } from '@/app/styles/slide.ts';
 import { chartProps } from '../../types/chart.ts';
 import { fetchChartData } from '../../api/chart.ts';
 import theme from '../styles/theme.ts';
 
 function MusicElement({ ranking, thumnailImage, title }: chartProps) {
   return (
-    <div className="w-[24%] h-1/4 flex flex-row justify-start items-center m-2 cursor-pointer hover-bg-opacity">
+    <div className="hover-bg-opacity m-2 flex h-1/4 w-[24%] cursor-pointer flex-row items-center justify-start">
       {/* 순위 */}
-      <p className="w-16 text-right text-4xl mt-6 drop-shadow-text z-10 -mr-4">
+      <p className="drop-shadow-text z-10 -mr-4 mt-6 w-16 text-right text-4xl">
         {ranking}
       </p>
       {/* 앨범 커버 */}
       <Image width={64} height={64} alt="Album Cover" src={thumnailImage} />
 
       {/* 음악 정보 */}
-      <div className="flex flex-col justify-center ml-4">
-        <p className="text-xl w-full z-10">{title}</p>
+      <div className="ml-4 flex flex-col justify-center">
+        <p className="z-10 w-full text-xl">{title}</p>
       </div>
     </div>
   );
@@ -71,20 +71,20 @@ function ChartMusicComponent() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
       <div
         className={
-          'w-5/6 h-full flex flex-col flex-wrap justify-center items-start slide-content'
+          'slide-content flex h-full w-5/6 flex-col flex-wrap items-start justify-center'
         }
         style={getSlideContentStyle(pageIndex, 4)}
       >
         {isLoading ? <div>Loading...</div> : musicList}
       </div>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>

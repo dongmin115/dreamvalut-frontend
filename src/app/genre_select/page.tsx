@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
@@ -17,6 +18,7 @@ import { GenreData } from '@/types/genre.ts';
 import { Cookies } from 'react-cookie';
 import { useSearchParams } from 'next/navigation';
 import { EditfetchGenres, fetchGenres } from '../../api/genre.ts';
+import { getCookie } from '../Cookies.tsx';
 
 interface ClientSearchParamSetterOptions {
   scroll?: boolean
@@ -73,8 +75,13 @@ const GenrePage = (options: ClientSearchParamSetterOptions) => {
   // 내 장르 취향 설정하기
   const handleNextPage = async () => {
     try {
-      // API 호출
-      await axios.post('/api/v1/users/preference', { genres: selectedGenres });
+      const access_Token = await getCookie('accessToken');
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/preference`, { genre_ids: selectedGenres }, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${access_Token}`,
+        },
+      });
     } catch (error) {
       console.error('Error navigating to next page:', error);
     }
@@ -92,7 +99,6 @@ const GenrePage = (options: ClientSearchParamSetterOptions) => {
                     value={genre.genre_id}
                     onClick={() => {
                       handleGenreToggle(genre.genre_id);
-                      // fetchGenres(); // fetchGenres 호출
                     }}
                     className={`flex fade-in-box flex-col w-full h-full text-center hover-bg-opacity ${selectedGenres.includes(genre.genre_id) ? '#341672' : ''}`}
                     style={{
@@ -131,7 +137,7 @@ const GenrePage = (options: ClientSearchParamSetterOptions) => {
           onClick={handleNextPage}
         >
           <ArrowForwardIosIcon color="primary" fontSize="large" />
-        </button>{' '}
+        </button>
       </Link>
     </ThemeProvider>
   );

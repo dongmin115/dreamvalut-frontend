@@ -2,15 +2,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 import { albumCoverUserProps } from '@/types/albumCover.ts';
+import Link from 'next/link';
 
 function AlbumCoverUser({
   image1,
   image2,
   image3,
   title,
+  Id,
 }: albumCoverUserProps) {
   return (
-    <div className="flex flex-col w-56 h-80 items-center justify-center m-4 cursor-pointer hover-bg-opacity pt-8 p-1">
+    <Link
+      href={`playlist/${Id}`}
+      className="flex flex-col w-56 h-80 items-center justify-center m-4 cursor-pointer hover-bg-opacity pt-8 p-1"
+    >
       {/* <Image
         src={image1}
         alt="Album cover"
@@ -48,7 +53,7 @@ function AlbumCoverUser({
         className="h-40 w-40 rounded-lg -mt-48 z-10"
       />
       <p className="text-lg h-16 text-white text-center mt-20">{title}</p>
-    </div>
+    </Link>
   );
 }
 

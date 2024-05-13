@@ -20,6 +20,7 @@ import {
   popularTagsData,
 } from './handlers/playlistHandlers';
 import { searchHandlers } from './handlers/searchHandlers';
+import { AddLikeData, CancelLikeData } from './handlers/likeHandler';
 
 export const server = setupServer(
   ...handlers,
@@ -36,4 +37,6 @@ export const server = setupServer(
   ...followPlaylistData,
   ...getRecentList,
   ...popularTagsData,
+  ...AddLikeData,
+  ...CancelLikeData,
 );

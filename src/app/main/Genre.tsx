@@ -15,6 +15,7 @@ import { useQuery } from '@tanstack/react-query';
 import { GenreMusicProps } from '../../types/genre.ts';
 import theme from '../styles/theme.ts';
 import { fetchGenrePlaylist } from '../../api/playlist.ts';
+import './GenreColorArr.css';
 
 // 1부터 n까지의 정수를 포함하는 배열을 생성하는 함수
 function rangeArray(n: number): number[] {
@@ -48,15 +49,15 @@ function GenreMusic({
   ];
 
   return (
-    <div className="flex flex-row justify-center items-center w-72 h-full my-12">
+    <div className="my-12 flex h-full w-72 flex-row items-center justify-center">
       <div
-        className={`flex flex-col rounded-2xl w-full h-full bg-genre-${bgColor} mx-4`}
+        className={`flex h-full w-full flex-col rounded-2xl bg-genre-${bgColor} mx-4`}
       >
         {/* 위에 단색 배경바 */}
         <div
-          className={`flex flex-row items-center w-full h-20 p-6 rounded-t-2xl bg-nv-${bgColor}`}
+          className={`flex h-20 w-full flex-row items-center rounded-t-2xl p-6 bg-nv-${bgColor}`}
         >
-          <p className="w-10/12 text-md text-black font-bold">{genre}</p>
+          <p className="text-md w-10/12 font-bold text-black">{genre}</p>
           <IconButton>
             <PlayCircleIcon style={{ fontSize: 50, opacity: 0.7 }} />
           </IconButton>
@@ -66,10 +67,10 @@ function GenreMusic({
         {musicList.map((music, index) => (
           <div
             key={index}
-            className="flex flex-row w-11/12 h-1/3 items-center justify-start m-2 p-1 cursor-pointer hover-bg-opacity hover:bg-opacity-90"
+            className="hover-bg-opacity m-2 flex h-1/3 w-11/12 cursor-pointer flex-row items-center justify-start p-1 hover:bg-opacity-90"
           >
             <img
-              className="w-1/3 m-2"
+              className="m-2 w-1/3"
               src={music.image}
               alt={`Music ${index + 1}`}
             />
@@ -113,12 +114,12 @@ function GenreMusicComponent() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
-      <div className="w-10/12 h-full flex flex-row items-center justify-start py-8">
+      <div className="flex h-full w-10/12 flex-row items-center justify-start py-8">
         {/* content[0] 배열 내용 */}
         {data.content[0] && (
           <GenreMusic
@@ -172,7 +173,7 @@ function GenreMusicComponent() {
           />
         )}
       </div>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>

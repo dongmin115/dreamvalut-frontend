@@ -22,6 +22,7 @@ import {
   takemygenrehandlers,
 } from './handlers/genreHandlers';
 import { searchHandlers } from './handlers/searchHandlers';
+import { AddLikeData, CancelLikeData } from './handlers/likeHandler';
 
 export const worker = setupWorker(
   ...chartHandlers,
@@ -39,4 +40,6 @@ export const worker = setupWorker(
   ...followPlaylistData,
   ...getRecentList,
   ...popularTagsData,
+  ...AddLikeData,
+  ...CancelLikeData,
 );
