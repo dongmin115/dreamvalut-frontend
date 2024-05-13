@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-const KakaoLogin = () => {
+export const KakaoLogin = () => {
   const handleCallback = async () => {
     try {
       // API 호출
