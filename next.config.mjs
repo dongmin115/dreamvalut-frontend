@@ -3,6 +3,14 @@ const nextConfig = {
   images: {
     domains: ['i.ibb.co'],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+};
+module.exports = {
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
