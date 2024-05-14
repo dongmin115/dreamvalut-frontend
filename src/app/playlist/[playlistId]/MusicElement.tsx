@@ -13,6 +13,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { likes, disLikes } from '@/api/music.ts';
 import { useState } from 'react';
 import Link from 'next/link';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Swal from 'sweetalert2';
+import { deleteTrack } from '@/api/playlist.ts';
 import theme from '../../styles/theme.ts';
 
 export default function MusicElement({
@@ -21,8 +24,12 @@ export default function MusicElement({
   like,
   isLiked,
   trackId,
+  playlistId,
+  isEdit,
 }: MusicElementProps) {
   const [isLikedStore, setIsLikedStore] = useState(isLiked);
+  const [deleteAnimation, setDeleteAnimation] = useState(false);
+  const [isTrack, setIsTrack] = useState(true);
   const [likeStore, setLikeStore] = useState(like);
   const [formattedLike, setFormattedLike] = useState(
     likeStore > 999
@@ -70,36 +77,89 @@ export default function MusicElement({
     }
   };
 
+  const clearMusic = () => {
+    Swal.fire({
+      title: '정말 삭제 하시겠어요?',
+      text: '삭제하면 되돌릴 수 없어요!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#777',
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        popup: 'swal2-dark', // 여기에 다크 테마 클래스 추가
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteTrack(playlistId, trackId)
+          .then(() => {
+            console.log('음악 삭제 성공');
+            setDeleteAnimation(true);
+            setTimeout(() => {
+              setIsTrack(false);
+            }, 500);
+          })
+          .catch(() => {
+            console.log('음악 삭제 실패');
+          });
+      }
+    });
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <div className="hover-bg-opacity flex w-full flex-row items-center justify-start py-4">
-        <Link
-          href={`/track/${trackId}`}
-          className="flex w-full flex-row items-center px-12"
+      {isTrack && (
+        <div
+          className={`hover-bg-opacity flex w-full flex-row items-center justify-start py-4 ${deleteAnimation ? 'transform-playlist-delete' : null} `}
         >
-          <img src={image} alt="Album cover" className="h-24 w-24 rounded-lg" />
-          <p className="mx-6 flex text-2xl">{title}</p>
-        </Link>
-        <div className="flex w-2/12 items-center justify-center text-2xl">
-          <IconButton onClick={handleLike}>
-            {isLikedStore ? (
-              <FavoriteIcon color="primary" fontSize="inherit" />
+          <div
+            className={`flex items-center justify-center ${isEdit ? 'transform-playlist-edit transform-playlist-opacity' : 'transform-playlist-normal opacity-0'}`}
+          >
+            {isEdit ? (
+              <IconButton className="mx-2" onClick={clearMusic}>
+                <CancelIcon
+                  className="h-10 w-10"
+                  color="error"
+                  fontSize="large"
+                />
+              </IconButton>
             ) : (
-              <FavoriteBorderIcon color="primary" />
+              <div className="w-14" />
             )}
-          </IconButton>
-
-          {formattedLike}
-        </div>
-        <div className="flex w-24 items-center justify-center">
-          <IconButton>
-            <PlayCircleIcon
-              color="primary"
-              style={{ fontSize: 50, opacity: 1 }}
+          </div>
+          <Link
+            href={`/track/${trackId}`}
+            className={`flex w-full flex-row items-center ${isEdit ? 'transform-playlist-edit' : 'transform-playlist-normal'}`}
+          >
+            <img
+              src={image}
+              alt="Album cover"
+              className="h-24 w-24 rounded-lg"
             />
-          </IconButton>
+            <p className="mx-6 flex text-2xl">{title}</p>
+          </Link>
+
+          <div className="flex w-2/12 items-center justify-center text-2xl">
+            <IconButton onClick={handleLike}>
+              {isLikedStore ? (
+                <FavoriteIcon color="primary" fontSize="inherit" />
+              ) : (
+                <FavoriteBorderIcon color="primary" />
+              )}
+            </IconButton>
+
+            {formattedLike}
+          </div>
+          <div className="flex w-24 items-center justify-center">
+            <IconButton>
+              <PlayCircleIcon
+                color="primary"
+                style={{ fontSize: 50, opacity: 1 }}
+              />
+            </IconButton>
+          </div>
         </div>
-      </div>
+      )}
     </ThemeProvider>
   );
 }

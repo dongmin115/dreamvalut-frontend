@@ -10,6 +10,10 @@ const theme = createTheme({
       // 흰색
       main: '#ffffff',
     },
+    error: {
+      // 빨간색
+      main: '#FF4444',
+    },
   },
 });
 

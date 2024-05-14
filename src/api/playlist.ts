@@ -288,3 +288,64 @@ export async function deletePlaylist(playlistId: string) {
     throw error;
   }
 }
+
+// 플레이리스트 팔로우
+export async function postFollow(playlistId: string) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}/follow`,
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (follow playlist):', error);
+    throw error;
+  }
+}
+
+// 플레이리스트 언팔로우
+export async function deleteFollow(playlistId: string) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}/follow`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (unfollow playlist):', error);
+    throw error;
+  }
+}
+
+// 나의 플레이리스트에서 음악 삭제
+export async function deleteTrack(playlistId: string, trackId: string) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}/tracks/${trackId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (delete music from playlist):', error);
+    throw error;
+  }
+}
