@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-unused-vars */
 
@@ -17,6 +18,7 @@ import { useQuery } from '@tanstack/react-query';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import uploadMymusic from '@/api/uploadmymusic.ts';
+import Swal from 'sweetalert2';
 
 const theme = createTheme({
   palette: {
@@ -65,25 +67,39 @@ const UploadMyMusic = () => {
     setHasLyrics(event.target.checked);
   };
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    if (trackImage !== null && trackAudio !== null && genreId !== null) {
-      uploadMymusic(
-        title,
-        prompt,
-        hasLyrics,
-        tags,
-        genreId,
-        trackImage,
-        trackAudio,
-      );
-      console.log('Upload response:');
+    if (title && prompt && tags.length > 1 && genreId !== null && trackImage !== null && trackAudio !== null) {
+      try {
+        const response = await uploadMymusic(
+          title,
+          prompt,
+          hasLyrics,
+          tags,
+          genreId,
+          trackImage,
+          trackAudio,
+        );
+        console.log('Upload response:', response);
+      } catch (error) {
+        console.error('업로드 중 오류가 발생했습니다!', error);
+        Swal.fire({
+          title: '업로드 오류',
+          text: '업로드 중 오류가 발생했습니다. 다시 시도해 주세요.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
+      }
     } else {
-      console.error('이미지 또는 오디오가 업로드 되지 않았습니다!');
+      Swal.fire({
+        title: '입력 오류',
+        text: '모든 필드를 입력해 주세요.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <div className="h-screen w-full pl-[15%]">
