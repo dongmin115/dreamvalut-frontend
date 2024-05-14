@@ -7,7 +7,7 @@
 import { MusicElementProps } from '@/types/playlist.ts';
 import numeral from 'numeral';
 import { IconButton, ThemeProvider } from '@mui/material';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { likes, disLikes } from '@/api/music.ts';
@@ -152,10 +152,7 @@ export default function MusicElement({
           </div>
           <div className="flex w-24 items-center justify-center">
             <IconButton>
-              <PlayCircleIcon
-                color="primary"
-                style={{ fontSize: 50, opacity: 1 }}
-              />
+              <PlayArrowIcon color="primary" fontSize="large" />
             </IconButton>
           </div>
         </div>

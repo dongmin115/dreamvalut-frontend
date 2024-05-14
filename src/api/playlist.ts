@@ -243,6 +243,30 @@ export async function fetchPlaylistDetail(
   }
 }
 
+// 태그 상세정보 가져오기
+export async function fetchTagDetail(
+  tagId: string,
+  pageIndex: number,
+  size: number,
+) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/tags/${tagId}/tracks?page=${pageIndex}&size=${size}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (tag detail):', error);
+    throw error;
+  }
+}
+
 // 플레이리스트 수정
 export async function patchPlaylistName(
   playlistId: string,
