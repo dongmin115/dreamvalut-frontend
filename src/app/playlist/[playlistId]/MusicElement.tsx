@@ -12,6 +12,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { likes, disLikes } from '@/api/music.ts';
 import { useState } from 'react';
+import Link from 'next/link';
 import theme from '../../styles/theme.ts';
 
 export default function MusicElement({
@@ -72,10 +73,13 @@ export default function MusicElement({
   return (
     <ThemeProvider theme={theme}>
       <div className="hover-bg-opacity flex w-full flex-row items-center justify-start py-4">
-        <div className="flex w-full flex-row items-center px-12">
+        <Link
+          href={`/track/${trackId}`}
+          className="flex w-full flex-row items-center px-12"
+        >
           <img src={image} alt="Album cover" className="h-24 w-24 rounded-lg" />
           <p className="mx-6 flex text-2xl">{title}</p>
-        </div>
+        </Link>
         <div className="flex w-2/12 items-center justify-center text-2xl">
           <IconButton onClick={handleLike}>
             {isLikedStore ? (
