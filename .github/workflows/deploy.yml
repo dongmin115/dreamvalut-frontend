@@ -1,0 +1,49 @@
+name: Next.js deployment with AWS S3 and CloudFront
+
+# Main 브랜치에 push(+merge)가 발생할 때, workflow가 실행되도록 설정
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  cloudfront-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Main 브랜치의 코드를 가져옴
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Github Actions 환경에 Node.js 설치
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21
+
+      # Github Secrets에 저장된 환경변수를 .env 파일로 생성
+      - name: Make .env
+        run: |
+          touch ./.env
+          echo "${{ secrets.ENV_VARIABLES }}" > ./.env
+        shell: bash
+
+      # Yarn 설치 및 빌드
+      - name: Build with Yarn
+        run: |
+          npm install -g yarn
+          yarn install --frozen-lockfile
+          yarn build
+
+      # AWS CLI 설치 및 AWS S3, CloudFront에 배포
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}         
+
+      - name: Deploy to S3
+        run: aws s3 sync ./${{ secrets.BUILD_DIRECTORY }} s3://${{ secrets.AWS_S3_BUCKET_NAME }} --delete
+
+      - name: CloudFront Invalidate Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'

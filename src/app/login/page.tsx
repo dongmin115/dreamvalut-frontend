@@ -7,7 +7,7 @@
 'use client';
 
 import React from 'react';
-import { KakaoLogin, GoogleLogin, NaverLogin } from '@/api/login.ts';
+import { KakaoLogin, NaverLogin, GoogleLogin } from '@/api/login.ts';
 
 // 클라이언트 코드에서 실제 서버로 POST 요청을 보내는 방식
 const LogIn = () => (
@@ -28,7 +28,7 @@ const LogIn = () => (
           alt="googleimage"
           className="h-10 w-10 rounded-full"
         />
-        <button onClick={GoogleLogin} className="text-xl ml-10">
+        <button onClick={GoogleLogin} className="ml-10 text-xl">
           구글로 로그인
         </button>
       </div>
@@ -50,7 +50,7 @@ const LogIn = () => (
           className="h-10 w-10 rounded-full"
         />
 
-         <button onClick={NaverLogin} className="text-xl ml-10">
+        <button onClick={NaverLogin} className="ml-10 text-xl">
           네이버로 로그인
         </button>
       </div>
