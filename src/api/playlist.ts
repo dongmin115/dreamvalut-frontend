@@ -268,3 +268,23 @@ export async function patchPlaylistName(
     throw error;
   }
 }
+
+// 플레이리스트 삭제
+export async function deletePlaylist(playlistId: string) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (delete playlist):', error);
+    throw error;
+  }
+}

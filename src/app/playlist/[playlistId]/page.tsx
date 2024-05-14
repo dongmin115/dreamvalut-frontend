@@ -10,7 +10,11 @@
 
 'use client';
 
-import { fetchPlaylistDetail, patchPlaylistName } from '@/api/playlist.ts';
+import {
+  deletePlaylist,
+  fetchPlaylistDetail,
+  patchPlaylistName,
+} from '@/api/playlist.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { IconButton, ThemeProvider } from '@mui/material';
@@ -20,10 +24,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
 function page(props: any) {
+  const router = useRouter();
   const playlistId = decodeURIComponent(props.params.playlistId);
   const renderSize = 12;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -71,6 +78,36 @@ function page(props: any) {
       if (loadMoreRef.current) observer.disconnect();
     };
   }, [hasNextPage, fetchNextPage]);
+
+  const handleDeletePlaylist = async () => {
+    setEditOpen(false);
+    handleClose();
+    Swal.fire({
+      title: '정말 삭제 하시겠어요?',
+      text: '삭제하면 되돌릴 수 없어요!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#777',
+      confirmButtonText: 'Yes, delete it!',
+      customClass: {
+        popup: 'swal2-dark', // 여기에 다크 테마 클래스 추가
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '삭제 완료',
+          text: '플레이리스트가 삭제 되었습니다!',
+          icon: 'success',
+          customClass: {
+            popup: 'swal2-dark', // 여기에 다크 테마 클래스 추가
+          },
+        });
+        deletePlaylist(playlistId);
+        router.push('/playlist');
+      }
+    });
+  };
 
   useEffect(() => {
     if (data === undefined) return;
@@ -136,7 +173,10 @@ function page(props: any) {
                   <EditIcon className="mx-2" />
                   플레이리스트 이름 수정
                 </MenuItem>
-                <MenuItem className="h-12 text-lg" onClick={handleClose}>
+                <MenuItem
+                  className="h-12 text-lg"
+                  onClick={handleDeletePlaylist}
+                >
                   <DeleteIcon className="mx-2" />
                   플레이리스트 삭제
                 </MenuItem>
