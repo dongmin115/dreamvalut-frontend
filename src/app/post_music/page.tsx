@@ -70,7 +70,8 @@ const UploadMyMusic = () => {
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    if (title && prompt && tags.length > 1 && genreId !== null && trackImage !== null && trackAudio !== null) {
+    if (title && prompt &&  tags !== null &&
+      tags.length > 0 && genreId !== null && trackImage !== null && trackAudio !== null) {
       try {
         const response = await uploadMymusic(
           title,
