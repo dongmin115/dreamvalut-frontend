@@ -1,6 +1,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './styles/globals.css';
@@ -23,6 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const trackId = 123;
   return (
     <html lang="ko">
       <body className={inter.className}>
@@ -35,7 +37,7 @@ export default function RootLayout({
           <QueryProviders>
             <SharedAudioProvider>
               {children}
-              <MusicBar />
+              <MusicBar trackId={trackId} />
             </SharedAudioProvider>
             <NavigationBar />
           </QueryProviders>

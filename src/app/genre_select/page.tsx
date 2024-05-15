@@ -18,12 +18,13 @@ import { useSearchParams } from 'next/navigation';
 import { fetchGenres } from '../../api/genre.ts';
 import { getCookie } from '../Cookies.tsx';
 
-interface ClientSearchParamSetterOptions {
-  scroll?: boolean;
-  replace?: boolean;
-}
+// interface ClientSearchParamSetterOptions {
+//   scroll?: never;
+//   replace?: never;
+// }
+// options: ClientSearchParamSetterOptions
 
-const GenrePageContent = (options: ClientSearchParamSetterOptions) => {
+const GenrePageContent = () => {
   const searchParams = useSearchParams();
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<GenreData[]>([]); // 변경: genres 상태 타입 수정
@@ -35,22 +36,22 @@ const GenrePageContent = (options: ClientSearchParamSetterOptions) => {
   cookies.set('accessToken', accessToken, { path: '/' });
   cookies.set('refreshToken', refreshToken, { path: '/' });
 
-  // const handleGenreToggle = (genre_id: number) => {
-  //   // 변경: genre_id 타입 명시
-  //   if (selectedGenres.includes(genre_id)) {
-  //     setSelectedGenres(selectedGenres.filter((id) => id !== genre_id));
-  //   } else {
-  //     setSelectedGenres([...selectedGenres, genre_id]);
-  //   }
-  // };
-
   const handleGenreToggle = (genre_id: number) => {
+    // 변경: genre_id 타입 명시
     if (selectedGenres.includes(genre_id)) {
       setSelectedGenres(selectedGenres.filter((id) => id !== genre_id));
     } else {
       setSelectedGenres([...selectedGenres, genre_id]);
     }
   };
+
+  // const handleGenreToggle = (genre_id: number) => {
+  //   if (selectedGenres.includes(genre_id)) {
+  //     setSelectedGenres(selectedGenres.filter((id) => id !== genre_id));
+  //   } else {
+  //     setSelectedGenres([...selectedGenres, genre_id]);
+  //   }
+  // };
 
   const { data } = useQuery({
     queryKey: ['genres'],
@@ -153,10 +154,12 @@ const GenrePageContent = (options: ClientSearchParamSetterOptions) => {
   );
 };
 
-const GenrePage = (options: ClientSearchParamSetterOptions) => {
+// options: ClientSearchParamSetterOptions
+const GenrePage = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <GenrePageContent {...options} />
+      {/* <GenrePageContent {...options} /> */}
+      <GenrePageContent />
     </Suspense>
   );
 };

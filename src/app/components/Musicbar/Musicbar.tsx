@@ -23,8 +23,12 @@ import { getMusic } from '@/api/music.ts';
 import theme from '@/app/styles/theme.ts';
 import { useSharedAudio } from '../audio/Audio.tsx';
 
+interface MusicBarProps {
+  trackId: number;
+}
+
 /* eslint-disable @next/next/no-img-element */
-export default function MusicBar(trackId: number) {
+export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
   const path = usePathname();
   if (
     path === '/' ||
@@ -96,7 +100,7 @@ export default function MusicBar(trackId: number) {
 
   const { data } = useQuery({
     queryKey: ['music'],
-    queryFn: () => getMusic(trackId),
+    queryFn: () => getMusic(trackId, setIsLiked),
   });
 
   return data ? (
