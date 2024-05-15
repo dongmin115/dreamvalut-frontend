@@ -115,8 +115,10 @@ function page(props: any) {
   };
 
   useEffect(() => {
-    if (data === undefined) return;
-    setPlaylistName(data.pages['0'].playlist_name);
+    if (data !== undefined) {
+      setPlaylistName(data.pages['0'].playlist_name);
+      setIsFollow(data.pages['0'].is_follow);
+    }
   }, [data]);
 
   if (isLoading || data === undefined) return <div>Loading...</div>;
