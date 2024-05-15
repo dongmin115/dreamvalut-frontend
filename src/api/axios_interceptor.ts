@@ -1,7 +1,8 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
-import { getCookie } from '@/app/Cookies';
+import { getCookie, setCookie } from '@/app/Cookies.tsx';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
@@ -25,11 +26,8 @@ refreshapi.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // 토큰 재시도 플래그 설정
-      console.log('401 에러 감지. 토큰 재발급을 시도합니다.'); // 로그 추가: 401 에러 및 토큰 재발급 시도
+      originalRequest._retry = true;
       try {
-        console.log('토큰재발급요청중....');
-        // 토큰 재발급 요청
         const refreshToken = getCookie('refreshToken');
         const accessToken = getCookie('accessToken');
         const response = await axios.post(
@@ -42,40 +40,20 @@ refreshapi.interceptors.response.use(
             },
           },
         );
-        console.log('토큰재발급요청완료', response);
 
-        // axios
-        //   .post(`${process.env.NEXT_PUBLIC_API_URL}/refresh`)
-        //   .then((response) => {
-        //     console.log('토큰재발급요청완료', response);
-        //   })
-        //   .catch((error) => {
-        //     console.error('토큰재발급실패', error);
-        //   })
-        //   .finally(() => {
-        //     console.log('토큰재발급요청종료');
-        //   });
-
-        // 쿠키에 저장하는 로직만 구현하면댐
-        if (response) {
-          const { accesstoken, refreshtoken } = response.data;
-          cookies.set('accessToken', accesstoken, { path: '/' });
-          cookies.set('refreshToken', refreshtoken, { path: '/' });
-          console.log(
-            `새 액세스 토큰(${accesstoken})과 리프레시 토큰(${refreshtoken})이 쿠키에 저장되었습니다.`,
-          ); // 로그 추가: 새 토큰 저장
-          // 헤더 업데이트
-          refreshapi.defaults.headers.common.Authorization = `Bearer ${accesstoken}`;
-
-          // 원래 요청 재시도
+        if (response.status === 200) {
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+            response.data;
+          setCookie('accessToken', newAccessToken, { path: '/' });
+          setCookie('refreshToken', newRefreshToken, { path: '/' });
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return refreshapi(originalRequest);
         }
       } catch (refreshError) {
-        console.error('토큰 재발급 실패', refreshError);
         return Promise.reject(refreshError);
       }
     }
-    return Promise.reject(error);
+    return Promise.reject(error); // 반환 추가
   },
 );
 

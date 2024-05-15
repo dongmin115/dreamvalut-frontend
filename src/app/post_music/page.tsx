@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable max-len */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-unused-vars */
@@ -67,11 +68,18 @@ const UploadMyMusic = () => {
     setHasLyrics(event.target.checked);
   };
 
-  const handleSubmit = async (event: { preventDefault: () => void; }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault(); // 폼의 기본 동작을 막습니다.
 
-    if (title && prompt &&  tags !== null &&
-      tags.length > 0 && genreId !== null && trackImage !== null && trackAudio !== null) {
+    if (
+      title &&
+      prompt &&
+      tags !== null &&
+      tags.length > 0 &&
+      genreId !== null &&
+      trackImage !== null &&
+      trackAudio !== null
+    ) {
       try {
         const response = await uploadMymusic(
           title,
@@ -82,7 +90,6 @@ const UploadMyMusic = () => {
           trackImage,
           trackAudio,
         );
-        console.log('Upload response:', response);
       } catch (error) {
         console.error('업로드 중 오류가 발생했습니다!', error);
         Swal.fire({

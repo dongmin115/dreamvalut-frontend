@@ -2,7 +2,7 @@
 import { getCookie } from '@/app/Cookies.tsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import refreshapi from './axios_interceptor';
+import refreshapi from './axios_interceptor.ts';
 
 // 특정 곡 등록하기
 const uploadMymusic = async (
