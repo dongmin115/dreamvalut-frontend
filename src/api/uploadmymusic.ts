@@ -2,6 +2,7 @@
 import { getCookie } from '@/app/Cookies.tsx';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import refreshapi from './axios_interceptor';
 
 // 특정 곡 등록하기
 const uploadMymusic = async (
@@ -14,13 +15,21 @@ const uploadMymusic = async (
   trackAudio: File,
 ) => {
   const formData = new FormData();
-  formData.append('track_info', new Blob([JSON.stringify({
-    title,
-    prompt,
-    has_lyrics: hasLyrics,
-    tags,
-    genre_id: genreId,
-  })], { type: 'application/json' }));
+  formData.append(
+    'track_info',
+    new Blob(
+      [
+        JSON.stringify({
+          title,
+          prompt,
+          has_lyrics: hasLyrics,
+          tags,
+          genre_id: genreId,
+        }),
+      ],
+      { type: 'application/json' },
+    ),
+  );
   formData.append('track_image', trackImage as Blob);
   formData.append('track_audio', trackAudio as Blob);
 
@@ -36,12 +45,16 @@ const uploadMymusic = async (
 
   try {
     const accessToken = getCookie('accessToken');
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/tracks`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${accessToken}`,
+    const response = await refreshapi.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
+    );
     if (response.data) {
       Swal.fire({
         title: '나만의 폼 등록 완료',
