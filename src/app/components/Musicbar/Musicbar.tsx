@@ -70,7 +70,7 @@ export default function MusicBar(trackId: number) {
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef, isDragging]);
+  }, [audioRef, isDragging, setCurrentTime]);
 
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
