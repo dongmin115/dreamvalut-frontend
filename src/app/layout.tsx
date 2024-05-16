@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
@@ -27,6 +28,13 @@ export default function RootLayout({
   const trackId = 123;
   return (
     <html lang="ko">
+      <head>
+        <link
+          href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+          rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+      </head>
       <body className={inter.className}>
         <link
           rel="icon"

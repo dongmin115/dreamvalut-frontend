@@ -10,4 +10,5 @@ export interface albumCoverSystemProps {
   image: string;
   title: string;
   Id: number;
+  curation: string;
 }
