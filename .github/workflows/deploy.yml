@@ -3,7 +3,7 @@ name: Deploy Next.js to Amazon ECS
 # develop branch에 push 또는 merge 시 workflow 실행
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "deploy" ]
   workflow_dispatch:
 
 env:
