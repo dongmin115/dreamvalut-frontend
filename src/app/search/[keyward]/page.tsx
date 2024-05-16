@@ -56,6 +56,11 @@ const SearchResult = ({
     );
   }
 
+  const stripHtmlTags = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+  };
+
   // 검색 결과가 있을 경우
   return (
     <>
@@ -80,10 +85,16 @@ const SearchResult = ({
               </div>
               <div className="flex w-[80%] flex-col items-center justify-center gap-2">
                 <div className="flex flex-row gap-2 self-start">
+                  <div
+                    key={e.track_genre.genre_id}
+                    className="w-fit rounded-full bg-[#5419d4]  p-2 text-xs"
+                  >
+                    {stripHtmlTags(e.track_genre.genre_name)}
+                  </div>
                   {e.track_tags.map((tags: Tag) => (
                     <div
                       key={tags.tag_id}
-                      className="w-fit rounded-full bg-[#5419d4] p-2 text-xs"
+                      className="w-fit rounded-full bg-[#5419d4] bg-opacity-75 p-2 text-xs"
                     >
                       {tags.tag_name}
                     </div>
