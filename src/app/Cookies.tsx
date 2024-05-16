@@ -1,10 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable implicit-arrow-linebreak */
 import { Cookies } from 'react-cookie';
 
 const cookies = new Cookies();
 
 // 쿠키를 저장함
-export const setCookie = (name: string, value: string, option?: any) => {
+export const setCookie = (
+  name: string,
+  value: string,
+  option?: any,
+  p0?: { headers: { Authorization: string; 'X-Refresh-Token': string } },
+) => {
   cookies.set(name, value, { ...option });
 };
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 /* eslint-disable no-undef */
 
@@ -73,7 +75,7 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef]);
+  }, [audioRef, handleTimeUpdate]);
 
   // 오디오 상태 및 제어 함수 공유
   const sharedState: SharedAudioState = {
