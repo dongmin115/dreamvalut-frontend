@@ -1,5 +1,6 @@
 name: Deploy Next.js to Amazon ECS
 
+# develop branch에 push 또는 merge 시 workflow 실행
 on:
   push:
     branches: [ "develop" ]
@@ -21,15 +22,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # GitHub repository를 최신 커밋을 checkout
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Github Secrets에 저장된 환경 변수를 .env 파일로 생성
       - name: Make .env
         run: |
           touch ./.env
           echo "${{ secrets.ENV_VARIABLES }}" > ./.env
         shell: bash
 
+      # AWS Credential 설정
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -37,10 +41,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      # Amazon ECR에 로그인
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      # Docker 이미지를 빌드하고 Amazon ECR에 푸시
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
@@ -51,12 +57,14 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
+      # Amazon ECS task definition 다운로드
       - name: Download Amazon ECS task definition
         env:
           TASK_DEFINITION_NAME: ${{ env.ECS_TASK_DEFINITION }}
         run: |
           aws ecs describe-task-definition --task-definition $TASK_DEFINITION_NAME --query taskDefinition > task-definition.json
 
+      # 새로운 task definition 생성
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
@@ -65,6 +73,7 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
+      # CodeDeploy를 이용하여 Amazon ECS에 배포
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
