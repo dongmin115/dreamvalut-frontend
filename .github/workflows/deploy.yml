@@ -64,7 +64,7 @@ jobs:
         run: |
           aws ecs describe-task-definition --task-definition $TASK_DEFINITION_NAME --query taskDefinition > task-definition.json
 
-      # 새로운 task definition 생성
+      # 새로운 task definition을 생성
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
