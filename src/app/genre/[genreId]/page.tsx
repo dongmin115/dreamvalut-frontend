@@ -11,19 +11,20 @@
 
 'use client';
 
-import { fetchTagDetail } from '@/api/playlist.ts';
+import { fetchGenreDetail } from '@/api/playlist.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
-function page(props: { params: { tagId: string } }) {
-  const tagId = decodeURIComponent(props.params.tagId);
+function page(props: { params: { genreId: string } }) {
+  const genreId = decodeURIComponent(props.params.genreId);
   const renderSize = 12;
   const [playlistName, setPlaylistName] = useState('');
   const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['Tag Details', tagId],
-    queryFn: ({ pageParam }) => fetchTagDetail(tagId, pageParam, renderSize),
+    queryKey: ['Genre Details', genreId],
+    queryFn: ({ pageParam }) =>
+      fetchGenreDetail(genreId, pageParam, renderSize),
     initialPageParam: 0,
 
     getNextPageParam: (lastPage, allPages) => {
@@ -58,7 +59,7 @@ function page(props: { params: { tagId: string } }) {
 
   useEffect(() => {
     if (data === undefined) return;
-    setPlaylistName(data.pages['0'].tag_name);
+    setPlaylistName(data.pages['0'].genre_name);
   }, [data]);
 
   if (isLoading || data === undefined) return <div>Loading...</div>;
@@ -69,11 +70,11 @@ function page(props: { params: { tagId: string } }) {
         <div className="flex w-full flex-row items-center justify-center ">
           <h1 className="w-full text-start">
             <p className="flex h-16 items-center justify-start p-4">
-              #{playlistName}
+              {playlistName}
             </p>
           </h1>
 
-          <PlayButton tagId={tagId} />
+          <PlayButton genreId={genreId} />
         </div>
         {/* 플리 박스 */}
         <div className="bg-gray-650 flex h-auto w-full flex-col items-center rounded-2xl p-8">
@@ -95,7 +96,7 @@ function page(props: { params: { tagId: string } }) {
                 like={track.likes}
                 isLiked={track.likes_flag}
                 trackId={track.track_id}
-                playlistId={tagId}
+                playlistId={genreId}
                 isEdit={false}
               />
             )),

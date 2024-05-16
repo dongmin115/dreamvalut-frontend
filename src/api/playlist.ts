@@ -6,28 +6,6 @@
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 
-// 특정 플레이리스트 정보 가져오기
-export async function getPlaylist() {
-  try {
-    const response = await axios.get('/api/v1/playlists/playlist_id');
-    return response.data;
-  } catch (error) {
-    console.error('오류 발생:', error);
-    throw error;
-  }
-}
-
-// 모든 플레이리스트 정보 가져오기
-export async function getMyPlaylists() {
-  try {
-    const response = await axios.get('/api/v1/users/playlists/list');
-    return response.data;
-  } catch (error) {
-    console.error('오류 발생:', error);
-    throw error;
-  }
-}
-
 // 플레이리스트 생성
 export async function fetchTags(pageIndex: number) {
   try {
@@ -370,6 +348,30 @@ export async function deleteTrack(playlistId: string, trackId: string) {
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (delete music from playlist):', error);
+    throw error;
+  }
+}
+
+// 특정 장르의 모든 곡 가져오기
+export async function fetchGenreDetail(
+  genreId: string,
+  pageIndex: number,
+  size: number,
+) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/genres/${genreId}/tracks?page=${pageIndex}&size=${size}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (genre detail):', error);
     throw error;
   }
 }
