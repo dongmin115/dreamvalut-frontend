@@ -23,8 +23,12 @@ import { getMusic } from '@/api/music.ts';
 import theme from '@/app/styles/theme.ts';
 import { useSharedAudio } from '../audio/Audio.tsx';
 
+interface MusicBarProps {
+  trackId: number;
+}
+
 /* eslint-disable @next/next/no-img-element */
-export default function MusicBar(trackId: number) {
+export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
   const path = usePathname();
   if (
     path === '/' ||
@@ -70,7 +74,7 @@ export default function MusicBar(trackId: number) {
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef, isDragging]);
+  }, [audioRef, isDragging, setCurrentTime]);
 
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
@@ -96,7 +100,7 @@ export default function MusicBar(trackId: number) {
 
   const { data } = useQuery({
     queryKey: ['music'],
-    queryFn: () => getMusic(trackId),
+    queryFn: () => getMusic(trackId, setIsLiked),
   });
 
   return data ? (

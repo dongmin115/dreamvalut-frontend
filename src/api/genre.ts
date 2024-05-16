@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable consistent-return */
@@ -30,12 +31,15 @@ const fetchGenres = async () => {
 // 내 장르 취향 가져오기
 const EditfetchGenres = async () => {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/preference`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
+    );
     const genresData = response.data.data.genres;
     return genresData; // 장르 데이터 반환
   } catch (error) {
