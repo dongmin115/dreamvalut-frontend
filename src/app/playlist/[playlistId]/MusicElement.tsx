@@ -93,15 +93,12 @@ export default function MusicElement({
       if (result.isConfirmed) {
         deleteTrack(playlistId, trackId)
           .then(() => {
-            console.log('음악 삭제 성공');
             setDeleteAnimation(true);
             setTimeout(() => {
               setIsTrack(false);
             }, 500);
           })
-          .catch(() => {
-            console.log('음악 삭제 실패');
-          });
+          .catch(() => {});
       }
     });
   };

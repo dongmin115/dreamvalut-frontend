@@ -36,22 +36,23 @@ function SystemPlaylistComponent() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
-      <div className="w-11/12 h-full flex flex-row justify-start items-start">
+      <div className="flex h-full w-11/12 flex-row items-start justify-start">
         {data.content.map((content: any, index: number) => (
           <AlbumCoverSystem
             key={index}
             image={content.tracks[0].thumbnail_image}
             title={content.playlist_name}
             Id={content.playlist_id}
+            curation={''}
           />
         ))}
       </div>
-      <div className="w-1/12 h-full flex flex-row justify-center items-center z-30 bg-gray-650">
+      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
