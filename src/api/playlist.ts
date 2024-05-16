@@ -6,6 +6,25 @@
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 
+export async function getStreamTrack(pageIndex: number, size: number) {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/users/played?page=${pageIndex}&size=${size}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('API Fetch Error (stream track):', error);
+    throw error;
+  }
+}
+
 // 플레이리스트 생성
 export async function fetchTags(pageIndex: number) {
   try {
