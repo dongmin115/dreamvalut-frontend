@@ -32,12 +32,12 @@ export default function FavoriteButton({
     e.preventDefault();
     setIsLiked(!isLiked);
     if (isLiked) {
-      disLikes(track_id.toString());
+      disLikes(track_id);
       setLikeCount(likeCount - 1);
     }
 
     if (!isLiked) {
-      likes(track_id.toString());
+      likes(track_id);
       setLikeCount(likeCount + 1);
     }
   };
