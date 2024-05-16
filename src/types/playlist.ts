@@ -4,4 +4,6 @@ export interface MusicElementProps {
   like: number;
   isLiked: boolean;
   trackId: string;
+  playlistId: string;
+  isEdit: boolean;
 }

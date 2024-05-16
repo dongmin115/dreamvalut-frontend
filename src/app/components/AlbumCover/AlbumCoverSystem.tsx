@@ -4,7 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 import Link from 'next/link';
 
-function AlbumCoverSystem({ image, title, Id }: albumCoverSystemProps) {
+function AlbumCoverSystem({
+  image,
+  title,
+  Id,
+  curation,
+}: albumCoverSystemProps) {
   const [albumRandomColor, setAlbumRandomColor] = useState('');
 
   useEffect(() => {
@@ -26,8 +31,8 @@ function AlbumCoverSystem({ image, title, Id }: albumCoverSystemProps) {
   return (
     <>
       <Link
-        href={`/playlist/${Id}`}
-        className="flex flex-col m-4 p-4 w-56 h-72 items-center justify-center hover-bg-opacity cursor-pointer"
+        href={`/${curation === 'tag' ? 'tag' : 'playlist'}/${Id}`}
+        className="hover-bg-opacity m-4 flex h-72 w-56 cursor-pointer flex-col items-center justify-center p-4"
       >
         {/* <Image
         src={image}
@@ -36,18 +41,18 @@ function AlbumCoverSystem({ image, title, Id }: albumCoverSystemProps) {
         width={192}
         height={192}
       /> */}
-        <img src={image} alt="Album cover" className="w-48 h-48 rounded-lg" />
+        <img src={image} alt="Album cover" className="h-48 w-48 rounded-lg" />
         <div
-          className={`h-48 w-48 rounded-lg z-10 -mt-48 ${albumRandomColor} opacity-50`}
+          className={`z-10 -mt-48 h-48 w-48 rounded-lg ${albumRandomColor} opacity-50`}
         />
         <p
           className={
-            'flex flex-wrap text-xl w-48 h-48 justify-center items-center z-20 font-bold drop-shadow-text p-4 -mt-48'
+            'drop-shadow-text z-20 -mt-48 flex h-48 w-48 flex-wrap items-center justify-center p-4 text-xl font-bold'
           }
         >
           {title}
         </p>
-        <p className="flex w-48 h-16 justify-center items-start text-white text-xl z-20 pt-4">
+        <p className="z-20 flex h-16 w-48 items-start justify-center pt-4 text-xl text-white">
           {title}
         </p>
       </Link>

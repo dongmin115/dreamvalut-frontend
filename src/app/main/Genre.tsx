@@ -12,6 +12,7 @@ import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 import { GenreMusicProps } from '../../types/genre.ts';
 import theme from '../styles/theme.ts';
 import { fetchGenrePlaylist } from '../../api/playlist.ts';
@@ -54,14 +55,15 @@ function GenreMusic({
         className={`flex h-full w-full flex-col rounded-2xl bg-genre-${bgColor} mx-4`}
       >
         {/* 위에 단색 배경바 */}
-        <div
+        <Link
+          href={`/genre/${bgColor / 100}`}
           className={`flex h-20 w-full flex-row items-center rounded-t-2xl p-6 bg-nv-${bgColor}`}
         >
           <p className="text-md w-10/12 font-bold text-black">{genre}</p>
           <IconButton>
             <PlayCircleIcon style={{ fontSize: 50, opacity: 0.7 }} />
           </IconButton>
-        </div>
+        </Link>
 
         {/* 음악 정보 */}
         {musicList.map((music, index) => (
