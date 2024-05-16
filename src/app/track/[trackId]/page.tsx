@@ -23,7 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import { getMyPlaylists, getPlaylist } from '@/api/playlist';
+import { getStreamTrack } from '@/api/playlist';
 import { getMusic, disLikes, likes } from '@/api/music';
 import theme from '@/app/styles/theme';
 import { useSharedAudio } from '@/app/components/audio/Audio';
@@ -115,17 +115,14 @@ export default function MusicPage(props: any) {
   // API 호출
   // 특정 플레이리스트 가져오기
   const { data, isLoading } = useQuery({
-    queryKey: ['playlist'],
-    queryFn: getPlaylist,
-    // () => {
-    //   getPlaylist(selectedPlaylist);
-    // },
+    queryKey: ['Streaming Track'],
+    queryFn: () => getStreamTrack(0, 5), // 하드코딩, 추후 수정 필요
   });
 
   // 모든 플레이리스트 가져오기
   const { data: listData, isLoading: listLoading } = useQuery({
-    queryKey: ['AllPlaylist'],
-    queryFn: getMyPlaylists,
+    queryKey: ['Streaming Track'],
+    queryFn: () => getStreamTrack(0, 5), // 하드코딩, 추후 수정 필요
   });
 
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -323,15 +320,15 @@ export default function MusicPage(props: any) {
               >
                 {listLoading
                   ? 'loading'
-                  : listData.data.playlists.map((e: any) => (
+                  : listData.content.map((e: any) => (
                       <MenuItem
-                        key={e.playlist_id}
+                        key={e.track_id}
                         onClick={() => {
                           handleClose();
                           // setSelectedPlaylist(e.playlist_id);
                         }}
                       >
-                        {e.playlist_name}
+                        {e.title}
                       </MenuItem>
                     ))}
               </Menu>
@@ -345,7 +342,7 @@ export default function MusicPage(props: any) {
             {/* 재생목록 리스트 */}
             {isLoading
               ? 'loading'
-              : data.tracks.content.map((track: any) => (
+              : data.content.map((track: any) => (
                   <li
                     key={track.id}
                     className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
