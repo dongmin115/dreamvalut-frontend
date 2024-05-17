@@ -170,7 +170,7 @@ export default function MusicPage(props: any) {
               </div>
               <img
                 id="card-front"
-                src={musicData.thumbnail_image}
+                src={musicData.track_image}
                 alt="1"
                 className="h-96 w-96 rounded-md drop-shadow-lg"
               />
@@ -340,24 +340,26 @@ export default function MusicPage(props: any) {
               className="w-full bg-white drop-shadow-xl"
             />
             {/* 재생목록 리스트 */}
-            {isLoading
-              ? 'loading'
-              : data.content.map((track: any) => (
-                  <li
-                    key={track.id}
-                    className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
-                  >
-                    <img
-                      src={track.thumbnail_image}
-                      alt="음악 커버"
-                      className="h-16 w-16 rounded-md drop-shadow-lg"
-                    />
-                    <div className="flex flex-col items-center justify-center">
-                      <p className="text-lg text-white">{track.title}</p>
-                      <p className="text-[#777777]">{track.uploader_name}</p>
-                    </div>
-                  </li>
-                ))}
+            <div className="flex h-[26rem] w-full flex-col overflow-y-scroll border">
+              {isLoading
+                ? 'loading'
+                : data.content.map((track: any) => (
+                    <li
+                      key={track.id}
+                      className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
+                    >
+                      <img
+                        src={track.thumbnail_image}
+                        alt="음악 커버"
+                        className="h-16 w-16 rounded-md drop-shadow-lg"
+                      />
+                      <div className="flex flex-col items-center justify-center">
+                        <p className="text-lg text-white">{track.title}</p>
+                        <p className="text-[#777777]">{track.uploader_name}</p>
+                      </div>
+                    </li>
+                  ))}
+            </div>
           </div>
         </div>
       )}
