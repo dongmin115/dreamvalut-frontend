@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 'use client';
@@ -7,7 +8,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // 메인 페이지 컴포넌트
-function Page() {
+function page() {
   const cookies = new Cookies();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -35,4 +36,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default page;
