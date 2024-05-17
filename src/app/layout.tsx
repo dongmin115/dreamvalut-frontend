@@ -7,7 +7,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './styles/globals.css';
 import React from 'react';
-import { MSWComponent } from '@/mocks/MSWComponent';
 import MusicBar from './components/Musicbar/Musicbar';
 import NavigationBar from './components/NavBar/NavigationBar';
 import QueryProviders from './components/QueryProvider/QueryProvider';
@@ -41,15 +40,13 @@ export default function RootLayout({
           href="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
           sizes="any"
         />
-        <MSWComponent>
-          <QueryProviders>
-            <SharedAudioProvider>
-              {children}
-              <MusicBar trackId={trackId} />
-            </SharedAudioProvider>
-            <NavigationBar />
-          </QueryProviders>
-        </MSWComponent>
+        <QueryProviders>
+          <SharedAudioProvider>
+            {children}
+            <MusicBar trackId={trackId} />
+          </SharedAudioProvider>
+          <NavigationBar />
+        </QueryProviders>
       </body>
     </html>
   );
