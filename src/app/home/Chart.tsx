@@ -10,11 +10,20 @@ import Image from 'next/image';
 import { ThemeProvider } from '@emotion/react';
 import { useQuery } from '@tanstack/react-query';
 import { getSlideContentStyle } from '@/app/styles/slide.ts';
+import { Cookies } from 'react-cookie';
+import { useSearchParams } from 'next/navigation';
 import { chartProps } from '../../types/chart.ts';
 import { fetchChartData } from '../../api/chart.ts';
 import theme from '../styles/theme.ts';
 
 function MusicElement({ ranking, thumnailImage, title }: chartProps) {
+  const cookies = new Cookies();
+  const searchParams = useSearchParams();
+  const accessToken = searchParams.get('accessToken');
+  const refreshToken = searchParams.get('refreshToken');
+
+  cookies.set('accessToken', accessToken, { path: '/' });
+  cookies.set('refreshToken', refreshToken, { path: '/' });
   return (
     <div className="hover-bg-opacity m-2 flex h-1/4 w-[24%] cursor-pointer flex-row items-center justify-start">
       {/* 순위 */}
