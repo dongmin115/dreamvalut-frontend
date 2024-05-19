@@ -14,7 +14,7 @@
 
 import { fetchGenreDetail } from '@/api/playlist.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
 import Image from 'next/image';
 import PlayButton from './PlayButton.tsx';
