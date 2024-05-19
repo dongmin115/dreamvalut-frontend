@@ -84,3 +84,26 @@ export interface TagPlaylist {
     total_pages: number;
   };
 }
+
+export interface GenrePlaylist {
+  genre_id: number;
+  genre_image: string;
+  genre_name: string;
+  tracks: {
+    content: TrackInfo[];
+    empty: boolean;
+    first: boolean;
+    last: boolean;
+    number: number;
+    number_of_elements: number;
+    pageable: Pageable;
+    size: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    total_elements: number;
+    total_pages: number;
+  };
+}
