@@ -16,6 +16,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
 import { Music } from '@/types/music.ts';
+import { TagPlaylist } from '@/types/playlist.ts';
+
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
@@ -29,8 +31,8 @@ function page(props: { params: { tagId: string } }) {
     return response;
   };
 
-  const getNextPageParam = (lastPage, allPages) => {
-    if (lastPage.tracks.next === null) {
+  const getNextPageParam = (lastPage: TagPlaylist, allPages: TagPlaylist[]) => {
+    if (lastPage.tracks.last) {
       return undefined;
     }
     return allPages.length;
@@ -89,7 +91,7 @@ function page(props: { params: { tagId: string } }) {
               />
             )}
             getNextPageParam={getNextPageParam}
-            dataPath={(page) => page.tracks.content}
+            dataPath={(page: TagPlaylist) => page.tracks.content}
           />
         </div>
       </div>

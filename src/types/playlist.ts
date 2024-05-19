@@ -61,3 +61,26 @@ export interface Playlist {
     total_pages: number;
   };
 }
+
+export interface TagPlaylist {
+  tag_id: number;
+  tag_image: string;
+  tag_name: string;
+  tracks: {
+    content: TrackInfo[];
+    empty: boolean;
+    first: boolean;
+    last: boolean;
+    number: number;
+    number_of_elements: number;
+    pageable: Pageable;
+    size: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    total_elements: number;
+    total_pages: number;
+  };
+}
