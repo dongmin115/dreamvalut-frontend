@@ -248,7 +248,7 @@ function page(props: any) {
           <InfiniteScroll
             queryKey={['Playlist Details', playlistId]}
             queryFn={fetchMoreTracks}
-            renderItem={(track, index) => (
+            renderItem={(track) => (
               <MusicElement
                 key={track.track_id}
                 image={track.thumbnail_image}

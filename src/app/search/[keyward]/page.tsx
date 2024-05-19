@@ -163,9 +163,7 @@ export default function SearchPage(props: any) {
                 <InfiniteScroll
                   queryKey={['search']}
                   queryFn={fetchMoreSearch}
-                  renderItem={(item: TrackInfo, index: number) => (
-                    <SearchResult key={index} item={item} />
-                  )}
+                  renderItem={(item: TrackInfo) => <SearchResult item={item} />}
                   getNextPageParam={getNextPageParam}
                   dataPath={(page) => page.content}
                 />

@@ -49,7 +49,7 @@ const InfiniteScroll = ({
       {isError && <div>Error loading data</div>}
       {data?.pages.map((page, pageIndex) => (
         <React.Fragment key={pageIndex}>
-          {dataPath(page).map((item, index: number) => renderItem(item, index))}
+          {dataPath(page).map((item) => renderItem(item))}
         </React.Fragment>
       ))}
       {isLoading && <div>Loading more items...</div>}
