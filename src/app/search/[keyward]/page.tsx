@@ -122,7 +122,10 @@ export default function SearchPage(props: any) {
     return response;
   };
 
-  const getNextPageParam = (lastPage, allPages) => {
+  const getNextPageParam = (
+    lastPage: searchResult,
+    allPages: searchResult[],
+  ) => {
     if (lastPage.last) {
       return undefined;
     }
@@ -165,7 +168,7 @@ export default function SearchPage(props: any) {
                   queryFn={fetchMoreSearch}
                   renderItem={(item: TrackInfo) => <SearchResult item={item} />}
                   getNextPageParam={getNextPageParam}
-                  dataPath={(page) => page.content}
+                  dataPath={(page: searchResult) => page.content}
                 />
               </ul>
             </div>

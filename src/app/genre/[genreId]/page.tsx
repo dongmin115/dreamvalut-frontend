@@ -16,6 +16,7 @@ import { fetchGenreDetail } from '@/api/playlist.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
+import { Music } from '@/types/music.ts';
 import Image from 'next/image';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
@@ -103,7 +104,7 @@ function page(props: { params: { genreId: string } }) {
           <InfiniteScroll
             queryKey={['Genre Details', genreId]}
             queryFn={fetchMoreGenres}
-            renderItem={(item) => (
+            renderItem={(item: Music) => (
               <MusicElement
                 key={item.track_id}
                 image={item.thumbnail_image}

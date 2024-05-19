@@ -34,6 +34,7 @@ import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
+import { Music } from '@/types/music.ts';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
@@ -248,7 +249,7 @@ function page(props: any) {
           <InfiniteScroll
             queryKey={['Playlist Details', playlistId]}
             queryFn={fetchMoreTracks}
-            renderItem={(track) => (
+            renderItem={(track: Music) => (
               <MusicElement
                 key={track.track_id}
                 image={track.thumbnail_image}
