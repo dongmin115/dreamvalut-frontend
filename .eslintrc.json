@@ -3,9 +3,5 @@
     "browser": true,
     "node": true
   },
-  "extends": ["next/core-web-vitals", "prettier", "airbnb-base"],
-  "rules": {
-    "linebreak-style": 0,
-    "no-console": "off"
-  }
+  "extends": ["next/core-web-vitals", "prettier", "airbnb-base"]
 }
