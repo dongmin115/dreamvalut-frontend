@@ -10,12 +10,12 @@ import { ThemeProvider } from '@emotion/react';
 import { IconButton, createTheme } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Divider from '@mui/material/Divider';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import axios from 'axios';
-import { getCookie } from '@/app/Cookies';
 import { Tag, TrackInfo, searchResult } from '@/types/search';
 import FavoriteButton from '@/app/components/FavoriteButton';
+import InfiniteScroll from '@/app/components/InfiniteScroll';
+import { fetchSearch } from '@/api/music';
 
 const theme = createTheme({
   palette: {
@@ -30,31 +30,23 @@ const theme = createTheme({
   },
 });
 
-const SearchResult = ({
-  data,
-  isLoading,
-  keyward,
-}: {
-  data: searchResult;
-  isLoading: boolean;
-  keyward: string;
-}) => {
+const SearchResult = ({ item }: { item: TrackInfo }) => {
   // 로딩중일 경우
-  if (isLoading) {
-    return (
-      <div className="my-auto h-full w-full items-center text-center text-2xl">
-        {decodeURIComponent(keyward)}에 대한 검색 결과 가져오는중...
-      </div>
-    );
-  }
-  // 검색 결과가 없을 경우
-  if (data && data.total_elements === 0) {
-    return (
-      <div className="my-auto h-fit w-full items-center text-center text-2xl">
-        {decodeURIComponent(keyward)}에 대한 검색 결과가 없습니다.
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="my-auto h-full w-full items-center text-center text-2xl">
+  //       {decodeURIComponent(keyward)}에 대한 검색 결과 가져오는중...
+  //     </div>
+  //   );
+  // }
+  // // 검색 결과가 없을 경우
+  // if (data && data.total_elements === 0) {
+  //   return (
+  //     <div className="my-auto h-fit w-full items-center text-center text-2xl">
+  //       {decodeURIComponent(keyward)}에 대한 검색 결과가 없습니다.
+  //     </div>
+  //   );
+  // }
 
   const stripHtmlTags = (html: string) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -63,95 +55,85 @@ const SearchResult = ({
 
   // 검색 결과가 있을 경우
   return (
-    <>
-      {data.content.map((e: TrackInfo, i: number) => (
-        <Link key={i} href={`/track/${e.id}`}>
-          <li
-            key={i}
-            className="hover-bg-opacity flex h-fit flex-row items-center justify-around gap-y-2 rounded-xl py-[1%]"
-          >
-            {/* 검색 결과 내용 */}
-            <div className="flex w-[60%] flex-row items-center justify-between gap-8">
-              <div className="flex w-fit flex-col items-center justify-center gap-4">
-                <img
-                  src={e.thumbnail_image}
-                  alt="cover"
-                  className="size-28 rounded-sm"
-                />
-                <p
-                  className="xs:text-xs w-fit text-center md:text-xs lg:text-xs xl:text-sm"
-                  dangerouslySetInnerHTML={{ __html: e.title }}
-                />
+    <Link href={`/track/${item.id}`}>
+      <li className="hover-bg-opacity flex h-fit flex-row items-center justify-around gap-y-2 rounded-xl py-[1%]">
+        <div className="flex w-[60%] flex-row items-center justify-between gap-8">
+          <div className="flex w-fit flex-col items-center justify-center gap-4">
+            <img
+              src={item.thumbnail_image}
+              alt="cover"
+              className="size-28 rounded-sm"
+            />
+            <p
+              className="xs:text-xs w-fit text-center md:text-xs lg:text-xs xl:text-sm"
+              dangerouslySetInnerHTML={{ __html: item.title }}
+            />
+          </div>
+          <div className="flex w-[80%] flex-col items-center justify-center gap-2">
+            <div className="flex flex-row gap-2 self-start">
+              <div
+                key={item.track_genre.genre_id}
+                className="w-fit rounded-full bg-[#5419d4]  p-2 text-xs"
+              >
+                {stripHtmlTags(item.track_genre.genre_name)}
               </div>
-              <div className="flex w-[80%] flex-col items-center justify-center gap-2">
-                <div className="flex flex-row gap-2 self-start">
-                  <div
-                    key={e.track_genre.genre_id}
-                    className="w-fit rounded-full bg-[#5419d4]  p-2 text-xs"
-                  >
-                    {stripHtmlTags(e.track_genre.genre_name)}
-                  </div>
-                  {e.track_tags.map((tags: Tag) => (
-                    <div
-                      key={tags.tag_id}
-                      className="w-fit rounded-full bg-[#5419d4] bg-opacity-75 p-2 text-xs"
-                    >
-                      {tags.tag_name}
-                    </div>
-                  ))}
+              {item.track_tags.map((tags: Tag) => (
+                <div
+                  key={tags.tag_id}
+                  className="w-fit rounded-full bg-[#5419d4] bg-opacity-75 p-2 text-xs"
+                >
+                  {stripHtmlTags(tags.tag_name)}
                 </div>
-                <p
-                  className="text-md w-full items-center"
-                  dangerouslySetInnerHTML={{ __html: e.prompt }}
-                />
-              </div>
+              ))}
             </div>
             <p
-              className="w-[10%] text-center text-lg"
-              dangerouslySetInnerHTML={{ __html: e.uploader_name }}
+              className="text-md w-full items-center"
+              dangerouslySetInnerHTML={{ __html: item.prompt }}
             />
-            <div className="flex w-[10%] flex-row items-center justify-center gap-2">
-              <FavoriteButton
-                color="primary"
-                fontSize="medium"
-                likes_flag={e.likes_flag}
-                track_id={e.id}
-                likes_count={e.likes}
-                count_visible={true}
-              />
-            </div>
-            <div className="w-[10%] text-center">
-              <IconButton>
-                <PlayArrowIcon color="primary" fontSize="large" />
-              </IconButton>
-            </div>
-          </li>
-        </Link>
-      ))}
-    </>
+          </div>
+        </div>
+        <p
+          className="w-[10%] text-center text-lg"
+          dangerouslySetInnerHTML={{ __html: item.uploader_name }}
+        />
+        <div className="flex w-[10%] flex-row items-center justify-center gap-2">
+          <FavoriteButton
+            color="primary"
+            fontSize="medium"
+            likes_flag={item.likes_flag}
+            track_id={item.id}
+            likes_count={item.likes}
+            count_visible={true}
+          />
+        </div>
+        <div className="w-[10%] text-center">
+          <IconButton>
+            <PlayArrowIcon color="primary" fontSize="large" />
+          </IconButton>
+        </div>
+      </li>
+    </Link>
   );
 };
 
 export default function SearchPage(props: any) {
-  const { data, isLoading } = useQuery({
-    queryKey: ['search'],
-    queryFn: async () => {
-      const accessToken = await getCookie('accessToken');
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/search`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-          params: {
-            query: props.params.keyward,
-            page: 0,
-          },
-        },
-      );
-      return response.data;
-    },
+  const fetchMoreSearch = async ({ pageParam = 0 }) => {
+    const response = await fetchSearch(props.params.keyward, pageParam, 8);
+    return response;
+  };
+
+  const getNextPageParam = (lastPage, allPages) => {
+    if (lastPage.last) {
+      return undefined;
+    }
+    return allPages.length;
+  };
+
+  const { data, isLoading } = useInfiniteQuery({
+    queryKey: ['search', props.params.keyward],
+    queryFn: fetchMoreSearch,
+    getNextPageParam,
+    initialPageParam: 0,
   });
 
   return (
@@ -165,7 +147,7 @@ export default function SearchPage(props: any) {
             ) : (
               <p className="w-fit text-xl">
                 <em>{decodeURIComponent(props.params.keyward)}</em> 에 대한 검색
-                결과 {data.total_elements}건 입니다.
+                결과 {data?.pages[0].total_elements}건 입니다.
               </p>
             )}
             <div className="flex h-fit w-full flex-col gap-4 rounded-xl bg-[#353535] p-[2%]">
@@ -178,10 +160,14 @@ export default function SearchPage(props: any) {
               <Divider />
               {/* 검색 결과 리스트 */}
               <ul className="flex h-fit min-h-[70vh] flex-col gap-8">
-                <SearchResult
-                  data={data}
-                  isLoading={isLoading}
-                  keyward={props.params.keyward}
+                <InfiniteScroll
+                  queryKey={['search']}
+                  queryFn={fetchMoreSearch}
+                  renderItem={(item: TrackInfo, index: number) => (
+                    <SearchResult key={index} item={item} />
+                  )}
+                  getNextPageParam={getNextPageParam}
+                  dataPath={(page) => page.content}
                 />
               </ul>
             </div>

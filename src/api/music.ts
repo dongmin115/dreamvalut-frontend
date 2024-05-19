@@ -62,3 +62,27 @@ export const disLikes = async (trackId: string) => {
     throw error;
   }
 };
+
+export const fetchSearch = async (
+  query: string,
+  pageIndex: number,
+  size: number,
+) => {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/search?query=${query}&page=${pageIndex}&size=${size}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('오류 발생:', error);
+    throw error;
+  }
+};

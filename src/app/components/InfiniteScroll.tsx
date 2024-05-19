@@ -53,7 +53,6 @@ const InfiniteScroll = ({
         </React.Fragment>
       ))}
       {isLoading && <div>Loading more items...</div>}
-      {!hasNextPage && <div>No more items to load</div>}
       <div ref={loadMoreRef} />
     </div>
   );
