@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-console */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable arrow-body-style */

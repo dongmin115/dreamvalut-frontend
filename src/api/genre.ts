@@ -1,14 +1,16 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-console */
 /* eslint-disable consistent-return */
 
 import { getCookie } from '@/app/Cookies.tsx';
-import axios from 'axios';
+// import axios from 'axios';
+import refreshapi from './axios_interceptor.ts';
 
 const accessToken = getCookie('accessToken');
 // 모든 장르 데이터 가져오기
 const fetchGenres = async () => {
   try {
-    const response = await axios.get(
+    const response = await refreshapi.get(
       `${process.env.NEXT_PUBLIC_API_URL}/genres/list`,
       {
         headers: {
@@ -29,7 +31,7 @@ const fetchGenres = async () => {
 // 내 장르 취향 가져오기
 const EditfetchGenres = async () => {
   try {
-    const response = await axios.get(
+    const response = await refreshapi.get(
       `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
       {
         headers: {
