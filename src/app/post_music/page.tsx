@@ -210,9 +210,7 @@ const UploadMyMusic = () => {
                     {/* 오디오 미리보기 추가 */}
                     {audioPreview && (
                       <div className="mt-[5%]">
-                        <audio controls src={audioPreview}>
-                          Your browser does not support the audio element.
-                        </audio>
+                        <audio controls src={audioPreview}></audio>
                       </div>
                     )}
                   </div>
