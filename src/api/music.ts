@@ -79,7 +79,6 @@ export const fetchSearch = async (
         },
       },
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('오류 발생:', error);

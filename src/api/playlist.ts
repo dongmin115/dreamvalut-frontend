@@ -238,7 +238,6 @@ export async function fetchTagDetail(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (tag detail):', error);
@@ -370,7 +369,6 @@ export async function fetchGenreDetail(
         },
       },
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (genre detail):', error);
