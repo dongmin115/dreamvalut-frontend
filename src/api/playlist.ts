@@ -238,6 +238,7 @@ export async function fetchTagDetail(
         },
       },
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (tag detail):', error);

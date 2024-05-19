@@ -13,7 +13,8 @@
 
 import { fetchTagDetail } from '@/api/playlist.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
@@ -21,40 +22,25 @@ function page(props: { params: { tagId: string } }) {
   const tagId = decodeURIComponent(props.params.tagId);
   const renderSize = 12;
   const [playlistName, setPlaylistName] = useState('');
-  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery({
+
+  const fetchMoreTags = async ({ pageParam = 0 }) => {
+    const response = await fetchTagDetail(tagId, pageParam, renderSize);
+    return response;
+  };
+
+  const getNextPageParam = (lastPage, allPages) => {
+    if (lastPage.tracks.next === null) {
+      return undefined;
+    }
+    return allPages.length;
+  };
+
+  const { data, isLoading } = useInfiniteQuery({
     queryKey: ['Tag Details', tagId],
-    queryFn: ({ pageParam }) => fetchTagDetail(tagId, pageParam, renderSize),
+    queryFn: fetchMoreTags,
     initialPageParam: 0,
-
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.tracks.next === null) {
-        return undefined;
-      }
-      return allPages.length;
-    },
+    getNextPageParam,
   });
-  const loadMoreRef = useRef(null);
-
-  useEffect(() => {
-    if (!hasNextPage) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchNextPage();
-        }
-      },
-      {
-        root: null, // 기본적으로 브라우저 뷰포트를 root로 사용
-        rootMargin: '0px',
-        threshold: 0.1, // 타겟 요소가 10% 보이면 콜백 실행
-      },
-    );
-    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
-
-    return () => {
-      if (loadMoreRef.current) observer.disconnect();
-    };
-  }, [hasNextPage, fetchNextPage]);
 
   useEffect(() => {
     if (data === undefined) return;
@@ -86,8 +72,10 @@ function page(props: { params: { tagId: string } }) {
           </div>
           <hr className="my-6 w-full border-zinc-600" />
           {/* 음악 요소들 */}
-          {data.pages.map((page: any) =>
-            page.tracks.content.map((track: any) => (
+          <InfiniteScroll
+            queryKey={['Tag Details', tagId]}
+            queryFn={fetchMoreTags}
+            renderItem={(track) => (
               <MusicElement
                 key={track.track_id}
                 image={track.thumbnail_image}
@@ -98,9 +86,10 @@ function page(props: { params: { tagId: string } }) {
                 playlistId={tagId}
                 isEdit={false}
               />
-            )),
-          )}
-          <div ref={loadMoreRef} />
+            )}
+            getNextPageParam={getNextPageParam}
+            dataPath={(page) => page.tracks.content}
+          />
         </div>
       </div>
     </div>
