@@ -35,6 +35,7 @@ import { useRouter } from 'next/navigation';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
 import { Music } from '@/types/music.ts';
+import { Playlist } from '@/types/playlist.ts';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
@@ -57,8 +58,8 @@ function page(props: any) {
     return response;
   };
 
-  const getNextPageParam = (lastPage, allPages) => {
-    if (lastPage.tracks.next === null) {
+  const getNextPageParam = (lastPage: Playlist, allPages: Playlist[]) => {
+    if (lastPage.tracks.last) {
       return undefined;
     }
     return allPages.length;
@@ -262,7 +263,7 @@ function page(props: any) {
               />
             )}
             getNextPageParam={getNextPageParam}
-            dataPath={(page) => page.tracks.content}
+            dataPath={(page: Playlist) => page.tracks.content}
           />
         </div>
       </div>
