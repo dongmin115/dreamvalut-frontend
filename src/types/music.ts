@@ -7,4 +7,6 @@ export interface Music {
   track_image: string;
   thumbnail_image: string;
   prompt: string;
+  likes: number;
+  likes_flag: boolean;
 }

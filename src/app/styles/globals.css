@@ -194,8 +194,13 @@ h1 {
 em {
   background-color: #6c26ff;
   font-style: normal;
-  padding: 2px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
   border-radius: 2px;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 /* 음악상세페이지 썸네일 - 프롬프트 Flip 애니메이션*/
