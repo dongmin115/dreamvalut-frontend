@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 /* eslint-disable consistent-return */
 
 import { getCookie } from '@/app/Cookies.tsx';

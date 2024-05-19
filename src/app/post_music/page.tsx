@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-console */
 /* eslint-disable operator-linebreak */
 /* eslint-disable max-len */
@@ -109,6 +110,28 @@ const UploadMyMusic = () => {
       });
     }
   };
+  // 이미지와 오디오 미리보기를 위한 state 추가
+  const [audioPreview, setAudioPreview] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  // 이미지 파일이 변경될 때(업로드)
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setTrackImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  // 오디오 파일이 변경될 때(업로드)
+  const handleAudioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setTrackAudio(file);
+      setAudioPreview(URL.createObjectURL(file));
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="h-screen w-full pl-[15%]">
@@ -138,12 +161,7 @@ const UploadMyMusic = () => {
                       <input
                         type="file"
                         className="flex justify-center"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0]; // null 체크를 통해 오류 방지
-                          if (file) {
-                            setTrackImage(file);
-                          }
-                        }}
+                        onChange={handleImageChange}
                         accept="image/*"
                         required
                         style={{
@@ -156,6 +174,16 @@ const UploadMyMusic = () => {
                         }}
                       />
                     </div>
+                    {/* 업로드된 이미지 미리보기 */}
+                    {imagePreview && (
+                      <div className="m-[5%] mb-[-10%]">
+                        <img
+                          src={imagePreview}
+                          alt="Track preview"
+                          className="h-[70%] w-[100%] object-cover"
+                        />
+                      </div>
+                    )}
                     <div className="flex justify-center">
                       <label
                         htmlFor="file"
@@ -165,12 +193,7 @@ const UploadMyMusic = () => {
                       </label>
                       <input
                         type="file"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0]; // null 체크를 통해 오류 방지
-                          if (file) {
-                            setTrackAudio(file);
-                          }
-                        }}
+                        onChange={handleAudioChange}
                         accept="audio/*"
                         required
                         style={{
@@ -179,10 +202,18 @@ const UploadMyMusic = () => {
                           display: 'flex',
                           justifyContent: 'center',
                           width: '100%',
-                          marginBottom: '8%',
+                          marginBottom: '10%',
                         }}
                       />
                     </div>
+                    {/* 오디오 미리보기 추가 */}
+                    {audioPreview && (
+                      <div className="mt-[5%]">
+                        <audio controls src={audioPreview}>
+                          Your browser does not support the audio element.
+                        </audio>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

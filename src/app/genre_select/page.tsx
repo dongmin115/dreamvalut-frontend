@@ -46,14 +46,6 @@ const GenrePageContent = () => {
     }
   };
 
-  // const handleGenreToggle = (genre_id: number) => {
-  //   if (selectedGenres.includes(genre_id)) {
-  //     setSelectedGenres(selectedGenres.filter((id) => id !== genre_id));
-  //   } else {
-  //     setSelectedGenres([...selectedGenres, genre_id]);
-  //   }
-  // };
-
   const { data } = useQuery({
     queryKey: ['genres'],
     queryFn: fetchGenres,
