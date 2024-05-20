@@ -5,10 +5,9 @@
 
 import { Cookies } from 'react-cookie';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
-// 메인 페이지 컴포넌트
-function page() {
+function MainPage() {
   const cookies = new Cookies();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -25,15 +24,21 @@ function page() {
     }
   }, [accessToken, refreshToken]);
 
-  setTimeout(() => {
-    router.push('/home');
-  }, 500);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/home');
+    }, 500);
 
-  return (
-    <div className="flex h-full w-full flex-col items-end justify-end">
-      잘못된 접근입니다
-    </div>
-  );
+    return () => clearTimeout(timer); // cleanup the timeout on component unmount
+  }, []);
+
+  return <div>잘못된 접근입니다</div>;
 }
 
-export default page;
+export default function PageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MainPage />
+    </Suspense>
+  );
+}

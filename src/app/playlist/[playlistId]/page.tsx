@@ -67,11 +67,13 @@ function page(props: any) {
   };
 
   useEffect(() => {
+    console.log('hasNextPage : ', hasNextPage, 'fetchNextPage : ', hasNextPage);
     if (!hasNextPage) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           fetchNextPage();
+          console.log('fetchNextPage 실행됨');
         }
       },
       {
