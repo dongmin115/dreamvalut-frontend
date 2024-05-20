@@ -8,14 +8,11 @@ import React, { useState } from 'react';
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import { useQuery } from '@tanstack/react-query';
-import { getSlideContentStyle } from '@/app/styles/slide.ts';
 import theme from '../styles/theme.ts';
-import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
 
 function systemPlaylistComponent() {
   const [pageIndex, setPageIndex] = useState<number>(0);
-  const [data, setData] = useState<any>([]);
+  const [data] = useState<any>([]);
 
   const handleForwardClick = () => {
     if (data.length - 4 > pageIndex) {

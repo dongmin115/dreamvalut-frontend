@@ -22,7 +22,7 @@ import {
   postFollow,
 } from '@/api/playlist.ts';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconButton, ThemeProvider } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import theme from '@/app/styles/theme.ts';
@@ -33,6 +33,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
+import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
+import { Music } from '@/types/music.ts';
+import { Playlist } from '@/types/playlist.ts';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
@@ -45,49 +48,36 @@ function page(props: any) {
   const [editOpen, setEditOpen] = useState(false);
   const [playlistName, setPlaylistName] = useState('');
   const [isFollow, setIsFollow] = useState(false);
-  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['Playlist Details', playlistId],
-    queryFn: ({ pageParam }) =>
-      fetchPlaylistDetail(playlistId, pageParam, renderSize),
-    initialPageParam: 0,
 
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.tracks.next === null) {
-        return undefined;
-      }
-      return allPages.length;
-    },
+  const fetchMoreTracks = async ({ pageParam = 0 }) => {
+    const response = await fetchPlaylistDetail(
+      playlistId,
+      pageParam,
+      renderSize,
+    );
+    return response;
+  };
+
+  const getNextPageParam = (lastPage: Playlist, allPages: Playlist[]) => {
+    if (lastPage.tracks.last) {
+      return undefined;
+    }
+    return allPages.length;
+  };
+
+  const { data, isLoading } = useInfiniteQuery({
+    queryKey: ['Playlist Details', playlistId],
+    queryFn: fetchMoreTracks,
+    getNextPageParam,
+    initialPageParam: 0,
   });
-  const loadMoreRef = useRef(null);
+
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  useEffect(() => {
-    console.log('hasNextPage : ', hasNextPage, 'fetchNextPage : ', hasNextPage);
-    if (!hasNextPage) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchNextPage();
-          console.log('fetchNextPage 실행됨');
-        }
-      },
-      {
-        root: null, // 기본적으로 브라우저 뷰포트를 root로 사용
-        rootMargin: '0px',
-        threshold: 0.1, // 타겟 요소가 10% 보이면 콜백 실행
-      },
-    );
-    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
-
-    return () => {
-      if (loadMoreRef.current) observer.disconnect();
-    };
-  }, [hasNextPage, fetchNextPage]);
 
   const handleDeletePlaylist = async () => {
     setEditOpen(false);
@@ -243,7 +233,7 @@ function page(props: any) {
           </div>
           <hr className="my-6 w-full border-zinc-600" />
           {/* 음악 요소들 */}
-          {data.pages.map((page: any) =>
+          {/* {data.pages.map((page: any) =>
             page.tracks.content.map((track: any) => (
               <MusicElement
                 key={track.track_id}
@@ -256,8 +246,25 @@ function page(props: any) {
                 isEdit={editOpen}
               />
             )),
-          )}
-          <div ref={loadMoreRef} className="cursor-pointer" />
+          )} */}
+          <InfiniteScroll
+            queryKey={['Playlist Details', playlistId]}
+            queryFn={fetchMoreTracks}
+            renderItem={(track: Music) => (
+              <MusicElement
+                key={track.track_id}
+                image={track.thumbnail_image}
+                title={track.title}
+                like={track.likes}
+                isLiked={track.likes_flag}
+                trackId={track.track_id}
+                playlistId={playlistId}
+                isEdit={editOpen}
+              />
+            )}
+            getNextPageParam={getNextPageParam}
+            dataPath={(page: Playlist) => page.tracks.content}
+          />
         </div>
       </div>
     </div>
