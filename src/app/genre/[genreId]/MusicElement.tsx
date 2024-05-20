@@ -39,7 +39,7 @@ export default function MusicElement({
           ? numeral(likeStore - 1).format('0.0a')
           : numeral(likeStore - 1).format('0a'),
       );
-      disLikes(trackId).catch(() => {
+      disLikes(String(trackId)).catch(() => {
         // API 호출이 실패하면 상태를 되돌립니다
         setIsLikedStore(true);
         setLikeStore(likeStore);
@@ -57,7 +57,7 @@ export default function MusicElement({
           ? numeral(likeStore + 1).format('0.0a')
           : numeral(likeStore + 1).format('0a'),
       );
-      likes(trackId).catch(() => {
+      likes(String(trackId)).catch(() => {
         // API 호출이 실패하면 상태를 되돌립니다
         setIsLikedStore(false);
         setLikeStore(likeStore);

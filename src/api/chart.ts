@@ -5,11 +5,11 @@
 import axios from 'axios';
 import { getCookie } from '@/app/Cookies';
 
-export async function fetchChartData() {
+export async function fetchChartData(page: number, size: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/charts`,
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/charts?page=${page}&size=${size}`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export async function fetchChartData() {
         },
       },
     );
-    return response.data.data.tracks;
+    return response.data;
   } catch (error) {
     console.error('API Fetch Error (chart data) : ', error);
     throw error;

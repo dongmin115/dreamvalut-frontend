@@ -1,54 +1,44 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/no-unresolved */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react-hooks/exhaustive-deps */
 
-'use server';
+'use client';
 
-import Chart from './Chart.tsx';
-import Tag from './Tag.tsx';
-import Genre from './Genre.tsx';
-import AllPlaylistComponent from './AllPlayList.tsx';
-import SystemPlaylistComponent from './SystemPlaylist.tsx';
+import { Cookies } from 'react-cookie';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useEffect, useState, Suspense } from 'react';
 
-// 메인 페이지 컴포넌트
-async function Page() {
-  return (
-    <div className="flex h-full w-full flex-col items-end justify-end">
-      {/* NavigationBar 제외 영역 */}
-      <div className="h-full w-10/12 pr-8">
-        {/* 인기 차트 */}
-        <h1 className="">인기 차트</h1>
-        <div className="bg-gray-650 flex h-80 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
-          <Chart />
-        </div>
+function MainPage() {
+  const cookies = new Cookies();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [accessToken, setAccessToken] = useState<string>('');
+  const [refreshToken, setRefreshToken] = useState<string>('');
 
-        {/* 인기 태그 */}
-        <h1 className="">태그별 음악</h1>
-        <div className="bg-gray-650 flex h-80 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
-          <Tag />
-        </div>
+  useEffect(() => {
+    setAccessToken(searchParams.get('accessToken') || '');
+    setRefreshToken(searchParams.get('refreshToken') || '');
+    if (accessToken !== '' && refreshToken !== '') {
+      cookies.set('accessToken', accessToken, { path: '/' });
+      cookies.set('refreshToken', refreshToken, { path: '/' });
+      router.push('/home');
+    }
+  }, [accessToken, refreshToken]);
 
-        {/* 장르별 음악 */}
-        <h1 className="">장르별 음악</h1>
-        <div className="bg-gray-650 flex h-[30rem] w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
-          <Genre />
-        </div>
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/home');
+    }, 500);
 
-        {/* 다른 유저가 선택한 플레이리스트 */}
-        <h1 className="">다른 유저가 선택한 플레이리스트</h1>
-        <div className="bg-gray-650 flex h-96 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
-          <AllPlaylistComponent />
-        </div>
+    return () => clearTimeout(timer); // cleanup the timeout on component unmount
+  }, []);
 
-        {/* 구독한 플레이리스트 */}
-        <h1 className="">DreamVault가 제공하는 플레이리스트</h1>
-        <div className="bg-gray-650 flex h-80 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
-          <SystemPlaylistComponent />
-        </div>
-      </div>
-      {/* 아래 여백, footer 넣을 예정 */}
-      <div className="h-40 w-full" />
-    </div>
-  );
+  return <div>잘못된 접근입니다</div>;
 }
 
-export default Page;
+export default function PageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MainPage />
+    </Suspense>
+  );
+}
