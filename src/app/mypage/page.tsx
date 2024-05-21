@@ -19,6 +19,7 @@ import { EditfetchGenres, fetchGenres } from '@/api/genre.ts';
 import { Genre, GenreData } from '@/types/genre.ts';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getRecentList } from '@/api/playlist.ts';
+import getUser from '@/api/user.ts';
 
 const theme = createTheme({
   palette: {
@@ -34,89 +35,6 @@ const theme = createTheme({
 });
 
 export default function Mypage() {
-  const recentSongs = [
-    {
-      title: 'title1',
-      artist: 'artist1',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title2',
-      artist: 'artist2',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title3',
-      artist: 'artist3',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title4',
-      artist: 'artist4',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title5',
-      artist: 'artist5',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title6',
-      artist: 'artist6',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title7',
-      artist: 'artist7',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title8',
-      artist: 'artist8',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title9',
-      artist: 'artist9',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title10',
-      artist: 'artist10',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title11',
-      artist: 'artist11',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title12',
-      artist: 'artist12',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title13',
-      artist: 'artist13',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title13',
-      artist: 'artist13',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title13',
-      artist: 'artist13',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-    {
-      title: 'title13',
-      artist: 'artist13',
-      cover: 'https://i.ibb.co/hLxvjJG/1.jpg',
-    },
-  ];
-
   const { data } = useQuery({
     queryKey: ['genres'],
     queryFn: EditfetchGenres,
@@ -125,6 +43,11 @@ export default function Mypage() {
   const { data: recentList, isLoading: recentListLoading } = useQuery({
     queryKey: ['recentList'],
     queryFn: getRecentList,
+  });
+
+  const { data: userInfo, isLoading: userInfoLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: getUser,
   });
 
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -162,21 +85,25 @@ export default function Mypage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="w-screen h-screen pl-[15%] bg-[#1a1a1a] flex flex-col">
-        <div className="flex flex-row w-full h-[30%] space-x-6 p-[2%]">
+      <div className="flex h-screen w-screen flex-col bg-[#1a1a1a] pl-[15%]">
+        <div className="flex h-[30%] w-full flex-row space-x-6 p-[2%]">
           {/* 내 계정 */}
-          <div className="flex flex-col w-[40%] h-full space-y-4">
-            <h1 className="text-[#D4D4D4] text-3xl">내 계정</h1>
-            <div className="flex flex-row items-center space-x-4 bg-[#353535] w-full h-full rounded-xl p-[4%] justify-between shadow-md">
+          <div className="flex h-full w-[40%] flex-col space-y-4">
+            <h1 className="text-3xl text-[#D4D4D4]">내 계정</h1>
+            <div className="flex h-full w-full flex-row items-center justify-between space-x-4 rounded-xl bg-[#353535] p-[4%] shadow-md">
               <div className="flex flex-row space-x-8">
                 <img
-                  src="https://i.ibb.co/hLxvjJG/1.jpg"
+                  src={userInfoLoading ? null : userInfo.profile_image}
                   alt="프로필 이미지"
                   className="size-28 rounded-full drop-shadow-sm"
                 />
                 <div className="flex flex-col justify-center">
-                  <p className="text-white text-xl">User name</p>
-                  <p className="text-[#777777] text-lg">User email</p>
+                  <p className="text-xl text-white">
+                    {userInfoLoading ? null : userInfo.user_name}
+                  </p>
+                  <p className="text-lg text-[#777777]">
+                    {userInfoLoading ? null : userInfo.user_email}
+                  </p>
                 </div>
               </div>
               <Button
@@ -190,9 +117,9 @@ export default function Mypage() {
             </div>
           </div>
           {/* 음악취향 */}
-          <div className="flex flex-col w-[60%] h-full space-y-4">
-            <h1 className="text-[#D4D4D4] text-3xl">나의 음악취향</h1>
-            <div className="flex flex-wrap items-center bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md justify-center gap-2 text-center object-center">
+          <div className="flex h-full w-[60%] flex-col space-y-4">
+            <h1 className="text-3xl text-[#D4D4D4]">나의 음악취향</h1>
+            <div className="flex h-full w-full flex-wrap items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md">
               <div>
                 {/* 장르 데이터를 Button 컴포넌트로 매핑하여 보여줍니다. */}
                 <div>
@@ -215,7 +142,7 @@ export default function Mypage() {
                   </div>
 
                   {/* 페이지네이션 */}
-                  <div className="flex justify-center mt-4">
+                  <div className="mt-4 flex justify-center">
                     <Button
                       disabled={currentPage === 1}
                       onClick={handlePrevPage}
@@ -238,24 +165,24 @@ export default function Mypage() {
           </div>
         </div>
         {/* 최근 감상한 곡 */}
-        <div className="flex flex-col w-full h-full p-[2%] space-y-4">
-          <h1 className="text-[#D4D4D4] text-3xl">최근 감상한 곡</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 bg-[#353535] w-full h-full rounded-xl p-[2%] shadow-md">
+        <div className="flex h-full w-full flex-col space-y-4 p-[2%]">
+          <h1 className="text-3xl text-[#D4D4D4]">최근 감상한 곡</h1>
+          <div className="grid h-full w-full grid-cols-1 gap-4 rounded-xl bg-[#353535] p-[2%] shadow-md md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {recentListLoading ? (
               <div>로딩중...</div>
             ) : (
-              recentList.tracks.map((e: any) => (
+              recentList.content.map((e: any) => (
                 <div
                   key={e.track_id}
-                  className="flex flex-row space-x-4 w-full h-fit hover:bg-[#040404] hover:bg-opacity-30 rounded-lg p-4"
+                  className="flex h-fit w-full flex-row space-x-4 rounded-lg p-4 hover:bg-[#040404] hover:bg-opacity-30"
                 >
                   <img
                     src={e.track_image}
                     alt="음악 커버이미지"
-                    className="w-16 h-16 rounded-md drop-shadow-lg items-center"
+                    className="h-16 w-16 items-center rounded-md drop-shadow-lg"
                   />
                   <div className="flex flex-col justify-center">
-                    <p className="text-white text-lg">{e.title}</p>
+                    <p className="text-lg text-white">{e.title}</p>
                     <p className="text-[#777777]">{e.uploader_name}</p>
                   </div>
                 </div>
