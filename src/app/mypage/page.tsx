@@ -93,16 +93,16 @@ export default function Mypage() {
             <div className="flex h-full w-full flex-row items-center justify-between space-x-4 rounded-xl bg-[#353535] p-[4%] shadow-md">
               <div className="flex flex-row space-x-8">
                 <img
-                  src={userInfoLoading ? null : userInfo.profile_image}
+                  src={userInfoLoading ? 'loading' : userInfo.profile_image}
                   alt="프로필 이미지"
                   className="size-28 rounded-full drop-shadow-sm"
                 />
                 <div className="flex flex-col justify-center">
                   <p className="text-xl text-white">
-                    {userInfoLoading ? null : userInfo.user_name}
+                    {userInfoLoading ? 'loading' : userInfo.user_name}
                   </p>
                   <p className="text-lg text-[#777777]">
-                    {userInfoLoading ? null : userInfo.user_email}
+                    {userInfoLoading ? 'loading' : userInfo.user_email}
                   </p>
                 </div>
               </div>
@@ -174,12 +174,12 @@ export default function Mypage() {
               recentList.content.map((e: any) => (
                 <div
                   key={e.track_id}
-                  className="flex h-fit w-full flex-row space-x-4 rounded-lg p-4 hover:bg-[#040404] hover:bg-opacity-30"
+                  className="flex h-auto w-auto flex-row items-center space-x-4 rounded-lg p-4 hover:bg-[#040404] hover:bg-opacity-30"
                 >
                   <img
                     src={e.track_image}
                     alt="음악 커버이미지"
-                    className="h-16 w-16 items-center rounded-md drop-shadow-lg"
+                    className="my-auto h-24 w-24 items-center rounded-md drop-shadow-lg"
                   />
                   <div className="flex flex-col justify-center">
                     <p className="text-lg text-white">{e.title}</p>

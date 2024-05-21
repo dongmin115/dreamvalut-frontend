@@ -16,7 +16,6 @@ async function getUser() {
         },
       },
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('유저 정보 요청 실패:', error);
