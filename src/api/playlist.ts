@@ -135,8 +135,17 @@ export async function fetchLikePlaylistThumbnail() {
 // 최근 감상한 곡 목록 가져오기
 export async function getRecentList() {
   try {
-    const response = await axios.get('/api/v1/users/tracks/played');
-    return response.data.data;
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/users/played`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response.data;
   } catch (error) {
     console.error('API Fetch Error (recent playlists):', error);
     throw error;
