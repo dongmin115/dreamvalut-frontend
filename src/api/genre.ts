@@ -8,7 +8,7 @@ import refreshapi from './axios_interceptor.ts';
 
 const accessToken = getCookie('accessToken');
 // 모든 장르 데이터 가져오기
-const fetchGenres = async () => {
+export const fetchGenres = async () => {
   try {
     const response = await refreshapi.get(
       `${process.env.NEXT_PUBLIC_API_URL}/genres/list`,
@@ -29,7 +29,7 @@ const fetchGenres = async () => {
 };
 
 // 내 장르 취향 가져오기
-const EditfetchGenres = async () => {
+export const EditfetchGenres = async () => {
   try {
     const response = await refreshapi.get(
       `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
@@ -47,4 +47,22 @@ const EditfetchGenres = async () => {
   }
 };
 
-export { EditfetchGenres, fetchGenres };
+export const postGenreTaste = async (genreIds: number[]) => {
+  console.log('genreIds:', genreIds);
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
+      { genre_ids: genreIds },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log('response:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error navigating to next page:', error);
+  }
+};
