@@ -57,7 +57,7 @@ export default function Mypage() {
 
   const { data: recentList, isLoading: recentListLoading } = useQuery({
     queryKey: ['recentList', recentListPage],
-    queryFn: () => getRecentList(recentListPage, renderSize),
+    queryFn: () => getRecentList(recentListPage - 1, renderSize),
   });
 
   const handleGenreToggle = (genreId: number) => {
@@ -87,7 +87,7 @@ export default function Mypage() {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const genresPerPage = 8;
+  const genresPerPage = 5;
   // 페이지 이동 버튼 핸들러
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
@@ -139,25 +139,27 @@ export default function Mypage() {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+          {/* 음악취향 */}
+          <div className="flex h-full w-[60%] flex-col">
+            <div className="flex h-fit flex-row justify-between">
+              <h1 className="text-3xl text-[#D4D4D4]">나의 음악취향</h1>
               <Button
                 variant="contained"
                 color="primary"
-                className="whitespace-nowrap rounded-full bg-[#6C26FF] px-8 py-2 text-white"
+                className="h-fit w-fit whitespace-nowrap rounded-xl bg-[#6C26FF] px-8 py-2 text-white"
                 onClick={handleEdit}
               >
                 <EditIcon color="secondary" fontSize="small" className="mr-2" />
                 {isEditing ? '수정하기' : '프로필 수정'}
               </Button>
             </div>
-          </div>
-          {/* 음악취향 */}
-          <div className="flex h-full w-[60%] flex-col">
-            <h1 className="text-3xl text-[#D4D4D4]">나의 음악취향</h1>
-            <div className="flex h-2/3 w-full flex-wrap items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md">
+            <div className="flex h-2/3 w-full items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md">
               {/* 장르 데이터를 Button 컴포넌트로 매핑하여 보여줍니다. */}
               <div className="w-full">
                 {/* 장르 목록 */}
-                <div className="flex w-full ">
+                <div className="flex w-full min-w-full">
                   {currentGenres.map((genre) => (
                     <Button
                       key={genre.genre_id}
@@ -165,9 +167,11 @@ export default function Mypage() {
                       style={{
                         backgroundColor: genre.state ? '#6c26ff' : '#606060',
                         margin: '1%',
-                        borderRadius: '45%',
+                        whiteSpace: 'nowrap', // 텍스트가 버튼 밖으로 넘치지 않도록 줄바꿈 방지
+                        overflow: 'hidden', // 넘치는 텍스트 숨김
+                        textOverflow: 'ellipsis', // 넘치는 텍스트를 "..."로 표시
                       }}
-                      className="flex-grow"
+                      className="flex-grow rounded-2xl"
                       onClick={() => handleGenreToggle(genre.genre_id)}
                     >
                       {genre.genre_name}
@@ -180,7 +184,7 @@ export default function Mypage() {
                   <Button disabled={currentPage === 1} onClick={handlePrevPage}>
                     <ArrowBackIosIcon />
                   </Button>
-                  <div>
+                  <div className="my-auto">
                     {currentPage} / {totalPages}
                   </div>
                   <Button
