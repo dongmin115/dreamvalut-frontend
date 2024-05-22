@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const accessToken = getCookie('accessToken');
 // 모든 장르 데이터 가져오기
-const fetchGenres = async () => {
+export const fetchGenres = async () => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/genres/list`,
@@ -30,7 +30,10 @@ const fetchGenres = async () => {
 };
 
 // 장르 정보 가져오기
-const getUserGenres = async (setGenres: any, setSelectedGenreIds: any) => {
+export const getUserGenres = async (
+  setGenres: any,
+  setSelectedGenreIds: any,
+) => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/users/preference?page=0&size=16`,
@@ -57,7 +60,7 @@ const getUserGenres = async (setGenres: any, setSelectedGenreIds: any) => {
   }
 };
 
-const patchUser = async (name: string, genreId: number[]) => {
+export const patchUser = async (name: string, genreId: number[]) => {
   try {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API_URL}/users`, // API 엔드포인트
@@ -77,4 +80,22 @@ const patchUser = async (name: string, genreId: number[]) => {
   }
 };
 
-export { getUserGenres, fetchGenres, patchUser };
+export const postGenreTaste = async (genreIds: number[]) => {
+  console.log('genreIds:', genreIds);
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
+      { genre_ids: genreIds },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log('response:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error navigating to next page:', error);
+  }
+};

@@ -22,9 +22,6 @@ import ignorePath from '@/types/ignorePath.ts';
 import theme from '../../styles/theme.ts';
 
 // 각각의 컴포넌트에 대한 타입 선언
-type HomeProps = {
-  children: React.ReactNode;
-};
 
 type PlaylistProps = {
   title: string;
@@ -93,7 +90,6 @@ export function SearchAppBar() {
 }
 
 // 각각의 컴포넌트 구현
-const Home: React.FC<HomeProps> = ({ children }) => <div>{children}</div>;
 
 const Playlist: React.FC<PlaylistProps> = ({ children }) => (
   <div>{children}</div>
@@ -113,31 +109,31 @@ function NavigationBar() {
     return null;
   }
   return (
-    <div className="fixed flex flex-col justify-start left-0 top-0 h-full w-[15%] bg-zinc-900 text-white p-4">
-      <Link className="flex flex-col cursor-pointer" href={'/main'}>
-        <div className="flex items-center mt-5">
+    <div className="fixed left-0 top-0 flex h-full w-[15%] flex-col justify-start bg-zinc-900 p-4 text-white">
+      <Link className="flex cursor-pointer flex-col" href={'/main'}>
+        <div className="mt-5 flex flex-row items-center">
           <img
             src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
             alt="DreamVault-logo-img"
             className="w-12"
           />
-          <h2 className="p-3 text-2xl font-bold">DreamVault</h2>
+          <h2 className="pl-3 text-2xl font-bold">DreamVault</h2>
+          <h6 className="-mt-4 p-2 text-xs">Beta</h6>
         </div>
       </Link>
 
-      <div className="flex flex-col mt-12 h-full">
+      <div className="mt-12 flex h-full flex-col">
         <SearchAppBar />
-        <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
-          <Home>
-            <HomeIcon style={{ color: theme.palette.primary.main }} />
-            <button className="p-2 text-sm">
-              <Link href={'/main'}>홈</Link>
-            </button>
-          </Home>
-        </div>
+        <Link
+          href={'/main'}
+          className="hover-bg-opacity mb-5 flex cursor-pointer flex-row items-center rounded-lg"
+        >
+          <HomeIcon style={{ color: theme.palette.primary.main }} />
+          <p className="p-2 text-sm">홈</p>
+        </Link>
 
         <Link
-          className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer"
+          className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg"
           href={'/playlist'}
         >
           <Playlist
@@ -150,7 +146,7 @@ function NavigationBar() {
         </Link>
 
         <Link href={'/post_music'}>
-          <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
+          <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
             <Mymusic>
               <EditNoteIcon style={{ color: theme.palette.primary.main }} />
               <button className="p-2 text-sm">나만의 음악 등록</button>
@@ -158,7 +154,7 @@ function NavigationBar() {
           </div>
         </Link>
 
-        <div className="flex mb-5 items-center rounded-lg hover-bg-opacity cursor-pointer">
+        <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
           <PersonIcon style={{ color: theme.palette.primary.main }} />
           <UserProfile>
             <button className="p-2 text-sm">
@@ -168,11 +164,11 @@ function NavigationBar() {
         </div>
       </div>
 
-      <div className="flex flex-col my-4">
-        <div className="flex items-center text-sm rounded-lg hover-bg-opacity">
+      <div className="my-4 flex flex-col">
+        <div className="hover-bg-opacity flex items-center rounded-lg text-sm">
           <LogOut>
             <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
-            <button className="p-2 text-sx">로그아웃</button>
+            <button className="text-sx p-2">로그아웃</button>
           </LogOut>
         </div>
       </div>
