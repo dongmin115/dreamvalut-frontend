@@ -3,7 +3,7 @@
 /* eslint-disable consistent-return */
 
 import { getCookie } from '@/app/Cookies.tsx';
-// import axios from 'axios';
+import axios from 'axios';
 import refreshapi from './axios_interceptor.ts';
 
 const accessToken = getCookie('accessToken');
