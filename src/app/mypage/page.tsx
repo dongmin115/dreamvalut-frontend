@@ -9,15 +9,15 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { EditfetchGenres, fetchGenres } from '@/api/genre.ts';
-import { Genre, GenreData } from '@/types/genre.ts';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { getUserGenres, patchUser } from '@/api/genre.ts';
+import { Genre } from '@/types/genre.ts';
+import { useQuery } from '@tanstack/react-query';
 import { getRecentList } from '@/api/playlist.ts';
 import getUser from '@/api/user.ts';
 
@@ -35,9 +35,19 @@ const theme = createTheme({
 });
 
 export default function Mypage() {
-  const { data } = useQuery({
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [selectedGenreIds, setSelectedGenreIds] = useState<number[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState<string>('');
+
+  const { data: userInfo, isLoading: userInfoLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUser(setName),
+  });
+
+  const { data: genreData } = useQuery({
     queryKey: ['genres'],
-    queryFn: EditfetchGenres,
+    queryFn: () => getUserGenres(setGenres, setSelectedGenreIds),
   });
 
   const { data: recentList, isLoading: recentListLoading } = useQuery({
@@ -45,27 +55,34 @@ export default function Mypage() {
     queryFn: getRecentList,
   });
 
-  const { data: userInfo, isLoading: userInfoLoading } = useQuery({
-    queryKey: ['user'],
-    queryFn: getUser,
-  });
-
-  const [genres, setGenres] = useState<Genre[]>([]);
-
-  React.useEffect(() => {
-    if (data) {
-      setGenres(data);
-    }
-  }, [data]);
-
   const handleGenreToggle = (genreId: number) => {
     const updatedGenres = genres.map((genre) =>
       genre.genre_id === genreId ? { ...genre, state: !genre.state } : genre,
     );
     setGenres(updatedGenres);
+
+    // 선택된 장르 ID 업데이트
+    setSelectedGenreIds(
+      (prevIds) =>
+        prevIds.includes(genreId)
+          ? prevIds.filter((id) => id !== genreId) // 이미 선택된 경우 제거
+          : [...prevIds, genreId], // 새로 선택된 경우 추가
+    );
   };
+
+  const patchProfile = async () => {
+    await patchUser(name, selectedGenreIds);
+  };
+
+  const handleEdit = async () => {
+    if (isEditing) {
+      await patchProfile();
+    }
+    setIsEditing(!isEditing);
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
-  const genresPerPage = 7;
+  const genresPerPage = 8;
   // 페이지 이동 버튼 핸들러
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
@@ -86,22 +103,33 @@ export default function Mypage() {
   return (
     <ThemeProvider theme={theme}>
       <div className="flex h-screen w-screen flex-col bg-[#1a1a1a] pl-[15%]">
-        <div className="flex h-[30%] w-full flex-row space-x-6 p-[2%]">
+        <div className="flex h-fit w-full flex-row space-x-6 p-[2%]">
           {/* 내 계정 */}
-          <div className="flex h-full w-[40%] flex-col space-y-4">
+          <div className="flex h-full w-[40%] flex-col">
             <h1 className="text-3xl text-[#D4D4D4]">내 계정</h1>
-            <div className="flex h-full w-full flex-row items-center justify-between space-x-4 rounded-xl bg-[#353535] p-[4%] shadow-md">
-              <div className="flex flex-row space-x-8">
+            <div className="flex h-2/3 w-full flex-row items-center justify-between space-x-4 rounded-xl bg-[#353535] p-[4%] shadow-md">
+              <div className="flex h-full w-full flex-row space-x-8">
                 <img
                   src={userInfoLoading ? 'loading' : userInfo.profile_image}
                   alt="프로필 이미지"
-                  className="size-28 rounded-full drop-shadow-sm"
+                  className="rounded-full object-cover drop-shadow-sm"
                 />
-                <div className="flex flex-col justify-center">
-                  <p className="text-xl text-white">
-                    {userInfoLoading ? 'loading' : userInfo.user_name}
-                  </p>
-                  <p className="text-lg text-[#777777]">
+                <div className="flex w-fit flex-col justify-center">
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      className="w-full rounded-md bg-[#040404] bg-opacity-30 p-2 text-xl text-white focus:outline-none"
+                      value={name}
+                      size={1}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  ) : (
+                    <p className="text-xl text-white">
+                      {userInfoLoading ? 'loading' : name}
+                    </p>
+                  )}
+
+                  <p className="w-fit text-lg text-[#777777]">
                     {userInfoLoading ? 'loading' : userInfo.user_email}
                   </p>
                 </div>
@@ -109,56 +137,53 @@ export default function Mypage() {
               <Button
                 variant="contained"
                 color="primary"
-                className="rounded-full bg-[#6C26FF] text-white"
+                className="whitespace-nowrap rounded-full bg-[#6C26FF] px-8 py-2 text-white"
+                onClick={handleEdit}
               >
                 <EditIcon color="secondary" fontSize="small" className="mr-2" />
-                프로필 수정
+                {isEditing ? '수정하기' : '프로필 수정'}
               </Button>
             </div>
           </div>
           {/* 음악취향 */}
-          <div className="flex h-full w-[60%] flex-col space-y-4">
+          <div className="flex h-full w-[60%] flex-col">
             <h1 className="text-3xl text-[#D4D4D4]">나의 음악취향</h1>
-            <div className="flex h-full w-full flex-wrap items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md">
-              <div>
-                {/* 장르 데이터를 Button 컴포넌트로 매핑하여 보여줍니다. */}
-                <div>
-                  {/* 장르 목록 */}
-                  <div className="flex">
-                    {currentGenres.map((genre) => (
-                      <Button
-                        key={genre.genre_id}
-                        variant="contained"
-                        style={{
-                          backgroundColor: genre.state ? '#6c26ff' : '#606060',
-                          margin: '1%',
-                          borderRadius: '45%',
-                        }}
-                        onClick={() => handleGenreToggle(genre.genre_id)}
-                      >
-                        {genre.genre_name}
-                      </Button>
-                    ))}
-                  </div>
+            <div className="flex h-2/3 w-full flex-wrap items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md">
+              {/* 장르 데이터를 Button 컴포넌트로 매핑하여 보여줍니다. */}
+              <div className="w-full">
+                {/* 장르 목록 */}
+                <div className="flex w-full ">
+                  {currentGenres.map((genre) => (
+                    <Button
+                      key={genre.genre_id}
+                      variant="contained"
+                      style={{
+                        backgroundColor: genre.state ? '#6c26ff' : '#606060',
+                        margin: '1%',
+                        borderRadius: '45%',
+                      }}
+                      className="flex-grow"
+                      onClick={() => handleGenreToggle(genre.genre_id)}
+                    >
+                      {genre.genre_name}
+                    </Button>
+                  ))}
+                </div>
 
-                  {/* 페이지네이션 */}
-                  <div className="mt-4 flex justify-center">
-                    <Button
-                      disabled={currentPage === 1}
-                      onClick={handlePrevPage}
-                    >
-                      <ArrowBackIosIcon />
-                    </Button>
-                    <div>
-                      {currentPage} / {totalPages}
-                    </div>
-                    <Button
-                      disabled={currentPage === totalPages}
-                      onClick={handleNextPage}
-                    >
-                      <ArrowForwardIosIcon />
-                    </Button>
+                {/* 페이지네이션 */}
+                <div className="mt-4 flex justify-center">
+                  <Button disabled={currentPage === 1} onClick={handlePrevPage}>
+                    <ArrowBackIosIcon />
+                  </Button>
+                  <div>
+                    {currentPage} / {totalPages}
                   </div>
+                  <Button
+                    disabled={currentPage === totalPages}
+                    onClick={handleNextPage}
+                  >
+                    <ArrowForwardIosIcon />
+                  </Button>
                 </div>
               </div>
             </div>
@@ -166,7 +191,7 @@ export default function Mypage() {
         </div>
         {/* 최근 감상한 곡 */}
         <div className="flex h-full w-full flex-col space-y-4 p-[2%]">
-          <h1 className="text-3xl text-[#D4D4D4]">최근 감상한 곡</h1>
+          <h1 className="mt-0 text-3xl text-[#D4D4D4]">최근 감상한 곡</h1>
           <div className="grid h-full w-full grid-cols-1 gap-4 rounded-xl bg-[#353535] p-[2%] shadow-md md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {recentListLoading ? (
               <div>로딩중...</div>
