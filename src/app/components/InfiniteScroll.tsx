@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable consistent-return */
 /* eslint-disable comma-spacing */
 /* eslint-disable object-curly-newline */
@@ -11,7 +12,7 @@ const InfiniteScroll = ({
   renderItem,
   getNextPageParam,
   dataPath,
-}) => {
+}: any) => {
   const { data, isLoading, isError, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey,
@@ -49,7 +50,7 @@ const InfiniteScroll = ({
       {isError && <div>Error loading data</div>}
       {data?.pages.map((page, pageIndex) => (
         <React.Fragment key={pageIndex}>
-          {dataPath(page).map((item) => renderItem(item))}
+          {dataPath(page).map((item: any) => renderItem(item))}
         </React.Fragment>
       ))}
       {isLoading && <div>Loading more items...</div>}

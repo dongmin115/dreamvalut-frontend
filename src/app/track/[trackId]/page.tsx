@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable operator-linebreak */
 /* eslint-disable consistent-return */
 /* eslint-disable indent */
@@ -10,7 +14,7 @@
 'use client';
 
 import { ThemeProvider } from '@emotion/react';
-import { Button, Divider, IconButton, Popover, Slider } from '@mui/material';
+import { Divider, IconButton, Popover, Slider } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
@@ -19,9 +23,8 @@ import VolumeDown from '@mui/icons-material/VolumeDown';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import Favorite from '@mui/icons-material/Favorite';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { getStreamTrack } from '@/api/playlist';
 import { getMusic, disLikes, likes } from '@/api/music';
@@ -35,6 +38,9 @@ export default function MusicPage(props: any) {
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorEl2);
   const id = open2 ? 'simple-popover' : undefined;
+
+  const renderSize = 10; // 한 번에 렌더링할 음악 수
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const {
     audioRef,
     playAudio,
@@ -45,9 +51,29 @@ export default function MusicPage(props: any) {
     setVolume,
   } = useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+
+  // 현재 재생 목록 가져오기
+  const { data, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useInfiniteQuery({
+      queryKey: ['Streaming Track'],
+      queryFn: ({ pageParam }) => getStreamTrack(pageParam, renderSize),
+      initialPageParam: 0,
+
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.content.next === null) {
+          return undefined;
+        }
+        return allPages.length;
+      },
+    });
+  const loadMoreRef = useRef(null);
+
+  // 재생중인 음악 정보 가져오기
+  const { data: musicData, isLoading: musicLoading } = useQuery({
+    queryKey: ['music'],
+    queryFn: () => getMusic(props.params.trackId, setIsLiked),
+  });
+
   // 재생목록 버튼 메뉴 닫기
   const handleClose = () => {
     setAnchorEl(null);
@@ -112,26 +138,35 @@ export default function MusicPage(props: any) {
     }
   };
 
-  // API 호출
-  // 특정 플레이리스트 가져오기
-  const { data, isLoading } = useQuery({
-    queryKey: ['Streaming Track'],
-    queryFn: () => getStreamTrack(0, 5), // 하드코딩, 추후 수정 필요
-  });
+  useEffect(() => {
+    console.log('hasNextPage : ', hasNextPage, 'fetchNextPage : ', hasNextPage);
+    if (!hasNextPage) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNextPage();
+          console.log('fetchNextPage 실행됨');
+        }
+      },
+      {
+        root: null, // 기본적으로 브라우저 뷰포트를 root로 사용
+        rootMargin: '0px',
+        threshold: 0.1, // 타겟 요소가 10% 보이면 콜백 실행
+      },
+    );
+    const loadMoreElement = loadMoreRef.current;
+    if (loadMoreElement) {
+      observer.observe(loadMoreElement);
+    }
 
-  // 모든 플레이리스트 가져오기
-  const { data: listData, isLoading: listLoading } = useQuery({
-    queryKey: ['Streaming Track'],
-    queryFn: () => getStreamTrack(0, 5), // 하드코딩, 추후 수정 필요
-  });
+    return () => {
+      if (loadMoreElement) {
+        observer.unobserve(loadMoreElement);
+      }
+    };
+  }, [hasNextPage, fetchNextPage]);
 
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  const { data: musicData, isLoading: musicLoading } = useQuery({
-    queryKey: ['music'],
-    queryFn: () => getMusic(props.params.trackId, setIsLiked),
-  });
-
+  if (isFetchingNextPage || data === undefined) return <div>Loading...</div>;
   return (
     <ThemeProvider theme={theme}>
       {/* 음악소스 */}
@@ -170,7 +205,7 @@ export default function MusicPage(props: any) {
               </div>
               <img
                 id="card-front"
-                src={musicData.thumbnail_image}
+                src={musicData.track_image}
                 alt="1"
                 className="h-96 w-96 rounded-md drop-shadow-lg"
               />
@@ -299,7 +334,7 @@ export default function MusicPage(props: any) {
               <h1 className="m-0 h-fit text-4xl text-white drop-shadow-lg">
                 Playlist
               </h1>
-              <Button
+              {/* <Button
                 color="secondary"
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
@@ -308,7 +343,7 @@ export default function MusicPage(props: any) {
                 onClick={handleClick}
               >
                 재생목록 선택
-              </Button>
+              </Button> */}
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -318,7 +353,7 @@ export default function MusicPage(props: any) {
                   'aria-labelledby': 'basic-button',
                 }}
               >
-                {listLoading
+                {/* {listLoading
                   ? 'loading'
                   : listData.content.map((e: any) => (
                       <MenuItem
@@ -330,7 +365,7 @@ export default function MusicPage(props: any) {
                       >
                         {e.title}
                       </MenuItem>
-                    ))}
+                    ))} */}
               </Menu>
             </div>
             <Divider
@@ -340,24 +375,31 @@ export default function MusicPage(props: any) {
               className="w-full bg-white drop-shadow-xl"
             />
             {/* 재생목록 리스트 */}
-            {isLoading
-              ? 'loading'
-              : data.content.map((track: any) => (
+            <div className="flex h-[26rem] w-full flex-col overflow-y-scroll">
+              {data.pages.map((page: any) =>
+                page.content.map((content: any) => (
                   <li
-                    key={track.id}
+                    key={content.id}
                     className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
                   >
                     <img
-                      src={track.thumbnail_image}
+                      src={content.thumbnail_image}
                       alt="음악 커버"
                       className="h-16 w-16 rounded-md drop-shadow-lg"
                     />
-                    <div className="flex flex-col items-center justify-center">
-                      <p className="text-lg text-white">{track.title}</p>
-                      <p className="text-[#777777]">{track.uploader_name}</p>
+                    <div className="flex flex-col items-start justify-center">
+                      <p className="text-lg text-white">{content.title}</p>
+                      <p className="text-start text-[#777777]">
+                        {content.uploader_name}
+                      </p>
                     </div>
                   </li>
-                ))}
+                )),
+              )}
+              <div ref={loadMoreRef} className="h-2 w-2 cursor-pointer">
+                load
+              </div>
+            </div>
           </div>
         </div>
       )}
