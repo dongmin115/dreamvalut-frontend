@@ -95,29 +95,40 @@ h1 {
   }
 }
 
-.LogInBtns {
-  background: transparent;
-  color: rgba(207, 124, 255, 0.7);
+.LogInBtnsNaver {
+  background: rgba(4, 199, 90, 255);
+  color: white;
   transition: all 0.7s ease-out;
-  background: linear-gradient(
-    270deg,
-    rgba(167, 106, 223, 0.8),
-    rgba(93, 52, 146, 0.8),
-    rgba(34, 34, 34, 0),
-    rgba(34, 34, 34, 0)
-  );
   background-position: 1% 50%;
   background-size: 300% 300%;
   text-decoration: none;
-  border: 3px solid rgba(185, 101, 235, 0.3);
+  border: 3px solid rgba(4, 199, 90, 255);
 }
 
-.LogInBtns:hover {
-  color: #fff;
-  border: 1px solid rgba(223, 190, 106, 0);
-  color: white;
-  background-position: 99% 50%;
-  cursor: pointer;
+.LogInBtnsGoogle {
+  color: rgb(0, 0, 0);
+  transition: all 0.7s ease-out;
+  background-color: rgb(235, 235, 235);
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  border: 3px solid rgba(242, 242, 242, 255);
+}
+
+.LogInBtnsKakao {
+  color: rgb(0, 0, 0);
+  transition: all 0.7s ease-out;
+  background-color: rgba(254, 221, 2, 255);
+  background-position: 1% 50%;
+  background-size: 300% 300%;
+  text-decoration: none;
+  border: 3px solid rgba(254, 221, 2, 255);
+}
+
+.LogInBtnsGoogle:hover,
+.LogInBtnsKakao:hover,
+.LogInBtnsNaver:hover {
+  filter: brightness(75%);
 }
 
 /* 로그인 페이지-배경 효과 */
