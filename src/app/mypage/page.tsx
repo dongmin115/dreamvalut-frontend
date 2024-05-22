@@ -20,6 +20,7 @@ import { Genre } from '@/types/genre.ts';
 import { useQuery } from '@tanstack/react-query';
 import { getRecentList } from '@/api/playlist.ts';
 import getUser from '@/api/user.ts';
+import Link from 'next/link';
 
 const theme = createTheme({
   palette: {
@@ -201,20 +202,19 @@ export default function Mypage() {
               <div>로딩중...</div>
             ) : (
               recentList.content.map((e: any) => (
-                <div
-                  key={e.track_id}
-                  className="flex h-auto w-auto flex-row items-center space-x-4 rounded-lg p-4 hover:bg-[#040404] hover:bg-opacity-30"
-                >
-                  <img
-                    src={e.track_image}
-                    alt="음악 커버이미지"
-                    className="my-auto h-24 w-24 items-center rounded-md drop-shadow-lg"
-                  />
-                  <div className="flex flex-col justify-center">
-                    <p className="text-lg text-white">{e.title}</p>
-                    <p className="text-[#777777]">{e.uploader_name}</p>
+                <Link key={e.track_id} href={`/track/${e.track_id}`}>
+                  <div className="flex h-auto w-auto flex-row items-center space-x-4 rounded-lg p-4 hover:bg-[#040404] hover:bg-opacity-30">
+                    <img
+                      src={e.track_image}
+                      alt="음악 커버이미지"
+                      className="my-auto h-24 w-24 items-center rounded-md drop-shadow-lg"
+                    />
+                    <div className="flex flex-col justify-center">
+                      <p className="text-lg text-white">{e.title}</p>
+                      <p className="text-[#777777]">{e.uploader_name}</p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))
             )}
           </div>
