@@ -133,11 +133,11 @@ export async function fetchLikePlaylistThumbnail() {
 }
 
 // 최근 감상한 곡 목록 가져오기
-export async function getRecentList() {
+export async function getRecentList(page: number, size: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/users/played`,
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/users/played?page=${page}&size=${size}`,
       {
         headers: {
           'Content-Type': 'application/json',

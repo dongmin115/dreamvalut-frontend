@@ -50,9 +50,13 @@ export default function Mypage() {
     queryFn: () => getUserGenres(setGenres, setSelectedGenreIds),
   });
 
+  const [recentListPage, setRecentListPage] = useState(1);
+  const renderSize = 12;
+  const totalRecentListPages = 5;
+
   const { data: recentList, isLoading: recentListLoading } = useQuery({
-    queryKey: ['recentList'],
-    queryFn: getRecentList,
+    queryKey: ['recentList', recentListPage],
+    queryFn: () => getRecentList(recentListPage, renderSize),
   });
 
   const handleGenreToggle = (genreId: number) => {
@@ -213,6 +217,33 @@ export default function Mypage() {
                 </div>
               ))
             )}
+          </div>
+          <div className="pagination  w-full items-center text-center">
+            <Button
+              // 페이지가 1보다 작아지지 않도록
+              onClick={() => setRecentListPage((prev) => Math.max(prev - 1, 1))}
+              disabled={recentListPage === 1}
+            >
+              <ArrowBackIosIcon />
+            </Button>
+            <span>
+              {recentListPage} / {totalRecentListPages}
+            </span>
+            <Button
+              // 페이지가 최대 페이지를 넘어가지 않도록
+              onClick={() =>
+                setRecentListPage((prev) =>
+                  totalRecentListPages
+                    ? Math.min(prev + 1, totalRecentListPages)
+                    : prev,
+                )
+              }
+              disabled={
+                recentListPage === totalRecentListPages || !totalRecentListPages
+              }
+            >
+              <ArrowForwardIosIcon />
+            </Button>
           </div>
         </div>
       </div>
