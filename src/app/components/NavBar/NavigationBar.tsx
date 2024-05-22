@@ -22,9 +22,6 @@ import ignorePath from '@/types/ignorePath.ts';
 import theme from '../../styles/theme.ts';
 
 // 각각의 컴포넌트에 대한 타입 선언
-type HomeProps = {
-  children: React.ReactNode;
-};
 
 type PlaylistProps = {
   title: string;
@@ -93,7 +90,6 @@ export function SearchAppBar() {
 }
 
 // 각각의 컴포넌트 구현
-const Home: React.FC<HomeProps> = ({ children }) => <div>{children}</div>;
 
 const Playlist: React.FC<PlaylistProps> = ({ children }) => (
   <div>{children}</div>
