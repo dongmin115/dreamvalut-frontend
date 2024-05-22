@@ -207,7 +207,7 @@ export default function Mypage() {
             ) : (
               recentList.content.map((e: any) => (
                 <Link key={e.track_id} href={`/track/${e.track_id}`}>
-                  <div className="flex h-auto w-auto flex-row items-center space-x-4 rounded-lg p-4 hover:bg-[#040404] hover:bg-opacity-30">
+                  <div className="flex h-auto w-auto flex-row items-center space-x-4 rounded-lg p-4 transition-colors duration-300 ease-in hover:bg-[#040404] hover:bg-opacity-30">
                     <img
                       src={e.track_image}
                       alt="음악 커버이미지"
