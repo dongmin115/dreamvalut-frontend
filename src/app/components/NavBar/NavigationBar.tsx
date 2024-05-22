@@ -85,6 +85,7 @@ function NavigationBar() {
               className="w-12"
             />
             <h2 className="p-3 text-2xl font-bold">DreamVault</h2>
+            <h6 className="-mt-4 p-2 text-xs">Beta</h6>
           </div>
         </Link>
 
