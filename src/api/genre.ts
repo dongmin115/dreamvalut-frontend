@@ -3,7 +3,7 @@
 /* eslint-disable consistent-return */
 
 import { getCookie } from '@/app/Cookies.tsx';
-import { Genre } from '@/types/genre';
+import { Genre } from '@/types/genre.ts';
 import axios from 'axios';
 import refreshapi from './axios_interceptor.ts';
 

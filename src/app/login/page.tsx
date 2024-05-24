@@ -29,7 +29,7 @@ const LogIn = () => (
             <Image
               src="https://i.ibb.co/09htLD8/web-neutral-sq-na-2x.png"
               alt="googleimage"
-              layout="fill" // 부모 컨테이너를 채우도록 설정
+              fill={true} // 부모 컨테이너를 채우도록 설정
               objectFit="cover" // 이미지가 부모 컨테이너에 맞게 조정됨
             />
           </div>
@@ -47,7 +47,7 @@ const LogIn = () => (
             <Image
               src="https://i.ibb.co/r6y52R7/kakaotalk-sharing-btn-small-ov.png"
               alt="kakaoimage"
-              layout="fill"
+              fill={true}
               objectFit="cover"
             />
           </div>
@@ -62,7 +62,7 @@ const LogIn = () => (
             <Image
               src="https://i.ibb.co/wYf09Y3/btn-G.png"
               alt="naverimage"
-              layout="fill"
+              fill={true}
               objectFit="cover"
             />
           </div>
