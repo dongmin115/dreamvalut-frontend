@@ -19,13 +19,13 @@ const LogIn = () => (
         alt="DreamVault-logo-img"
         className="mb-[1%] w-[5%]"
       />
-      <p className="z-10 mb-10 text-2xl text-white md:text-3xl lg:text-4xl">
+      <p className="z-10 mb-10 text-2xl text-white sm:text-4xl">
         Welcome To <span className="z-10 text-violet-600">DreamVault.</span>
       </p>
-      <p className="z-10 mb-16 text-4xl text-white md:text-5xl lg:text-6xl">
+      <p className="z-10 mb-16 text-2xl text-white sm:text-4xl">
         당신의 꿈을 열어보세요.
       </p>
-      <div className="LogInBtnsGoogle z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
+      <div className="LogInBtnsGoogle z-10 mb-4 flex h-10 w-1/5 items-center justify-start rounded-md sm:w-1/6 md:w-1/5 lg:w-1/4">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
             src="https://i.ibb.co/09htLD8/web-neutral-sq-na-2x.png"
@@ -42,7 +42,7 @@ const LogIn = () => (
         </button>
       </div>
 
-      <div className="LogInBtnsKakao z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
+      <div className="LogInBtnsKakao z-10 mb-4 flex h-10 w-1/5 items-center justify-start rounded-md sm:w-1/6 md:w-1/5 lg:w-1/4">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
             src="https://i.ibb.co/r6y52R7/kakaotalk-sharing-btn-small-ov.png"
@@ -58,7 +58,7 @@ const LogIn = () => (
           <span className="block md:hidden lg:hidden">카카오</span>
         </button>
       </div>
-      <div className="LogInBtnsNaver z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
+      <div className="LogInBtnsNaver z-10 mb-4 flex h-10 w-1/5 items-center justify-start rounded-md sm:w-1/6 md:w-1/5 lg:w-1/4">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
             src="https://i.ibb.co/wYf09Y3/btn-G.png"
