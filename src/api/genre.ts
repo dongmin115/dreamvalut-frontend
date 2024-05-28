@@ -1,11 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-console */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 /* eslint-disable consistent-return */
 
 import { getCookie } from '@/app/Cookies.tsx';
-import { Genre } from '@/types/genre';
+import { Genre } from '@/types/genre.ts';
 import axios from 'axios';
+import refreshapi from './axios_interceptor.ts';
 
 const accessToken = getCookie('accessToken');
 // 모든 장르 데이터 가져오기
@@ -36,7 +37,7 @@ export const getUserGenres = async (
 ) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/preference?page=0&size=16`,
+      `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
       {
         headers: {
           'Content-Type': 'application/json',

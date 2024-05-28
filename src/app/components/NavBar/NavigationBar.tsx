@@ -19,27 +19,8 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import ignorePath from '@/types/ignorePath.ts';
+import { LogOut } from '@/util/login.ts';
 import theme from '../../styles/theme.ts';
-
-// 각각의 컴포넌트에 대한 타입 선언
-
-type PlaylistProps = {
-  title: string;
-  songs: string[];
-  children?: React.ReactNode;
-};
-
-type MymusicProps = {
-  children: React.ReactNode;
-};
-
-type UserProfileProps = {
-  children: React.ReactNode;
-};
-
-type LogOutProps = {
-  children: React.ReactNode;
-};
 
 export function SearchAppBar() {
   const router = useRouter();
@@ -89,90 +70,69 @@ export function SearchAppBar() {
   );
 }
 
-// 각각의 컴포넌트 구현
-
-const Playlist: React.FC<PlaylistProps> = ({ children }) => (
-  <div>{children}</div>
-);
-
-const Mymusic: React.FC<MymusicProps> = ({ children }) => <div>{children}</div>;
-
-const UserProfile: React.FC<UserProfileProps> = ({ children }) => (
-  <div>{children}</div>
-);
-
-const LogOut: React.FC<LogOutProps> = ({ children }) => <div>{children}</div>;
-
 function NavigationBar() {
   const path = usePathname();
   if (ignorePath().includes(path)) {
     return null;
   }
   return (
-    <div className="fixed left-0 top-0 flex h-full w-[15%] flex-col justify-start bg-zinc-900 p-4 text-white">
-      <Link className="flex cursor-pointer flex-col" href={'/main'}>
-        <div className="mt-5 flex flex-row items-center">
-          <img
-            src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
-            alt="DreamVault-logo-img"
-            className="w-12"
-          />
-          <h2 className="pl-3 text-2xl font-bold">DreamVault</h2>
-          <h6 className="-mt-4 p-2 text-xs">Beta</h6>
-        </div>
-      </Link>
-
-      <div className="mt-12 flex h-full flex-col">
-        <SearchAppBar />
-        <Link
-          href={'/main'}
-          className="hover-bg-opacity mb-5 flex cursor-pointer flex-row items-center rounded-lg"
-        >
-          <HomeIcon style={{ color: theme.palette.primary.main }} />
-          <p className="p-2 text-sm">홈</p>
-        </Link>
-
-        <Link
-          className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg"
-          href={'/playlist'}
-        >
-          <Playlist
-            title="내 플레이리스트"
-            songs={['노래 1', '노래 2', '노래 3']}
-          >
-            <PlaylistPlayIcon style={{ color: theme.palette.primary.main }} />
-            <button className="p-2 text-sm">플레이리스트</button>
-          </Playlist>
-        </Link>
-
-        <Link href={'/post_music'}>
-          <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
-            <Mymusic>
-              <EditNoteIcon style={{ color: theme.palette.primary.main }} />
-              <button className="p-2 text-sm">나만의 음악 등록</button>
-            </Mymusic>
+    <ThemeProvider theme={theme}>
+      <div className="fixed left-0 top-0 flex h-full w-[15%] flex-col justify-start bg-zinc-900 p-4 text-white">
+        <Link className="flex cursor-pointer flex-col" href={'/main'}>
+          <div className="mt-5 flex items-center">
+            <img
+              src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
+              alt="DreamVault-logo-img"
+              className="w-12"
+            />
+            <h2 className="p-3 text-2xl font-bold">DreamVault</h2>
+            <h6 className="-mt-4 p-2 text-xs">Beta</h6>
           </div>
         </Link>
 
-        <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
-          <PersonIcon style={{ color: theme.palette.primary.main }} />
-          <UserProfile>
+        <div className="mt-12 flex h-full flex-col">
+          <SearchAppBar />
+          <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
+            <HomeIcon color="primary" />
+            <button className="p-2 text-sm">
+              <Link href={'/main'}>홈</Link>
+            </button>
+          </div>
+
+          <Link
+            className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg"
+            href={'/playlist'}
+          >
+            <PlaylistPlayIcon color="primary" />
+            <button className="p-2 text-sm">플레이리스트</button>
+          </Link>
+
+          <Link href={'/post_music'}>
+            <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
+              <EditNoteIcon color="primary" />
+              <button className="p-2 text-sm">나만의 음악 등록</button>
+            </div>
+          </Link>
+
+          <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
+            <PersonIcon color="primary" />
+
             <button className="p-2 text-sm">
               <Link href={'/mypage'}>프로필</Link>
             </button>
-          </UserProfile>
+          </div>
         </div>
-      </div>
 
-      <div className="my-4 flex flex-col">
-        <div className="hover-bg-opacity flex items-center rounded-lg text-sm">
-          <LogOut>
-            <MeetingRoomIcon style={{ color: theme.palette.primary.main }} />
-            <button className="text-sx p-2">로그아웃</button>
-          </LogOut>
+        <div className="my-4 flex flex-col">
+          <div className="hover-bg-opacity flex items-center rounded-lg text-sm">
+            <MeetingRoomIcon color="primary" />
+            <button className="text-sx p-2" onClick={LogOut}>
+              로그아웃
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 
