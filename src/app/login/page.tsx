@@ -22,7 +22,9 @@ const LogIn = () => (
       <p className="z-10 mb-10 text-2xl text-white md:text-3xl lg:text-4xl">
         Welcome To <span className="z-10 text-violet-600">DreamVault.</span>
       </p>
-      <p className="z-10 mb-16 text-6xl text-white">당신의 꿈을 열어보세요.</p>
+      <p className="z-10 mb-16 text-4xl text-white md:text-5xl lg:text-6xl">
+        당신의 꿈을 열어보세요.
+      </p>
       <div className="LogInBtnsGoogle z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
@@ -33,11 +35,13 @@ const LogIn = () => (
         </div>
         <button
           onClick={GoogleLogin}
-          className="ml-2 h-10 flex-1 text-base font-medium"
+          className="ml-2 h-10 flex-1 text-xs font-medium md:text-sm lg:text-base"
         >
-          구글 로그인
+          <span className="hidden md:block lg:block">구글 로그인</span>
+          <span className="block md:hidden lg:hidden">구글</span>
         </button>
       </div>
+
       <div className="LogInBtnsKakao z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
@@ -48,9 +52,10 @@ const LogIn = () => (
         </div>
         <button
           onClick={KakaoLogin}
-          className="ml-2 h-10 flex-1 text-base font-medium"
+          className="ml-2 h-10 flex-1 text-xs font-medium md:text-sm lg:text-base"
         >
-          카카오 로그인
+          <span className="hidden md:block lg:block">카카오 로그인</span>
+          <span className="block md:hidden lg:hidden">카카오</span>
         </button>
       </div>
       <div className="LogInBtnsNaver z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
@@ -63,9 +68,10 @@ const LogIn = () => (
         </div>
         <button
           onClick={NaverLogin}
-          className="ml-2 h-10 flex-1 text-base font-medium"
+          className="ml-2 h-10 flex-1 text-xs font-medium md:text-sm lg:text-base"
         >
-          네이버 로그인
+          <span className="hidden md:block lg:block">네이버 로그인</span>
+          <span className="block md:hidden lg:hidden">네이버</span>
         </button>
       </div>
 
