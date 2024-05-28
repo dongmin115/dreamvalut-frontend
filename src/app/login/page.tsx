@@ -18,7 +18,7 @@ const LogIn = () => (
         alt="DreamVault-logo-img"
         className="mb-[1%] w-[5%]"
       />
-      <p className="z-10 mb-10 text-4xl text-white">
+      <p className="z-10 mb-10 text-2xl text-white md:text-3xl lg:text-4xl">
         Welcome To <span className="z-10 text-violet-600">DreamVault.</span>
       </p>
       <p className="z-10 mb-16 text-6xl text-white">당신의 꿈을 열어보세요.</p>
