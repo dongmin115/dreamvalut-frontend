@@ -7,7 +7,7 @@
 'use client';
 
 import React from 'react';
-import { KakaoLogin, NaverLogin, GoogleLogin } from '@/api/login.ts';
+import { KakaoLogin, NaverLogin, GoogleLogin } from '@/util/login.ts';
 import Image from 'next/image';
 
 // 클라이언트 코드에서 실제 서버로 POST 요청을 보내는 방식

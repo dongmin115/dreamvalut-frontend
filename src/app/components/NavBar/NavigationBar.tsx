@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import ignorePath from '@/types/ignorePath.ts';
-import { LogOut } from '@/api/login.ts';
+import { LogOut } from '@/util/login.ts';
 import theme from '../../styles/theme.ts';
 
 export function SearchAppBar() {
