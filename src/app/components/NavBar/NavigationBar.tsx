@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import ignorePath from '@/types/ignorePath.ts';
+import { LogOut } from '@/api/login.ts';
 import theme from '../../styles/theme.ts';
 
 export function SearchAppBar() {
@@ -125,7 +126,9 @@ function NavigationBar() {
         <div className="my-4 flex flex-col">
           <div className="hover-bg-opacity flex items-center rounded-lg text-sm">
             <MeetingRoomIcon color="primary" />
-            <button className="text-sx p-2">로그아웃</button>
+            <button className="text-sx p-2" onClick={LogOut}>
+              로그아웃
+            </button>
           </div>
         </div>
       </div>

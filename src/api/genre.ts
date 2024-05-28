@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-console */
 /* eslint-disable consistent-return */
@@ -11,7 +12,7 @@ const accessToken = getCookie('accessToken');
 // 모든 장르 데이터 가져오기
 export const fetchGenres = async () => {
   try {
-    const response = await refreshapi.get(
+    const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/genres/list`,
       {
         headers: {
@@ -35,7 +36,7 @@ export const getUserGenres = async (
   setSelectedGenreIds: any,
 ) => {
   try {
-    const response = await refreshapi.get(
+    const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
       {
         headers: {
