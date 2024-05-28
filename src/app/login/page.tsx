@@ -7,7 +7,8 @@
 'use client';
 
 import React from 'react';
-import { KakaoLogin, NaverLogin, GoogleLogin } from '@/api/login.ts';
+import { KakaoLogin, NaverLogin, GoogleLogin } from '@/util/login.ts';
+import Image from 'next/image';
 
 // 클라이언트 코드에서 실제 서버로 POST 요청을 보내는 방식
 const LogIn = () => (
@@ -21,41 +22,53 @@ const LogIn = () => (
       <p className="z-10 mb-10 text-2xl text-white md:text-3xl lg:text-4xl">
         Welcome To <span className="z-10 text-violet-600">DreamVault.</span>
       </p>
-      <p className="z-10 mb-16 text-4xl text-white md:text-5xl lg:text-6xl">
-        당신의 꿈을 열어보세요.
-      </p>
-      <div className="LogInBtns z-10 mb-4 flex h-[5%] w-1/5 items-center justify-center rounded-xl p-1">
-        <img
-          src="https://i.ibb.co/fQ4ZGZ8/image.png"
-          alt="googleimage"
-          className="h-10 w-10 rounded-full"
-        />
-        <button onClick={GoogleLogin} className="ml-10 text-xl">
-          구글로 로그인
+      <p className="z-10 mb-16 text-6xl text-white">당신의 꿈을 열어보세요.</p>
+      <div className="LogInBtnsGoogle z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
+        <div className="flex h-10 w-10 items-center justify-center">
+          <img
+            src="https://i.ibb.co/09htLD8/web-neutral-sq-na-2x.png"
+            alt="googleimage"
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <button
+          onClick={GoogleLogin}
+          className="ml-2 h-10 flex-1 text-base font-medium"
+        >
+          구글 로그인
         </button>
       </div>
-      <div className="LogInBtns z-10 mb-4 flex h-[5%] w-1/5 items-center justify-center rounded-xl p-1">
-        <img
-          src="https://i.ibb.co/9Y7CRMr/image.png"
-          alt="kakaoimage"
-          className="h-10 w-10 rounded-full"
-        />
+      <div className="LogInBtnsKakao z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
+        <div className="flex h-10 w-10 items-center justify-center">
+          <img
+            src="https://i.ibb.co/r6y52R7/kakaotalk-sharing-btn-small-ov.png"
+            alt="kakaoimage"
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <button
+          onClick={KakaoLogin}
+          className="ml-2 h-10 flex-1 text-base font-medium"
+        >
+          카카오 로그인
+        </button>
+      </div>
+      <div className="LogInBtnsNaver z-10 mb-4 flex h-10 w-1/6 items-center justify-start rounded-md">
+        <div className="flex h-10 w-10 items-center justify-center">
+          <img
+            src="https://i.ibb.co/wYf09Y3/btn-G.png"
+            alt="naverimage"
+            className="h-full w-full object-cover"
+          />
+        </div>
+        <button
+          onClick={NaverLogin}
+          className="ml-2 h-10 flex-1 text-base font-medium"
+        >
+          네이버 로그인
+        </button>
+      </div>
 
-        <button onClick={KakaoLogin} className="ml-10 text-xl">
-          카카오톡으로 로그인
-        </button>
-      </div>
-      <div className="LogInBtns z-10 mb-4 flex h-[5%] w-1/5 items-center justify-center rounded-xl p-1">
-        <img
-          src="https://i.ibb.co/Y8Q9dVv/image.png"
-          alt="naverimage"
-          className="h-10 w-10 rounded-full"
-        />
-
-        <button onClick={NaverLogin} className="ml-10 text-xl">
-          네이버로 로그인
-        </button>
-      </div>
       <div className="z-1">
         <div className="wave -one"></div>
         <div className="wave -two"></div>
