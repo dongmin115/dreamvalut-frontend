@@ -17,7 +17,7 @@ const LogIn = () => (
       <img
         src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
         alt="DreamVault-logo-img"
-        className="mb-[1%] w-[5%]"
+        className="mb-[1%] w-1/6 sm:w-1/12"
       />
       <p className="z-10 mb-10 text-2xl text-white sm:text-4xl">
         Welcome To <span className="z-10 text-violet-600">DreamVault.</span>
@@ -25,7 +25,7 @@ const LogIn = () => (
       <p className="z-10 mb-16 text-2xl text-white sm:text-4xl">
         당신의 꿈을 열어보세요.
       </p>
-      <div className="LogInBtnsGoogle z-10 mb-4 flex h-10 w-1/5 items-center justify-start rounded-md sm:w-1/6 md:w-1/5 lg:w-1/4">
+      <div className="LogInBtnsGoogle z-10 mb-4 flex h-10 w-2/3 items-center justify-start rounded-md sm:w-1/2 md:w-1/3 lg:w-1/4">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
             src="https://i.ibb.co/09htLD8/web-neutral-sq-na-2x.png"
@@ -35,14 +35,13 @@ const LogIn = () => (
         </div>
         <button
           onClick={GoogleLogin}
-          className="ml-2 h-10 flex-1 text-xs font-medium md:text-sm lg:text-base"
+          className="ml-2 h-10 flex-1 text-base font-medium"
         >
-          <span className="hidden md:block lg:block">구글 로그인</span>
-          <span className="block md:hidden lg:hidden">구글</span>
+          <span className="block">구글 로그인</span>
         </button>
       </div>
 
-      <div className="LogInBtnsKakao z-10 mb-4 flex h-10 w-1/5 items-center justify-start rounded-md sm:w-1/6 md:w-1/5 lg:w-1/4">
+      <div className="LogInBtnsKakao z-10 mb-4 flex h-10 w-2/3 items-center justify-start rounded-md sm:w-1/2 md:w-1/3 lg:w-1/4">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
             src="https://i.ibb.co/r6y52R7/kakaotalk-sharing-btn-small-ov.png"
@@ -52,13 +51,12 @@ const LogIn = () => (
         </div>
         <button
           onClick={KakaoLogin}
-          className="ml-2 h-10 flex-1 text-xs font-medium md:text-sm lg:text-base"
+          className="ml-2 h-10 flex-1 text-base font-medium"
         >
-          <span className="hidden md:block lg:block">카카오 로그인</span>
-          <span className="block md:hidden lg:hidden">카카오</span>
+          <span className="block">카카오 로그인</span>
         </button>
       </div>
-      <div className="LogInBtnsNaver z-10 mb-4 flex h-10 w-1/5 items-center justify-start rounded-md sm:w-1/6 md:w-1/5 lg:w-1/4">
+      <div className="LogInBtnsNaver z-10 mb-4 flex h-10 w-2/3 items-center justify-start rounded-md sm:w-1/2 md:w-1/3 lg:w-1/4">
         <div className="flex h-10 w-10 items-center justify-center">
           <img
             src="https://i.ibb.co/wYf09Y3/btn-G.png"
@@ -68,10 +66,9 @@ const LogIn = () => (
         </div>
         <button
           onClick={NaverLogin}
-          className="ml-2 h-10 flex-1 text-xs font-medium md:text-sm lg:text-base"
+          className="ml-2 h-10 flex-1 text-base font-medium"
         >
-          <span className="hidden md:block lg:block">네이버 로그인</span>
-          <span className="block md:hidden lg:hidden">네이버</span>
+          <span className="block">네이버 로그인</span>
         </button>
       </div>
 
