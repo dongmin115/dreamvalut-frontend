@@ -21,7 +21,9 @@ const LogIn = () => (
       <p className="z-10 mb-10 text-2xl text-white md:text-3xl lg:text-4xl">
         Welcome To <span className="z-10 text-violet-600">DreamVault.</span>
       </p>
-      <p className="z-10 mb-16 text-6xl text-white">당신의 꿈을 열어보세요.</p>
+      <p className="z-10 mb-16 text-4xl text-white md:text-5xl lg:text-6xl">
+        당신의 꿈을 열어보세요.
+      </p>
       <div className="LogInBtns z-10 mb-4 flex h-[5%] w-1/5 items-center justify-center rounded-xl p-1">
         <img
           src="https://i.ibb.co/fQ4ZGZ8/image.png"
