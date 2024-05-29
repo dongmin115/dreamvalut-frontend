@@ -123,9 +123,36 @@ export default function MusicPage(props: any) {
     }
   }, [audioRef, isDragging]);
 
+  useEffect(() => {
+    // 마우스 업 이벤트를 전역적으로 처리
+    const handleMouseUpGlobal = () => {
+      setIsDragging(false); // 드래그 상태 업데이트
+    };
+
+    // 마우스 다운 이벤트는 슬라이더에서만 처리
+    const handleMouseDownLocal = () => {
+      setIsDragging(true); // 드래그 시작
+    };
+
+    const sliderElement = document.querySelector('.volume-slider'); // 슬라이더 요소 선택
+    if (sliderElement) {
+      sliderElement.addEventListener('mousedown', handleMouseDownLocal);
+    }
+
+    window.addEventListener('mouseup', handleMouseUpGlobal); // 전역에 마우스 업 이벤트 추가
+
+    return () => {
+      // 클린업 함수에서 이벤트 리스너 제거
+      if (sliderElement) {
+        sliderElement.removeEventListener('mousedown', handleMouseDownLocal);
+      }
+      window.removeEventListener('mouseup', handleMouseUpGlobal);
+    };
+  }, []);
+
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (!event.defaultPrevented) {
+    if (!event.defaultPrevented && isDragging) {
       setCurrentTime(newValue as number);
     }
   };
@@ -135,6 +162,7 @@ export default function MusicPage(props: any) {
     // 변경된 시간을 재생 시간으로 설정
     if (audioRef.current) {
       audioRef.current.currentTime = currentTime;
+      setIsDragging(false);
     }
   };
 
@@ -144,7 +172,6 @@ export default function MusicPage(props: any) {
       (entries) => {
         if (entries[0].isIntersecting) {
           fetchNextPage();
-          console.log('fetchNextPage 실행됨');
         }
       },
       {
@@ -221,12 +248,11 @@ export default function MusicPage(props: any) {
                   </p>
                 </div>
                 <Slider
+                  className="volume-slider"
                   aria-label="Volume"
                   value={currentTime}
                   onChange={handleSliderChange}
                   onChangeCommitted={handleSliderRelease}
-                  onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
-                  onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
                   size="medium"
                   color="secondary"
                   max={musicData.duration}
