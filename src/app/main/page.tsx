@@ -25,10 +25,9 @@ async function Page() {
 
         {/* 인기 태그 */}
         <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
-          {' '}
-          음악
+          태그 별 음악
         </h1>
-        <div className="bg-gray-650 flex h-48 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-56 2xl:h-72">
+        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
           <Tag />
         </div>
 
@@ -36,7 +35,7 @@ async function Page() {
         <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
           장르별 음악
         </h1>
-        <div className="bg-gray-650 flex h-[30rem] w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
+        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
           <Genre />
         </div>
 
@@ -44,15 +43,15 @@ async function Page() {
         <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
           다른 유저가 선택한 플레이리스트
         </h1>
-        <div className="bg-gray-650 flex h-96 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
+        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
           <AllPlaylistComponent />
         </div>
 
         {/* 구독한 플레이리스트 */}
         <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
-          DreamVault가 제공하는 플레이리스트
+          DreamVault 가 제공하는 플레이리스트
         </h1>
-        <div className="bg-gray-650 flex h-48 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-56 2xl:h-72">
+        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
           <SystemPlaylistComponent />
         </div>
       </div>

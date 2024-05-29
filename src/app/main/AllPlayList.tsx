@@ -33,7 +33,7 @@ function AllPlayListComponent() {
   if (isLoading) return <div>Loading...</div>;
   return (
     <ThemeProvider theme={theme}>
-      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
+      <div className="z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
@@ -62,7 +62,7 @@ function AllPlayListComponent() {
           />
         ))}
       </div>
-      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
+      <div className="z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
