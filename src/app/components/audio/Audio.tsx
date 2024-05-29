@@ -62,7 +62,7 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
   // 시간 업데이트 핸들러
   const handleTimeUpdate = () => {
     if (audioRef.current) {
-      setCurrentTime(currentTime);
+      setCurrentTime(audioRef.current.currentTime);
     }
   };
 
@@ -75,7 +75,7 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef, handleTimeUpdate]);
+  }, [audioRef]);
 
   // 오디오 상태 및 제어 함수 공유
   const sharedState: SharedAudioState = {

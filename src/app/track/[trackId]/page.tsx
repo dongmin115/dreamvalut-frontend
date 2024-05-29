@@ -121,7 +121,7 @@ export default function MusicPage(props: any) {
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef, isDragging, setCurrentTime]);
+  }, [audioRef, isDragging]);
 
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
@@ -139,7 +139,6 @@ export default function MusicPage(props: any) {
   };
 
   useEffect(() => {
-    console.log('hasNextPage : ', hasNextPage, 'fetchNextPage : ', hasNextPage);
     if (!hasNextPage) return;
     const observer = new IntersectionObserver(
       (entries) => {
