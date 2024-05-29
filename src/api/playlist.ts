@@ -153,11 +153,11 @@ export async function getRecentList(page: number, size: number) {
 }
 
 // 장르별 플레이리스트 목록 가져오기
-export async function fetchGenrePlaylist(pageIndex: number) {
+export async function fetchGenrePlaylist() {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/genres?page=${pageIndex}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/genres?page=0&size=100`,
       {
         headers: {
           'Content-Type': 'application/json',

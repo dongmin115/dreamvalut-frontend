@@ -54,29 +54,29 @@ function GenreMusic({
   ];
 
   return (
-    <div className="m-4 flex w-96 flex-col items-center justify-center">
+    <div className="m-4 flex w-56 flex-col items-center justify-center xl:w-72">
       {/* 위에 단색 배경바 */}
       <Link
         href={`/genre/${bgColor / 100}`}
-        className={`flex h-20 w-full flex-row items-center rounded-t-2xl p-4 bg-nv-${bgColor}`}
+        className={`flex h-12 w-full flex-row items-center rounded-t-xl p-4 xl:h-16 bg-nv-${bgColor}`}
       >
-        {/* <p className="text-md m-4 w-full font-bold text-black">{genre}</p>
+        <p className="text-md mx-4 w-full font-bold text-black">{genre}</p>
         <IconButton>
-          <PlayCircleIcon style={{ fontSize: 50, opacity: 0.7 }} />
-        </IconButton> */}
+          <PlayCircleIcon style={{ fontSize: 30, opacity: 0.7 }} />
+        </IconButton>
       </Link>
 
       {/* 음악 정보 */}
       <div
-        className={`flex h-full w-full flex-col items-center justify-center rounded-b-2xl bg-genre-${bgColor} mx-4`}
+        className={`flex h-full w-full flex-col items-center justify-center rounded-b-xl bg-genre-${bgColor} mx-4`}
       >
         {/* 음악 정보 */}
-        {/* {musicList.map((music, index) => (
+        {musicList.map((music, index) => (
           <div
             key={index}
-            className="hover-bg-opacity flex h-16 w-11/12 cursor-pointer flex-row items-center justify-start rounded-3xl px-3 hover:bg-opacity-90"
+            className="hover-bg-opacity flex w-11/12 cursor-pointer flex-row items-center justify-start rounded-3xl p-1 hover:bg-opacity-90 xl:p-2"
           >
-            <figure className="relative m-2 flex h-12 w-12">
+            <figure className="relative m-2 flex h-10 w-10 xl:h-12 xl:w-12">
               <Image
                 src={music.image}
                 alt="Music cover"
@@ -85,9 +85,11 @@ function GenreMusic({
                 className="rounded-lg"
               />
             </figure>
-            <p className="flex flex-wrap text-sm text-black">{music.title}</p>
+            <p className="flex w-3/5 flex-wrap text-sm font-bold text-black">
+              {music.title}
+            </p>
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );
@@ -124,12 +126,13 @@ function Genre() {
         observer.unobserve(divRef.current);
       }
     };
-  }, []);
+  }, [divRef.current]);
 
   const { isLoading, data } = useQuery({
-    queryKey: ['Genre Data'], // pageIndex를 queryKey에 추가
+    queryKey: ['Genre Data'],
     queryFn: fetchGenrePlaylist,
   });
+
   const handleForwardClick = () => {
     if (isVisible) {
       setPageIndex(pageIndex + 1);
@@ -173,7 +176,7 @@ function Genre() {
             },
             index: number,
           ) => (
-            <div className="flex h-96 w-80">
+            <div className="flex h-72 w-64 xl:h-80 xl:w-72">
               <GenreMusic
                 key={index}
                 genre={genreData.genre_name}
@@ -188,17 +191,7 @@ function Genre() {
             </div>
           ),
         )}
-        {/* <GenreMusic
-          genre={genreData.genre_name}
-          bgColor={randomGenreColor[index]}
-          musicImage1={genreData.tracks[0].thumbnail_image}
-          musicImage2={genreData.tracks[1].thumbnail_image}
-          musicImage3={genreData.tracks[2].thumbnail_image}
-          musicTitle1={genreData.tracks[0].title}
-          musicTitle2={genreData.tracks[1].title}
-          musicTitle3={genreData.tracks[2].title}
-        /> */}
-        <div ref={divRef} className="h-2 w-2 bg-blue-200" />
+        <div ref={divRef} />
       </div>
       <div className="z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
