@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 import Link from 'next/link';
+import Image from 'next/image';
 
 function AlbumCoverSystem({
   image,
@@ -27,32 +28,38 @@ function AlbumCoverSystem({
     const randomIndex = Math.floor(Math.random() * randomAlbumColorList.length);
     setAlbumRandomColor(randomAlbumColorList[randomIndex]);
   }, []); // 빈 배열을 넣어서 처음 렌더링 시에만 실행되도록 함
-
+  // console.log('image : ', image);
   return (
     <>
       <Link
         href={`/${curation === 'tag' ? 'tag' : 'playlist'}/${Id}`}
-        className="hover-bg-opacity m-4 flex h-72 w-56 cursor-pointer flex-col items-center justify-center p-4"
+        className="hover-bg-opacity flex h-72 cursor-pointer flex-col items-center justify-center px-4"
       >
-        {/* <Image
-        src={image}
-        alt="Album cover"
-        className="rounded-lg"
-        width={192}
-        height={192}
-      /> */}
-        <img src={image} alt="Album cover" className="h-48 w-48 rounded-lg" />
+        <figure className="relative h-40 w-40 rounded-lg">
+          <Image
+            src={
+              image === 'default'
+                ? 'https://i.ibb.co/26Bt8jw/Dream-Vault-Logo-BGO.png'
+                : image
+            }
+            alt="Album cover"
+            className="rounded-lg"
+            layout="fill"
+            objectFit="cover"
+          />
+        </figure>
+
         <div
-          className={`z-10 -mt-48 h-48 w-48 rounded-lg ${albumRandomColor} opacity-50`}
+          className={`z-10 -mt-40 h-40 w-40 rounded-lg ${albumRandomColor} opacity-50`}
         />
         <p
           className={
-            'drop-shadow-text z-20 -mt-48 flex h-48 w-48 flex-wrap items-center justify-center p-4 text-xl font-bold'
+            'drop-shadow-text z-20 -mt-40 flex h-40 w-40 flex-wrap items-center justify-center text-xl font-bold'
           }
         >
           {title}
         </p>
-        <p className="z-20 flex h-16 w-48 items-start justify-center pt-4 text-xl text-white">
+        <p className="z-20 flex h-16 w-40 items-start justify-center pt-4 text-xl text-white">
           {title}
         </p>
       </Link>
