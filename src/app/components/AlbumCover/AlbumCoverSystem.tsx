@@ -1,9 +1,11 @@
+/* eslint-disable max-len */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 import Link from 'next/link';
 import Image from 'next/image';
+import { matchMedia } from '@/util/matchMedia.ts';
 
 function AlbumCoverSystem({
   image,
@@ -12,6 +14,8 @@ function AlbumCoverSystem({
   curation,
 }: albumCoverSystemProps) {
   const [albumRandomColor, setAlbumRandomColor] = useState('');
+  const [albumSize, setAlbumSize] = useState<number>(40); // 앨범 커버 크기
+  matchMedia();
 
   useEffect(() => {
     // 컴포넌트가 처음 렌더링될 때 한 번만 랜덤한 색상을 선택
@@ -28,40 +32,58 @@ function AlbumCoverSystem({
     const randomIndex = Math.floor(Math.random() * randomAlbumColorList.length);
     setAlbumRandomColor(randomAlbumColorList[randomIndex]);
   }, []); // 빈 배열을 넣어서 처음 렌더링 시에만 실행되도록 함
-  // console.log('image : ', image);
+
+  useEffect(() => {
+    if (matchMedia() === '2xl') {
+      setAlbumSize(40);
+    } else if (matchMedia() === 'xl') {
+      setAlbumSize(32);
+    } else {
+      setAlbumSize(28);
+    }
+  }, []);
+
+  window.addEventListener('resize', () => {
+    if (matchMedia() === '2xl') {
+      setAlbumSize(40);
+    } else if (matchMedia() === 'xl') {
+      setAlbumSize(32);
+    } else {
+      setAlbumSize(28);
+    }
+  });
+
   return (
     <>
       <Link
         href={`/${curation === 'tag' ? 'tag' : 'playlist'}/${Id}`}
-        className="hover-bg-opacity flex h-72 cursor-pointer flex-col items-center justify-center px-4"
+        className="hover-bg-opacity flex h-32 cursor-pointer flex-col items-center justify-center px-4 xl:h-40 2xl:h-48"
       >
-        <figure className="relative h-40 w-40 rounded-lg">
+        <figure className={`relative h-${albumSize} w-${albumSize} rounded-lg`}>
           <Image
-            src={
-              image === 'default'
-                ? 'https://i.ibb.co/26Bt8jw/Dream-Vault-Logo-BGO.png'
-                : image
-            }
+            src={image}
             alt="Album cover"
             className="rounded-lg"
             layout="fill"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             objectFit="cover"
           />
         </figure>
 
         <div
-          className={`z-10 -mt-40 h-40 w-40 rounded-lg ${albumRandomColor} opacity-50`}
-        />
-        <p
-          className={
-            'drop-shadow-text z-20 -mt-40 flex h-40 w-40 flex-wrap items-center justify-center text-xl font-bold'
-          }
+          className={`z-10 -mt-${albumSize} h-${albumSize} w-${albumSize} rounded-lg ${albumRandomColor} bg-opacity-50`}
+        >
+          <p
+            className={`drop-shadow-text z-20 flex h-${albumSize} w-${albumSize} text-md z-20 flex-wrap items-center justify-center font-bold xl:text-lg`}
+          >
+            {title}
+          </p>
+        </div>
+        {/* <p
+          className={`z-20 flex h-16 w-${albumSize} text-md items-start justify-start overflow-hidden text-ellipsis whitespace-nowrap pt-4 text-white xl:text-lg`}
         >
           {title}
-        </p>
-        <p className="z-20 flex h-16 w-40 items-start justify-center pt-4 text-xl text-white">
-          {title}
-        </p>
+        </p> */}
       </Link>
     </>
   );

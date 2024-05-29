@@ -23,7 +23,7 @@ async function Page() {
 
         {/* 인기 태그 */}
         <h1 className="">태그별 음악</h1>
-        <div className="bg-gray-650 flex h-80 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
+        <div className="bg-gray-650 flex h-48 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-56 2xl:h-72">
           <Tag />
         </div>
 
@@ -41,7 +41,7 @@ async function Page() {
 
         {/* 구독한 플레이리스트 */}
         <h1 className="">DreamVault가 제공하는 플레이리스트</h1>
-        <div className="bg-gray-650 flex h-80 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
+        <div className="bg-gray-650 flex h-48 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-56 2xl:h-72">
           <SystemPlaylistComponent />
         </div>
       </div>
