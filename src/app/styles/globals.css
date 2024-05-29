@@ -181,6 +181,28 @@ h1 {
   stroke: #441897;
 }
 
+@media (max-width: 780px) {
+  .hide-text {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 780px) {
+  .show-searchbar {
+    display: block;
+  }
+}
+/* 자동완성 배경색 제거 */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #353535 inset;
+  -webkit-text-fill-color: white;
+  -webkit-box-sizing: inherit;
+}
+
+.css-1o9s3wi-MuiInputBase-input-MuiOutlinedInput-input:-webkit-autofill {
+  border-radius: 0;
+}
+
 .css-1guuiq7-MuiButtonBase-root-MuiToggleButton-root.Mui-selected:hover {
   background-color: rgb(127, 0, 247);
 }
