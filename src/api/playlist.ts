@@ -197,7 +197,7 @@ export async function fetchSystemPlaylist(pageIndex: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}&size=12`,
       {
         headers: {
           'Content-Type': 'application/json',

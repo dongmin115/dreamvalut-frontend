@@ -71,7 +71,7 @@ function AlbumCoverSystem({
         </figure>
 
         <div
-          className={`z-10 -mt-${albumSize} h-${albumSize} w-${albumSize} rounded-lg ${albumRandomColor} bg-opacity-50`}
+          className={`z-10 -mt-28 xl:-mt-32 2xl:-mt-40 h-${albumSize} w-${albumSize} rounded-lg ${albumRandomColor} flex flex-wrap items-center justify-center bg-opacity-50 px-2 font-bold text-white xl:text-lg`}
         >
           <p
             className={`drop-shadow-text z-20 flex h-${albumSize} w-${albumSize} text-md z-20 flex-wrap items-center justify-center font-bold xl:text-lg`}

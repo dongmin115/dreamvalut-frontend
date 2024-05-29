@@ -1,28 +1,72 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable function-paren-newline */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-shadow */
 
 'use client';
 
-import { ThemeProvider } from '@emotion/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
-import { useQuery } from '@tanstack/react-query';
+import { ThemeProvider } from '@emotion/react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { getSlideContentStyle } from '@/app/styles/slide.ts';
 import { fetchSystemPlaylist } from '@/api/playlist.ts';
-import theme from '../styles/theme.ts';
 import AlbumCoverSystem from '../components/AlbumCover/AlbumCoverSystem.tsx';
+import theme from '../styles/theme.ts';
 
-function SystemPlaylistComponent() {
+function SystemPlaylist() {
   const [pageIndex, setPageIndex] = useState(0); // 인기 음악 페이지 인덱스
-  const { isLoading, data } = useQuery({
-    queryKey: ['System Playlist Data', pageIndex], // pageIndex를 queryKey에 추가
-    queryFn: () => fetchSystemPlaylist(pageIndex),
+  const [isVisible, setIsVisible] = useState(true);
+  const divRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(false);
+          } else {
+            setIsVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.1, // 10% 가시성을 기준으로 설정
+      },
+    );
+
+    if (divRef.current) {
+      observer.observe(divRef.current);
+    }
+
+    return () => {
+      if (divRef.current) {
+        observer.unobserve(divRef.current);
+      }
+    };
+  }, []);
+
+  const { data, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['System Playlists Data'], // pageIndex를 queryKey에 추가
+    queryFn: ({ pageParam = 0 }) => fetchSystemPlaylist(pageParam),
+    initialPageParam: 0,
+
+    getNextPageParam: (lastPage) => {
+      // if (!lastPage.last && !lastPage.empty) {
+      if (!lastPage.last) {
+        return lastPage.pageable.page_number + 1;
+      }
+      return undefined;
+    },
   });
 
   const handleForwardClick = () => {
-    if (data.total_pages - 1 > pageIndex) {
+    fetchNextPage();
+    if (isVisible) {
       setPageIndex(pageIndex + 1);
-    } // 이때 4는 한번에 보여지는 인기음악의 개수
+    }
   };
 
   const handleBackwardClick = () => {
@@ -31,9 +75,6 @@ function SystemPlaylistComponent() {
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
   return (
     <ThemeProvider theme={theme}>
       <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
@@ -41,16 +82,22 @@ function SystemPlaylistComponent() {
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
       </div>
-      <div className="flex h-full w-11/12 flex-row items-start justify-start">
-        {data.content.map((content: any, index: number) => (
-          <AlbumCoverSystem
-            key={index}
-            image={content.tracks[0].thumbnail_image}
-            title={content.playlist_name}
-            Id={content.playlist_id}
-            curation={''}
-          />
-        ))}
+      <div
+        className="flex h-full w-11/12 flex-row items-center justify-start"
+        style={getSlideContentStyle(pageIndex, 3)}
+      >
+        {data?.pages.map((page: any, pageIndex) =>
+          page?.content.map((playlist: any, index: any) => (
+            <AlbumCoverSystem
+              key={pageIndex * 6 + index}
+              image={playlist.tracks[0].thumbnail_image}
+              title={playlist.playlist_name}
+              Id={playlist.playlist_id}
+              curation="SystemPlaylist"
+            />
+          )),
+        )}
+        <div ref={divRef} />
       </div>
       <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
@@ -61,4 +108,4 @@ function SystemPlaylistComponent() {
   );
 }
 
-export default SystemPlaylistComponent;
+export default SystemPlaylist;
