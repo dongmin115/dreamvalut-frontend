@@ -16,31 +16,42 @@ async function Page() {
       {/* NavigationBar 제외 영역 */}
       <div className="h-full w-10/12 pr-8">
         {/* 인기 차트 */}
-        <h1 className="">인기 차트</h1>
+        <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
+          인기 차트
+        </h1>
         <div className="bg-gray-650 flex h-64 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-72 2xl:h-80 ">
           <Chart />
         </div>
 
         {/* 인기 태그 */}
-        <h1 className="">태그별 음악</h1>
+        <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
+          {' '}
+          음악
+        </h1>
         <div className="bg-gray-650 flex h-48 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-56 2xl:h-72">
           <Tag />
         </div>
 
         {/* 장르별 음악 */}
-        <h1 className="">장르별 음악</h1>
+        <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
+          장르별 음악
+        </h1>
         <div className="bg-gray-650 flex h-[30rem] w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
           <Genre />
         </div>
 
         {/* 다른 유저가 선택한 플레이리스트 */}
-        <h1 className="">다른 유저가 선택한 플레이리스트</h1>
+        <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
+          다른 유저가 선택한 플레이리스트
+        </h1>
         <div className="bg-gray-650 flex h-96 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
           <AllPlaylistComponent />
         </div>
 
         {/* 구독한 플레이리스트 */}
-        <h1 className="">DreamVault가 제공하는 플레이리스트</h1>
+        <h1 className="mb-5 mt-14 text-2xl font-bold xl:text-3xl 2xl:text-4xl">
+          DreamVault가 제공하는 플레이리스트
+        </h1>
         <div className="bg-gray-650 flex h-48 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-56 2xl:h-72">
           <SystemPlaylistComponent />
         </div>
