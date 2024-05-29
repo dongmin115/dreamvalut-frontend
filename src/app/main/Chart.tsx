@@ -23,11 +23,11 @@ function MusicElement({ ranking, thumnailImage, title, trackId }: chartProps) {
       className="hover-bg-opacity my-1 flex h-1/4 w-1/2 cursor-pointer flex-row items-center justify-start lg:w-1/2 xl:w-1/3 2xl:w-1/4"
     >
       {/* 순위 */}
-      <p className="drop-shadow-text z-10 -ml-4 -mr-4 mt-6 w-16 text-right text-4xl">
+      <p className="drop-shadow-text z-10 -ml-3 -mr-3 mt-6 w-16 text-right text-3xl xl:-ml-4 xl:-mr-4 xl:text-4xl ">
         {ranking}
       </p>
       {/* 앨범 커버 */}
-      <figure className="relative flex h-16 w-16">
+      <figure className="relative flex h-12 w-12 xl:h-14 xl:w-14 2xl:h-16 2xl:w-16">
         <Image
           alt="Album Cover"
           src={thumnailImage}

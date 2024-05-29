@@ -17,7 +17,7 @@ async function Page() {
       <div className="h-full w-10/12 pr-8">
         {/* 인기 차트 */}
         <h1 className="">인기 차트</h1>
-        <div className="bg-gray-650 flex h-80 w-full flex-row items-center justify-center overflow-hidden rounded-2xl">
+        <div className="bg-gray-650 flex h-64 w-full flex-row items-center justify-center overflow-hidden rounded-2xl xl:h-72 2xl:h-80 ">
           <Chart />
         </div>
 
