@@ -88,7 +88,7 @@ const GenrePageContent = () => {
       </ToggleButtonGroup>
       {/* 다음 페이지로 이동하는 버튼 */}
       <button
-        className="svg-wrapper fixed bottom-0 right-0"
+        className="svg-wrapper fixed bottom-0 right-0 ml-2 mr-2 mt-0 inline-block h-[40px] w-[150px] rounded"
         onClick={async () => {
           await postGenreTaste(selectedGenres).then(() => {
             router.push('/main');
@@ -98,7 +98,7 @@ const GenrePageContent = () => {
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
           <rect
             id="shape"
-            className="h-full w-full fill-current text-indigo-600"
+            className="h-full w-full fill-transparent stroke-[#5e22cf] stroke-[6px] text-indigo-600"
           />
           <text
             x="50%"
