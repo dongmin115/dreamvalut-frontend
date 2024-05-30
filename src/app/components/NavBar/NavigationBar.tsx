@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable @next/next/no-img-element */
 
@@ -50,15 +51,15 @@ export function SearchAppBar() {
         InputProps={{
           startAdornment: (
             <Link href={`/search/${keyward}`}>
-              <IconButton className="-ml-1 p-0">
+              <IconButton>
                 <InputAdornment position="start">
-                  <SearchIcon color="primary" className="w-[1.1rem]" />
+                  <SearchIcon color="primary" className="-ml-3 w-[1.1rem]" />
                 </InputAdornment>
               </IconButton>
             </Link>
           ),
           className:
-            'text-white bg-[#353535] h-[5vh] text-xs sm:text-[10px] md:text-xs lg:text-sm mb-[3rem]',
+            'text-white bg-[#353535] justify-start h-10 text-xs lg:text-sm mb-1',
         }}
         variant="outlined"
         value={keyward}
@@ -75,7 +76,7 @@ export function ToggleSearchbar() {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="-ml-2 inline-flex w-full justify-center rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm">
+        <MenuButton className="inline-flex w-full justify-center rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm">
           <SearchIcon color="primary" />
         </MenuButton>
       </div>
@@ -105,84 +106,86 @@ function NavigationBar() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="width5 fixed left-0 top-0 z-40 flex h-full w-[5rem] flex-col justify-start bg-zinc-900 p-4 text-white sm:w-[5rem] md:w-[8rem] lg:w-[12.5rem]">
-        <Link className="flex cursor-pointer flex-col" href={'/main'}>
+      <div className="flex h-full w-20 lg:w-60" />
+      <div className="fixed z-40 flex h-full w-20 flex-shrink-0 flex-grow flex-col bg-zinc-900 p-2 text-white lg:w-60 lg:justify-start lg:p-4">
+        <Link
+          className="flex w-full cursor-pointer flex-col items-center lg:items-start"
+          href={'/main'}
+        >
           <div className="mt-5 flex items-center">
             <img
               src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
               alt="DreamVault-logo-img"
-              className="w-[10rem] sm:w-[10rem] md:w-1/3 lg:w-1/3"
+              className="w-8"
             />
-            <div className="relative">
-              <h2 className="text-1xl hide-text md:text-1xl p-3 font-bold sm:text-[10px] lg:text-[18px]">
+            <div className="relative flex items-center justify-start">
+              <h1 className="hide-text md:text-1xl p-2 text-xl font-bold sm:text-[10px] lg:text-[18px]">
                 DreamVault
-              </h2>
-
-              <h6 className="hide-text absolute left-2 top-5 -translate-y-full p-1 text-xs sm:text-[8px] lg:text-[10px]">
+              </h1>
+              <h6 className="hide-text -mt-4 flex text-xs sm:text-[8px] lg:text-[10px]">
                 Beta
               </h6>
             </div>
           </div>
         </Link>
-        <div className="mt-12 flex h-full flex-col">
-          <div className="hidden sm:hidden md:block lg:block">
+        <div className="mt-6 flex h-full w-full flex-col">
+          <div className="hidden w-full lg:mb-8 lg:block">
             <span className="hide-text">
               <SearchAppBar />
             </span>
           </div>
-          <div className="mb-10 block sm:block md:hidden lg:hidden">
+          <div className="hover-bg-opacity flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 lg:hidden">
             <ToggleSearchbar />
+            <p className="text-[0.5rem] lg:hidden">검색</p>
           </div>
           {/* 일부 화면 크기에서 검색 아이콘 사라지는것 방지 */}
           <div className="show-searchbar mb-10 hidden">
             <ToggleSearchbar />
           </div>
-          <Link href={'/main'}>
-            <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
-              <HomeIcon color="primary" />
-              <button className="hidden p-2 sm:block sm:text-[10px] md:block lg:text-sm">
-                <span className="hide-text">홈</span>
-              </button>
-            </div>
+          <Link
+            href={'/main'}
+            className="hover-bg-opacity flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 lg:flex-row lg:justify-start lg:p-2"
+          >
+            <HomeIcon color="primary" />
+            <p className="pt-2 text-[0.5rem] lg:ml-4 lg:pt-0 lg:text-sm">홈</p>
           </Link>
 
           <Link
-            className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg"
+            className="hover-bg-opacity flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 lg:flex-row lg:justify-start lg:p-2"
             href={'/playlist'}
           >
             <PlaylistPlayIcon color="primary" />
-            <button className="hidden p-2 sm:block sm:text-[10px] md:block lg:text-sm">
-              <span className="hide-text">플레이리스트</span>
-            </button>
+            <p className="pt-2 text-[0.5rem] lg:ml-4 lg:pt-0 lg:text-sm">
+              플레이리스트
+            </p>
           </Link>
 
-          <Link href={'/post_music'}>
-            <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
-              <EditNoteIcon color="primary" />
-              <button className="hidden p-2 sm:block sm:text-[8px] md:block lg:text-sm">
-                <span className="hide-text">나만의 음악 등록</span>
-              </button>
-            </div>
+          <Link
+            href={'/post_music'}
+            className="hover-bg-opacity flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 lg:flex-row lg:justify-start lg:p-2"
+          >
+            <EditNoteIcon color="primary" />
+            <p className="pt-2 text-[0.5rem] lg:ml-4 lg:pt-0 lg:text-sm">
+              음악 등록
+            </p>
           </Link>
 
-          <Link href={'/mypage'}>
-            <div className="hover-bg-opacity mb-5 flex cursor-pointer items-center rounded-lg">
-              <PersonIcon color="primary" />
-              <button className="hidden p-2 sm:block sm:text-[10px] md:block lg:text-sm">
-                <span className="hide-text">프로필</span>
-              </button>
-            </div>
+          <Link
+            href={'/mypage'}
+            className="hover-bg-opacity flex w-full cursor-pointer flex-col items-center justify-center rounded-lg py-1 lg:flex-row lg:justify-start lg:p-2"
+          >
+            <PersonIcon color="primary" />
+            <p className="pt-2 text-[0.5rem] lg:ml-4 lg:pt-0 lg:text-sm">
+              프로필
+            </p>
           </Link>
         </div>
 
         <div className="my-4 flex flex-col">
-          <div className="hover-bg-opacity flex items-center rounded-lg text-sm">
+          <div className="hover-bg-opacity m-1 flex items-center rounded-lg text-sm">
             <MeetingRoomIcon color="primary" />
-            <button
-              className="hidden p-2 sm:block sm:text-[10px] md:block lg:text-sm"
-              onClick={LogOut}
-            >
-              <span className="hide-text">로그아웃</span>
+            <button className="hidden p-2 sm:block lg:text-sm" onClick={LogOut}>
+              <p className="hide-text">로그아웃</p>
             </button>
           </div>
         </div>

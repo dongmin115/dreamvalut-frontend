@@ -143,7 +143,7 @@ export default function SearchPage(props: any) {
     <ThemeProvider theme={theme}>
       <div className="h-fit min-h-screen">
         {/* NavBar 제외영역 */}
-        <div className="h-fit w-full pl-[15%]">
+        <div className="h-fit w-full">
           <div className="flex w-full flex-col gap-8 p-[3%]">
             {isLoading ? (
               <p className="w-fit text-xl">검색결과 가져오는 중 ...</p>

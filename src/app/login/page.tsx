@@ -13,7 +13,7 @@ import Image from 'next/image';
 // 클라이언트 코드에서 실제 서버로 POST 요청을 보내는 방식
 const LogIn = () => (
   <>
-    <div className="fade-in-box flex h-screen flex-col items-center justify-center">
+    <div className="fade-in-box flex h-screen w-screen flex-col items-center justify-center">
       <img
         src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
         alt="DreamVault-logo-img"

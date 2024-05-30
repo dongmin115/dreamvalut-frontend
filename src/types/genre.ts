@@ -22,4 +22,7 @@ export interface GenreMusicProps {
   musicTitle1: string;
   musicTitle2: string;
   musicTitle3: string;
+  id1: number;
+  id2: number;
+  id3: number;
 }

@@ -23,6 +23,15 @@
   background: #555; /* 호버 시 배경색 변경 */
 }
 
+.main-content {
+  width: calc(100% - 15rem); /* 15rem은 w-60에 해당하는 값 */
+}
+@media (max-width: 1024px) {
+  .main-content {
+    width: calc(100% - 5rem); /* 5rem은 w-20에 해당하는 값 */
+  }
+}
+
 body {
   background-color: #1a1a1a;
   color: white;
@@ -36,6 +45,10 @@ body {
 /* background color #333333 커스텀 지정 */
 .bg-gray-650 {
   background-color: #333333;
+}
+
+.bg-zinc-650 {
+  background-color: #1a1a1a;
 }
 
 /* text-shadow 커스텀 지정 */
@@ -58,13 +71,6 @@ body {
   transition: transform 0.5s ease;
   transform: scale(1.05);
   border-radius: 10px;
-}
-
-h1 {
-  font-size: 2.25rem;
-  margin-top: 3.25rem;
-  margin-bottom: 1.25rem;
-  font-weight: 700;
 }
 
 /* 로그인페이지- 로그인 버튼들 효과 */
@@ -181,17 +187,12 @@ h1 {
   stroke: #441897;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1024px) {
   .hide-text {
     display: none;
   }
 }
 
-@media (min-width: 768px) and (max-width: 780px) {
-  .show-searchbar {
-    display: block;
-  }
-}
 /* 자동완성 배경색 제거 */
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px #353535 inset;

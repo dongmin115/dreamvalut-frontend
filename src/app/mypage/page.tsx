@@ -107,7 +107,7 @@ export default function Mypage() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex h-screen w-screen flex-col bg-[#1a1a1a] pl-[15%]">
+      <div className="flex h-screen w-full flex-col bg-[#1a1a1a]">
         <div className="flex h-fit w-full flex-row space-x-6 p-[2%]">
           {/* 내 계정 */}
           <div className="flex h-full w-[40%] flex-col">
