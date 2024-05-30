@@ -49,6 +49,8 @@ export default function MusicPage(props: any) {
     setCurrentTime,
     volume,
     setVolume,
+    trackId,
+    setTrackId,
   } = useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
 
@@ -70,9 +72,16 @@ export default function MusicPage(props: any) {
 
   // 재생중인 음악 정보 가져오기
   const { data: musicData, isLoading: musicLoading } = useQuery({
-    queryKey: ['music'],
-    queryFn: () => getMusic(props.params.trackId, setIsLiked),
+    queryKey: ['music', props.params.trackId],
+    queryFn: () => getMusic(props.params.trackId),
+    enabled: !!props.params.trackId,
   });
+
+  useEffect(() => {
+    if (musicData && musicLoading === false) {
+      setIsLiked(musicData.likes_flag);
+    }
+  }, [musicData, setIsLiked]);
 
   // 재생목록 버튼 메뉴 닫기
   const handleClose = () => {
@@ -109,6 +118,7 @@ export default function MusicPage(props: any) {
   // 재생 시간이 변경될 때마다 현재 재생 시간을 설정합니다.
   useEffect(() => {
     const audioElement = audioRef.current;
+
     if (audioElement) {
       const handleTimeUpdate = () => {
         // 슬라이더를 드래그 중이 아닐 때만 현재 재생 시간을 설정합니다.
@@ -121,34 +131,23 @@ export default function MusicPage(props: any) {
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef, isDragging]);
+  }, [audioRef.current, isDragging]);
 
   useEffect(() => {
+    setTrackId(props.params.trackId);
+    setIsDragging(false);
     // 마우스 업 이벤트를 전역적으로 처리
     const handleMouseUpGlobal = () => {
       setIsDragging(false); // 드래그 상태 업데이트
     };
 
-    // 마우스 다운 이벤트는 슬라이더에서만 처리
-    const handleMouseDownLocal = () => {
-      setIsDragging(true); // 드래그 시작
-    };
-
-    const sliderElement = document.querySelector('.volume-slider'); // 슬라이더 요소 선택
-    if (sliderElement) {
-      sliderElement.addEventListener('mousedown', handleMouseDownLocal);
-    }
-
     window.addEventListener('mouseup', handleMouseUpGlobal); // 전역에 마우스 업 이벤트 추가
 
     return () => {
       // 클린업 함수에서 이벤트 리스너 제거
-      if (sliderElement) {
-        sliderElement.removeEventListener('mousedown', handleMouseDownLocal);
-      }
       window.removeEventListener('mouseup', handleMouseUpGlobal);
     };
-  }, []);
+  }, [props.params.trackId]);
 
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
@@ -162,7 +161,6 @@ export default function MusicPage(props: any) {
     // 변경된 시간을 재생 시간으로 설정
     if (audioRef.current) {
       audioRef.current.currentTime = currentTime;
-      setIsDragging(false);
     }
   };
 
@@ -197,10 +195,7 @@ export default function MusicPage(props: any) {
     <ThemeProvider theme={theme}>
       {/* 음악소스 */}
       <audio ref={audioRef} controls preload="auto" className="hidden">
-        <source
-          src={musicLoading ? 'loading' : musicData.track_url}
-          type="audio/wav"
-        />
+        {!musicLoading && <source src={musicData.track_url} type="audio/wav" />}
       </audio>
       {/* 블러배경 */}
       {!musicLoading && (
@@ -248,11 +243,14 @@ export default function MusicPage(props: any) {
                   </p>
                 </div>
                 <Slider
-                  className="volume-slider"
+                  className="time-slider"
                   aria-label="Volume"
                   value={currentTime}
                   onChange={handleSliderChange}
                   onChangeCommitted={handleSliderRelease}
+                  onMouseDown={() => {
+                    setIsDragging(true);
+                  }}
                   size="medium"
                   color="secondary"
                   max={musicData.duration}
@@ -296,6 +294,7 @@ export default function MusicPage(props: any) {
                     onClick={() => {
                       playAudio();
                       setIsPaused(false);
+                      console.log('trackId:', trackId);
                     }}
                     disabled={musicLoading}
                   >
