@@ -30,7 +30,7 @@ export async function fetchTags(pageIndex: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tags/list?page=${pageIndex}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/tags/list?page=${pageIndex}&size=12`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -153,11 +153,11 @@ export async function getRecentList(page: number, size: number) {
 }
 
 // 장르별 플레이리스트 목록 가져오기
-export async function fetchGenrePlaylist(pageIndex: number) {
+export async function fetchGenrePlaylist() {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/genres?page=${pageIndex}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/genres?page=0&size=100`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +197,7 @@ export async function fetchSystemPlaylist(pageIndex: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}&size=12`,
       {
         headers: {
           'Content-Type': 'application/json',

@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 import Link from 'next/link';
+import Image from 'next/image';
 
 function AlbumCoverSystem({
   image,
@@ -32,29 +34,34 @@ function AlbumCoverSystem({
     <>
       <Link
         href={`/${curation === 'tag' ? 'tag' : 'playlist'}/${Id}`}
-        className="hover-bg-opacity m-4 flex h-72 w-56 cursor-pointer flex-col items-center justify-center p-4"
+        className="hover-bg-opacity flex h-36 cursor-pointer flex-col items-center justify-center px-4 xl:h-40 2xl:h-44"
       >
-        {/* <Image
-        src={image}
-        alt="Album cover"
-        className="rounded-lg"
-        width={192}
-        height={192}
-      /> */}
-        <img src={image} alt="Album cover" className="h-48 w-48 rounded-lg" />
-        <div
-          className={`z-10 -mt-48 h-48 w-48 rounded-lg ${albumRandomColor} opacity-50`}
-        />
-        <p
+        <figure
           className={
-            'drop-shadow-text z-20 -mt-48 flex h-48 w-48 flex-wrap items-center justify-center p-4 text-xl font-bold'
+            'relative h-32 w-32 rounded-lg xl:h-36 xl:w-36 2xl:h-40 2xl:w-40'
           }
         >
-          {title}
-        </p>
-        <p className="z-20 flex h-16 w-48 items-start justify-center pt-4 text-xl text-white">
-          {title}
-        </p>
+          <Image
+            src={image}
+            alt="Album cover"
+            className="rounded-lg"
+            layout="fill"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            objectFit="cover"
+          />
+        </figure>
+
+        <div
+          className={`z-10 -mt-32 h-32 w-32 rounded-lg xl:-mt-36 xl:h-36 xl:w-36 2xl:-mt-40 2xl:h-40 2xl:w-40 ${albumRandomColor} flex flex-wrap items-center justify-center bg-opacity-50 px-2 font-bold text-white xl:text-lg`}
+        >
+          <p
+            className={
+              'drop-shadow-text text-md z-20 flex h-32 w-32 flex-wrap items-center justify-center font-bold xl:h-36 xl:w-36 xl:text-lg 2xl:h-40 2xl:w-40'
+            }
+          >
+            {title}
+          </p>
+        </div>
       </Link>
     </>
   );
