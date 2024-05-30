@@ -258,32 +258,28 @@ export default function MusicPage(props: any) {
               </div>
               <div className="flex justify-between">
                 {isLiked ? (
-                  <IconButton>
-                    <Favorite
-                      color="secondary"
-                      fontSize="large"
-                      onClick={() => {
-                        setIsLiked(false);
-                        disLikes(props.params.trackId).catch(() => {
-                          // API 호출이 실패하면 상태를 되돌립니다
-                          setIsLiked(true);
-                        });
-                      }}
-                    />
+                  <IconButton
+                    onClick={() => {
+                      setIsLiked(false);
+                      disLikes(props.params.trackId).catch(() => {
+                        // API 호출이 실패하면 상태를 되돌립니다
+                        setIsLiked(true);
+                      });
+                    }}
+                  >
+                    <Favorite color="secondary" fontSize="large" />
                   </IconButton>
                 ) : (
-                  <IconButton>
-                    <FavoriteBorder
-                      color="secondary"
-                      fontSize="large"
-                      onClick={() => {
-                        setIsLiked(true);
-                        likes(props.params.trackId).catch(() => {
-                          // API 호출이 실패하면 상태를 되돌립니다
-                          setIsLiked(false);
-                        });
-                      }}
-                    />
+                  <IconButton
+                    onClick={() => {
+                      setIsLiked(true);
+                      likes(props.params.trackId).catch(() => {
+                        // API 호출이 실패하면 상태를 되돌립니다
+                        setIsLiked(false);
+                      });
+                    }}
+                  >
+                    <FavoriteBorder color="secondary" fontSize="large" />
                   </IconButton>
                 )}
                 <IconButton>
@@ -358,16 +354,6 @@ export default function MusicPage(props: any) {
               <h1 className="m-0 h-fit text-4xl text-white drop-shadow-lg">
                 Playlist
               </h1>
-              {/* <Button
-                color="secondary"
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              >
-                재생목록 선택
-              </Button> */}
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -376,21 +362,7 @@ export default function MusicPage(props: any) {
                 MenuListProps={{
                   'aria-labelledby': 'basic-button',
                 }}
-              >
-                {/* {listLoading
-                  ? 'loading'
-                  : listData.content.map((e: any) => (
-                      <MenuItem
-                        key={e.track_id}
-                        onClick={() => {
-                          handleClose();
-                          // setSelectedPlaylist(e.playlist_id);
-                        }}
-                      >
-                        {e.title}
-                      </MenuItem>
-                    ))} */}
-              </Menu>
+              ></Menu>
             </div>
             <Divider
               variant="fullWidth"
