@@ -27,7 +27,7 @@ async function Page() {
         <h1 className="mb-5 mt-14 text-xl font-bold xl:text-2xl 2xl:text-3xl">
           태그 별 음악
         </h1>
-        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
+        <div className="flex h-52 w-full flex-row items-center justify-center overflow-hidden">
           <Tag />
         </div>
 
@@ -35,7 +35,7 @@ async function Page() {
         <h1 className="mb-5 mt-14 text-xl font-bold xl:text-2xl 2xl:text-3xl">
           장르별 음악
         </h1>
-        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
+        <div className="flex h-96 w-full flex-row items-center justify-center overflow-hidden">
           <Genre />
         </div>
 
@@ -43,7 +43,7 @@ async function Page() {
         <h1 className="mb-5 mt-14 text-xl font-bold xl:text-2xl 2xl:text-3xl">
           다른 유저가 선택한 플레이리스트
         </h1>
-        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
+        <div className="flex h-80 w-full flex-row items-center justify-center overflow-hidden">
           <AllPlaylistComponent />
         </div>
 
@@ -51,7 +51,7 @@ async function Page() {
         <h1 className="mb-5 mt-14 text-xl font-bold xl:text-2xl 2xl:text-3xl">
           DreamVault 가 제공하는 플레이리스트
         </h1>
-        <div className="flex w-full flex-row items-center justify-center overflow-hidden ">
+        <div className="flex h-52 w-full flex-row items-center justify-center overflow-hidden">
           <SystemPlaylistComponent />
         </div>
       </div>

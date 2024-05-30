@@ -77,7 +77,7 @@ function SystemPlaylist() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="z-30 flex h-full w-1/12 flex-row items-center justify-center">
+      <div className="bg-zinc-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
@@ -99,7 +99,7 @@ function SystemPlaylist() {
         )}
         <div ref={divRef} />
       </div>
-      <div className="z-30 flex h-full w-1/12 flex-row items-center justify-center">
+      <div className="bg-zinc-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>

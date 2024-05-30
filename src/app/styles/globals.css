@@ -38,6 +38,10 @@ body {
   background-color: #333333;
 }
 
+.bg-zinc-650 {
+  background-color: #1a1a1a;
+}
+
 /* text-shadow 커스텀 지정 */
 .drop-shadow-text {
   text-shadow: 4px 2px 0.1px #777;

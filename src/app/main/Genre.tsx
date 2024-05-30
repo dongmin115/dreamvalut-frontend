@@ -46,11 +46,14 @@ function GenreMusic({
   musicTitle1,
   musicTitle2,
   musicTitle3,
+  id1,
+  id2,
+  id3,
 }: GenreMusicProps) {
   const musicList = [
-    { image: musicImage1, title: musicTitle1 },
-    { image: musicImage2, title: musicTitle2 },
-    { image: musicImage3, title: musicTitle3 },
+    { image: musicImage1, title: musicTitle1, id: id1 },
+    { image: musicImage2, title: musicTitle2, id: id2 },
+    { image: musicImage3, title: musicTitle3, id: id3 },
   ];
 
   return (
@@ -68,15 +71,16 @@ function GenreMusic({
 
       {/* 음악 정보 */}
       <div
-        className={`flex h-full w-full flex-col items-center justify-center rounded-b-xl bg-genre-${bgColor} mx-4`}
+        className={`flex h-full w-full flex-col items-center justify-center rounded-b-xl p-1 bg-genre-${bgColor} mx-4`}
       >
         {/* 음악 정보 */}
         {musicList.map((music, index) => (
-          <div
+          <Link
+            href={`/track/${music.id}`}
             key={index}
             className="hover-bg-opacity flex w-11/12 cursor-pointer flex-row items-center justify-start rounded-3xl p-1 hover:bg-opacity-90 xl:p-2"
           >
-            <figure className="relative m-2 flex h-10 w-10 xl:h-12 xl:w-12">
+            <figure className="relative m-2 flex h-10 w-10 xl:h-14 xl:w-14">
               <Image
                 src={music.image}
                 alt="Music cover"
@@ -88,7 +92,7 @@ function GenreMusic({
             <p className="flex w-3/5 flex-wrap text-sm font-bold text-black">
               {music.title}
             </p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
@@ -158,7 +162,7 @@ function Genre() {
   console.log('isVisible :', isVisible);
   return (
     <ThemeProvider theme={theme}>
-      <div className="z-30 flex h-full w-1/12 flex-row items-center justify-center">
+      <div className="bg-zinc-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
@@ -172,7 +176,11 @@ function Genre() {
           (
             genreData: {
               genre_name: string;
-              tracks: { thumbnail_image: string; title: string }[];
+              tracks: {
+                thumbnail_image: string;
+                title: string;
+                track_id: number;
+              }[];
             },
             index: number,
           ) => (
@@ -187,13 +195,16 @@ function Genre() {
                 musicTitle1={genreData.tracks[0].title}
                 musicTitle2={genreData.tracks[1].title}
                 musicTitle3={genreData.tracks[2].title}
+                id1={genreData.tracks[0].track_id}
+                id2={genreData.tracks[1].track_id}
+                id3={genreData.tracks[2].track_id}
               />
             </div>
           ),
         )}
         <div ref={divRef} />
       </div>
-      <div className="z-30 flex h-full w-1/12 flex-row items-center justify-center">
+      <div className="bg-zinc-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>
