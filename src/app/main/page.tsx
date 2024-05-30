@@ -12,9 +12,9 @@ import SystemPlaylistComponent from './SystemPlaylist.tsx';
 // 메인 페이지 컴포넌트
 async function Page() {
   return (
-    <div className="flex h-full w-full flex-col items-end justify-end">
+    <div className="flex h-full w-full flex-grow flex-col items-end justify-end">
       {/* NavigationBar 제외 영역 */}
-      <div className="h-full w-10/12 pr-8">
+      <div className="flex h-full w-full flex-grow flex-col items-start justify-start px-4">
         {/* 인기 차트 */}
         <h1 className="mb-5 mt-14 text-xl font-bold xl:text-2xl 2xl:text-3xl">
           인기 차트

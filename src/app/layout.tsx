@@ -34,7 +34,7 @@ export default function RootLayout({
         />
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} flex w-full flex-row`}>
         <link
           rel="icon"
           href="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
@@ -42,10 +42,10 @@ export default function RootLayout({
         />
         <QueryProviders>
           <SharedAudioProvider>
-            {children}
+            <NavigationBar />
+            <div className="main-content">{children}</div>
             <MusicBar trackId={trackId} />
           </SharedAudioProvider>
-          <NavigationBar />
         </QueryProviders>
       </body>
     </html>

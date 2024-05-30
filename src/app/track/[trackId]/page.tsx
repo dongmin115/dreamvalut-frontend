@@ -178,7 +178,7 @@ export default function MusicPage(props: any) {
       </audio>
       {/* 블러배경 */}
       {!musicLoading && (
-        <div className="flex h-screen w-screen flex-row justify-around pl-[15%]">
+        <div className="flex h-screen w-screen flex-row justify-around">
           <img
             src={musicData.track_image}
             alt="1"
