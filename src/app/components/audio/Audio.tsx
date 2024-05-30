@@ -44,14 +44,9 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
   const playAudio = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = currentTime; // 시작 시간 설정
-      audioRef.current
-        .play()
-        .then(() => {
-          console.log('Audio is playing');
-        })
-        .catch((error) => {
-          console.error('Error playing audio:', error);
-        });
+      audioRef.current.play().catch((error) => {
+        console.error('Error playing audio:', error);
+      });
     }
   };
 

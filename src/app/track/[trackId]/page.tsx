@@ -373,7 +373,7 @@ export default function MusicPage(props: any) {
               {data.pages.map((page: any) =>
                 page.content.map((content: any) => (
                   <li
-                    key={content.id}
+                    key={content.track_id}
                     className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
                   >
                     <img
