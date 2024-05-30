@@ -159,7 +159,7 @@ function Genre() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  console.log('isVisible :', isVisible);
+
   return (
     <ThemeProvider theme={theme}>
       <div className="bg-zinc-650 z-30 flex h-full w-1/12 flex-row items-center justify-center">

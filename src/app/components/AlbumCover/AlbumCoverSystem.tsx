@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 import Link from 'next/link';
 import Image from 'next/image';
-import { matchMedia } from '@/util/matchMedia.ts';
 
 function AlbumCoverSystem({
   image,
@@ -14,8 +13,6 @@ function AlbumCoverSystem({
   curation,
 }: albumCoverSystemProps) {
   const [albumRandomColor, setAlbumRandomColor] = useState('');
-  const [albumSize, setAlbumSize] = useState<number>(40); // 앨범 커버 크기
-  matchMedia();
 
   useEffect(() => {
     // 컴포넌트가 처음 렌더링될 때 한 번만 랜덤한 색상을 선택
@@ -33,33 +30,17 @@ function AlbumCoverSystem({
     setAlbumRandomColor(randomAlbumColorList[randomIndex]);
   }, []); // 빈 배열을 넣어서 처음 렌더링 시에만 실행되도록 함
 
-  useEffect(() => {
-    if (matchMedia() === '2xl') {
-      setAlbumSize(40);
-    } else if (matchMedia() === 'xl') {
-      setAlbumSize(32);
-    } else {
-      setAlbumSize(28);
-    }
-  }, []);
-
-  window.addEventListener('resize', () => {
-    if (matchMedia() === '2xl') {
-      setAlbumSize(40);
-    } else if (matchMedia() === 'xl') {
-      setAlbumSize(32);
-    } else {
-      setAlbumSize(28);
-    }
-  });
-
   return (
     <>
       <Link
         href={`/${curation === 'tag' ? 'tag' : 'playlist'}/${Id}`}
-        className="hover-bg-opacity flex h-32 cursor-pointer flex-col items-center justify-center px-4 xl:h-40 2xl:h-48"
+        className="hover-bg-opacity flex h-36 cursor-pointer flex-col items-center justify-center px-4 xl:h-40 2xl:h-44"
       >
-        <figure className={`relative h-${albumSize} w-${albumSize} rounded-lg`}>
+        <figure
+          className={
+            'relative h-32 w-32 rounded-lg xl:h-36 xl:w-36 2xl:h-40 2xl:w-40'
+          }
+        >
           <Image
             src={image}
             alt="Album cover"
@@ -71,19 +52,16 @@ function AlbumCoverSystem({
         </figure>
 
         <div
-          className={`z-10 -mt-28 xl:-mt-32 2xl:-mt-40 h-${albumSize} w-${albumSize} rounded-lg ${albumRandomColor} flex flex-wrap items-center justify-center bg-opacity-50 px-2 font-bold text-white xl:text-lg`}
+          className={`z-10 -mt-32 h-32 w-32 rounded-lg xl:-mt-36 xl:h-36 xl:w-36 2xl:-mt-40 2xl:h-40 2xl:w-40 ${albumRandomColor} flex flex-wrap items-center justify-center bg-opacity-50 px-2 font-bold text-white xl:text-lg`}
         >
           <p
-            className={`drop-shadow-text z-20 flex h-${albumSize} w-${albumSize} text-md z-20 flex-wrap items-center justify-center font-bold xl:text-lg`}
+            className={
+              'drop-shadow-text text-md z-20 flex h-32 w-32 flex-wrap items-center justify-center font-bold xl:h-36 xl:w-36 xl:text-lg 2xl:h-40 2xl:w-40'
+            }
           >
             {title}
           </p>
         </div>
-        {/* <p
-          className={`z-20 flex h-16 w-${albumSize} text-md items-start justify-start overflow-hidden text-ellipsis whitespace-nowrap pt-4 text-white xl:text-lg`}
-        >
-          {title}
-        </p> */}
       </Link>
     </>
   );
