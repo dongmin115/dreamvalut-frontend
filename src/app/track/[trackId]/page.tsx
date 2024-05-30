@@ -49,6 +49,7 @@ export default function MusicPage(props: any) {
     setCurrentTime,
     volume,
     setVolume,
+    setTrackId,
   } = useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
 
@@ -70,9 +71,16 @@ export default function MusicPage(props: any) {
 
   // 재생중인 음악 정보 가져오기
   const { data: musicData, isLoading: musicLoading } = useQuery({
-    queryKey: ['music'],
-    queryFn: () => getMusic(props.params.trackId, setIsLiked),
+    queryKey: ['music', props.params.trackId],
+    queryFn: () => getMusic(props.params.trackId),
+    enabled: !!props.params.trackId,
   });
+
+  useEffect(() => {
+    if (musicData && musicLoading === false) {
+      setIsLiked(musicData.likes_flag);
+    }
+  }, [musicData, setIsLiked]);
 
   // 재생목록 버튼 메뉴 닫기
   const handleClose = () => {
@@ -109,6 +117,7 @@ export default function MusicPage(props: any) {
   // 재생 시간이 변경될 때마다 현재 재생 시간을 설정합니다.
   useEffect(() => {
     const audioElement = audioRef.current;
+
     if (audioElement) {
       const handleTimeUpdate = () => {
         // 슬라이더를 드래그 중이 아닐 때만 현재 재생 시간을 설정합니다.
@@ -121,11 +130,27 @@ export default function MusicPage(props: any) {
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef, isDragging, setCurrentTime]);
+  }, [audioRef.current, isDragging]);
+
+  useEffect(() => {
+    setTrackId(props.params.trackId);
+    setIsDragging(false);
+    // 마우스 업 이벤트를 전역적으로 처리
+    const handleMouseUpGlobal = () => {
+      setIsDragging(false); // 드래그 상태 업데이트
+    };
+
+    window.addEventListener('mouseup', handleMouseUpGlobal); // 전역에 마우스 업 이벤트 추가
+
+    return () => {
+      // 클린업 함수에서 이벤트 리스너 제거
+      window.removeEventListener('mouseup', handleMouseUpGlobal);
+    };
+  }, [props.params.trackId]);
 
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    if (!event.defaultPrevented) {
+    if (!event.defaultPrevented && isDragging) {
       setCurrentTime(newValue as number);
     }
   };
@@ -139,13 +164,11 @@ export default function MusicPage(props: any) {
   };
 
   useEffect(() => {
-    console.log('hasNextPage : ', hasNextPage, 'fetchNextPage : ', hasNextPage);
     if (!hasNextPage) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
           fetchNextPage();
-          console.log('fetchNextPage 실행됨');
         }
       },
       {
@@ -171,10 +194,7 @@ export default function MusicPage(props: any) {
     <ThemeProvider theme={theme}>
       {/* 음악소스 */}
       <audio ref={audioRef} controls preload="auto" className="hidden">
-        <source
-          src={musicLoading ? 'loading' : musicData.track_url}
-          type="audio/wav"
-        />
+        {!musicLoading && <source src={musicData.track_url} type="audio/wav" />}
       </audio>
       {/* 블러배경 */}
       {!musicLoading && (
@@ -222,12 +242,14 @@ export default function MusicPage(props: any) {
                   </p>
                 </div>
                 <Slider
+                  className="time-slider"
                   aria-label="Volume"
                   value={currentTime}
                   onChange={handleSliderChange}
                   onChangeCommitted={handleSliderRelease}
-                  onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
-                  onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
+                  onMouseDown={() => {
+                    setIsDragging(true);
+                  }}
                   size="medium"
                   color="secondary"
                   max={musicData.duration}
@@ -235,32 +257,28 @@ export default function MusicPage(props: any) {
               </div>
               <div className="flex justify-between">
                 {isLiked ? (
-                  <IconButton>
-                    <Favorite
-                      color="secondary"
-                      fontSize="large"
-                      onClick={() => {
-                        setIsLiked(false);
-                        disLikes(props.params.trackId).catch(() => {
-                          // API 호출이 실패하면 상태를 되돌립니다
-                          setIsLiked(true);
-                        });
-                      }}
-                    />
+                  <IconButton
+                    onClick={() => {
+                      setIsLiked(false);
+                      disLikes(props.params.trackId).catch(() => {
+                        // API 호출이 실패하면 상태를 되돌립니다
+                        setIsLiked(true);
+                      });
+                    }}
+                  >
+                    <Favorite color="secondary" fontSize="large" />
                   </IconButton>
                 ) : (
-                  <IconButton>
-                    <FavoriteBorder
-                      color="secondary"
-                      fontSize="large"
-                      onClick={() => {
-                        setIsLiked(true);
-                        likes(props.params.trackId).catch(() => {
-                          // API 호출이 실패하면 상태를 되돌립니다
-                          setIsLiked(false);
-                        });
-                      }}
-                    />
+                  <IconButton
+                    onClick={() => {
+                      setIsLiked(true);
+                      likes(props.params.trackId).catch(() => {
+                        // API 호출이 실패하면 상태를 되돌립니다
+                        setIsLiked(false);
+                      });
+                    }}
+                  >
+                    <FavoriteBorder color="secondary" fontSize="large" />
                   </IconButton>
                 )}
                 <IconButton>
@@ -334,16 +352,6 @@ export default function MusicPage(props: any) {
               <h1 className="m-0 h-fit text-4xl text-white drop-shadow-lg">
                 Playlist
               </h1>
-              {/* <Button
-                color="secondary"
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-              >
-                재생목록 선택
-              </Button> */}
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -352,21 +360,7 @@ export default function MusicPage(props: any) {
                 MenuListProps={{
                   'aria-labelledby': 'basic-button',
                 }}
-              >
-                {/* {listLoading
-                  ? 'loading'
-                  : listData.content.map((e: any) => (
-                      <MenuItem
-                        key={e.track_id}
-                        onClick={() => {
-                          handleClose();
-                          // setSelectedPlaylist(e.playlist_id);
-                        }}
-                      >
-                        {e.title}
-                      </MenuItem>
-                    ))} */}
-              </Menu>
+              ></Menu>
             </div>
             <Divider
               variant="fullWidth"
@@ -379,7 +373,7 @@ export default function MusicPage(props: any) {
               {data.pages.map((page: any) =>
                 page.content.map((content: any) => (
                   <li
-                    key={content.id}
+                    key={content.track_id}
                     className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
                   >
                     <img

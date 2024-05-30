@@ -23,12 +23,8 @@ import { getMusic } from '@/api/music.ts';
 import theme from '@/app/styles/theme.ts';
 import { useSharedAudio } from '../audio/Audio.tsx';
 
-interface MusicBarProps {
-  trackId: number;
-}
-
 /* eslint-disable @next/next/no-img-element */
-export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
+export default function MusicBar() {
   const path = usePathname();
   if (
     path === '/' ||
@@ -54,6 +50,7 @@ export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
     setCurrentTime,
     volume,
     setVolume,
+    trackId,
   } = useSharedAudio();
   const [isPaused, setIsPaused] = useState<boolean>(true);
 
@@ -75,6 +72,33 @@ export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
       };
     }
   }, [audioRef, isDragging, setCurrentTime]);
+
+  useEffect(() => {
+    // 마우스 업 이벤트를 전역적으로 처리
+    const handleMouseUpGlobal = () => {
+      setIsDragging(false); // 드래그 상태 업데이트
+    };
+
+    // 마우스 다운 이벤트는 슬라이더에서만 처리
+    const handleMouseDownLocal = () => {
+      setIsDragging(true); // 드래그 시작
+    };
+
+    const sliderElement = document.querySelector('.volume-slider'); // 슬라이더 요소 선택
+    if (sliderElement) {
+      sliderElement.addEventListener('mousedown', handleMouseDownLocal);
+    }
+
+    window.addEventListener('mouseup', handleMouseUpGlobal); // 전역에 마우스 업 이벤트 추가
+
+    return () => {
+      // 클린업 함수에서 이벤트 리스너 제거
+      if (sliderElement) {
+        sliderElement.removeEventListener('mousedown', handleMouseDownLocal);
+      }
+      window.removeEventListener('mouseup', handleMouseUpGlobal);
+    };
+  }, []);
 
   // 슬라이더 변경 시 음악의 재생 시간을 변경합니다.
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
@@ -98,9 +122,10 @@ export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
     }
   };
 
-  const { data } = useQuery({
-    queryKey: ['music'],
-    queryFn: () => getMusic(trackId, setIsLiked),
+  const { data, isLoading } = useQuery({
+    queryKey: ['music', trackId],
+    queryFn: () => getMusic(trackId),
+    enabled: !!trackId,
   });
 
   return data ? (
@@ -108,7 +133,7 @@ export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
       <div className="fixed bottom-[1%] z-40 ml-[16%] flex h-[7%] w-[83%] items-center justify-between rounded-md bg-gradient-to-r from-[#333333]  via-[#6b26ff75] to-[#333333] px-[2%] py-[0.5%] shadow-lg">
         {/* 음악소스 */}
         <audio ref={audioRef} controls preload="auto" className="hidden">
-          <source src={data.track_url} type="audio/wav" />
+          {!isLoading && <source src={data.track_url} type="audio/wav" />}
         </audio>
         <Slider
           aria-label="Volume"
@@ -117,8 +142,6 @@ export default function MusicBar({ trackId }: MusicBarProps, setIsLiked: any) {
           value={currentTime}
           onChange={handleSliderChange}
           onChangeCommitted={handleSliderRelease}
-          onMouseDown={() => setIsDragging(true)} // 슬라이더를 드래그하기 시작하면 상태를 변경합니다.
-          onMouseUp={() => setIsDragging(false)} // 슬라이더에서 손을 떼면 상태를 변경합니다.
           max={data.duration}
           size="medium"
           color="primary"

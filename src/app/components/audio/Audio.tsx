@@ -23,6 +23,8 @@ interface SharedAudioState {
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
   volume: number;
   setVolume: React.Dispatch<React.SetStateAction<number>>;
+  trackId: number | null;
+  setTrackId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const SharedAudioContext = createContext<SharedAudioState | undefined>(
@@ -36,19 +38,15 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
   const [currentTime, setCurrentTime] = useState<number>(0); // 초기 값은 0으로 설정
   // 볼륨조절
   const [volume, setVolume] = useState<number>(30);
+  const [trackId, setTrackId] = useState<number | null>(null);
 
   // 재생 함수
   const playAudio = () => {
     if (audioRef.current) {
       audioRef.current.currentTime = currentTime; // 시작 시간 설정
-      audioRef.current
-        .play()
-        .then(() => {
-          console.log('Audio is playing');
-        })
-        .catch((error) => {
-          console.error('Error playing audio:', error);
-        });
+      audioRef.current.play().catch((error) => {
+        console.error('Error playing audio:', error);
+      });
     }
   };
 
@@ -62,7 +60,7 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
   // 시간 업데이트 핸들러
   const handleTimeUpdate = () => {
     if (audioRef.current) {
-      setCurrentTime(currentTime);
+      setCurrentTime(audioRef.current.currentTime);
     }
   };
 
@@ -75,7 +73,7 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
         audioElement.removeEventListener('timeupdate', handleTimeUpdate);
       };
     }
-  }, [audioRef, handleTimeUpdate]);
+  }, [audioRef]);
 
   // 오디오 상태 및 제어 함수 공유
   const sharedState: SharedAudioState = {
@@ -86,6 +84,8 @@ export const SharedAudioProvider: React.FC<{ children: ReactNode }> = ({
     setCurrentTime,
     volume,
     setVolume,
+    trackId,
+    setTrackId,
   };
 
   return (

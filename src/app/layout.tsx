@@ -24,7 +24,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const trackId = 123;
   return (
     <html lang="ko">
       <head>
@@ -44,7 +43,7 @@ export default function RootLayout({
           <SharedAudioProvider>
             <NavigationBar />
             <div className="main-content">{children}</div>
-            <MusicBar trackId={trackId} />
+            <MusicBar />
           </SharedAudioProvider>
         </QueryProviders>
       </body>
