@@ -290,7 +290,6 @@ export default function MusicPage(props: any) {
                     onClick={() => {
                       playAudio();
                       setIsPaused(false);
-                      console.log('trackId:', trackId);
                     }}
                     disabled={musicLoading}
                   >
