@@ -3,11 +3,13 @@
 
 'use server';
 
-import Chart from './Chart.tsx';
+import dynamic from 'next/dynamic';
 import Tag from './Tag.tsx';
 import Genre from './Genre.tsx';
 import AllPlaylistComponent from './AllPlayList.tsx';
 import SystemPlaylistComponent from './SystemPlaylist.tsx';
+
+const Chart = dynamic(() => import('./Chart.tsx'), { ssr: false });
 
 // 메인 페이지 컴포넌트
 async function Page() {
