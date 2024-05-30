@@ -49,7 +49,6 @@ export default function MusicPage(props: any) {
     setCurrentTime,
     volume,
     setVolume,
-    trackId,
     setTrackId,
   } = useSharedAudio();
   // 재생목록 버튼 클릭시 메뉴 열기
