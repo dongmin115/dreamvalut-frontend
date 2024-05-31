@@ -30,6 +30,7 @@ import { getStreamTrack } from '@/api/playlist';
 import { getMusic, disLikes, likes, postStream } from '@/api/music';
 import theme from '@/app/styles/theme';
 import { useSharedAudio } from '@/app/components/audio/Audio';
+import { matchMedia } from '@/util/matchMedia';
 
 export default function MusicPage(props: any) {
   // const [selectedPlaylist, setSelectedPlaylist] = useState<number>(1); // 선택한 플레이리스트
@@ -38,7 +39,8 @@ export default function MusicPage(props: any) {
   const open = Boolean(anchorEl);
   const open2 = Boolean(anchorEl2);
   const id = open2 ? 'simple-popover' : undefined;
-
+  const [showThumbnail, setShowThumbnail] = useState(true);
+  const [showPlaylist, setShowPlaylist] = useState(true);
   const renderSize = 10; // 한 번에 렌더링할 음악 수
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const {
@@ -190,6 +192,22 @@ export default function MusicPage(props: any) {
   }, [hasNextPage, fetchNextPage]);
 
   if (isFetchingNextPage || data === undefined) return <div>Loading...</div>;
+
+  matchMedia();
+
+  window.addEventListener('resize', () => {
+    if (matchMedia() === 'sm' || matchMedia() === 'md') {
+      setShowThumbnail(false);
+      setShowPlaylist(false);
+    } else if (matchMedia() === 'lg') {
+      setShowThumbnail(true);
+      setShowPlaylist(false);
+    } else {
+      setShowThumbnail(true);
+      setShowPlaylist(true);
+    }
+  });
+
   return (
     <ThemeProvider theme={theme}>
       {/* 음악소스 */}
@@ -198,7 +216,7 @@ export default function MusicPage(props: any) {
       </audio>
       {/* 블러배경 */}
       {!musicLoading && (
-        <div className="flex h-screen w-screen flex-row justify-around">
+        <div className="flex h-screen w-full flex-row justify-evenly">
           <img
             src={musicData.track_image}
             alt="1"
@@ -207,29 +225,34 @@ export default function MusicPage(props: any) {
           {/* 검은색 레이어 */}
           <div className="fixed -z-10 h-full w-full bg-black bg-opacity-30" />
           {/* 음악정보 */}
-          <div className="flex h-full w-[40%] flex-col items-center justify-center space-y-4">
-            <h1 className="text-4xl text-white drop-shadow-lg">
+          <div className="flex h-full w-fit flex-col items-center justify-center space-y-4">
+            <h1 className="text-white drop-shadow-lg lg:text-2xl xl:text-3xl 2xl:text-4xl">
               {musicData.title}
             </h1>
             <p className="text-[#777777] drop-shadow-md">
               {musicData.uploader_name}
             </p>
             {/* 프롬프트 + 썸네일 */}
-            <div id="card">
-              <div
-                id="card-back"
-                className="h-96 w-96 rounded-md bg-[#2B2B2B] p-6 drop-shadow-lg"
-              >
-                <p className="mb-4 text-lg font-semibold">음악생성 프롬프트</p>
-                <p className="text-sm">{musicData.prompt}</p>
+            {showThumbnail && (
+              <div id="card">
+                <div
+                  id="card-back"
+                  className="rounded-md bg-[#2B2B2B] p-6 drop-shadow-lg lg:size-96 xl:size-80 2xl:size-96"
+                >
+                  <p className="mb-4 text-lg font-semibold">
+                    음악생성 프롬프트
+                  </p>
+                  <p className="text-sm">{musicData.prompt}</p>
+                </div>
+                <img
+                  id="card-front"
+                  src={musicData.track_image}
+                  alt="1"
+                  className="hidden rounded-md drop-shadow-lg lg:block lg:size-96 xl:size-80 2xl:size-96"
+                />
               </div>
-              <img
-                id="card-front"
-                src={musicData.track_image}
-                alt="1"
-                className="h-96 w-96 rounded-md drop-shadow-lg"
-              />
-            </div>
+            )}
+
             {/* 재생 컨트롤러 */}
             <div className="w-96">
               <div className="mt-6 flex flex-col items-center">
@@ -348,54 +371,56 @@ export default function MusicPage(props: any) {
             </div>
           </div>
           {/* 재생목록 */}
-          <div className="flex h-full w-[30%] flex-col items-center justify-center space-y-4">
-            <div className="flex h-fit w-full flex-row items-center justify-between">
-              <h1 className="m-0 h-fit text-4xl text-white drop-shadow-lg">
-                Playlist
-              </h1>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-              ></Menu>
-            </div>
-            <Divider
-              variant="fullWidth"
-              orientation="horizontal"
-              flexItem
-              className="w-full bg-white drop-shadow-xl"
-            />
-            {/* 재생목록 리스트 */}
-            <div className="flex h-[26rem] w-full flex-col overflow-y-scroll">
-              {data.pages.map((page: any) =>
-                page.content.map((content: any) => (
-                  <li
-                    key={content.track_id}
-                    className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
-                  >
-                    <img
-                      src={content.thumbnail_image}
-                      alt="음악 커버"
-                      className="h-16 w-16 rounded-md drop-shadow-lg"
-                    />
-                    <div className="flex flex-col items-start justify-center">
-                      <p className="text-lg text-white">{content.title}</p>
-                      <p className="text-start text-[#777777]">
-                        {content.uploader_name}
-                      </p>
-                    </div>
-                  </li>
-                )),
-              )}
-              <div ref={loadMoreRef} className="h-2 w-2 cursor-pointer">
-                load
+          {showPlaylist && (
+            <div className="\mr-[10%]  flex h-full w-[25%] flex-col items-center justify-center space-y-4">
+              <div className="flex h-fit w-full flex-row items-center justify-between">
+                <h1 className="m-0 h-fit text-white drop-shadow-lg lg:text-2xl xl:text-3xl 2xl:text-4xl">
+                  Playlist
+                </h1>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                  }}
+                ></Menu>
+              </div>
+              <Divider
+                variant="fullWidth"
+                orientation="horizontal"
+                flexItem
+                className="w-full bg-white drop-shadow-xl"
+              />
+              {/* 재생목록 리스트 */}
+              <div className="flex h-[40%] w-full flex-col overflow-y-scroll">
+                {data.pages.map((page: any) =>
+                  page.content.map((content: any) => (
+                    <li
+                      key={content.track_id}
+                      className="flex w-full flex-row space-x-4 self-start p-2 hover:rounded-md hover:bg-[#040404] hover:bg-opacity-30"
+                    >
+                      <img
+                        src={content.thumbnail_image}
+                        alt="음악 커버"
+                        className="size-16 rounded-md drop-shadow-lg"
+                      />
+                      <div className="flex flex-col items-start justify-center">
+                        <p className="text-white xl:text-base 2xl:text-lg">
+                          {content.title}
+                        </p>
+                        <p className="text-start text-[#777777] xl:text-sm 2xl:text-base">
+                          {content.uploader_name}
+                        </p>
+                      </div>
+                    </li>
+                  )),
+                )}
+                <div ref={loadMoreRef} className="h-2 w-2 cursor-pointer"></div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </ThemeProvider>
