@@ -114,8 +114,8 @@ export default function Mypage() {
             <h1 className="text-xs text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
               내 계정
             </h1>
-            <div className="flex h-2/3 w-full flex-row items-center justify-between space-x-4 overflow-x-auto rounded-xl bg-[#353535] p-[4%] shadow-md">
-              <div className="flex h-full w-full flex-row items-center justify-center space-x-4 space-y-2 sm:items-center sm:justify-center md:items-center md:justify-start md:space-x-8 lg:items-start lg:justify-start lg:space-x-8 lg:space-y-2 xl:items-start xl:justify-start xl:space-x-12 xl:space-y-2 2xl:items-start 2xl:justify-start 2xl:space-x-12 2xl:space-y-2">
+            <div className="flex h-full w-full flex-row items-center justify-between space-x-4 overflow-x-auto rounded-xl bg-[#353535] p-[4%] shadow-md md:h-full lg:h-2/3">
+              <div className="flex h-full w-full flex-row items-center justify-center space-x-4 space-y-2 sm:items-center sm:justify-center md:items-center md:justify-center md:space-x-8 lg:items-center lg:justify-center lg:space-x-8 lg:space-y-0 xl:items-start xl:justify-start xl:space-x-12 xl:space-y-2 2xl:items-start 2xl:justify-start 2xl:space-x-12 2xl:space-y-2">
                 <img
                   src={userInfoLoading ? 'loading' : userInfo.profile_image}
                   alt="프로필 이미지"
@@ -162,7 +162,7 @@ export default function Mypage() {
                 {isEditing ? '수정하기' : '프로필 수정'}
               </Button>
             </div>
-            <div className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md md:h-auto lg:h-2/3 xl:h-2/3 2xl:h-2/3 ">
+            <div className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md md:h-auto lg:h-2/3 lg:p-8 xl:h-2/3 2xl:h-2/3 ">
               {/* 장르 데이터를 Button 컴포넌트로 매핑하여 보여줍니다. */}
               <div className="w-full">
                 {/* 장르 목록 */}
