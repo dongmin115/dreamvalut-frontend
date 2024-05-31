@@ -110,7 +110,7 @@ export default function Mypage() {
       <div className="flex h-screen w-full flex-col bg-[#1a1a1a]">
         <div className="flex h-fit w-full flex-row space-x-6 p-[2%]">
           {/* 내 계정 */}
-          <div className="flex h-full w-[40%] flex-col space-y-2">
+          <div className="flex h-full w-[40%] flex-col space-y-2 md:space-y-3 lg:space-y-2 xl:space-y-2 2xl:space-y-2">
             <h1 className="text-xs text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
               내 계정
             </h1>
@@ -119,7 +119,7 @@ export default function Mypage() {
                 <img
                   src={userInfoLoading ? 'loading' : userInfo.profile_image}
                   alt="프로필 이미지"
-                  className="h-20 w-20 rounded-full object-cover drop-shadow-sm md:h-20 md:w-20 lg:h-20 lg:w-20 xl:h-20 xl:w-20 2xl:h-20 2xl:w-20"
+                  className="h-20 w-20 rounded-full object-cover drop-shadow-sm"
                 />
                 <div className="flex w-fit flex-col justify-center">
                   {isEditing ? (
