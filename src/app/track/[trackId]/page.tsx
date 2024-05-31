@@ -198,7 +198,7 @@ export default function MusicPage(props: any) {
       </audio>
       {/* 블러배경 */}
       {!musicLoading && (
-        <div className="flex h-screen w-screen flex-row justify-around">
+        <div className="flex h-screen w-full flex-row justify-around">
           <img
             src={musicData.track_image}
             alt="1"
@@ -207,7 +207,7 @@ export default function MusicPage(props: any) {
           {/* 검은색 레이어 */}
           <div className="fixed -z-10 h-full w-full bg-black bg-opacity-30" />
           {/* 음악정보 */}
-          <div className="flex h-full w-[40%] flex-col items-center justify-center space-y-4">
+          <div className="ml-[10%] flex h-full w-fit flex-col items-center justify-center space-y-4">
             <h1 className="text-4xl text-white drop-shadow-lg">
               {musicData.title}
             </h1>
@@ -347,7 +347,7 @@ export default function MusicPage(props: any) {
             </div>
           </div>
           {/* 재생목록 */}
-          <div className="flex h-full w-[30%] flex-col items-center justify-center space-y-4">
+          <div className="mr-[10%] flex h-full w-[25%] flex-col items-center justify-center space-y-4">
             <div className="flex h-fit w-full flex-row items-center justify-between">
               <h1 className="m-0 h-fit text-4xl text-white drop-shadow-lg">
                 Playlist
@@ -369,7 +369,7 @@ export default function MusicPage(props: any) {
               className="w-full bg-white drop-shadow-xl"
             />
             {/* 재생목록 리스트 */}
-            <div className="flex h-[26rem] w-full flex-col overflow-y-scroll">
+            <div className="flex h-[40%] w-full flex-col overflow-y-scroll">
               {data.pages.map((page: any) =>
                 page.content.map((content: any) => (
                   <li
