@@ -23,6 +23,28 @@ export const getMusic = async (trackId: number | null) => {
   }
 };
 
+export const postStream = async (trackId: number) => {
+  try {
+    const accessToken = await getCookie('accessToken');
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/stream_events`,
+      {
+        track_id: trackId,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.error('오류 발생:', error);
+    throw error;
+  }
+};
+
 export const likes = async (trackId: string) => {
   try {
     const accessToken = await getCookie('accessToken');

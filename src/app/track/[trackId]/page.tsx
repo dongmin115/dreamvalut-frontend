@@ -27,7 +27,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { getStreamTrack } from '@/api/playlist';
-import { getMusic, disLikes, likes } from '@/api/music';
+import { getMusic, disLikes, likes, postStream } from '@/api/music';
 import theme from '@/app/styles/theme';
 import { useSharedAudio } from '@/app/components/audio/Audio';
 
@@ -288,6 +288,7 @@ export default function MusicPage(props: any) {
                   <IconButton
                     onClick={() => {
                       playAudio();
+                      postStream(props.params.trackId);
                       setIsPaused(false);
                     }}
                     disabled={musicLoading}
