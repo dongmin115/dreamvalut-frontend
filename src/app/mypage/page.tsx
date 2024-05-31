@@ -114,7 +114,7 @@ export default function Mypage() {
             <h1 className="text-xs text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
               내 계정
             </h1>
-            <div className="flex h-full w-full flex-row items-center justify-between space-x-4 overflow-x-auto rounded-xl bg-[#353535] p-[4%] shadow-md md:h-full lg:h-2/3">
+            <div className="flex h-full w-full flex-row items-center justify-center space-x-4 overflow-x-auto rounded-xl bg-[#353535] p-8 shadow-md md:h-full lg:h-2/3">
               <div className="flex h-full w-full flex-row items-center justify-center space-x-4 space-y-2 sm:items-center sm:justify-center md:items-center md:justify-center md:space-x-8 lg:items-center lg:justify-center lg:space-x-8 lg:space-y-0 xl:items-start xl:justify-start xl:space-x-12 xl:space-y-2 2xl:items-start 2xl:justify-start 2xl:space-x-12 2xl:space-y-2">
                 <img
                   src={userInfoLoading ? 'loading' : userInfo.profile_image}
