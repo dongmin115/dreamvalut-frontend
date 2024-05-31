@@ -111,13 +111,15 @@ export default function Mypage() {
         <div className="flex h-fit w-full flex-row space-x-6 p-[2%]">
           {/* 내 계정 */}
           <div className="flex h-full w-[40%] flex-col">
-            <h1 className="text-3xl text-[#D4D4D4]">내 계정</h1>
+            <h1 className="text-xs text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
+              내 계정
+            </h1>
             <div className="flex h-2/3 w-full flex-row items-center justify-between space-x-4 rounded-xl bg-[#353535] p-[4%] shadow-md">
-              <div className="flex h-full w-full flex-row space-x-8">
+              <div className="flex h-full w-full flex-row space-x-4">
                 <img
                   src={userInfoLoading ? 'loading' : userInfo.profile_image}
                   alt="프로필 이미지"
-                  className="rounded-full object-cover drop-shadow-sm"
+                  className="md:w-30 w-20 rounded-full object-cover drop-shadow-sm"
                 />
                 <div className="flex w-fit flex-col justify-center">
                   {isEditing ? (
@@ -129,12 +131,12 @@ export default function Mypage() {
                       onChange={(e) => setName(e.target.value)}
                     />
                   ) : (
-                    <p className="text-xl text-white">
+                    <p className="w-fit text-xs text-white sm:text-xl md:flex md:text-[15px] lg:text-[14px] xl:text-xl">
                       {userInfoLoading ? 'loading' : name}
                     </p>
                   )}
 
-                  <p className="w-fit text-lg text-[#777777]">
+                  <p className="hidden w-fit text-[#777777] md:flex md:text-[10px] lg:text-[14px] xl:text-xl">
                     {userInfoLoading ? 'loading' : userInfo.user_email}
                   </p>
                 </div>
@@ -144,18 +146,23 @@ export default function Mypage() {
           {/* 음악취향 */}
           <div className="flex h-full w-[60%] flex-col">
             <div className="flex h-fit flex-row justify-between">
-              <h1 className="text-3xl text-[#D4D4D4]">나의 음악취향</h1>
+              <h1 className="text-xs text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
+                나의 음악취향
+              </h1>
               <Button
                 variant="contained"
                 color="primary"
-                className="h-fit w-fit whitespace-nowrap rounded-xl bg-[#6C26FF] px-8 py-2 text-white"
+                className="mb-2 h-3 w-2 whitespace-nowrap rounded-xl bg-[#6C26FF] p-2 px-8 py-2 text-[7px] text-white sm:h-3 sm:w-[5rem] sm:text-[10px] md:h-5 md:w-[7rem] md:text-[14px] lg:h-7 lg:w-[10rem] lg:text-base xl:w-fit"
                 onClick={handleEdit}
               >
-                <EditIcon color="secondary" fontSize="small" className="mr-2" />
+                <EditIcon
+                  color="secondary"
+                  className="mr-2 w-[10px] sm:w-3 md:w-[1rem] lg:w-[2rem]"
+                />
                 {isEditing ? '수정하기' : '프로필 수정'}
               </Button>
             </div>
-            <div className="flex h-2/3 w-full items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md">
+            <div className="flex h-2/3 w-full items-center justify-center gap-2 rounded-xl bg-[#353535] object-center p-[2%] text-center shadow-md ">
               {/* 장르 데이터를 Button 컴포넌트로 매핑하여 보여줍니다. */}
               <div className="w-full">
                 {/* 장르 목록 */}
@@ -182,16 +189,16 @@ export default function Mypage() {
                 {/* 페이지네이션 */}
                 <div className="mt-4 flex justify-center">
                   <Button disabled={currentPage === 1} onClick={handlePrevPage}>
-                    <ArrowBackIosIcon />
+                    <ArrowBackIosIcon className="w-5 sm:w-5 md:w-7 lg:w-10" />
                   </Button>
-                  <div className="my-auto">
+                  <div className="my-auto text-xs sm:text-xs md:text-sm lg:text-base xl:text-base">
                     {currentPage} / {totalPages}
                   </div>
                   <Button
                     disabled={currentPage === totalPages}
                     onClick={handleNextPage}
                   >
-                    <ArrowForwardIosIcon />
+                    <ArrowForwardIosIcon className="w-5 sm:w-5 md:w-7 lg:w-10" />
                   </Button>
                 </div>
               </div>
@@ -200,7 +207,9 @@ export default function Mypage() {
         </div>
         {/* 최근 감상한 곡 */}
         <div className="flex h-full w-full flex-col space-y-4 p-[2%]">
-          <h1 className="mt-0 text-3xl text-[#D4D4D4]">최근 감상한 곡</h1>
+          <h1 className="mt-0 text-xs text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
+            최근 감상한 곡
+          </h1>
           <div className="grid h-full w-full grid-cols-1 gap-4 rounded-xl bg-[#353535] p-[2%] shadow-md md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {recentListLoading ? (
               <div>로딩중...</div>
@@ -228,7 +237,7 @@ export default function Mypage() {
               onClick={() => setRecentListPage((prev) => Math.max(prev - 1, 1))}
               disabled={recentListPage === 1}
             >
-              <ArrowBackIosIcon />
+              <ArrowBackIosIcon className="w-5 sm:w-5 md:w-7 lg:w-10" />
             </Button>
             <span>
               {recentListPage} / {totalRecentListPages}
@@ -246,7 +255,7 @@ export default function Mypage() {
                 recentListPage === totalRecentListPages || !totalRecentListPages
               }
             >
-              <ArrowForwardIosIcon />
+              <ArrowForwardIosIcon className="w-5 sm:w-5 md:w-7 lg:w-10" />
             </Button>
           </div>
         </div>
