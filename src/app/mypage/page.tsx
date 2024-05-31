@@ -178,7 +178,7 @@ export default function Mypage() {
                         overflow: 'hidden', // 넘치는 텍스트 숨김
                         textOverflow: 'ellipsis', // 넘치는 텍스트를 "..."로 표시
                       }}
-                      className="flex-grow rounded-2xl"
+                      className="w-24 flex-grow rounded-2xl"
                       onClick={() => handleGenreToggle(genre.genre_id)}
                     >
                       {genre.genre_name}
