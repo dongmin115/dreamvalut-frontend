@@ -11,7 +11,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { getSlideContentStyle } from '@/app/styles/slide.ts';
 import Swal from 'sweetalert2';
-import Link from 'next/link';
+
 import {
   fetchMyPlaylistThumbnail,
   fetchLikePlaylistThumbnail,
@@ -54,18 +54,15 @@ function MyPlaylistComponent() {
       if (myPlaylistData.content[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
-          <Link
-            href={`/playlist/${myPlaylistData.content[i].playlist_name}`} // 플레이리스트 이름으로 링크, 그러나 아이디로 링크할 수도 있음(수정 가능성 있음)
-            className="flex w-1/6 items-center justify-center"
-          >
+          <>
             <AlbumCoverUser
               image1={myPlaylistData.content[i].thumbnails[0]}
               image2={myPlaylistData.content[i].thumbnails[1]}
               image3={myPlaylistData.content[i].thumbnails[2]}
               title={myPlaylistData.content[i].playlist_name}
-              Id={myPlaylistData.content[i].playlist_id}
+              id={myPlaylistData.content[i].playlist_id}
             />
-          </Link>,
+          </>,
         );
       }
     }
@@ -206,7 +203,7 @@ function MyPlaylistComponent() {
           image2={likePlaylistData.thumbnails[0]}
           image3={likePlaylistData.thumbnails[1]}
           title="좋아요 누른 곡"
-          Id="like"
+          id={-1}
         />
 
         {/* 내가 생성한 플리 버튼 */}

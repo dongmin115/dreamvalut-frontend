@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
@@ -10,11 +11,13 @@ function AlbumCoverUser({
   image2,
   image3,
   title,
-  Id,
+  id,
 }: albumCoverUserProps) {
+  const href =
+    id !== -1 ? `playlist/type=user_created&id=${id}` : 'playlist/type=like';
   return (
     <Link
-      href={`playlist/${Id}`}
+      href={href}
       className="hover-bg-opacity flex h-60 w-60 cursor-pointer flex-col items-center justify-center p-4 pt-10 xl:h-64 2xl:h-80"
     >
       <figure className="relative z-30 h-32 w-32 rounded-lg xl:h-36 xl:w-36 2xl:h-40 2xl:w-40">
@@ -22,8 +25,8 @@ function AlbumCoverUser({
           src={image1}
           alt="Album cover"
           className="z-30 rounded-lg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100vm"
         />
       </figure>
       <figure className="relative z-20 -mt-32 h-28 w-28 rounded-lg xl:-mt-36 xl:h-32 xl:w-32 2xl:-mt-44 2xl:h-36 2xl:w-36">
@@ -31,8 +34,8 @@ function AlbumCoverUser({
           src={image2}
           alt="Album cover"
           className="z-20 rounded-lg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100vm"
         />
       </figure>
       <figure className="relative z-10 -mt-28 h-24 w-24 rounded-lg xl:-mt-32 xl:h-28 xl:w-28 2xl:-mt-40 2xl:h-32 2xl:w-32">
@@ -40,8 +43,8 @@ function AlbumCoverUser({
           src={image3}
           alt="Album cover"
           className="z-10 rounded-lg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100vm"
         />
       </figure>
       <p className="text-md mt-16 h-16 text-center font-bold text-white xl:mt-20 xl:text-lg">

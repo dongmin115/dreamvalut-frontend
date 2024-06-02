@@ -3,12 +3,12 @@ export interface albumCoverUserProps {
   image2: string;
   image3: string;
   title: string;
-  Id: string;
+  id: number;
 }
 
 export interface albumCoverSystemProps {
   image: string;
   title: string;
-  Id: number;
-  curation: string;
+  id: number;
+  type: string;
 }

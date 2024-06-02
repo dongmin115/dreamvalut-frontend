@@ -4,7 +4,7 @@ export interface MusicElementProps {
   like: number;
   isLiked: boolean;
   trackId: number;
-  playlistId: string;
+  playlistId: number;
   isEdit: boolean;
 }
 
@@ -36,6 +36,9 @@ interface Pageable {
 }
 
 export interface Playlist {
+  tag_name: string;
+  genre_name: string;
+  genre_image: string;
   is_curated: boolean;
   is_follow: boolean;
   is_owner: boolean;
@@ -106,4 +109,9 @@ export interface GenrePlaylist {
     total_elements: number;
     total_pages: number;
   };
+}
+
+export interface playlistParam {
+  type: string;
+  id: number;
 }

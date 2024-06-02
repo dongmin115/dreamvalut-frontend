@@ -1,17 +1,14 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable max-len */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable @next/next/no-img-element */
+
 import React, { useState, useEffect } from 'react';
 import { albumCoverSystemProps } from '@/types/albumCover.ts';
 import Link from 'next/link';
 import Image from 'next/image';
 
-function AlbumCoverSystem({
-  image,
-  title,
-  Id,
-  curation,
-}: albumCoverSystemProps) {
+function AlbumCoverSystem({ image, title, id, type }: albumCoverSystemProps) {
   const [albumRandomColor, setAlbumRandomColor] = useState('');
 
   useEffect(() => {
@@ -33,7 +30,7 @@ function AlbumCoverSystem({
   return (
     <>
       <Link
-        href={`/${curation === 'tag' ? 'tag' : 'playlist'}/${Id}`}
+        href={`/playlist/type=${type}&i=${id}`}
         className="hover-bg-opacity flex h-36 cursor-pointer flex-col items-center justify-center px-4 xl:h-40 2xl:h-44"
       >
         <figure
@@ -45,9 +42,9 @@ function AlbumCoverSystem({
             src={image}
             alt="Album cover"
             className="rounded-lg"
-            layout="fill"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            objectFit="cover"
+            fill
+            sizes="100vm"
+            priority
           />
         </figure>
 

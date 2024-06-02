@@ -1,15 +1,6 @@
 /* eslint-disable no-console */
-/* eslint-disable consistent-return */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable function-paren-newline */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
 /* eslint-disable operator-linebreak */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable consistent-return */
-/* eslint-disable object-curly-newline */
-/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-shadow */
 /* eslint-disable react-hooks/rules-of-hooks */
 
 'use client';
@@ -17,7 +8,7 @@
 import {
   deleteFollow,
   deletePlaylist,
-  fetchPlaylistDetail,
+  getPlaylistMusic,
   patchPlaylistName,
   postFollow,
 } from '@/api/playlist.ts';
@@ -35,22 +26,39 @@ import { useRouter } from 'next/navigation';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
 import InfiniteScroll from '@/app/components/InfiniteScroll.tsx';
 import { Music } from '@/types/music.ts';
-import { Playlist } from '@/types/playlist.ts';
+import { Playlist, playlistParam } from '@/types/playlist.ts';
+import Image from 'next/image';
 import PlayButton from './PlayButton.tsx';
 import MusicElement from './MusicElement.tsx';
 
 function page(props: any) {
   const router = useRouter();
-  const playlistId = decodeURIComponent(props.params.playlistId);
+  const param = decodeURIComponent(props.params.param);
+  const paramsArray = param.split('&');
+  const paramObj: playlistParam = {
+    type: '',
+    id: 0,
+  };
+  paramsArray.forEach((param: string) => {
+    const [key, value] = param.split('=');
+    if (key === 'type') {
+      paramObj.type = value;
+    } else if (key === 'id') {
+      paramObj.id = parseInt(value, 10);
+    }
+  });
+  const playlistType = paramObj.type;
+  const playlistId = paramObj.id;
   const renderSize = 12;
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [editOpen, setEditOpen] = useState(false);
   const [playlistName, setPlaylistName] = useState('');
   const [isFollow, setIsFollow] = useState(false);
 
   const fetchMoreTracks = async ({ pageParam = 0 }) => {
-    const response = await fetchPlaylistDetail(
+    const response = await getPlaylistMusic(
+      playlistType,
       playlistId,
       pageParam,
       renderSize,
@@ -111,21 +119,46 @@ function page(props: any) {
 
   useEffect(() => {
     if (data !== undefined) {
-      setPlaylistName(data.pages['0'].playlist_name);
+      if (playlistType === 'like') {
+        setPlaylistName('좋아요 누른 곡');
+      } else if (playlistType === 'tag') {
+        setPlaylistName(`# ${data.pages['0'].tag_name}`);
+      } else if (playlistType === 'genre') {
+        setPlaylistName(data.pages['0'].genre_name);
+      } else {
+        setPlaylistName(data.pages['0'].playlist_name);
+      }
+
       setIsFollow(data.pages['0'].is_follow);
     }
-  }, [data]);
+  }, [data, playlistType]);
 
   if (isLoading || data === undefined) return <div>Loading...</div>;
   return (
-    <div className="flex h-full w-full flex-col items-end justify-end overflow-hidden">
-      <div className="h-full w-10/12 pr-8">
+    <div className="-z-10 flex h-full w-full flex-col items-end justify-center overflow-hidden">
+      {playlistType === 'genre' && (
+        <div className="relative -z-10 -mb-20 flex h-40 w-full items-center justify-center">
+          <Image
+            src={data.pages['0'].genre_image}
+            alt="playlist"
+            className="h-full w-full"
+            objectFit="cover"
+            layout="fill"
+          />
+          <div
+            className="bg-gray-650 absolute bottom-0 left-0 flex h-full w-full items-end justify-end p-4 text-white"
+            style={{
+              background:
+                'linear-gradient(to top, rgba(26, 26, 26, 1) 10%,rgba(26, 26, 26, 0.95) 30%,  rgba(26, 26, 26, 0.1) 100%)',
+            }}
+          />
+        </div>
+      )}
+      <div className="h-full w-full px-8">
         {/* 플리 제목 및 플레이 아이콘 */}
         <div className="flex w-full flex-row items-center justify-center ">
-          <h1 className="w-full text-start">
-            {playlistId === 'like' ? (
-              '좋아요 누른 곡'
-            ) : editOpen ? (
+          <h1 className="mb-5 mt-14 w-full text-xl font-bold xl:text-2xl 2xl:text-3xl">
+            {editOpen ? (
               <div className="flex flex-row items-center justify-start">
                 <input
                   type="text"
@@ -233,20 +266,6 @@ function page(props: any) {
           </div>
           <hr className="my-6 w-full border-zinc-600" />
           {/* 음악 요소들 */}
-          {/* {data.pages.map((page: any) =>
-            page.tracks.content.map((track: any) => (
-              <MusicElement
-                key={track.track_id}
-                image={track.thumbnail_image}
-                title={track.title}
-                like={track.likes}
-                isLiked={track.likes_flag}
-                trackId={track.track_id}
-                playlistId={playlistId}
-                isEdit={editOpen}
-              />
-            )),
-          )} */}
           <InfiniteScroll
             queryKey={['Playlist Details', playlistId]}
             queryFn={fetchMoreTracks}
