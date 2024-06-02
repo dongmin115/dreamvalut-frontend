@@ -56,16 +56,16 @@ const SearchResult = ({ item }: { item: TrackInfo }) => {
   // 검색 결과가 있을 경우
   return (
     <Link href={`/track/${item.id}`}>
-      <li className="hover-bg-opacity flex h-fit flex-row items-center justify-around gap-y-2 rounded-xl py-[1%]">
-        <div className="flex w-[60%] flex-row items-center justify-between gap-8">
-          <div className="flex w-fit flex-col items-center justify-center gap-4">
+      <li className="hover-bg-opacity flex h-fit flex-row items-center justify-around rounded-xl p-[1%]">
+        <div className="flex w-[60%] flex-row items-center justify-between  gap-4 lg:gap-4 xl:gap-6 2xl:gap-8">
+          <div className="flex w-fit flex-col items-center justify-center gap-1 lg:gap-2 xl:gap-3 2xl:gap-4">
             <img
               src={item.thumbnail_image}
               alt="cover"
-              className="size-28 rounded-sm"
+              className="size-20 rounded-sm lg:size-20 xl:size-24 2xl:size-28"
             />
             <p
-              className="xs:text-xs w-fit text-center md:text-xs lg:text-xs xl:text-sm"
+              className="w-fit items-center text-xs lg:text-xs xl:text-xs 2xl:text-sm"
               dangerouslySetInnerHTML={{ __html: item.title }}
             />
           </div>
@@ -87,13 +87,13 @@ const SearchResult = ({ item }: { item: TrackInfo }) => {
               ))}
             </div>
             <p
-              className="text-md w-full items-center"
+              className="w-full items-center text-xs  lg:text-xs xl:text-sm 2xl:text-base"
               dangerouslySetInnerHTML={{ __html: item.prompt }}
             />
           </div>
         </div>
         <p
-          className="w-[10%] text-center text-lg"
+          className="w-[10%] text-center text-sm lg:text-sm xl:text-base 2xl:text-lg"
           dangerouslySetInnerHTML={{ __html: item.uploader_name }}
         />
         <div className="flex w-[10%] flex-row items-center justify-center gap-2">
@@ -146,19 +146,29 @@ export default function SearchPage(props: any) {
         <div className="h-fit w-full">
           <div className="flex w-full flex-col gap-8 p-[3%]">
             {isLoading ? (
-              <p className="w-fit text-xl">검색결과 가져오는 중 ...</p>
+              <p className="w-fit text-base lg:text-lg xl:text-xl 2xl:text-2xl">
+                검색결과 가져오는 중 ...
+              </p>
             ) : (
-              <p className="w-fit text-xl">
+              <p className="w-fit text-base lg:text-lg xl:text-xl 2xl:text-2xl">
                 <em>{decodeURIComponent(props.params.keyward)}</em> 에 대한 검색
                 결과 {data?.pages[0].total_elements}건 입니다.
               </p>
             )}
             <div className="flex h-fit w-full flex-col gap-4 rounded-xl bg-[#353535] p-[2%]">
               <div className="flex h-fit flex-row items-center justify-around">
-                <p className="w-[60%] text-center text-xl">곡정보</p>
-                <p className="w-[10%] text-center text-lg">제작자</p>
-                <p className="w-[10%] text-center text-lg">좋아요</p>
-                <p className="w-[10%] text-center text-lg">재생</p>
+                <p className="w-[60%] text-center text-base lg:text-base xl:text-lg 2xl:text-xl">
+                  곡정보
+                </p>
+                <p className="w-[10%] text-center text-base lg:text-base xl:text-lg 2xl:text-xl">
+                  제작자
+                </p>
+                <p className="w-[10%] text-center text-base lg:text-base xl:text-lg 2xl:text-xl">
+                  좋아요
+                </p>
+                <p className="w-[10%] text-center text-base lg:text-base xl:text-lg 2xl:text-xl">
+                  재생
+                </p>
               </div>
               <Divider />
               {/* 검색 결과 리스트 */}

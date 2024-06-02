@@ -44,6 +44,7 @@ export function SearchAppBar() {
       router.push(searchUrl);
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       <TextField
