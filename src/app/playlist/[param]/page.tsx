@@ -137,7 +137,7 @@ function page(props: any) {
   return (
     <div className="-z-10 flex h-full w-full flex-col items-end justify-center overflow-hidden">
       {playlistType === 'genre' && (
-        <div className="relative -z-10 -mb-20 flex h-40 w-full items-center justify-center">
+        <div className="relative -z-10 -mb-20 flex h-64 w-full items-center justify-center">
           <Image
             src={data.pages['0'].genre_image}
             alt="playlist"
@@ -149,7 +149,7 @@ function page(props: any) {
             className="bg-gray-650 absolute bottom-0 left-0 flex h-full w-full items-end justify-end p-4 text-white"
             style={{
               background:
-                'linear-gradient(to top, rgba(26, 26, 26, 1) 10%,rgba(26, 26, 26, 0.95) 30%,  rgba(26, 26, 26, 0.1) 100%)',
+                'linear-gradient(to top, rgba(26, 26, 26, 1) 10%,rgba(26, 26, 26, 0.9) 30%,  rgba(26, 26, 26, 0) 100%)',
             }}
           />
         </div>
@@ -162,13 +162,13 @@ function page(props: any) {
               <div className="flex flex-row items-center justify-start">
                 <input
                   type="text"
-                  className="bg-gray-650 h-16 w-auto rounded-2xl p-4 text-4xl text-white focus:outline-none"
+                  className="bg-gray-650 h-16 w-auto rounded-2xl p-4 text-xl text-white focus:outline-none xl:text-2xl 2xl:text-3xl"
                   value={playlistName}
                   onChange={(e) => setPlaylistName(e.target.value)}
                 />
                 <button
                   type="button"
-                  className="mx-2 flex h-14 w-28 items-center justify-center rounded-2xl bg-zinc-700 p-2 text-2xl text-white focus:outline-none"
+                  className="mx-2 flex h-14 w-28 items-center justify-center rounded-2xl bg-zinc-700 p-2 text-lg text-white focus:outline-none xl:text-xl 2xl:text-2xl"
                   onClick={() => {
                     setEditOpen(false);
                     patchPlaylistName(playlistId, playlistName);
@@ -256,13 +256,13 @@ function page(props: any) {
           )}
         </div>
         {/* 플리 박스 */}
-        <div className="bg-gray-650 flex h-auto w-full flex-col items-center rounded-2xl p-8">
+        <div className="bg-gray-650 flex h-auto w-full min-w-[42rem] flex-col items-center rounded-2xl p-8">
           <div className="flex w-full flex-row">
-            <p className="flex w-full px-20 text-2xl"> 곡 정보</p>
-            <p className="flex w-2/12 items-center justify-center text-2xl">
+            <p className="flex w-full px-20 text-lg"> 곡 정보</p>
+            <p className="flex w-2/12 items-center justify-center text-lg">
               좋아요
             </p>
-            <p className="flex w-24 justify-center text-2xl ">재생</p>
+            <p className="flex w-24 justify-center text-lg ">재생</p>
           </div>
           <hr className="my-6 w-full border-zinc-600" />
           {/* 음악 요소들 */}
@@ -286,6 +286,7 @@ function page(props: any) {
           />
         </div>
       </div>
+      <div className="flex h-20 w-full items-center justify-center" />
     </div>
   );
 }

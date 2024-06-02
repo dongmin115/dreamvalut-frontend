@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 'use client';
 
 import { ThemeProvider } from '@emotion/react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { IconButton } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBackIosNew';
 import ForwardIcon from '@mui/icons-material/ArrowForwardIos';
@@ -23,8 +25,10 @@ import AlbumCoverUser from '../components/AlbumCover/AlbumCoverUser.tsx';
 function MyPlaylistComponent() {
   const [pageIndex, setPageIndex] = useState(0);
   const [publicScope, setPublicScope] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [createPlayListModalOpen, setCreatePlayListModalOpen] = useState(false);
   const musicList = [];
+  const divRef = useRef(null);
 
   const { isLoading, data: myPlaylistData } = useQuery({
     queryKey: ['myPlaylistThumbnail'],
@@ -36,8 +40,35 @@ function MyPlaylistComponent() {
     queryFn: fetchLikePlaylistThumbnail,
   });
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(false);
+          } else {
+            setIsVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.1, // 10% 가시성을 기준으로 설정
+      },
+    );
+
+    if (divRef.current) {
+      observer.observe(divRef.current);
+    }
+
+    return () => {
+      if (divRef.current) {
+        observer.unobserve(divRef.current);
+      }
+    };
+  }, [divRef.current]);
+
   const handleForwardClick = () => {
-    if (myPlaylistData.content.length - 4 > pageIndex) {
+    if (isVisible) {
       setPageIndex(pageIndex + 1);
     }
   };
@@ -54,7 +85,7 @@ function MyPlaylistComponent() {
       if (myPlaylistData.content[i]) {
         // 데이터가 존재하는 경우에만 생성
         musicList.push(
-          <>
+          <div key={i}>
             <AlbumCoverUser
               image1={myPlaylistData.content[i].thumbnails[0]}
               image2={myPlaylistData.content[i].thumbnails[1]}
@@ -62,7 +93,7 @@ function MyPlaylistComponent() {
               title={myPlaylistData.content[i].playlist_name}
               id={myPlaylistData.content[i].playlist_id}
             />
-          </>,
+          </div>,
         );
       }
     }
@@ -120,43 +151,51 @@ function MyPlaylistComponent() {
           setCreatePlayListModalOpen(false);
         }}
       />
-      <div className="z-50 flex h-3/5 w-3/5 flex-col rounded-2xl border-4 border-gray-400 bg-zinc-800 p-8 drop-shadow-md">
-        <h1 className="mt-16 text-4xl text-white">새로운 플레이리스트</h1>
-        <input
-          className="my-24 h-12 w-3/4 border-b border-gray-500 bg-zinc-800 p-4 text-xl text-gray-100 focus:outline-none"
-          placeholder="플레이리스트 이름을 입력하세요"
-        />
-        <p className="my-6 text-sm text-zinc-600">공개 범위</p>
-        <div
-          className="flex w-1/5 cursor-pointer flex-row items-center border-b border-gray-500 px-4 text-xl"
-          style={{ userSelect: 'none' }}
-          onClick={() => setPublicScope(!publicScope)}
-        >
-          <div className="w-full">{publicScope ? 'Public' : 'Private'}</div>
-          <IconButton>
-            {publicScope ? (
-              <LockOpenIcon color="primary" fontSize="large" />
-            ) : (
-              <LockIcon color="primary" fontSize="large" />
-            )}
-          </IconButton>
-        </div>
-        {publicScope && (
-          <div className="my-6 text-sm text-zinc-600">
-            ! 공개 범위를 Public으로 설정하면 모든 사람들이 회원님의
-            플레이리스트를 볼 수 있습니다.
+      <div className="z-50 flex h-3/5 w-4/5 min-w-96 flex-col rounded-2xl border-4 border-gray-400 bg-zinc-800 p-8 drop-shadow-md xl:w-2/3 2xl:w-3/5">
+        <h1 className="flex h-1/6 items-center justify-start text-xl text-white xl:text-2xl 2xl:text-3xl">
+          새로운 플레이리스트
+        </h1>
+        <div className="flex h-4/6 flex-col items-start justify-around">
+          <input
+            className="my-6 h-12 w-3/4 border-b border-gray-500 bg-zinc-800 p-4 text-base text-gray-100 focus:outline-none 2xl:text-lg"
+            placeholder="플레이리스트 이름을 입력하세요"
+          />
+          <div className="flex w-full flex-col">
+            <p className="my-3 text-sm text-zinc-600">공개 범위</p>
+            <div className="flex w-full flex-row">
+              <div
+                className="flex min-w-20 cursor-pointer flex-row items-center border-b border-gray-500 px-4 text-base 2xl:text-lg"
+                style={{ userSelect: 'none' }}
+                onClick={() => setPublicScope(!publicScope)}
+              >
+                <p className="w-full">{publicScope ? 'Public' : 'Private'}</p>
+                <IconButton>
+                  {publicScope ? (
+                    <LockOpenIcon color="primary" fontSize="large" />
+                  ) : (
+                    <LockIcon color="primary" fontSize="large" />
+                  )}
+                </IconButton>
+              </div>
+              {publicScope && (
+                <div className="my-2 flex h-full items-center justify-center text-sm text-zinc-600">
+                  ! 공개 범위를 Public으로 설정하면 모든 사람들이 회원님의
+                  플레이리스트를 볼 수 있습니다.
+                </div>
+              )}
+            </div>
           </div>
-        )}
-        <div className="flex h-full w-full flex-row items-end justify-end">
+        </div>
+        <div className="flex h-1/6 w-full flex-row items-end justify-end">
           <p
-            className="hover-bg-opacity m-4 flex h-16 w-32  cursor-pointer items-center justify-center text-xl font-bold text-white hover:rounded-full"
+            className="hover-bg-opacity mx-4 flex w-32 cursor-pointer items-center justify-center p-4 font-bold text-white *:text-base hover:rounded-full xl:text-xl"
             onClick={() => handleCancelClick()}
           >
             취소
           </p>
 
           <p
-            className="hover-bg-opacity m-4 flex h-16 w-32 cursor-pointer items-center justify-center rounded-full bg-white text-xl font-bold text-purple-700 hover:rounded-full"
+            className="hover-bg-opacity mx-4 flex w-32 cursor-pointer items-center justify-center rounded-full bg-white p-4 text-base font-bold text-purple-700 hover:rounded-full xl:text-xl"
             onClick={() => handleAddPlaylist()}
           >
             확인
@@ -172,7 +211,7 @@ function MyPlaylistComponent() {
       {/* 모달창 */}
       {createPlayListModalOpen && NewPlaylistModal}
 
-      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
+      <div className="bg-zinc-650 z-30 flex h-full w-10 flex-row items-center justify-center">
         <IconButton onClick={handleBackwardClick}>
           {pageIndex !== 0 && <BackIcon color="primary" fontSize="large" />}
         </IconButton>
@@ -180,19 +219,19 @@ function MyPlaylistComponent() {
 
       <div
         className={
-          'slide-content flex h-full w-5/6 flex-col flex-wrap items-start justify-center'
+          'slide-content flex h-full w-full flex-col flex-wrap items-start justify-center'
         }
-        style={getSlideContentStyle(pageIndex, 6)}
+        style={getSlideContentStyle(pageIndex, 3)}
       >
         {/* 플리 생성 버튼 */}
         <div
-          className="hover-bg-big m-4 mt-12 flex h-auto w-56 cursor-pointer flex-col items-center justify-center"
+          className="hover-bg-big -mx-8 mt-12 flex w-56 cursor-pointer flex-col items-center justify-center xl:-mx-4 2xl:mt-8"
           onClick={() => setCreatePlayListModalOpen(true)}
         >
-          <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-zinc-500">
+          <div className="z-30 flex h-32 w-32 items-center justify-center rounded-lg bg-zinc-500 xl:h-36 xl:w-36 2xl:h-40 2xl:w-40">
             <AddIcon color="primary" fontSize="large" />
           </div>
-          <p className="mt-4 text-center text-lg text-white">
+          <p className="mt-4 h-16 text-center text-base font-bold text-white xl:text-lg">
             플레이리스트 생성
           </p>
         </div>
@@ -208,8 +247,9 @@ function MyPlaylistComponent() {
 
         {/* 내가 생성한 플리 버튼 */}
         {musicList}
+        <div ref={divRef} />
       </div>
-      <div className="bg-gray-650 z-30 flex h-full w-1/12 flex-row items-center justify-center rounded-2xl opacity-95">
+      <div className="bg-zinc-650 z-30 flex h-full w-10 flex-row items-center justify-center">
         <IconButton onClick={handleForwardClick}>
           <ForwardIcon color="primary" fontSize="large" />
         </IconButton>

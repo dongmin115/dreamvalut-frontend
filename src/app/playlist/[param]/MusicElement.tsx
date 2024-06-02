@@ -16,6 +16,7 @@ import Link from 'next/link';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Swal from 'sweetalert2';
 import { deleteTrack } from '@/api/playlist.ts';
+import Image from 'next/image';
 import theme from '../../styles/theme.ts';
 
 export default function MusicElement({
@@ -128,20 +129,24 @@ export default function MusicElement({
             href={`/track/${trackId}`}
             className={`flex w-full flex-row items-center ${isEdit ? 'transform-playlist-edit' : 'transform-playlist-normal'}`}
           >
-            <img
-              src={image}
-              alt="Album cover"
-              className="h-24 w-24 rounded-lg"
-            />
-            <p className="mx-6 flex text-2xl">{title}</p>
+            <figure className="relative h-16 w-16 rounded-lg">
+              <Image
+                src={image}
+                alt="Album cover"
+                className="rounded-lg"
+                fill
+                sizes="100vw"
+              />
+            </figure>
+            <p className="mx-6 flex text-base">{title}</p>
           </Link>
 
-          <div className="flex w-2/12 items-center justify-center text-2xl">
+          <div className="mr-2 flex w-2/12 items-center justify-center text-base">
             <IconButton onClick={handleLike}>
               {isLikedStore ? (
-                <FavoriteIcon color="primary" fontSize="inherit" />
+                <FavoriteIcon color="primary" fontSize="small" />
               ) : (
-                <FavoriteBorderIcon color="primary" />
+                <FavoriteBorderIcon color="primary" fontSize="small" />
               )}
             </IconButton>
 
@@ -149,7 +154,7 @@ export default function MusicElement({
           </div>
           <div className="flex w-24 items-center justify-center">
             <IconButton>
-              <PlayArrowIcon color="primary" fontSize="large" />
+              <PlayArrowIcon color="primary" fontSize="inherit" />
             </IconButton>
           </div>
         </div>

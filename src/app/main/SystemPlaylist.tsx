@@ -92,8 +92,8 @@ function SystemPlaylist() {
               key={pageIndex * 6 + index}
               image={playlist.tracks[0].thumbnail_image}
               title={playlist.playlist_name}
-              Id={playlist.playlist_id}
-              curation="SystemPlaylist"
+              id={playlist.playlist_id}
+              type="curated"
             />
           )),
         )}

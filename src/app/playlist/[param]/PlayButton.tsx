@@ -10,7 +10,7 @@ function PlayButton(playlistId: any) {
   return (
     <ThemeProvider theme={theme}>
       <IconButton className="mx-8">
-        <PlayCircleIcon color="primary" style={{ fontSize: 60, opacity: 1 }} />
+        <PlayCircleIcon color="primary" style={{ fontSize: 40, opacity: 1 }} />
       </IconButton>
     </ThemeProvider>
   );

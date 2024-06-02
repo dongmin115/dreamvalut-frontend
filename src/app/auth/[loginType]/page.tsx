@@ -28,7 +28,7 @@ function page(props: any) {
     }
     router.push('/main');
   }, [accessToken, refreshToken]);
-  return <div>잘못된 접근입니다.</div>;
+  return <div></div>;
 }
 
 export default page;
