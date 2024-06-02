@@ -186,9 +186,8 @@ function Genre() {
             },
             index: number,
           ) => (
-            <div className="flex h-72 w-64 xl:h-80 xl:w-72">
+            <div key={index} className="flex h-72 w-64 xl:h-80 xl:w-72">
               <GenreMusic
-                key={index}
                 id={genreData.genre_id}
                 genre={genreData.genre_name}
                 bgColor={randomGenreColor[index]}
