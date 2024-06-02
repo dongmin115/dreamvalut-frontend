@@ -30,7 +30,7 @@ function AlbumCoverSystem({ image, title, id, type }: albumCoverSystemProps) {
   return (
     <>
       <Link
-        href={`/playlist/type=${type}&i=${id}`}
+        href={`/playlist/type=${type}&id=${id}`}
         className="hover-bg-opacity flex h-36 cursor-pointer flex-col items-center justify-center px-4 xl:h-40 2xl:h-44"
       >
         <figure

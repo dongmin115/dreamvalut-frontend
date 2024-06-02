@@ -92,8 +92,8 @@ function Tag() {
               key={pageIndex * 6 + index}
               image={tag.tag_image}
               title={tag.tag_name}
-              Id={tag.tag_id}
-              curation="tag"
+              id={tag.tag_id}
+              type="tag"
             />
           )),
         )}
