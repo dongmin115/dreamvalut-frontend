@@ -37,7 +37,7 @@ export const getUserGenres = async (
 ) => {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
+      `${process.env.NEXT_PUBLIC_API_URL}/users/preference?page=0&size=15`,
       {
         headers: {
           'Content-Type': 'application/json',
