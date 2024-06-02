@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-else-return */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
@@ -213,16 +214,17 @@ export async function fetchSystemPlaylist(pageIndex: number) {
 }
 
 // 플레이리스트 상세 정보 가져오기
-export async function fetchPlaylistDetail(
-  playlistId: string,
+export async function getPlaylistMusic(
+  playlistType: string,
+  playlistId: number,
   pageIndex: number,
   size: number,
 ) {
   try {
     const accessToken = await getCookie('accessToken');
-    if (playlistId === 'like') {
+    if (playlistType === 'user_created') {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/liked/tracks?page=${pageIndex}&size=${size}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}?page=${pageIndex}&size=${size}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -231,9 +233,31 @@ export async function fetchPlaylistDetail(
         },
       );
       return response.data;
-    } else {
+    } else if (playlistType === 'tag') {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}?page=${pageIndex}&size=${size}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/tags/${playlistId}/tracks?page=${pageIndex}&size=${size}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      return response.data;
+    } else if (playlistType === 'genre') {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/genres/${playlistId}/tracks?page=${pageIndex}&size=${size}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      return response.data;
+    } else if (playlistType === 'like') {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/liked/tracks?page=${pageIndex}&size=${size}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -275,7 +299,7 @@ export async function fetchTagDetail(
 
 // 플레이리스트 수정
 export async function patchPlaylistName(
-  playlistId: string,
+  playlistId: number,
   playlistName: string,
 ) {
   try {
@@ -300,7 +324,7 @@ export async function patchPlaylistName(
 }
 
 // 플레이리스트 삭제
-export async function deletePlaylist(playlistId: string) {
+export async function deletePlaylist(playlistId: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.delete(
@@ -320,7 +344,7 @@ export async function deletePlaylist(playlistId: string) {
 }
 
 // 플레이리스트 팔로우
-export async function postFollow(playlistId: string) {
+export async function postFollow(playlistId: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.post(
@@ -341,7 +365,7 @@ export async function postFollow(playlistId: string) {
 }
 
 // 플레이리스트 언팔로우
-export async function deleteFollow(playlistId: string) {
+export async function deleteFollow(playlistId: number) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.delete(
@@ -361,7 +385,7 @@ export async function deleteFollow(playlistId: string) {
 }
 
 // 나의 플레이리스트에서 음악 삭제
-export async function deleteTrack(playlistId: string, trackId: string) {
+export async function deleteTrack(playlistId: number, trackId: string) {
   try {
     const accessToken = await getCookie('accessToken');
     const response = await axios.delete(

@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
@@ -10,11 +11,13 @@ function AlbumCoverUser({
   image2,
   image3,
   title,
-  Id,
+  id,
 }: albumCoverUserProps) {
+  const href =
+    id !== -1 ? `playlist/type=user_created&id=${id}` : 'playlist/type=like';
   return (
     <Link
-      href={`playlist/${Id}`}
+      href={href}
       className="hover-bg-opacity flex h-60 w-60 cursor-pointer flex-col items-center justify-center p-4 pt-10 xl:h-64 2xl:h-80"
     >
       <figure className="relative z-30 h-32 w-32 rounded-lg xl:h-36 xl:w-36 2xl:h-40 2xl:w-40">

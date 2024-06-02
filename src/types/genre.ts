@@ -14,6 +14,7 @@ export interface Genre {
 
 // 메인 페이지에서 장르를 선택하고 선택된 장르의 props (진우)
 export interface GenreMusicProps {
+  id: number;
   genre: string;
   bgColor: number;
   musicImage1: string;

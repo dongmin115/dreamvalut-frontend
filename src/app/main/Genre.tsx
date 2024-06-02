@@ -38,6 +38,7 @@ function shuffleArray<T>(array: T[]): T[] {
 
 // 장르별 음악 컴포넌트
 function GenreMusic({
+  id,
   genre,
   bgColor,
   musicImage1,
@@ -60,7 +61,7 @@ function GenreMusic({
     <div className="m-4 flex w-56 flex-col items-center justify-center xl:w-72">
       {/* 위에 단색 배경바 */}
       <Link
-        href={`/genre/${bgColor / 100}`}
+        href={`/playlist/type=genre&id=${id}`}
         className={`flex h-12 w-full flex-row items-center rounded-t-xl p-4 xl:h-16 bg-nv-${bgColor}`}
       >
         <p className="text-md mx-4 w-full font-bold text-black">{genre}</p>
@@ -175,6 +176,7 @@ function Genre() {
         {data.content.map(
           (
             genreData: {
+              genre_id: number;
               genre_name: string;
               tracks: {
                 thumbnail_image: string;
@@ -187,6 +189,7 @@ function Genre() {
             <div className="flex h-72 w-64 xl:h-80 xl:w-72">
               <GenreMusic
                 key={index}
+                id={genreData.genre_id}
                 genre={genreData.genre_name}
                 bgColor={randomGenreColor[index]}
                 musicImage1={genreData.tracks[0].thumbnail_image}
