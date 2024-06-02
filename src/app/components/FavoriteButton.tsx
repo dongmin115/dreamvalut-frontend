@@ -49,7 +49,9 @@ export default function FavoriteButton({
             <Favorite color={color} fontSize={fontSize} />
           </IconButton>
           {count_visible ? (
-            <p className="w-fit text-center text-lg text-white">{likeCount}</p>
+            <p className="w-fit text-center text-sm text-white lg:text-sm xl:text-base 2xl:text-lg">
+              {likeCount}
+            </p>
           ) : null}
         </>
       ) : (
@@ -58,7 +60,9 @@ export default function FavoriteButton({
             <FavoriteBorder color={color} fontSize={fontSize} />
           </IconButton>
           {count_visible ? (
-            <p className="w-fit text-center text-lg text-white">{likeCount}</p>
+            <p className="w-fit text-center text-sm text-white lg:text-sm xl:text-base 2xl:text-lg">
+              {likeCount}
+            </p>
           ) : null}
         </>
       )}

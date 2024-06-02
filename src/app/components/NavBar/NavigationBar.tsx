@@ -20,7 +20,6 @@ import {
 } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import ignorePath from '@/types/ignorePath.ts';
-import { LogOut } from '@/util/login.ts';
 import {
   Menu,
   MenuButton,
@@ -28,6 +27,7 @@ import {
   MenuItems,
   Transition,
 } from '@headlessui/react';
+import logout from '@/api/logout.ts';
 import theme from '../../styles/theme.ts';
 
 export function SearchAppBar() {
@@ -44,6 +44,7 @@ export function SearchAppBar() {
       router.push(searchUrl);
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       <TextField
@@ -100,6 +101,7 @@ export function ToggleSearchbar() {
 
 function NavigationBar() {
   const path = usePathname();
+  const router = useRouter();
   if (ignorePath().includes(path)) {
     return null;
   }
@@ -184,7 +186,14 @@ function NavigationBar() {
         <div className="my-4 flex flex-col">
           <div className="hover-bg-opacity m-1 flex items-center rounded-lg text-sm">
             <MeetingRoomIcon color="primary" />
-            <button className="hidden p-2 sm:block lg:text-sm" onClick={LogOut}>
+            <button
+              className="hidden p-2 sm:block lg:text-sm"
+              onClick={() => {
+                logout().then(() => {
+                  router.push('/login');
+                });
+              }}
+            >
               <p className="hide-text">로그아웃</p>
             </button>
           </div>
