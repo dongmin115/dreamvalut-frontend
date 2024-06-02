@@ -42,9 +42,9 @@ function AlbumCoverSystem({ image, title, id, type }: albumCoverSystemProps) {
             src={image}
             alt="Album cover"
             className="rounded-lg"
-            layout="fill"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            objectFit="cover"
+            fill
+            sizes="100vm"
+            priority
           />
         </figure>
 

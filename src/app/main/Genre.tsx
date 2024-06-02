@@ -85,8 +85,8 @@ function GenreMusic({
               <Image
                 src={music.image}
                 alt="Music cover"
-                layout="fill"
-                objectFit="cover"
+                fill
+                sizes="100vm"
                 className="rounded-lg"
               />
             </figure>

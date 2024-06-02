@@ -1,15 +1,6 @@
 /* eslint-disable no-console */
-/* eslint-disable consistent-return */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable function-paren-newline */
-/* eslint-disable no-shadow */
-/* eslint-disable no-console */
 /* eslint-disable operator-linebreak */
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable consistent-return */
-/* eslint-disable object-curly-newline */
-/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable no-shadow */
 /* eslint-disable react-hooks/rules-of-hooks */
 
 'use client';
@@ -140,7 +131,7 @@ function page(props: any) {
 
       setIsFollow(data.pages['0'].is_follow);
     }
-  }, [data]);
+  }, [data, playlistType]);
 
   if (isLoading || data === undefined) return <div>Loading...</div>;
   return (

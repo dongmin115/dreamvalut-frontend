@@ -31,8 +31,9 @@ function MusicElement({ ranking, thumnailImage, title, trackId }: chartProps) {
         <Image
           alt="Album Cover"
           src={thumnailImage}
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100vm"
+          priority
         />
       </figure>
 

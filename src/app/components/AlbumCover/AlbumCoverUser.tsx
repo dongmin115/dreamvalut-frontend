@@ -25,8 +25,8 @@ function AlbumCoverUser({
           src={image1}
           alt="Album cover"
           className="z-30 rounded-lg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100vm"
         />
       </figure>
       <figure className="relative z-20 -mt-32 h-28 w-28 rounded-lg xl:-mt-36 xl:h-32 xl:w-32 2xl:-mt-44 2xl:h-36 2xl:w-36">
@@ -34,8 +34,8 @@ function AlbumCoverUser({
           src={image2}
           alt="Album cover"
           className="z-20 rounded-lg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100vm"
         />
       </figure>
       <figure className="relative z-10 -mt-28 h-24 w-24 rounded-lg xl:-mt-32 xl:h-28 xl:w-28 2xl:-mt-40 2xl:h-32 2xl:w-32">
@@ -43,8 +43,8 @@ function AlbumCoverUser({
           src={image3}
           alt="Album cover"
           className="z-10 rounded-lg"
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="100vm"
         />
       </figure>
       <p className="text-md mt-16 h-16 text-center font-bold text-white xl:mt-20 xl:text-lg">
