@@ -137,7 +137,7 @@ const UploadMyMusic = () => {
     <ThemeProvider theme={theme}>
       <div className="flex h-screen w-full items-center justify-center p-[10%]">
         <div className="bg-gray-1000 flex h-full w-full  flex-row items-center rounded-xl  shadow-lg">
-          <div className="flex h-full basis-1/3 justify-center rounded-l-lg bg-black">
+          <div className="flex h-full basis-1/12 justify-center rounded-l-lg bg-black sm:basis-1/6 md:basis-1/6 lg:basis-1/5 xl:basis-1/4 2xl:basis-1/3">
             <img
               src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
               alt="form_img"
@@ -148,10 +148,12 @@ const UploadMyMusic = () => {
           <form
             id="form-data"
             encType="multipart/form-data"
-            className="flex h-full basis-2/3 flex-col items-center justify-between px-[10%] py-[5%]"
+            className="flex h-full flex-col items-center justify-between px-[5%] py-[15%] sm:basis-5/6 md:basis-5/6 lg:basis-4/5 lg:px-[5%] lg:py-[15%] xl:basis-3/4 xl:px-[8%] xl:py-[10%] 2xl:basis-2/3 2xl:px-[10%] 2xl:py-[5%]"
             onSubmit={handleSubmit}
           >
-            <h1 className="text-4xl">음악을 등록해보세요</h1>
+            <h1 className="text-2xl lg:text-2xl xl:text-3xl 2xl:text-4xl">
+              음악을 등록해보세요
+            </h1>
             <div className="flex w-full basis-1/2 flex-col space-y-4">
               <div className="flex w-full justify-between space-x-4">
                 {/* 제목 */}
