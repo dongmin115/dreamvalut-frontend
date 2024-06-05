@@ -23,6 +23,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import uploadMymusic from '@/api/uploadmymusic.ts';
 import Swal from 'sweetalert2';
+import { Button, ButtonGroup, TextField } from '@mui/material';
 
 const theme = createTheme({
   palette: {
@@ -135,140 +136,79 @@ const UploadMyMusic = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="h-screen w-full pl-[15%]">
-        <div className="ml-[15%] mt-[2%] flex w-[70%]">
-          <div className="mb-[4%] flex w-full flex-col items-center space-x-4 rounded-xl bg-[#1e1e1e] shadow-lg shadow-indigo-500/100">
-            <div className="flex w-[90%] flex-col items-center border-b border-[#727272] p-[3%] text-center text-3xl text-[#A97DFF]">
-              나만의 음악 등록
-            </div>
-
-            {/* 등록할 곡 제목, 프롬프트, 가사보유여부, 곡 태그, 곡 장르, 이미지 파일&오디오 파일 업로드 */}
-            <form
-              id="form-data"
-              encType="multipart/form-data"
-              className="flex h-auto w-full flex-col"
-              onSubmit={handleSubmit}
-            >
-              <div className="flex items-center justify-center ">
-                <div className="mt-[4%] flex w-[35%] justify-center space-x-8 rounded-xl p-[3%] shadow-lg shadow-neutral-400">
-                  <div className="flex flex-col items-center justify-center">
-                    <div className="flex justify-center">
-                      <label
-                        htmlFor="file"
-                        className="absolute w-[18%] rounded-xl border-2 border-purple-900 bg-purple-800 p-[0.4%] text-center text-2xl hover:bg-violet-900"
-                      >
-                        Upload Image
-                      </label>
-                      <input
-                        type="file"
-                        className="flex justify-center"
-                        onChange={handleImageChange}
-                        accept="image/*"
-                        required
-                        style={{
-                          fontWeight: 'bold',
-                          opacity: 0,
-                          display: 'flex',
-                          justifyContent: 'center',
-                          width: '100%',
-                          marginBottom: '10%',
-                        }}
-                      />
-                    </div>
-                    {/* 업로드된 이미지 미리보기 */}
-                    {imagePreview && (
-                      <div className="m-[5%] mb-[-10%]">
-                        <img
-                          src={imagePreview}
-                          alt="Track preview"
-                          className="h-[70%] w-[100%] object-cover"
-                        />
-                      </div>
-                    )}
-                    <div className="flex justify-center">
-                      <label
-                        htmlFor="file"
-                        className="absolute w-[18%] rounded-xl border-2 border-purple-900 bg-purple-800 p-[0.4%] text-center text-2xl hover:bg-violet-900"
-                      >
-                        Upload Audio
-                      </label>
-                      <input
-                        type="file"
-                        onChange={handleAudioChange}
-                        accept="audio/*"
-                        required
-                        style={{
-                          fontWeight: 'bold',
-                          opacity: 0,
-                          display: 'flex',
-                          justifyContent: 'center',
-                          width: '100%',
-                          marginBottom: '10%',
-                        }}
-                      />
-                    </div>
-                    {/* 오디오 미리보기 추가 */}
-                    {audioPreview && (
-                      <div className="mt-[5%]">
-                        <audio controls src={audioPreview}></audio>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-              {/* 제목 */}
-              <div className="mt-[5%] flex justify-center">
-                <label className="p-[1%] text-lg text-[#A97DFF]">제목</label>
-                <input
-                  className="w-[50%] rounded-lg border-2 border-purple-950 bg-neutral-700 p-[1%] text-white outline-none"
-                  type="text"
-                  value={title}
+      <div className="flex h-screen w-full items-center justify-center p-[10%]">
+        <div className="bg-gray-1000 flex h-full w-full  flex-row items-center rounded-xl  shadow-lg">
+          <div className="flex h-full basis-1/3 justify-center rounded-l-lg bg-black">
+            <img
+              src="https://i.ibb.co/1GnSm8z/Dream-Vault-Png.png"
+              alt="form_img"
+              className="object-contain p-[20%]"
+            />
+          </div>
+          {/* 등록할 곡 제목, 프롬프트, 가사보유여부, 곡 태그, 곡 장르, 이미지 파일&오디오 파일 업로드 */}
+          <form
+            id="form-data"
+            encType="multipart/form-data"
+            className="flex h-full basis-2/3 flex-col items-center justify-between px-[10%] py-[5%]"
+            onSubmit={handleSubmit}
+          >
+            <h1 className="text-4xl">음악을 등록해보세요</h1>
+            <div className="flex w-full basis-1/2 flex-col space-y-8">
+              <div className="flex w-full justify-between space-x-8">
+                {/* 제목 */}
+                <TextField
+                  id="filled-basic"
+                  label="곡 제목"
+                  variant="outlined"
                   onChange={(e) => setTitle(e.target.value)}
-                  required
-                />
-              </div>
-              {/* 프롬프트 */}
-              <div className="mt-[3%] flex justify-center">
-                <label className="p-[1%] text-lg text-[#A97DFF] ">설명</label>
-                <textarea
-                  className="w-[50%] resize-none rounded-lg border-2 border-purple-950 bg-neutral-700 p-[1%] text-white outline-none"
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  required
-                />
-              </div>
-              {/* 해시태그 선택 */}
-              <div className="mt-[3%] flex justify-center">
-                <label className="p-[1%] text-lg text-[#A97DFF]">태그</label>
-                <input
-                  className="w-[50%] rounded-lg border-2 border-purple-950 bg-neutral-700 p-[1%] text-white outline-none"
+                  value={title}
                   type="text"
-                  value={tags}
+                  color="secondary"
+                  autoComplete="off"
+                  InputProps={{
+                    style: { color: 'white', backgroundColor: '#2c2c2c83' },
+                  }}
+                  InputLabelProps={{
+                    sx: {
+                      color: '#a0a0a0', // 클릭되지 않았을 때 레이블 색상 변경
+                      '&.Mui-focused': {
+                        color: '#6C26FF', // 포커스 상태의 레이블 색상
+                      },
+                    }, // 텍스트 색상 변경
+                  }}
+                  className="w-full"
+                />
+                {/* 해시태그 선택 */}
+                <TextField
+                  id="filled-basic"
+                  label="태그"
+                  variant="outlined"
                   onChange={(e) =>
                     setTags(e.target.value.split(',').map((tag) => tag.trim()))
                   }
-                  required
+                  value={tags}
+                  type="text"
+                  color="secondary"
+                  autoComplete="off"
+                  InputProps={{
+                    style: { color: 'white', backgroundColor: '#2c2c2c83' }, // 텍스트 색상 변경
+                  }}
+                  InputLabelProps={{
+                    sx: {
+                      color: '#a0a0a0', // 클릭되지 않았을 때 레이블 색상 변경
+                      '&.Mui-focused': {
+                        color: '#6C26FF', // 포커스 상태의 레이블 색상
+                      },
+                    }, // 텍스트 색상 변경
+                  }}
+                  className="w-full"
                 />
-              </div>
-              {/* 가사 보유여부 */}
-              <div className="mt-[3%] flex justify-center">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={hasLyrics}
-                      onChange={handleCheckboxChange}
-                    />
-                  }
-                  label="가사 보유 여부"
-                />
-              </div>
-              {/* 장르 선택 */}
-              <div className="mt-[3%] flex justify-center">
-                <FormControl sx={{ m: 1, width: 300 }}>
+                {/* 장르 선택 */}
+                <FormControl sx={{ width: '50%', height: '100%' }}>
                   <InputLabel
                     id="demo-simple-select-autowidth-label"
                     color="secondary"
-                    className="text-[#a97dff]"
+                    className="text-[#a0a0a0]"
                   >
                     Genre
                   </InputLabel>
@@ -277,9 +217,22 @@ const UploadMyMusic = () => {
                     id="demo-simple-select-autowidth"
                     value={genreId ? String(genreId) : ''} // 선택된 장르의 genre_id 값을 사용
                     onChange={handleGenre}
-                    input={<OutlinedInput label="genre" />}
+                    input={
+                      <OutlinedInput
+                        label="genre"
+                        sx={{
+                          '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#6C26FF',
+                          },
+                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#6C26FF',
+                          },
+                          backgroundColor: '#2c2c2c83',
+                        }}
+                      />
+                    }
                     color="secondary"
-                    className="text-[#a0a0a0]"
+                    className="text-white"
                   >
                     {genreData.map((genre) => (
                       <MenuItem
@@ -293,21 +246,123 @@ const UploadMyMusic = () => {
                   </Select>
                 </FormControl>
               </div>
-              <div className="flex h-full items-center justify-center">
-                <button
-                  className="bottom-[5%] p-[2%]"
-                  type="submit"
-                  form="test"
-                  onClick={handleSubmit}
+              {/* 프롬프트 */}
+              <TextField
+                id="filled-basic"
+                label="프롬프트"
+                variant="filled"
+                onChange={(e) => setPrompt(e.target.value)}
+                value={prompt}
+                type="text"
+                color="secondary"
+                autoComplete="off"
+                multiline
+                maxRows={10}
+                InputProps={{
+                  style: {
+                    color: 'white',
+                    backgroundColor: '#2c2c2c83',
+                  }, // 텍스트 색상 변경
+                }}
+                InputLabelProps={{
+                  sx: {
+                    color: '#a0a0a0', // 클릭되지 않았을 때 레이블 색상 변경
+                    '&.Mui-focused': {
+                      color: '#6C26FF', // 포커스 상태의 레이블 색상
+                    },
+                  }, // 텍스트 색상 변경
+                }}
+                className="h-full w-full"
+                sx={{
+                  '& .MuiInputBase-root': {
+                    height: '100%', // 부모 높이에 맞추기
+                  },
+                  '& .MuiFilledInput-root': {
+                    height: '100%', // 입력 필드의 높이 설정
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start', // 텍스트의 시작 위치 조정
+                  },
+                }}
+              />
+            </div>
+
+            <div className="mb-4 flex h-[6%] w-full items-center">
+              {/* 업로드된 이미지 미리보기 */}
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Track preview"
+                  className=" size-20 object-cover"
+                />
+              )}
+              {/* 오디오 미리보기 추가 */}
+              {audioPreview && (
+                <audio className="size-20" controls src={audioPreview} />
+              )}
+              <label htmlFor="image_file" className="ml-auto h-full">
+                <ButtonGroup
+                  variant="contained"
+                  size="large"
+                  className="h-full"
+                  sx={{
+                    '& .MuiButtonGroup-groupedContained': {
+                      borderColor: '#6C26FF', // 버튼 사이의 선 색상 변경
+                    },
+                  }}
                 >
-                  <FileUploadRoundedIcon
-                    sx={{ fontSize: 60 }}
-                    color="secondary"
-                  />
-                </button>
-              </div>
-            </form>
-          </div>
+                  <Button component="span" color="secondary">
+                    썸네일 등록
+                  </Button>
+                  <Button component="span" color="secondary">
+                    음악 파일 등록
+                  </Button>
+                </ButtonGroup>
+              </label>
+              <input
+                id="image_file"
+                type="file"
+                className="hidden size-0"
+                onChange={handleImageChange}
+                accept="image/*"
+                required
+              />
+
+              <label htmlFor="music_file"></label>
+              <input
+                id="music_file"
+                type="file"
+                onChange={handleAudioChange}
+                accept="audio/*"
+                required
+                className="hidden size-0"
+              />
+            </div>
+
+            {/* 가사 보유여부 */}
+            <FormControlLabel
+              className="mx-auto"
+              control={
+                <Checkbox
+                  checked={hasLyrics}
+                  onChange={handleCheckboxChange}
+                  color="secondary"
+                />
+              }
+              label="가사 유무 여부"
+            />
+
+            <Button
+              className="h-[7%] w-full bg-[#6C26FF] text-lg text-white"
+              type="submit"
+              form="test"
+              onClick={handleSubmit}
+              color="secondary"
+              variant="contained"
+            >
+              등록하기
+            </Button>
+          </form>
         </div>
       </div>
     </ThemeProvider>
