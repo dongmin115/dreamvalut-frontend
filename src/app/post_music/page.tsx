@@ -9,7 +9,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { fetchGenres } from '@/api/genre.ts';
-import { Genre, GenreData } from '@/types/genre.ts';
+import { GenreData } from '@/types/genre.ts';
 import { useQuery } from '@tanstack/react-query';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -153,8 +152,8 @@ const UploadMyMusic = () => {
             onSubmit={handleSubmit}
           >
             <h1 className="text-4xl">음악을 등록해보세요</h1>
-            <div className="flex w-full basis-1/2 flex-col space-y-8">
-              <div className="flex w-full justify-between space-x-8">
+            <div className="flex w-full basis-1/2 flex-col space-y-4">
+              <div className="flex w-full justify-between space-x-4">
                 {/* 제목 */}
                 <TextField
                   id="filled-basic"
@@ -287,38 +286,28 @@ const UploadMyMusic = () => {
               />
             </div>
 
-            <div className="mb-4 flex h-[6%] w-full items-center">
-              {/* 업로드된 이미지 미리보기 */}
-              {imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="Track preview"
-                  className=" size-20 object-cover"
-                />
-              )}
-              {/* 오디오 미리보기 추가 */}
-              {audioPreview && (
-                <audio className="size-20" controls src={audioPreview} />
-              )}
-              <label htmlFor="image_file" className="ml-auto h-full">
-                <ButtonGroup
-                  variant="contained"
-                  size="large"
-                  className="h-full"
-                  sx={{
-                    '& .MuiButtonGroup-groupedContained': {
-                      borderColor: '#6C26FF', // 버튼 사이의 선 색상 변경
-                    },
-                  }}
-                >
+            <div className="flex h-[6%] w-full items-center justify-between">
+              <ButtonGroup
+                variant="contained"
+                size="large"
+                className="h-full"
+                sx={{
+                  '& .MuiButtonGroup-groupedContained': {
+                    borderColor: '#6C26FF', // 버튼 사이의 선 색상 변경
+                  },
+                }}
+              >
+                <label htmlFor="image_file" className="h-full">
                   <Button component="span" color="secondary">
-                    썸네일 등록
+                    이미지 업로드
                   </Button>
+                </label>
+                <label htmlFor="music_file" className="h-full">
                   <Button component="span" color="secondary">
-                    음악 파일 등록
+                    음악 업로드
                   </Button>
-                </ButtonGroup>
-              </label>
+                </label>
+              </ButtonGroup>
               <input
                 id="image_file"
                 type="file"
@@ -328,7 +317,6 @@ const UploadMyMusic = () => {
                 required
               />
 
-              <label htmlFor="music_file"></label>
               <input
                 id="music_file"
                 type="file"
@@ -337,6 +325,16 @@ const UploadMyMusic = () => {
                 required
                 className="hidden size-0"
               />
+              {/* 업로드된 이미지 미리보기 */}
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Track preview"
+                  className=" size-20 object-cover"
+                />
+              )}
+              {/* 오디오 미리보기 추가 */}
+              {audioPreview && <audio controls src={audioPreview} />}
             </div>
 
             {/* 가사 보유여부 */}
@@ -347,6 +345,12 @@ const UploadMyMusic = () => {
                   checked={hasLyrics}
                   onChange={handleCheckboxChange}
                   color="secondary"
+                  sx={{
+                    color: '#6C26FF', // 기본 테두리 색상
+                    '&.Mui-checked': {
+                      color: '#6C26FF', // 체크된 상태의 테두리 색상
+                    },
+                  }}
                 />
               }
               label="가사 유무 여부"
