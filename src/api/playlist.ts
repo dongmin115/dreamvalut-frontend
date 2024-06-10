@@ -4,20 +4,12 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
 
-import axios from 'axios';
-import { getCookie } from '@/app/Cookies';
+import api from './axios_interceptor';
 
 export async function getStreamTrack(pageIndex: number, size: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/users/played?page=${pageIndex}&size=${size}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      `/tracks/users/played?page=${pageIndex}&size=${size}`,
     );
     return response.data;
   } catch (error) {
@@ -29,16 +21,7 @@ export async function getStreamTrack(pageIndex: number, size: number) {
 // 플레이리스트 생성
 export async function fetchTags(pageIndex: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tags/list?page=${pageIndex}&size=12`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get(`/tags/list?page=${pageIndex}&size=12`);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (popular tags):', error);
@@ -52,20 +35,10 @@ export async function fetchAddPlaylist(
   isPublic: boolean,
 ) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists`,
-      {
-        playlist_name: playlistName,
-        is_public: isPublic,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.post('/playlists', {
+      playlist_name: playlistName,
+      is_public: isPublic,
+    });
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (add playlist):', error);
@@ -75,16 +48,9 @@ export async function fetchAddPlaylist(
 
 // 팔로우한 플레이리스트 데이터 가져오기
 export async function fetchFollowPlaylistData() {
-  const accessToken = await getCookie('accessToken');
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/followed?type=user_created&page=0&size=60`, // 하드코딩 수정 필요
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      '/playlists/users/followed?type=user_created&page=0&size=60', // 하드코딩 수정 필요
     );
     return response.data;
   } catch (error) {
@@ -95,16 +61,9 @@ export async function fetchFollowPlaylistData() {
 
 // 내 플레이리스트 목록(썸네일) 가져오기
 export async function fetchMyPlaylistThumbnail() {
-  const accessToken = await getCookie('accessToken');
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/users/created?page=0&size=30`, // 하드코딩 수정 필요
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      '/playlists/users/created?page=0&size=30', // 하드코딩 수정 필요
     );
     return response.data;
   } catch (error) {
@@ -115,17 +74,8 @@ export async function fetchMyPlaylistThumbnail() {
 
 // 좋아요한 플레이리스트 목록(썸네일) 가져오기
 export async function fetchLikePlaylistThumbnail() {
-  const accessToken = await getCookie('accessToken');
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/liked`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get('/users/liked');
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (liked playlists thumbnail):', error);
@@ -136,15 +86,8 @@ export async function fetchLikePlaylistThumbnail() {
 // 최근 감상한 곡 목록 가져오기
 export async function getRecentList(page: number, size: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/users/played?page=${page}&size=${size}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      `/tracks/users/played?page=${page}&size=${size}`,
     );
     return response.data;
   } catch (error) {
@@ -156,16 +99,7 @@ export async function getRecentList(page: number, size: number) {
 // 장르별 플레이리스트 목록 가져오기
 export async function fetchGenrePlaylist() {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/genres?page=0&size=100`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get('/genres?page=0&size=100');
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (genre playlists):', error);
@@ -176,15 +110,8 @@ export async function fetchGenrePlaylist() {
 // 모든 플레이리스트 목록 가져오기
 export async function fetchAllPlaylist(pageIndex: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=user_created&page=${pageIndex}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      `/playlists?type=user_created&page=${pageIndex}`,
     );
     return response.data;
   } catch (error) {
@@ -196,15 +123,8 @@ export async function fetchAllPlaylist(pageIndex: number) {
 // 시스템 플레이리스트 목록 가져오기
 export async function fetchSystemPlaylist(pageIndex: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists?type=curated&page=${pageIndex}&size=12`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      `/playlists?type=curated&page=${pageIndex}&size=12`,
     );
     return response.data;
   } catch (error) {
@@ -221,49 +141,24 @@ export async function getPlaylistMusic(
   size: number,
 ) {
   try {
-    const accessToken = await getCookie('accessToken');
     if (playlistType === 'user_created') {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}?page=${pageIndex}&size=${size}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
+      const response = await api.get(
+        `/playlists/${playlistId}?page=${pageIndex}&size=${size}`,
       );
       return response.data;
     } else if (playlistType === 'tag') {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/tags/${playlistId}/tracks?page=${pageIndex}&size=${size}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
+      const response = await api.get(
+        `/tags/${playlistId}/tracks?page=${pageIndex}&size=${size}`,
       );
       return response.data;
     } else if (playlistType === 'genre') {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/genres/${playlistId}/tracks?page=${pageIndex}&size=${size}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
+      const response = await api.get(
+        `/genres/${playlistId}/tracks?page=${pageIndex}&size=${size}`,
       );
       return response.data;
     } else if (playlistType === 'like') {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/liked/tracks?page=${pageIndex}&size=${size}`,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
+      const response = await api.get(
+        `/users/liked/tracks?page=${pageIndex}&size=${size}`,
       );
       return response.data;
     }
@@ -280,15 +175,8 @@ export async function fetchTagDetail(
   size: number,
 ) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tags/${tagId}/tracks?page=${pageIndex}&size=${size}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      `/tags/${tagId}/tracks?page=${pageIndex}&size=${size}`,
     );
     return response.data;
   } catch (error) {
@@ -303,19 +191,9 @@ export async function patchPlaylistName(
   playlistName: string,
 ) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.patch(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}`,
-      {
-        playlist_name: playlistName,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.patch(`/playlists/${playlistId}`, {
+      playlist_name: playlistName,
+    });
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (patch playlist name):', error);
@@ -326,16 +204,7 @@ export async function patchPlaylistName(
 // 플레이리스트 삭제
 export async function deletePlaylist(playlistId: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.delete(`/playlists/${playlistId}`);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (delete playlist):', error);
@@ -346,17 +215,7 @@ export async function deletePlaylist(playlistId: number) {
 // 플레이리스트 팔로우
 export async function postFollow(playlistId: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}/follow`,
-      {},
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.post(`/playlists/${playlistId}/follow`, {});
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (follow playlist):', error);
@@ -367,16 +226,7 @@ export async function postFollow(playlistId: number) {
 // 플레이리스트 언팔로우
 export async function deleteFollow(playlistId: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}/follow`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.delete(`/playlists/${playlistId}/follow`);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (unfollow playlist):', error);
@@ -387,15 +237,8 @@ export async function deleteFollow(playlistId: number) {
 // 나의 플레이리스트에서 음악 삭제
 export async function deleteTrack(playlistId: number, trackId: string) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/playlists/${playlistId}/tracks/${trackId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.delete(
+      `/playlists/${playlistId}/tracks/${trackId}`,
     );
     return response.data;
   } catch (error) {
@@ -411,15 +254,8 @@ export async function fetchGenreDetail(
   size: number,
 ) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/genres/${genreId}/tracks?page=${pageIndex}&size=${size}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      `/genres/${genreId}/tracks?page=${pageIndex}&size=${size}`,
     );
     return response.data;
   } catch (error) {

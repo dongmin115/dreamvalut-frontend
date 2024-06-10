@@ -12,18 +12,27 @@ import { Cookies } from 'react-cookie';
 const cookies = new Cookies();
 
 // Axios 인스턴스 생성
-const refreshapi = axios.create({
+const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // 요청 인터셉터 추가
-refreshapi.interceptors.request.use(
-  (config) => config,
+api.interceptors.request.use(
+  (config) => {
+    const accessToken = getCookie('accessToken');
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
   (error) => Promise.reject(error),
 );
 
 // 응답 인터셉터 추가
-refreshapi.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -44,12 +53,12 @@ refreshapi.interceptors.response.use(
         );
 
         if (response.status === 200) {
-          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-            response.data;
+          const newAccessToken = response.data.accessToken;
+          const newRefreshToken = response.data.refreshToken;
           setCookie('accessToken', newAccessToken, { path: '/' });
           setCookie('refreshToken', newRefreshToken, { path: '/' });
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          return refreshapi(originalRequest);
+          return api(originalRequest);
         }
       } catch (refreshError) {
         return Promise.reject(refreshError);
@@ -59,4 +68,4 @@ refreshapi.interceptors.response.use(
   },
 );
 
-export default refreshapi;
+export default api;

@@ -5,12 +5,7 @@ import { Cookies } from 'react-cookie';
 const cookies = new Cookies();
 
 // 쿠키를 저장함
-export const setCookie = (
-  name: string,
-  value: string,
-  option?: any,
-  p0?: { headers: { Authorization: string; 'X-Refresh-Token': string } },
-) => {
+export const setCookie = (name: string, value: string, option?: any) => {
   cookies.set(name, value, { ...option });
 };
 

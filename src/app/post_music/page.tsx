@@ -50,7 +50,7 @@ const UploadMyMusic = () => {
   const [trackImage, setTrackImage] = useState<File | null>(null);
   const [trackAudio, setTrackAudio] = useState<File | null>(null);
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['genres'],
     queryFn: fetchGenres,
   });
@@ -235,15 +235,16 @@ const UploadMyMusic = () => {
                     color="secondary"
                     className="text-white"
                   >
-                    {genreData.map((genre) => (
-                      <MenuItem
-                        key={genre.genre_id}
-                        value={genre.genre_id}
-                        className=""
-                      >
-                        {genre.genre_name}
-                      </MenuItem>
-                    ))}
+                    {!isLoading &&
+                      genreData.map((genre) => (
+                        <MenuItem
+                          key={genre.genre_id}
+                          value={genre.genre_id}
+                          className=""
+                        >
+                          {genre.genre_name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </div>
