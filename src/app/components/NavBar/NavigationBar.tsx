@@ -102,6 +102,16 @@ export function ToggleSearchbar() {
 function NavigationBar() {
   const path = usePathname();
   const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/login'); // 로그아웃 성공 후 로그인 페이지로 이동
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // 에러 처리 로직을 여기에 작성
+    }
+  };
   if (ignorePath().includes(path)) {
     return null;
   }
@@ -188,11 +198,7 @@ function NavigationBar() {
             <MeetingRoomIcon color="primary" />
             <button
               className="hidden p-2 sm:block lg:text-sm"
-              onClick={() => {
-                logout().then(() => {
-                  router.push('/login');
-                });
-              }}
+              onClick={() => handleLogout()}
             >
               <p className="hide-text">로그아웃</p>
             </button>
