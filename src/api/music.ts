@@ -1,21 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-import axios from 'axios';
-import { getCookie } from '@/app/Cookies';
+
+import api from './axios_interceptor';
 
 export const getMusic = async (trackId: number | null) => {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get(`/tracks/${trackId}`);
     return response.data;
   } catch (error) {
     console.error('오류 발생:', error);
@@ -25,19 +16,9 @@ export const getMusic = async (trackId: number | null) => {
 
 export const postStream = async (trackId: number) => {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/stream_events`,
-      {
-        track_id: trackId,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.post(`/tracks/${trackId}/stream_events`, {
+      track_id: trackId,
+    });
     return response;
   } catch (error) {
     console.error('오류 발생:', error);
@@ -47,17 +28,7 @@ export const postStream = async (trackId: number) => {
 
 export const likes = async (trackId: string) => {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/likes`,
-      {},
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.post(`/tracks/${trackId}/likes`, {});
     return response.data;
   } catch (error) {
     console.error('오류 발생:', error);
@@ -67,16 +38,7 @@ export const likes = async (trackId: string) => {
 
 export const disLikes = async (trackId: string) => {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/${trackId}/disLikes`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.delete(`/tracks/${trackId}/disLikes`);
     return response.data;
   } catch (error) {
     console.error('오류 발생:', error);
@@ -90,15 +52,8 @@ export const fetchSearch = async (
   size: number,
 ) => {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/search?query=${query}&page=${pageIndex}&size=${size}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
+    const response = await api.get(
+      `/search?query=${query}&page=${pageIndex}&size=${size}`,
     );
     return response.data;
   } catch (error) {

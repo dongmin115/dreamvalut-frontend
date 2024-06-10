@@ -1,5 +1,5 @@
 import { getCookie, removeCookie } from '@/app/Cookies.tsx';
-import axios from 'axios';
+import api from './axios_interceptor.ts';
 
 const logout = () => {
   const accessToken = getCookie('accessToken');
@@ -9,17 +9,8 @@ const logout = () => {
     throw new Error('No tokens found in cookies');
   }
 
-  return axios
-    .post(
-      `${process.env.NEXT_PUBLIC_API_URL}/signout`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'X-Refresh-Token': `${refreshToken}`,
-        },
-      },
-    )
+  return api
+    .post('/signout', {}, {})
     .then((response) => {
       removeCookie('accessToken', { path: '/' });
       removeCookie('refreshToken', { path: '/' });

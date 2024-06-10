@@ -3,24 +3,13 @@
 /* eslint-disable no-console */
 /* eslint-disable consistent-return */
 
-import { getCookie } from '@/app/Cookies.tsx';
 import { Genre } from '@/types/genre.ts';
-import axios from 'axios';
-import refreshapi from './axios_interceptor.ts';
+import api from './axios_interceptor.ts';
 
-const accessToken = getCookie('accessToken');
 // 모든 장르 데이터 가져오기
 export const fetchGenres = async () => {
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/genres/list`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get('/genres/list');
 
     if (response) {
       return response.data; // 장르 데이터 반환
@@ -36,15 +25,7 @@ export const getUserGenres = async (
   setSelectedGenreIds: any,
 ) => {
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/preference?page=0&size=15`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get('/users/preference?page=0&size=15');
 
     setGenres(response.data.content);
 
@@ -63,17 +44,11 @@ export const getUserGenres = async (
 
 export const patchUser = async (name: string, genreId: number[]) => {
   try {
-    await axios.patch(
-      `${process.env.NEXT_PUBLIC_API_URL}/users`, // API 엔드포인트
+    await api.patch(
+      '/users', // API 엔드포인트
       {
         display_name: name,
         genre_ids: genreId,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
       },
     );
   } catch (error) {
@@ -84,16 +59,9 @@ export const patchUser = async (name: string, genreId: number[]) => {
 export const postGenreTaste = async (genreIds: number[]) => {
   console.log('genreIds:', genreIds);
   try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/preference`,
-      { genre_ids: genreIds },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.post('/users/preference', {
+      genre_ids: genreIds,
+    });
     console.log('response:', response);
     return response.data;
   } catch (error) {

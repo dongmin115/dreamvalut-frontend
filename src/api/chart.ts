@@ -2,21 +2,11 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-console */
 
-import axios from 'axios';
-import { getCookie } from '@/app/Cookies';
+import api from './axios_interceptor';
 
 export async function fetchChartData(page: number, size: number) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks/charts?page=${page}&size=${size}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get(`/tracks/charts?page=${page}&size=${size}`);
     return response.data;
   } catch (error) {
     console.error('API Fetch Error (chart data) : ', error);

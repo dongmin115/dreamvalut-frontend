@@ -2,10 +2,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
-import { getCookie } from '@/app/Cookies.tsx';
-import axios from 'axios';
 import Swal from 'sweetalert2';
-import refreshapi from './axios_interceptor.ts';
+import api from './axios_interceptor.ts';
 
 // 특정 곡 등록하기
 const uploadMymusic = async (
@@ -47,17 +45,11 @@ const uploadMymusic = async (
   });
 
   try {
-    const accessToken = getCookie('accessToken');
-    const response = await refreshapi.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/tracks`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await api.post('/tracks', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    );
+    });
     if (response.data) {
       Swal.fire({
         title: '나만의 폼 등록 완료',

@@ -1,21 +1,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 
-import axios from 'axios';
-import { getCookie } from '@/app/Cookies';
+import api from './axios_interceptor';
 
 async function getUser(setName: any) {
   try {
-    const accessToken = await getCookie('accessToken');
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/users`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const response = await api.get('/users');
     setName(response.data.display_name);
     return response.data;
   } catch (error) {
