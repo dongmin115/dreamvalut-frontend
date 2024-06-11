@@ -52,8 +52,8 @@ export default function Mypage() {
   });
 
   const [recentListPage, setRecentListPage] = useState(1);
-  const renderSize = 12;
-  const totalRecentListPages = 5;
+  const renderSize = 16;
+  const totalRecentListPages = 4;
 
   const { data: recentList, isLoading: recentListLoading } = useQuery({
     queryKey: ['recentList', recentListPage],
@@ -207,26 +207,26 @@ export default function Mypage() {
         </div>
         {/* 최근 감상한 곡 */}
         <div className="flex h-full w-full flex-col space-y-2 p-[2%]">
-          <h1 className="mt-0 text-sm text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
+          <h1 className="mb-4 mt-0 text-sm text-[#D4D4D4] md:text-[20px] lg:text-xl xl:text-3xl">
             최근 감상한 곡
           </h1>
-          <div className="grid h-full w-full grid-cols-1 gap-4 rounded-xl bg-[#353535] p-[2%] shadow-md md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid h-full w-full grid-cols-1 items-center gap-4 rounded-xl bg-[#353535] p-[2%] shadow-md md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {recentListLoading ? (
               <div>로딩중...</div>
             ) : (
               recentList.content.map((e: any) => (
                 <Link key={e.track_id} href={`/track/${e.track_id}`}>
-                  <div className="flex h-auto w-auto flex-row items-center space-x-4 rounded-lg p-4 transition-colors duration-300 ease-in hover:bg-[#040404] hover:bg-opacity-30">
+                  <div className="flex h-fit w-full flex-row items-center space-x-4 rounded-lg p-4 transition-colors duration-300 ease-in hover:bg-[#040404] hover:bg-opacity-30">
                     <img
                       src={e.track_image}
                       alt="음악 커버이미지"
-                      className="my-auto h-10 w-10 items-center rounded-md drop-shadow-lg md:h-16 md:w-16 lg:h-16 lg:w-16 xl:h-16 xl:w-16 2xl:h-20 2xl:w-20"
+                      className="size-16 items-center rounded-md drop-shadow-lg md:size-16 lg:size-20 xl:size-24 2xl:size-28"
                     />
                     <div className="flex flex-col justify-center">
-                      <p className="text-base text-white md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl">
+                      <p className="xl:lg text-sm text-white md:text-sm lg:text-base 2xl:text-xl">
                         {e.title}
                       </p>
-                      <p className="text-sm text-[#777777] lg:text-base xl:text-base 2xl:text-xl">
+                      <p className="text-sm text-[#777777] lg:text-sm xl:text-base 2xl:text-lg">
                         {e.uploader_name}
                       </p>
                     </div>
